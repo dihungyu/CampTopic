@@ -2,18 +2,18 @@
    session_start();
    require_once("conn.php");
 
-    if(isset($_POST["email"]) && isset($_POST["password"])){
-       $email = $_POST["email"];
-       $password = $_POST["password"];
-       $rs=$conn->query("select * from `member` where email ='$email'");
+    if(isset($_POST["accountEmail"]) && isset($_POST["accountPassword"])){
+       $accountEmail = $_POST["accountEmail"];
+       $passaccountPasswordword = $_POST["accountPassword"];
+       $rs=$conn->query("select * from `accounts` where accountEmail ='$accountEmail'");
       
     if($row = mysqli_fetch_array($rs)){
-        if($row["password"] == $_POST["password"]){
-           $_SESSION["member_name"] = $row["name"];
-           $_SESSION["member_email"] = $row["email"];
-           $_SESSION["member_phone"] = $row["phone"];
-           $_SESSION["member_password"] = $row["password"];
-           $_SESSION["level"] = $row["level"];
+        if($row["accountPassword"] == $_POST["accountPassword"]){
+           $_SESSION["accountName"] = $row["accountName"];
+           $_SESSION["accountEmail"] = $row["accountEmail"];
+           $_SESSION["accountTelephone"] = $row["accountTelephone"];
+           $_SESSION["accountPassword"] = $row["accountPassword"];
+           $_SESSION["accountLevel"] = $row["accountLevel"];
            header("location:index.php");
         }
 
