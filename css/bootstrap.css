@@ -514,6 +514,8 @@ mark,
 .img-fluid {
   max-width: 100%;
   height: auto;
+  margin-top: 5%;
+  margin-bottom: 50%;
 }
 
 .img-thumbnail {
