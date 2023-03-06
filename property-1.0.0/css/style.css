@@ -3204,8 +3204,10 @@ textarea.form-control-lg {
   width: 100%;
   padding: 0.25rem 1rem;
   clear: both;
-  font-weight: 400;
-  color: #212529;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  color: #212529cb;
   text-align: inherit;
   text-decoration: none;
   white-space: nowrap;
@@ -3480,7 +3482,7 @@ textarea.form-control-lg {
 
 .navbar-brand {
   padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  padding-bottom: 0.5rem;
   margin-right: 1rem;
   font-size: 1.25rem;
   text-decoration: none;
