@@ -23,10 +23,10 @@
 </head>
 <body>
 <form action="" method="post" name="formAdd" id="formAdd">
-請輸入活動名稱：<input type="text" name="activityTitle" id="activityTitle" value=" <?php echo $activityTitle ?>"><br/>
-請輸入活動介紹：<input type="text" name="activityDescription" id="activityDescription" value=" <?php echo $activityDescription ?>"><br/>
-請輸入活動開始日期：<input type="date" name="activityStartDate" id="activityStartDate" value=" <?php echo $activityStartDate ?>"><br/>
-請輸入活動結束日期：<input type="date" name="activityEndDate" id="activityEndDate" value=" <?php echo $activityEndDate ?>"><br/>
+請輸入活動名稱：<input type="text" name="activityTitle" id="activityTitle" value="<?php echo $activityTitle ?>"><br/>
+請輸入活動介紹：<input type="text" name="activityDescription" id="activityDescription" value="<?php echo $activityDescription ?>"><br/>
+請輸入活動開始日期：<input type="date" name="activityStartDate" id="activityStartDate" value="<?php echo $activityStartDate ?>"><br/>
+請輸入活動結束日期：<input type="date" name="activityEndDate" id="activityEndDate" value="<?php echo $activityEndDate ?>"><br/>
 <input type="hidden" name="action" value="update">
 <input type="submit" name="button" value="修改資料">
 </form>
