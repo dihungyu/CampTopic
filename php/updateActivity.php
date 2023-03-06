@@ -19,7 +19,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>新增活動資料</title>
+    <title>更新活動資料</title>
 </head>
 <body>
 <form action="" method="post" name="formAdd" id="formAdd">
