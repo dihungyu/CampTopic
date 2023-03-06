@@ -1,6 +1,6 @@
 <?php
     include("conn.php");
-    $sql_query = "SELECT * FROM campsites ORDER BY campsiteId ASC";
+    $sql_query = "SELECT * FROM campsites ORDER BY CAST(campsiteId AS SIGNED) ASC";
     $result = mysqli_query($conn, $sql_query);
     $total_records = mysqli_num_rows($result);
 ?>
