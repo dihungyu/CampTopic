@@ -25,7 +25,7 @@ if (isset($_POST["accountName"]) && isset($_POST["accountEmail"]) && isset($_POS
     if (mysqli_num_rows($result) >= 1) {
         echo "<script>{window.alert('此信箱已被註冊！'); location.href='../Register.html'}</script>";
     } else {
-        $stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountPassword, accountEmail, accountPhoneNumber) VALUES ( UUID(), ?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountPassword, accountEmail, accountPhoneNumber) VALUES ( REPLACE(UUID(),'-',''), ?,?,?,?)");
         $stmt->bind_param("ssss", $accountName, $hashedPassword, $accountEmail, $accountPhoneNumber);
         if ($stmt->execute()) {
             echo "<script>{window.alert('註冊成功！'); location.href='../LoginPage.html'}</script>";
