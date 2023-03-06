@@ -30,7 +30,7 @@ if (isset($_POST["action"])&&($_POST["action"] == "insert")) {
 
     //資料表查訪指令，請注意 "" , '' 的位置
     //INSERT INTO 就是新建一筆資料進哪個表的哪個欄位
-    $sql_query = "INSERT INTO campsites (cityId, campsiteName, campsiteAddress) VALUES ('$cityId', 
+    $sql_query = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress) VALUES (REPLACE(uuid(),'-',''), '$cityId', 
 '$campsiteName','$campsiteAddress')";
 
     //對資料庫執行查訪的動作

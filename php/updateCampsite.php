@@ -3,8 +3,7 @@
 
  $id = $_GET['id'];
  
- //請注意，這邊因為 $userID 本身是 integer，所以可以不用加 ''
- $sql_getDataQuery = "SELECT * FROM campsites WHERE campsiteId = $id";
+ $sql_getDataQuery = "SELECT * FROM campsites WHERE campsiteId = '$id'";
 
  $result = mysqli_query($conn, $sql_getDataQuery);
 
@@ -39,7 +38,7 @@
      $newCampsiteName = $_POST['campsiteName'];
      $newCampsiteAddress = $_POST['campsiteAddress'];
 
-     $sql_query = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = $id";
+     $sql_query = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$id'";
 
      mysqli_query($conn,$sql_query);
 

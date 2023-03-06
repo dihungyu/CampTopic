@@ -3,7 +3,7 @@
 
     include('conn.php');
 
-    $sql_query = "DELETE FROM campsites WHERE campsiteId = $id";
+    $sql_query = "DELETE FROM campsites WHERE campsiteId = '$id'";
 
     mysqli_query($conn,$sql_query);
 
