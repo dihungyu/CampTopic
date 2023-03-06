@@ -1,8 +1,14 @@
 <?php
-    include("conn.php");
-    $sql_query = "SELECT * FROM activities ORDER BY activityId ASC";
-    $result = mysqli_query($conn,$sql_query);
-    $total_records = mysqli_num_rows($result);
+   include("conn.php");
+
+   // 更新 activityIsOpen 的值
+   $update_query = "UPDATE activities SET activityIsOpen = CASE WHEN activityStartDate <= NOW() AND NOW() <= activityEndDate THEN 1 ELSE 0 END";
+   mysqli_query($conn, $update_query);
+
+   // 取得所有資料
+   $sql_query = "SELECT * FROM activities ORDER BY activityId ASC";
+   $result = mysqli_query($conn,$sql_query);
+   $total_records = mysqli_num_rows($result);
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +39,11 @@
 <?php
 
 while($row_result = mysqli_fetch_assoc($result)) {
+
+    // 取出更新後的 activityIsOpen 值
+    $activity_is_open = ($row_result['activityIsOpen'] == 1) ? "是" : "否";
+
+    // 印出資料
     echo "<tr>";
     echo "<td>".$row_result['activityId']."</td>";
     echo "<td>".$row_result['accountId']."</td>";
@@ -42,7 +53,7 @@ while($row_result = mysqli_fetch_assoc($result)) {
     echo "<td>".$row_result['activityStartDate']."</td>";
     echo "<td>".$row_result['activityEndDate']."</td>";
     echo "<td>".$row_result['activityDeadLineDate']."</td>";
-    echo "<td>".$row_result['activityIsOpen']."</td>";
+    echo "<td>".$activity_is_open."</td>";
     echo "<td>".$row_result['activityAttendence']."</td>";
     echo "<td><a href='updateActivity.php?id=".$row_result['activityId']."'>修改</a> ";
     echo "<a href='deleteActivity.php?id=".$row_result['activityId']."'>刪除</a></td>";

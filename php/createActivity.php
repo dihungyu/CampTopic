@@ -24,17 +24,24 @@ if (isset($_POST["action"]) && ($_POST["action"] == "insert")) {
 
     $activityTitle = $_POST["activityTitle"];
     $activityDescription = $_POST['activityDescription'];
+    $activityStartDate = $_POST['activityStartDate'];
+    $activityEndDate = $_POST['activityEndDate'];
 
-    // 取得使用者輸入的開始日期
-    $activityStartDate = new DateTime($_POST['activityStartDate']);
-    // 往前移動三天
-    $activityDeadLineDate = $activityStartDate->sub(new DateInterval('P3D'))->format('Y-m-d');
+    // 將活動結束日期往前移動三天，設定成報名截止日期
+    $activityDeadLineDate = date('Y-m-d', strtotime($activityStartDate . "-3 days"));
 
-    // 取得使用者輸入的結束日期
-    $activityEndDate = new DateTime($_POST['activityEndDate']);
+    // 獲取當前系統時間
+    $currentTime = date('Y-m-d H:i:s');
+
+    // 判斷當前時間是否在活動開始和結束時間之間
+    if ($currentTime >= $activityStartDate && $currentTime <= $activityEndDate) {
+        $activityIsOpen = 1;
+    } else {
+        $activityIsOpen = 0;
+    }
 
     $sql_query = "INSERT INTO activities (activityId, activityTitle, activityDescription, activityStartDate, activityEndDate, activityDeadLineDate, activityIsOpen, activityAttendence) 
-    VALUES (UUID(), '$activityTitle', '$activityDescription','$activityStartDate->format(\'Y-m-d\')','$activityEndDate->format(\'Y-m-d\')','$activityDeadLineDate', 1, 0)";
+    VALUES (REPLACE(uuid(),'-',''), '$activityTitle', '$activityDescription', '$activityStartDate', '$activityEndDate', '$activityDeadLineDate', '$activityIsOpen', 0)";
 
     mysqli_query($conn, $sql_query);
 
