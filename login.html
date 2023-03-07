@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -31,6 +32,7 @@
 	<link rel="stylesheet" href="css/owl.carousel.css">
 	<link rel="stylesheet" href="css/main.css">
 	
+
 </head>
 
 <body>
@@ -71,30 +73,32 @@
 							</ul>
 							<div class="tab-content" id="myTabContent">
 							  <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-								<form class="form-wrap" style="text-align: left;">
-								    信箱：
+								<form class="form-wrap">
+								    <p style="text-align: left;">信箱：</p>
 									<input type="text" class="form-control" name="email" placeholder="email " onfocus="this.placeholder = ''" onblur="this.placeholder = 'email '">									
 									
-									密碼：
+									<p style="text-align: left;">密碼：</p>
 									<input type="text" class="form-control" name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password '">							
   <a href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/property-1.0.0/index.html" class="primary-btn text-uppercase" style="background-color: #005555; border-radius: 30px;">登入</a>									
 								</form>
 							  </div>
 							  <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-								<form class="form-wrap" style="text-align: left;">
-									使用者名稱：
+								<form class="form-wrap">
+									<p style="text-align: left;">使用者名稱：</p>
 									
 									<input type="text" class="form-control" name="name" placeholder="name " onfocus="this.placeholder = ''" onblur="this.placeholder = 'name '">									
-									信箱：
+									<p style="text-align: left;">信箱：</p>
 									
 									<input type="text" class="form-control Email" name="email" placeholder="email " onfocus="this.placeholder = ''" onblur="this.placeholder = 'email '">
-									
-									性別：
-									<input type="radio" name="gender" value="g" style="align:left"><label for="g">女</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="b"><label for="b">男</label>									
 									<br>
-									手機號碼：<input type="text" class="form-control phone" name="phone'" placeholder="phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'phone '">
-									密碼：<input type="text" class="form-control " name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
-									再次輸入密碼：<input type="text" class="form-control " name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">						
+									<p style="text-align: left;">性別：
+									<input type="radio" name="gender" value="g" style="text-align: left;"><label for="g">女</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="b"><label for="b">男</label></p>									
+									
+									<p style="text-align: left;">生日：&nbsp;&nbsp;<input type="date" name="birth" value="date"></p>
+									
+									<p style="text-align: left;">手機號碼：</p><input type="text" class="form-control phone" name="phone'" placeholder="phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'phone '">
+									<p style="text-align: left;">密碼：</p><input type="text" class="form-control " name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+									<p style="text-align: left;">再次輸入密碼：</p><input type="text" class="form-control " name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">						
 									<a href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html" class="primary-btn text-uppercase" style="background-color: #005555; border-radius: 30px;">註冊</a>									
 								</form>							  	
 							  </div>
@@ -122,5 +126,10 @@
 	<script src="js/mail-script.js"></script>
 	<script src="js/main.js"></script>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 </html>
