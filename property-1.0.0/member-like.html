@@ -118,24 +118,26 @@
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-lg-6 text-center mx-auto">
-            <ul class="nav nav-tabs" style="position:absolute;top:600px; left:120px">
+            <ul class="nav nav-tabs" style="position:absolute;top:600px; left:120px" id="myTab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link land" aria-current="page" href="#">營地</a>
+                <a class="nav-link land" id="land-tab" data-toggle="tab" href="#land" role="tab" aria-controls="land" aria-selected="true">營地</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link paper" href="#">文章</a>
+                <a class="nav-link paper" id="paper-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="paper" aria-selected="true">文章</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link equip" href="#">設備</a>
+                <a class="nav-link equip" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="equip" aria-selected="true">設備</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link activity" href="#">活動</a>
+                <a class="nav-link activity" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="true">活動</a>
               </li>
             </ul>
           </div>
         </div>
         
-
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="land" role="tabpanel" aria-labelledby="land-tab">
+            
     <div class="section section-properties">
       <div class="container">
         <div class="row">
@@ -189,7 +191,7 @@
               <div class="property-content">
                 <div class="price mb-2"><span>燈火嵐杉野奢露營區inHere</span>
                   <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
-                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.0</p>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.3</p>
                 </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
@@ -231,7 +233,7 @@
               <div class="property-content">
                 <div class="price mb-2"><span>蟬說：霧繞 Chanshuo Woorao</span>
                   <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
-                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.0</p>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.8</p>
                 </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
@@ -272,21 +274,24 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>趣兒Chill:藍鵲菲菲</span>
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.8</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    >111台北市士林區菁山路101巷71弄16號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">台北市 / 士林區</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -295,6 +300,10 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
@@ -307,21 +316,24 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>向海那漾 Nayang Beach</span>
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.7</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    >439台中市大安區北汕路86巷 1號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">台中市 / 大安區</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -330,6 +342,10 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
@@ -342,21 +358,24 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>勤美學</span>
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.7</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    >361苗栗縣造橋鄉豐湖村1鄰乳姑山15-3號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">苗栗縣 / 造橋鄉</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -365,6 +384,10 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
@@ -378,21 +401,25 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>橘舍三食</span>
+                
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.7</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    > 369苗栗縣卓蘭鎮西坪43-15號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">苗栗縣 / 卓蘭鎮</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -401,6 +428,10 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
@@ -413,21 +444,24 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>森渼原ALIVE Glamping Base</span>
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.0</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    >438台中市外埔區二崁路700號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">台中市 / 外埔區</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -436,6 +470,10 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
@@ -448,21 +486,24 @@
               </a>
 
               <div class="property-content">
-                <div class="price mb-2"><span>$1,291,000</span></div>
+                <div class="price mb-2"><span>露營樂2號店</span>
+                  <i class="fa-solid fa-star" style="color: gold; position:absolute;top:35px;left: 320px;"></i>
+                  <p style="color: black; position:absolute;top:30px;left: 350px;">4.5</p>
+                </div>
                 <div>
                   <span class="d-block mb-2 text-black-50"
-                    >5232 California Fake, Ave. 21BC</span
+                    > 80545高雄市旗津區旗津三路51號</span
                   >
-                  <span class="city d-block mb-3">California, USA</span>
+                  <span class="city d-block mb-3">高雄市 / 旗津區</span>
 
                   <div class="specs d-flex mb-4">
                     <span class="d-block d-flex align-items-center me-3">
                       <span class="icon-bed me-2"></span>
-                      <span class="caption">2 beds</span>
+                      <span class="caption"></span>
                     </span>
                     <span class="d-block d-flex align-items-center">
                       <span class="icon-bath me-2"></span>
-                      <span class="caption">2 baths</span>
+                      <span class="caption"></span>
                     </span>
                   </div>
 
@@ -471,26 +512,70 @@
                     class="btn btn-primary py-2 px-3"
                     >See details</a
                   >
+                  <div class="price mb-2">
+                    <i class="fa-solid fa-heart" style="color: red; position:absolute;top:200px;left: 370px;"></i>
+                      
+                    </div>
                 </div>
               </div>
             </div>
             <!-- .item -->
           </div>
         </div>
-        <div class="row align-items-center py-5">
-          <div class="col-lg-3">Pagination (1 of 10)</div>
-          <div class="col-lg-6 text-center">
-            <div class="custom-pagination">
-              <a href="#">1</a>
-              <a href="#" class="active">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
+          </div>
+          
+
+            <div class="tab-pane fade show active" id="paper" role="tabpanel" aria-labelledby="paper-tab">
+              <br><br>
+              <div class="card" style="width: 1200px;left: 50px;">
+                
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+
+                    <h5>推薦給想露營卻沒有經驗的你！</h5>
+                    <p>最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。..........................................................................</p>
+                    <i class="fa-sharp fa-solid fa-heart" style="color: red;"></i>&nbsp;<lable>102</label>&nbsp;&nbsp;
+                      <i class="fa-solid fa-message-lines"></i>
+                  </blockquote>
+                </div>
+              </div>
+              <br>
+
+              <div class="card" style="width: 1200px;left: 50px;">
+                
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+
+                    <h5>推薦給想露營卻沒有經驗的你！</h5>
+                    <p>最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。..........................................................................</p>
+                    <i class="fa-sharp fa-solid fa-heart" style="color: red;"></i>&nbsp;<lable>102</label>&nbsp;&nbsp;
+                    
+                  </blockquote>
+                </div>
+              </div>
+              <br>
+              <div class="card" style="width: 1200px;left: 50px;">
+                
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+
+                    <h5>推薦給想露營卻沒有經驗的你！</h5>
+                    <p>最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。..........................................................................</p>
+                    <i class="fa-sharp fa-solid fa-heart" style="color: red;"></i>&nbsp;<lable>102</label>&nbsp;&nbsp;
+                    
+                  </blockquote>
+                </div>
+              </div>
+              <br>
+              </div>
+
+
+              
+
+            </div>
 
     <div class="site-footer">
       <div class="container">
