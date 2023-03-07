@@ -33,7 +33,11 @@
         <th>活動結束日期</th>
         <th>活動報名截止日期</th>
         <th>活動是否開啟</th>
+        <th>活動最低參加人數</th>
+        <th>活動最高參加人數</th>
         <th>活動出席人數</th>
+        <th>最低預估費用</th>
+        <th>最高預估費用</th>
         <th>相關操作</th>
     </tr>
 <?php
@@ -54,7 +58,11 @@ while($row_result = mysqli_fetch_assoc($result)) {
     echo "<td>".$row_result['activityEndDate']."</td>";
     echo "<td>".$row_result['activityDeadLineDate']."</td>";
     echo "<td>".$activity_is_open."</td>";
+    echo "<td>".$row_result['minAttendee']."</td>";
+    echo "<td>".$row_result['maxAttendee']."</td>";
     echo "<td>".$row_result['activityAttendence']."</td>";
+    echo "<td>".$row_result['leastAttendeeFee']."</td>";
+    echo "<td>".$row_result['maxAttendeeFee']."</td>";
     echo "<td><a href='updateActivity.php?id=".$row_result['activityId']."'>修改</a> ";
     echo "<a href='deleteActivity.php?id=".$row_result['activityId']."'>刪除</a></td>";
     echo "</tr>";
