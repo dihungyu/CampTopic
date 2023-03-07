@@ -83,7 +83,7 @@
 								</form>
 							  </div>
 							  <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-								<form class="form-wrap">
+								<form class="form-wrap" method="post">
 									<p style="text-align: left;">使用者名稱：</p>
 									
 									<input type="text" class="form-control" name="name" placeholder="name " onfocus="this.placeholder = ''" onblur="this.placeholder = 'name '">									
@@ -94,7 +94,7 @@
 									<p style="text-align: left;">性別：
 									<input type="radio" name="gender" value="g" style="text-align: left;"><label for="g">女</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="b"><label for="b">男</label></p>									
 									
-									<p style="text-align: left;">生日：&nbsp;&nbsp;<input type="date" name="birth" value="date"></p>
+									<p style="text-align: left;"> 生日：&nbsp;&nbsp;<input type="date" name="accountBirthday" id="birthday"></p>
 									
 									<p style="text-align: left;">手機號碼：</p><input type="text" class="form-control phone" name="phone'" placeholder="phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'phone '">
 									<p style="text-align: left;">密碼：</p><input type="text" class="form-control " name="password" placeholder="password " onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
@@ -125,11 +125,35 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/mail-script.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+        // 取得當前日期再減去 18 年的日期，並將其設置為生日欄位的最大可選日期
+        var today = new Date();
+        var maxBirthday = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        document.getElementById("birthday").setAttribute("max", maxBirthday.toISOString().slice(0, 10));
+
+        
+    </script>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
 
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+        // 取得當前日期再減去 18 年的日期，並將其設置為生日欄位的最大可選日期
+        var today = new Date();
+        var maxBirthday = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        document.getElementById("birthday").setAttribute("max", maxBirthday.toISOString().slice(0, 10));
 
+        function checkAge() {
+            var today = new Date();
+            var birthday = new Date(document.getElementsByName("accountBirthday")[0].value);
+            var age = today.getFullYear() - birthday.getFullYear();
+            if (age < 18) {
+                alert("Sorry, you must be at least 18 years old to register.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </html>
