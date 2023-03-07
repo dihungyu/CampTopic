@@ -4497,3 +4497,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a, .footer-text i {
   color: #f8b600;
 }
+.box{
+  margin:20px;
+  outline:1px solid;
+  text-align:center;
+  height: 65px;
+}
