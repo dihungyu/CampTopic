@@ -32,12 +32,12 @@ if($_POST["FormType"]=="Login"){
         	} 
 			else {
 				// 若密碼不正確，則顯示錯誤訊息，並轉址至登入頁面
-            	echo "<script>{window.alert('密碼錯誤！請再試一次'); location.href='login.php'}</script>";
+            	echo "<script>{window.alert('密碼錯誤！請再試一次'); location.href='login.php#login'}</script>";
 			}
     	} 
 		else {
         	// 若帳號不存在，則顯示錯誤訊息，並轉址至註冊頁面
-        	echo "<script>{window.alert('此電子信箱尚未註冊！請先註冊帳號'); location.href='login.php'}</script>";
+        	echo "<script>{window.alert('此電子信箱尚未註冊！請先註冊帳號'); location.href='login.php#register'}</script>";
 		}
 	}
 }
@@ -66,13 +66,13 @@ elseif($_POST["FormType"]== "Register"){
     	$result = $stmt->get_result();
 
     	if (mysqli_num_rows($result) >= 1) {
-       		echo "<script>{window.alert('此信箱已被註冊！'); location.href='login.php'}</script>";
+       		echo "<script>{window.alert('此信箱已被註冊！請換信箱再試一次'); location.href='login.php#register'}</script>";
     	} 
 		else {
         	$stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountGender, accountBirthday, accountPassword, accountEmail, accountPhoneNumber) VALUES ( REPLACE(UUID(),'-',''), ?,?,?,?,?,?)");
         	$stmt->bind_param("ssssss", $accountName, $accountGender, $accountBirthday, $hashedPassword, $accountEmail, $accountPhoneNumber);
         	if ($stmt->execute()) {
-            echo "<script>{window.alert('註冊成功！'); location.href='login.php'}</script>";
+            echo "<script>{window.alert('註冊成功！'); location.href='login.php#login'}</script>";
         	} 
 			else {
             echo "Error: " . $stmt->error;
