@@ -201,7 +201,7 @@ elseif($_POST["FormType"]== "Register"){
 									name="checkPassword" placeholder="password " onfocus="this.placeholder = ''"
 									onblur="this.placeholder = 'password'" id="checkPassword">
 								<button class="primary-btn text-uppercase"
-									style="background-color: #005555; border-radius: 30px;">註冊</button>
+									style="background-color: #005555; border-radius: 30px;" id="registerButton">註冊</button>
 							</form>
 						</div>
 
@@ -232,18 +232,23 @@ elseif($_POST["FormType"]== "Register"){
 			var today = new Date();
 			var maxBirthday = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 			document.getElementById("birthday").setAttribute("max", maxBirthday.toISOString().slice(0, 10));
-
 		</script>
 		<script>
 			function checkPassword() {
 				var password1 = document.getElementById("accountPassword").value;
 				var password2 = document.getElementById("checkPassword").value;
 				if (password1 != password2) {
-					alert("两次输入的密码不一致，请重新输入！");
+					alert("兩次輸入的密碼不一致，請重新輸入！");
 					return false;
 				}
 				return true;
 			}
+
+			document.getElementById("registerButton").addEventListener("click", function(event){
+				if (!checkPassword()) {
+					event.preventDefault();
+				}
+			});
 		</script>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
