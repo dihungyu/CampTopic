@@ -1,4 +1,15 @@
+<?php
+session_start();
+// $accountName = $_SESSION["accountName"];
+// $accountEmail = $_SESSION["accountEmail"];
+// $accountPhoneNumber = $_SESSION["accountPhoneNumber"];
+$accountName = "dihung";
+$accountEmail = "dihung921@gmail.com";
+$accountPhoneNumber = "0978546921";
 
+
+
+?>
 <!-- /*
 * Template Name: Property
 * Template Author: Untree.co
@@ -122,7 +133,7 @@
               <div class="d-flex flex-column align-items-center text-center">
                 <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="180">
                 <div class='mt-3'>
-                  <h3>姓名<?php echo $name; ?></h3>
+                  <h3><?php echo $accountName; ?></h3>
                 </div>
               </div>
             </div>
@@ -152,7 +163,7 @@
 													flex-wrap: wrap;
 													font-size: 15px;
 													font-weight: bold;">
-														info@gmail.com<br>
+														<?php echo $accountEmail ?><br>
 													</span>
               </div>
 
@@ -166,24 +177,26 @@
 													flex-wrap: wrap;
 													font-size: 15px;
 													font-weight: bold;">
-														+886 987 654 321
+														<?php echo $accountPhoneNumber ?>
 													</span>
               </div>
             </div>
           </div>
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <form action="#">
+            <form action="member.php" method="post">
+              <input type="hidden" value="EditMember">
               <div class="row" style="position:absolute;height: 250px;top:-200px;left:100px;right: 0px;">
                 <div class="col-6 mb-3">
                   <input
                     type="text"
                     class="form-control"
                     placeholder="請輸入名字"
+                    required
                   />
                 </div>
                 <div class="col-6 mb-3">
                   <input
-                    type="phone"
+                    type="tel"
                     class="form-control"
                     placeholder="請輸入電話"
                   />
