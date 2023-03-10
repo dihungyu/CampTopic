@@ -1,17 +1,40 @@
+<html>
+<body>
+<form action="" method="post" enctype="multipart/form-data">
+    選擇檔案:<input type="file" name="myfile" id="myfile"><br />
+    <input type="submit" name="submit" value="上傳檔案">
+
+</form>
+</body>
+</html>
+
+
 <?php
-// 檔案上傳並顯示基本資料
-echo "檔案名稱: " . $_FILES['myfile']['name'] . "<br>";
-echo "檔案大小: " . $_FILES['myfile']['size'] . "<br>";
-echo "檔案格式: " . $_FILES['myfile']['type'] . "<br>";
-echo "暫存名稱: " . $_FILES['myfile']['tmp_name'] . "<br>";
-echo "錯誤代碼: " . $_FILES['myfile']['error'] . "<br>";
-// 檔案上傳後的偵錯
-if($_FILES['myfile']['error'] >0 ) {
-switch ($_FILES['myfile']['error'] ) {
-case 1:die("檔案大小超出 php.ini:upload_max_filesize 限制 ");
-case 2:die("檔案大小超出 MAX_FILE_SIZE 限制");
-case 3:die("檔案大小僅被部份上傳");
-case 4:die("檔案未被上傳");
+if ($_FILES["myfile"]["error"] > 0){
+    echo "Error: " . $_FILES["myfile"]["error"];
+
+}else{
+
+    echo "檔案名稱: " . $_FILES["myfile"]["name"]."<br/>";
+    echo "檔案類型: " . $_FILES["myfile"]["type"]."<br/>";
+    echo "檔案大小: " . ($_FILES["myfile"]["size"] / 1024)." Kb<br />";
+    echo "暫存名稱: " . $_FILES["myfile"]["tmp_name"]."<br/>";
+    
+    if (file_exists("/Applications/XAMPP/xamppfiles/htdocs/upload/".$_FILES["myfile"]["name"])){
+    echo "檔案已經存在，請勿重覆上傳相同檔案";
+
+    } else{
+        
+        $target_path = "/Applications/XAMPP/xamppfiles/htdocs/upload/".$_FILES["myfile"]["name"];
+
+        if(move_uploaded_file($_FILES['myfile']['tmp_name'], $target_path)) {  
+        echo "檔案：". $_FILES['myfile']['name'] . " 上傳成功!";
+
+        } else{
+            echo "檔案上傳失敗，請再試一次!";
+
+        }
+    }
 }
-}
+
 ?>
