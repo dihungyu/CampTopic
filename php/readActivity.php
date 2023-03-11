@@ -64,7 +64,8 @@ while($row_result = mysqli_fetch_assoc($result)) {
     echo "<td>".$row_result['leastAttendeeFee']."</td>";
     echo "<td>".$row_result['maxAttendeeFee']."</td>";
     echo "<td><a href='updateActivity.php?id=".$row_result['activityId']."'>修改</a> ";
-    echo "<a href='deleteActivity.php?id=".$row_result['activityId']."'>刪除</a></td>";
+    echo "<a href='deleteActivity.php?id=".$row_result['activityId']."'>刪除</a>";
+    echo "<a href='signupActivity.php?id=".$row_result['activityId']."'>報名</a></td>'";
     echo "</tr>";
 }
 ?>
