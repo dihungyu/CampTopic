@@ -31,34 +31,46 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Deluxe</a>
+	     <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item active"><a href="rooms.html" class="nav-link">Rooms</a></li>
+	          <li class="nav-item "><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
 	          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	           
+            <li class="nav-item dropdown active">
+              <a class="nav-link dropdown-toggle " href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="member.html">會員帳號</a>
+                <a class="dropdown-item" href="member-like.html">我的收藏</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">登出</a>
+              </div>
+            </li>
+            
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
-    <!-- END nav -->
-
-    <div class="hero-wrap" style="background-image: url('images/bg_1.jpg');">
-      <div class="overlay"></div>
+    <div
+      class="hero page-inner overlay"
+      style="background-image: url('images/hero_bg_1.jpg'); height: 600px;"
+    >
       <div class="container">
-        <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
-          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
-          	<div class="text">
-	            <p class="breadcrumbs mb-2" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="rooms.html">Room</a></span> <span>Room Single</span></p>
-	            <h1 class="mb-4 bread">Room Single</h1>
-            </div>
+        <div class="row justify-content-center align-items-center">
+          
+            <h1 class="heading" data-aos="fade-up" style="top:400px;">Account</h1>
+
+            
           </div>
         </div>
       </div>
