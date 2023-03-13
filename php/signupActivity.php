@@ -1,11 +1,4 @@
 <?php
-if(isset($_GET["id"])){
-    $activityId = $_GET["id"]; 
-}
-$activityCreatorEmail = "egroup.intern.ryancho@gmail.com";
-$activityApplicantEmail = "dihung0921@yahoo.com.tw";
-
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -14,7 +7,37 @@ require '../phpmailer/src/PHPMailer.php';
 require '../phpmailer/src/Exception.php';
 require '../phpmailer/src/SMTP.php';
 
+//Logic section
+if(isset($_GET["id"])){
+    $activityId = $_GET["id"]; 
+}
+
 if(isset($_POST["submit"])){
+
+    //資料庫連線
+    require_once("conn.php");
+    //官方通知mail
+    $officialEmail = "dihung0921@yahoo.com.tw";
+
+    // 取得活動發起者信箱
+    // 使用JOIN語句來避免進行兩個SQL查詢
+    // 使用參數化查詢來避免SQL注入攻擊
+
+    $stmt = $conn->prepare("SELECT accounts.accountEmail FROM activities 
+                 JOIN accounts ON activities.accountId = accounts.accountId 
+                WHERE activities.activityId = ?");
+    $stmt->bind_param("s", $activityId); // 將參數綁定到查詢語句中
+    $stmt->execute();
+    $result = $stmt->get_result(); // 取得查詢結果
+
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        $activityCreatorEmail = $row["accountEmail"]; // 活動發起者信箱
+    } 
+    else {
+    // 找不到符合條件的資料
+    http_response_code(404);
+    }
+
     // 建立PHPMailer對象
     $mail = new PHPMailer(true);
 
@@ -23,7 +46,7 @@ if(isset($_POST["submit"])){
         $mail->isSMTP();                                            // 設置使用SMTP發送郵件
         $mail->Host       = 'smtp.mail.yahoo.com';                       // SMTP服務器地址
         $mail->SMTPAuth   = true;                                   // 啟用SMTP驗證
-        $mail->Username   = $activityApplicantEmail;                   // 發送方郵箱地址
+        $mail->Username   = $officialEmail;                   // 發送方郵箱地址
         $mail->Password   = 'pdknaazebckinydd';                         // 發送方郵箱密碼
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          // SMTP加密方式
         $mail->Port       = 587;                                    // SMTP端口號
@@ -32,9 +55,9 @@ if(isset($_POST["submit"])){
 
 
         // 收件人、主題、內容設置
-        $mail->setFrom('dihung0921@yahoo.com.tw', '測試者');
+        $mail->setFrom($officialEmail, '營在起跑點');
         $mail->addAddress($activityCreatorEmail);                    // 收件人郵箱地址
-        $mail->addReplyTo('dihung0921@yahoo.com.tw', '測試者');        //預設收件人回覆地址
+        $mail->addReplyTo($officialEmail, '營在起跑點');        //預設收件人回覆地址
         $mail->Subject = '新的報名通知';
         $mail->Body    = '有人報名了您的活動，請儘速到我們的網站做確認，謝謝！';
 
