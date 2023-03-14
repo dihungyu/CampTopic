@@ -161,14 +161,7 @@ $accountPhoneNumber = "0978546921";
                 <h4 class="mb-2">Email:</h4>
                 <span style="
 <<<<<<< HEAD:property-1.0.0/member.html
-             display: flex;
-             justify-content: left;    
-             align-content: center;      
-             flex-wrap: wrap;
-             font-size: 15px;
-             font-weight: bold;">
-              <?php echo $accountEmail ?><br>
-             </span>
+           
 =======
 													display: flex;
 													justify-content: left;    
@@ -186,14 +179,7 @@ $accountPhoneNumber = "0978546921";
                 <h4 class="mb-2">Call:</h4>
                 <span style="
 <<<<<<< HEAD:property-1.0.0/member.html
-             display: flex;
-             justify-content: left;    
-             align-content: center;      
-             flex-wrap: wrap;
-             font-size: 15px;
-             font-weight: bold;">
-              <?php echo $accountPhoneNumber ?>
-             </span>
+            
 =======
 													display: flex;
 													justify-content: left;    
