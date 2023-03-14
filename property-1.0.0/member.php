@@ -1,5 +1,3 @@
-<<<<<<< HEAD:property-1.0.0/member.html
-=======
 <?php
 session_start();
 // $accountName = $_SESSION["accountName"];
@@ -18,7 +16,6 @@ $accountPhoneNumber = "0978546921";
 * Template URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
->>>>>>> 8792b5314ec4ce97ba9b750a158f3577730c75f8:property-1.0.0/member.php
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -160,9 +157,6 @@ $accountPhoneNumber = "0978546921";
                 <i class="icon-envelope"></i>
                 <h4 class="mb-2">Email:</h4>
                 <span style="
-<<<<<<< HEAD:property-1.0.0/member.html
-           
-=======
 													display: flex;
 													justify-content: left;    
 													align-content: center;      
@@ -171,16 +165,12 @@ $accountPhoneNumber = "0978546921";
 													font-weight: bold;">
 														<?php echo $accountEmail ?><br>
 													</span>
->>>>>>> 8792b5314ec4ce97ba9b750a158f3577730c75f8:property-1.0.0/member.php
               </div>
 
               <div class="phone mt-4">
                 <i class="icon-phone"></i>
                 <h4 class="mb-2">Call:</h4>
                 <span style="
-<<<<<<< HEAD:property-1.0.0/member.html
-            
-=======
 													display: flex;
 													justify-content: left;    
 													align-content: center;      
@@ -189,7 +179,6 @@ $accountPhoneNumber = "0978546921";
 													font-weight: bold;">
 														<?php echo $accountPhoneNumber ?>
 													</span>
->>>>>>> 8792b5314ec4ce97ba9b750a158f3577730c75f8:property-1.0.0/member.php
               </div>
             </div>
           </div>
