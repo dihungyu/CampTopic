@@ -1,4 +1,6 @@
 <?php
+//-----------------------參加者報名功能-------------------------
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -11,11 +13,21 @@ require '../phpmailer/src/SMTP.php';
 if(isset($_GET["id"])){
     $activityId = $_GET["id"]; 
 }
+//$accountId = $_SESSION["accountId"];
+$accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
 
 if(isset($_POST["submit"])){
 
     //資料庫連線
     require_once("conn.php");
+
+    //新增該活動報名者至資料庫
+    $stmt = $conn->prepare("INSERT INTO activities_accounts(activityAccountId, accountId, activityId) VALUES (REPLACE(uuid(),'-',''),?,?) ");
+    $stmt->bind_param("ss", $accountId, $activityId); // 將參數綁定到查詢語句中
+    $stmt->execute();
+    $result = $stmt->get_result(); // 取得查詢結果
+
+
     //官方通知mail
     $officialEmail = "dihung0921@yahoo.com.tw";
 
