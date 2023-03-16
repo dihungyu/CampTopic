@@ -2559,8 +2559,8 @@ textarea.form-control-lg {
 
 .btn-secondary {
   color: #fff;
-  background-color: #005555;
-  border-color: #005555; }
+  background-color: #769c9c;
+  border-color: #769c9c; }
   .btn-secondary:hover {
     color: #fff;
     background-color: #004848;
@@ -6898,7 +6898,7 @@ textarea.form-control-lg {
 
 .text-black-50, body {
   --bs-text-opacity: 1;
-  color: rgba(0, 0, 0, 0.5) !important; }
+  }
 
 .text-white-50 {
   --bs-text-opacity: 1;
