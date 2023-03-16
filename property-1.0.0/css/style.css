@@ -9750,7 +9750,7 @@ textarea {
 
 .section {
   padding-top: 4rem;
-  padding-bottom: 4rem; }
+ }
   .section .heading {
     font-weight: 500; }
     @media (max-width: 767.98px) {
@@ -10322,12 +10322,19 @@ nav[aria-label="breadcrumb"] li:before {
   padding: 0 0 0 60px;
   margin-bottom: 0;
   font-size: 14px; }
+  
 
 .site-footer {
   background: #efefef;
   font-size: 14px;
   color: #888;
-  padding: 70px 0; }
+  padding: 70px ;
+  margin-top: 50px; 
+  position: absolute;
+  left: 0;
+  right: 0;
+  
+  }
   .site-footer a {
     color: #777;
     position: relative;
