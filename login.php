@@ -116,29 +116,16 @@ elseif($_POST["FormType"]== "Register"){
 </head>
 
 <body>
-	<header id="header">
-		<div class="header-top">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-6 col-sm-6 col-6 header-top-left">
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-	</header><!-- #header -->
-
-	<section class="banner-area relative">
+	
+	<section class="banner-area relative" >
 		<div class="overlay overlay-bg"></div>
 		<div class="container">
 			<div class="row fullscreen align-items-center justify-content-between">
-				<div class="col-lg-6 col-md-6 banner-left">
+				<div class="col-lg-5 col-md-6 banner-left">
 					<h5 class="text-white">Start Camping</h5>
-					<h1 class="text-white">營在起跑點</h1>
-					<p class="text-white">
-					邀請你一同進入露營的世界，快速開始露營旅程，多處地點一覽，不怕踩雷讓你能夠「營」在起跑點！
+					<h1 class="text-white" style="font-size: 40px;">營在起跑點</h1>
+					<p class="text-white" style="font-size: 14px;">
+					邀請你一同進入露營的世界，快速開始一趟冒險旅程，多處地點一覽，不怕踩雷，讓你能夠「營」在起跑點！☺ ☺ ☺
 					</p>
 
 				</div>

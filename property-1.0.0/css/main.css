@@ -2485,12 +2485,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /*-------- Start Banner Area ------------*/
 .banner-area {
-  background: url(../img/hero-bg.jpg) center;
+  background: url(../img/Rectangle\ 54.jpg) center ;
   background-size: cover;
 }
 
 .banner-area .overlay-bg {
-  background: rgba(4, 9, 30, 0.4);
+  background: #0000005e;
 }
 
 @media (max-width: 767px) {
