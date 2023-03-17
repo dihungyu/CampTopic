@@ -2559,8 +2559,8 @@ textarea.form-control-lg {
 
 .btn-secondary {
   color: #fff;
-  background-color: #005555;
-  border-color: #005555; }
+  background-color: #769c9c;
+  border-color: #769c9c; }
   .btn-secondary:hover {
     color: #fff;
     background-color: #004848;
@@ -4015,11 +4015,48 @@ textarea.form-control-lg {
   .card > .list-group + .card-footer {
     border-top: 0; }
 
+.card-member {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  
+  border-radius: 0.25rem; }
+  .card > hr {
+    margin-right: 0;
+    margin-left: 0; }
+  .card > .list-group {
+    border-top: inherit;
+    border-bottom: inherit; }
+    .card > .list-group:first-child {
+      border-top-width: 0;
+      border-top-left-radius: calc(0.25rem - 1px);
+      border-top-right-radius: calc(0.25rem - 1px); }
+    .card > .list-group:last-child {
+      border-bottom-width: 0;
+      border-bottom-right-radius: calc(0.25rem - 1px);
+      border-bottom-left-radius: calc(0.25rem - 1px); }
+  .card > .card-header + .list-group,
+  .card > .list-group + .card-footer {
+    border-top: 0; }
+
 .card-body {
   -webkit-box-flex: 1;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding: 1rem 1rem; }
+  padding: 1rem 1rem;
+}
+.card-member {
+border: 0px;
+}
 
 .card-title {
   margin-bottom: 0.5rem; }
@@ -6898,7 +6935,7 @@ textarea.form-control-lg {
 
 .text-black-50, body {
   --bs-text-opacity: 1;
-  color: rgba(0, 0, 0, 0.5) !important; }
+  }
 
 .text-white-50 {
   --bs-text-opacity: 1;
@@ -10669,5 +10706,29 @@ nav[aria-label="breadcrumb"] li:before {
     font-weight: 700;
     font-size: 20px;
     text-transform: uppercase; }
-  
+
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    
+    .button1 {
+      background-color: white; 
+      color: black; 
+      border: 2px solid #4CAF50;
+    }
+    
+    .button1:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
   

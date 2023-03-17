@@ -138,8 +138,7 @@ elseif($_POST["FormType"]== "Register"){
 					<h5 class="text-white">Start Camping</h5>
 					<h1 class="text-white">營在起跑點</h1>
 					<p class="text-white">
-						If you are looking at blank cassettes on the web, you may be very confused at the difference in
-						price. You may see some for as low as $.17 each.
+					邀請你一同進入露營的世界，快速開始露營旅程，多處地點一覽，不怕踩雷讓你能夠「營」在起跑點！
 					</p>
 
 				</div>
@@ -156,52 +155,48 @@ elseif($_POST["FormType"]== "Register"){
 					</ul>
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-							<form class="form-wrap" method="post" action="login.php">
-								<input type="hidden" name="FormType" value="Login">
-								<p style="text-align: left;">信箱：</p>
-								<input type="email" class="form-control" name="accountEmail" placeholder="email "
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'email '" required>
+							<form class="form-wrap" method="post" action="login.php" style="padding: 40px 35px;">
+								<input type="hidden" name="FormType" value="Login" >
+								
+								<input type="email" class="form-control" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; " name="accountEmail" placeholder="電子信箱"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '電子信箱 '" required>
 
-								<p style="text-align: left;">密碼：</p>
-								<input type="password" class="form-control" name="accountPassword" placeholder="password "
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'password '" required>
+								<input type="password" class="form-control" name="accountPassword" style="margin-bottom:5px; border-radius: 25px;background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" placeholder="密碼"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'" required>
 								<button class="primary-btn text-uppercase"
-									style="background-color: #005555; border-radius: 30px;">登入</button>
+									style="background-color: #EFE9DA; color: black; border-radius: 25px; width:380px;  position:relative;  top: 15px">登入</button>
 							</form>
 						</div>
+						
 						<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-							<form class="form-wrap" method="post" action="login.php" onsubmit="return checkPassword()">
+							<form class="form-wrap" method="post" action="login.php" onsubmit="return checkPassword()" >
 								<input type="hidden" name="FormType" value="Register">
-								<p style="text-align: left;">使用者名稱：</p>
+								
 
-								<input type="text" class="form-control" name="accountName" placeholder="name "
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'name '" required>
-								<p style="text-align: left;">信箱：</p>
+								<input type="text" class="form-control" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; name="accountName" placeholder="名稱"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '名稱'" required>
+								
 
-								<input type="email" class="form-control Email" name="accountEmail" placeholder="email "
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'email '" required>
-								<br>
-								<p style="text-align: left;">性別：
-									<input type="radio" name="accountGender" value="Female"
-										style="text-align: left;" required><label
-										for="Female">女</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
-										name="accountGender" value="Male" required><label for="Male">男</label>
-								</p>
-
-								<p style="text-align: left;"> 生日：&nbsp;&nbsp;<input type="date" name="accountBirthday"
-										id="birthday" required></p>
-
-								<p style="text-align: left;">手機號碼：</p><input type="tel" class="form-control phone"
-									name="accountPhoneNumber" placeholder="phone " onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'phone '" required>
-								<p style="text-align: left;">密碼：</p><input type="password" class="form-control "
-									name="accountPassword" placeholder="password " onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'password'" id="accountPassword" required>
-								<p style="text-align: left;">再次輸入密碼：</p><input type="password" class="form-control "
-									name="checkPassword" placeholder="password " onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'password'" id="checkPassword">
+								<input type="email" class="form-control Email" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; name="accountEmail" placeholder="電子信箱"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '電子信箱 '" required>
+								<input type="tel" class="form-control phone" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
+									name="accountPhoneNumber" placeholder="電話" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '電話'" required>
+							<input type="date"  class="form-control " name="accountBirthday" id="birthday" style="width:200px; margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
+							<div class="form-check form-check-inline" style=" position:relative;  left: 110px; top: -40px;">
+							<input class="form-check-input" type="radio" name="accountGender" value="Female" style="text-align: left;" required>
+							<label class="form-check-label"  for="Female">女性</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="form-check-input" type="radio"name="accountGender" value="Male" required>
+							<label  class="form-check-label" for="Male">男性</label></div>
+							<hr>
+							<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
+									name="accountPassword" placeholder="密碼" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '密碼'" id="accountPassword" required>
+								<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
+									name="checkPassword" placeholder="再次確認密碼 " onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '再次確認密碼'" id="checkPassword">
 								<button class="primary-btn text-uppercase"
-									style="background-color: #005555; border-radius: 30px;" id="registerButton">註冊</button>
+								style="background-color: #EFE9DA; color: black; border-radius: 25px; width:380px;  position:relative;  top: 15px" id="registerButton">註冊</button>
 							</form>
 						</div>
 
