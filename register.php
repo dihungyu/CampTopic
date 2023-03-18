@@ -147,7 +147,7 @@ elseif($_POST["FormType"]== "Register"){
 								<input type="tel" class="form-control phone" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
 									name="accountPhoneNumber" placeholder="電話" onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '電話'" required>
-							<input type="date"  class="form-control " name="accountBirthday" id="birthday" style="width:200px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
+							<input type="date"  class="form-control " name="accountBirthday" id="birthday" style="width:200px; border-radius: 25px;  line-height: 15px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
 							<div class="form-check form-check-inline" style=" position:relative;  left: 110px; top: -40px;">
 							<input class="form-check-input" type="radio" name="accountGender" value="Female" style="text-align: left;" required>
 							<label class="form-check-label"  for="Female">女性</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -161,10 +161,9 @@ elseif($_POST["FormType"]== "Register"){
 									name="checkPassword" placeholder="再次確認密碼 " onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '再次確認密碼'" id="checkPassword">
 									
-									<button class="primary-btn text-uppercase"
-									style="background-color: #EFE9DA; color: black; border-radius: 25px; width:225px;  margin-top: 20px; " id="registerButton">註冊</button>
-									<button class="primary-btn text-uppercase"
-								style="background-color: #fff; border-radius: 25px; width:140px; border: solid; border-color: #EFE9DA; margin-right: 10px;" ><a href="login.php" style="color: #808080; font-weight: 400;" >已有帳號？</a></button>
+									<button class="primary-btn" :hover
+									style=" width:230px;  margin-top: 20px; margin-right: 5px; " id="registerButton">註冊</button>
+									<button class="secondary-btn" :hover style=" width:140px;" ><a :hover href="login.php" >已有帳號？</a></button>
 							
 								</form>
 						</div>

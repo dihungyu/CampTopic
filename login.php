@@ -142,11 +142,9 @@ elseif($_POST["FormType"]== "Register"){
 
 								<input type="password" class="form-control" name="accountPassword" style="margin-bottom:5px; border-radius: 25px;background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" placeholder="密碼"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'" required>
-								<button class="primary-btn text-uppercase"
-								style="background-color: #EFE9DA; color: black; border-radius: 25px; width:225px;  margin-top: 20px;  margin-right: 5px;">登入</button>
-
-								<button class="primary-btn text-uppercase"
-								style="background-color: #fff; border-radius: 25px; width:140px; border: solid; border-color: #EFE9DA;" ><a href="register.php" style="color: #808080; font-weight: 400;" >尚未註冊？</a></button>
+									<button class="primary-btn" :hover
+									style=" width:220px;  margin-top: 20px; margin-right: 5px; " id="registerButton">登入</button>
+									<button class="secondary-btn" :hover style=" width:140px;" ><a :hover href="register.php" >尚未註冊？</a></button>
 							
 							</form>
 						</div>
