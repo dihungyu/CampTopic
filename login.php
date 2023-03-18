@@ -132,8 +132,8 @@ elseif($_POST["FormType"]== "Register"){
 				<div class="col-lg-5 col-md-10 banner-right">
 					
 					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-							<form class="form-wrap" method="post" action="login.php" style="padding: 40px 35px;">
+						<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" ">
+							<form class="form-wrap" method="post" action="login.php" style="padding: 40px 35px; ">
 							<h4 style="text-align: center; margin-left: 12px; margin-bottom: 24px; color: ">歡迎回來！</h4>
 								<input type="hidden" name="FormType" value="Login" >
 								

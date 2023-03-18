@@ -2634,11 +2634,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .banner-right .tab-content {
   background: #fff;
+  border-radius: 5px;
 }
 
 .banner-right .form-wrap {
   padding: 40px 30px;
   text-align: center;
+  
 }
 
 .banner-right .form-wrap .form-control {
