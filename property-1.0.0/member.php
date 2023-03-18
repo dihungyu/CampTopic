@@ -178,8 +178,9 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <form action="member.php" method="post">
             <input type="hidden" name="updateMember" value="yes">
             <div class="column" style="position:absolute;height: 200px;top:-270px;left:100px;right: 0px;padding: 20px;">
-              <span style="font-size: 16;font-weight: bolder;margin-left: 8px;"><i class="fa-solid fa-pencil" style="margin-right: 5px;margin-bottom: 20px;"></i>編輯會員資料</span>
+              <span style="font-size: 16;font-weight: bolder;margin-left: 4px;"><i class="fa-solid fa-pencil" style="margin-right: 3px;margin-bottom: 20px;"></i>編輯會員資料</span>
               <span style="display: flex;
+                width: 50px;
                 transform: translate(1%, 150%);
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -190,6 +191,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 <input type="text" name="accountName" class="form-control" style="font-size: 14px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
               </div>
               <span style="display: flex;
+                width: 50px;
                 transform: translate(1%, 150%);
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -200,6 +202,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
               </div>
               <span style="display: flex;
+                width: 50px;
                 transform: translate(1%, 150%);
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -210,6 +213,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 <input type="email" name="accountEmail" class="form-control" style="font-size: 14px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
               </div>
               <span style="display: flex;
+                width: 50px;
                 transform: translate(1%, 150%);
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -219,7 +223,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
               <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
                 <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
                 <span style="display: flex;
-                transform: translate(-11%, 150%);
+                width: 50px;
+                transform: translate(-90%, 150%);
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: bold;
@@ -238,7 +243,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 </div>
                 <hr width="100%" align="left" size="3" style="margin-top: 30px;">
                 <span style="display: flex;
-                transform: translate(-11%, 100%);
+                width: 50px;
+                transform: translate(-90%, 100%);
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: bold;">
@@ -246,7 +252,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 </span>
                 <a href="#" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
                 <span style="display: flex;
-                transform: translate(-11%, 100%);
+                width: 50px;
+                transform: translate(-90%, 100%);
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: bold;">
