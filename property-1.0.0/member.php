@@ -250,7 +250,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 font-weight: bold;">
                   密碼
                 </span>
-                <a href="#" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
+                <a href="password.html" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
                 <span style="display: flex;
                 width: 50px;
                 transform: translate(-90%, 100%);
