@@ -130,28 +130,9 @@ elseif($_POST["FormType"]== "Register"){
 
 				</div>
 				<div class="col-lg-5 col-md-10 banner-right">
-					
-					<div class="tab-content" id="myTabContent">
+					<div class="tab-content" id="register">
 						<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-							<form class="form-wrap" method="post" action="login.php" style="padding: 40px 35px;">
-							<h4 style="text-align: center; margin-left: 12px; margin-bottom: 24px; color: ">歡迎回來！</h4>
-								<input type="hidden" name="FormType" value="Login" >
-								
-								<input type="email" class="form-control" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; " name="accountEmail" placeholder="電子信箱"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = '電子信箱 '" required>
-
-								<input type="password" class="form-control" name="accountPassword" style="margin-bottom:5px; border-radius: 25px;background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" placeholder="密碼"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'" required>
-								<button class="primary-btn text-uppercase"
-								style="background-color: #EFE9DA; color: black; border-radius: 25px; width:225px;  margin-top: 20px;  margin-right: 5px;">登入</button>
-
-								<button class="primary-btn text-uppercase"
-								style="background-color: #fff; border-radius: 25px; width:140px; border: solid; border-color: #EFE9DA;" ><a href="register.php" style="color: #808080; font-weight: 400;" >尚未註冊？</a></button>
-							
-							</form>
-						</div>
-						
-						<div class="tab-pane fade" id="register"  role="tabpanel" aria-labelledby="register-tab">
+					
 							<form class="form-wrap" method="post" action="login.php" onsubmit="return checkPassword()" >
 							<h4 style="text-align: center; margin-left: 12px; margin-bottom: 24px; color: ">加入我們！</h4>
 								<input type="hidden" name="FormType" value="Register">
@@ -166,27 +147,32 @@ elseif($_POST["FormType"]== "Register"){
 								<input type="tel" class="form-control phone" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
 									name="accountPhoneNumber" placeholder="電話" onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '電話'" required>
-							<input type="date"  class="form-control " name="accountBirthday" id="birthday" style="width:200px; margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
+							<input type="date"  class="form-control " name="accountBirthday" id="birthday" style="width:200px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
 							<div class="form-check form-check-inline" style=" position:relative;  left: 110px; top: -40px;">
 							<input class="form-check-input" type="radio" name="accountGender" value="Female" style="text-align: left;" required>
 							<label class="form-check-label"  for="Female">女性</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input class="form-check-input" type="radio"name="accountGender" value="Male" required>
 							<label  class="form-check-label" for="Male">男性</label></div>
-							<hr>
+							<hr style="margin-top :0px; margin-bottom: 2rem;">
 							<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
 									name="accountPassword" placeholder="密碼" onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '密碼'" id="accountPassword" required>
 								<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;
 									name="checkPassword" placeholder="再次確認密碼 " onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '再次確認密碼'" id="checkPassword">
-								<button class="primary-btn text-uppercase"
-								style="background-color: #EFE9DA; color: black; border-radius: 25px; width:380px;  position:relative;  top: 15px" id="registerButton">註冊</button>
-							</form>
+									
+									<button class="primary-btn text-uppercase"
+									style="background-color: #EFE9DA; color: black; border-radius: 25px; width:225px;  margin-top: 20px; " id="registerButton">註冊</button>
+									<button class="primary-btn text-uppercase"
+								style="background-color: #fff; border-radius: 25px; width:140px; border: solid; border-color: #EFE9DA; margin-right: 10px;" ><a href="login.php" style="color: #808080; font-weight: 400;" >已有帳號？</a></button>
+							
+								</form>
 						</div>
 
 					</div>
 				</div>
 			</div>
+</div>
 		</div>
 
 
