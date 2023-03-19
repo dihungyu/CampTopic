@@ -1,6 +1,6 @@
 <?php
     include("conn.php");
-    $sql_query = "SELECT * FROM campsites ORDER BY CAST(campsiteId AS SIGNED) ASC";
+    $sql_query= "SELECT * FROM campsites ORDER BY CAST(campsiteId AS SIGNED) ASC";
     $result = mysqli_query($conn, $sql_query);
     $total_records = mysqli_num_rows($result);
 ?>
@@ -19,6 +19,7 @@
 <table border="1" align = "center">
     <tr>
         <th>營區編號</th>
+        <th>營區圖片</th>
         <th>縣市編號</th>
         <th>營區名稱</th>
         <th>營區介紹</th>
@@ -33,6 +34,15 @@
 while($row_result = mysqli_fetch_assoc($result)) {
     echo "<tr>";
     echo "<td>".$row_result['campsiteId']."</td>";
+    echo "<td>";
+    $campsiteId = $row_result['campsiteId'];
+    $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
+    $files_result = mysqli_query($conn, $files_query);
+    while($file_result = mysqli_fetch_assoc($files_result)) {
+        echo "<img src='".$file_result['filePath']."' alt=''>";
+        echo "<br>"; // 加上換行，方便閱讀
+    }
+    echo "</td>";
     echo "<td>".$row_result['cityId']."</td>";
     echo "<td>".$row_result['campsiteName']."</td>";
     echo "<td>".$row_result['campsiteDescription']."</td>";
