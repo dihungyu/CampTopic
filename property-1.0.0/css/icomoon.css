@@ -50,9 +50,31 @@
 }
 .icon-heart:before {
   content: "\f004";
+  color: rgb(235, 47, 47);
+  position:absolute; 
+  text-shadow:0 0 10px #ffffff;
+}
+.icon-heart:active {
+  content: "\f004";
+  color: rgb(255, 255, 255);
+  position:absolute; 
+  text-shadow:0 0 10px #ffffff;
+}
+.icon-heart {
+  content: "\f004";
+  color: rgb(0, 0, 0);
+  position:absolute; 
+  bottom: 190px;
+  right: 40px;
+  transform: scale(1.6);
+  text-shadow:0 0 10px #ffffff;
 }
 .icon-star:before {
   content: "\f005";
+  display: inline-block;
+  color: #FEBB56;
+  margin-left: 20px;
+  margin-right: 4px;
 }
 .icon-star-o:before {
   content: "\f006";

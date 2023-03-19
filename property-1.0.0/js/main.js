@@ -58,6 +58,7 @@
 		}, 1);
 	};
 	loader();
+	
 
 	// Scrollax
    $.Scrollax();
@@ -282,6 +283,10 @@
 	};
 	contentWayPoint();
 
+	document.querySelector('.heart').addEventListener('click', function() {
+		document.querySelector('.icon-heart').classList.toggle('active');
+	  });
+	  
 
 	// navigation
 	var OnePageNav = function() {

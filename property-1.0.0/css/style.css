@@ -135,7 +135,7 @@ h6, .h6 {
   font-size: 1rem; }
 
 p {
-  margin-top: 0;
+  
   margin-bottom: 1rem; }
 
 abbr[title],
@@ -490,6 +490,10 @@ progress {
   max-width: 100%;
   height: auto; }
 
+.img-fluid .icon-heart:before{
+  position: absolute;
+ 
+}
 .img-thumbnail {
   padding: 0.25rem;
   background-color: #fff;
@@ -9791,16 +9795,22 @@ textarea {
   border-width: 2px;
   border-color: transparent;
   border: none !important;
-  top: 0;
-  position: relative;
+  
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 20px;
+  margin-right: 20px;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease; }
+
   .btn.btn-primary {
-    background: #005555;
+    background-color: #005555;
     color: #fff; }
+
   .btn:hover {
-    top: -2px;
+    bottom:3px;
     -webkit-box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); }
 
@@ -9904,13 +9914,16 @@ textarea {
   .property-item .property-content .price, .property-item .property-content .city {
     font-size: 20px;
     font-weight: 700;
-    color: #000; }
+    color: #000;
+    display: flex;
+    align-items: center; }
   .property-item .property-content .price {
     color: #005555; }
     .property-item .property-content .price span {
       position: relative;
       padding-bottom: 4px;
-      display: inline-block; }
+      display: inline-block;
+       }
       .property-item .property-content .price span:after {
         position: absolute;
         content: "";
@@ -9923,7 +9936,9 @@ textarea {
     font-size: 18px; }
     .property-item .property-content .specs .caption {
       font-size: 13px; }
-
+  .property-item .property-content p{
+    margin-left: 1px;
+  }
 .slider-nav {
   margin-top: -100px;
   position: relative; }
@@ -10676,5 +10691,10 @@ nav[aria-label="breadcrumb"] li:before {
     font-weight: 700;
     font-size: 20px;
     text-transform: uppercase; }
+
+  i.fa-solid{
+    width: 18px;
+    height: auto;
+  }
   
   
