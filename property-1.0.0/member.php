@@ -1,7 +1,7 @@
 <?php
 session_start();
 // $accountId = $_SESSION["accountId"];
-$accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
+$accountId = "c9bfc2d2bd8e11eda1d4e22a0f5e8454";
 
 // 取得會員資料
 require_once("../php/conn.php");

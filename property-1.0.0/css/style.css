@@ -9815,7 +9815,13 @@ textarea {
       font-size: 12px;
       padding: 5px;
       display: hidden;
+     
     }
+    .btn.btn-primary-tag:hover{
+    top: 0px;
+    -webkit-box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.1); }
+    
 .hero-slider-wrap .tns-controls {
   position: absolute;
   z-index: 2; }
