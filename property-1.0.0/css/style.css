@@ -3032,7 +3032,7 @@ textarea.form-control-lg {
   position: absolute;
   z-index: 1000;
   display: none;
-  min-width: 10rem;
+  min-width: 8rem;
   padding: 0.5rem 0;
   margin: 0;
   font-size: 1rem;
@@ -3514,7 +3514,7 @@ textarea.form-control-lg {
   flex-basis: 100%;
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1;
+  flex-grow: 0;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
@@ -9799,11 +9799,23 @@ textarea {
   .btn.btn-primary {
     background: #005555;
     color: #fff; }
+
   .btn:hover {
     top: -2px;
     -webkit-box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); }
-
+    .btn.btn-primary-tag{
+      transform: translate(-1% , 30%);
+      width:100px;
+      height:30px;
+      border:0;
+      background-color:#EFE9DA;
+      color:#000;
+      border-radius:20px;
+      font-size: 12px;
+      padding: 5px;
+      display: hidden;
+    }
 .hero-slider-wrap .tns-controls {
   position: absolute;
   z-index: 2; }
@@ -10517,7 +10529,8 @@ nav[aria-label="breadcrumb"] li:before {
       -o-transition: .3s all ease-out;
       transition: .3s all ease-out; }
     .ftco-navbar-light.scrolled .navbar-brand {
-      color: #000000; }
+      color: #000000;
+      background-image: url("../images/Group\ 67.png"); }
 
 .navbar-brand {
   font-weight: 700;
@@ -10669,5 +10682,4 @@ nav[aria-label="breadcrumb"] li:before {
     font-weight: 700;
     font-size: 20px;
     text-transform: uppercase; }
-  
   

@@ -74,7 +74,7 @@ if (isset($_POST["submit"])) {
   <link rel="stylesheet" href="css/style.css" />
 
   <title>
-    Property &mdash; Free Bootstrap 5 Website Template by Untree.co
+    Starting Camping &mdash; 開啟你的露營冒險！
   </title>
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
@@ -102,12 +102,12 @@ if (isset($_POST["submit"])) {
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
+        <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
@@ -115,7 +115,7 @@ if (isset($_POST["submit"])) {
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle " href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Account
+              帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.html">會員帳號</a>
@@ -129,7 +129,7 @@ if (isset($_POST["submit"])) {
       </div>
     </div>
   </nav>
-  <div class="hero page-inner overlay" style="background-image: url('images/hero_bg_1.jpg')">
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle 136.png')">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-9 text-center mt-5">
@@ -137,7 +137,8 @@ if (isset($_POST["submit"])) {
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="member.php">帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 會員資料
               </li>
@@ -149,38 +150,27 @@ if (isset($_POST["submit"])) {
   </div>
 
   <div class="section">
-    <div class="container" style="height:450px">
-      <div class="col-md-4 mb-3">
-        <div class="card" style="width: 350px;margin: 50px;">
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="card" style="width: 350px;margin: 50px; border:none;">
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
               <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
               <div class='mt-3'>
-                <h3><?php echo $accountName; ?></h3>
+                <h5><?php echo $accountName; ?></h5>
               </div>
-              <input class="btn btn-primary" style="transform: translate(-1% , 30%);width:90px;height:30px;border:0;background-color:#EFE9DA;color:#000;border-radius:20px;font-size: 13px;padding: 5px;display: hidden;" type="submit" value="露營新手">
+              <input class="btn btn-primary-tag" type="submit" value="露營新手">
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
-          <div class="contact-info">
-            <div class="address mt-2">
-            </div>
 
-            <div class="open-hours mt-4">
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-md-4 mb-3">
           <form action="password.php" method="post" onsubmit="return checkPassword()">
             <input type="hidden" name="updatePassword" value="yes">
-            <div class="column" style="position:absolute;height: 500px;top:-270px;left:200px;right: 0px;padding: 20px;">
-              <h4 style="margin-left: 150px;font-weight: bolder;letter-spacing: 3px;"><i class="fa-solid fa-pencil" style="margin-right: 10px;margin-bottom: 20px;"></i>編輯密碼</h4>
+            <div class="column" style="margin-top: 40px;">
+              <h4 style="margin-left: 150px; margin-bottom:24px; font-weight: bolder; letter-spacing: 3px;">編輯密碼</h4>
               <i class="fa-solid fa-key" style="display: flex;
                     transform: translate(50%, 100%);
                     flex-wrap: wrap;
@@ -189,7 +179,7 @@ if (isset($_POST["submit"])) {
                     width: 50px;">
               </i>
 
-              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+              <div class="col-9 mb-3" style="margin-left: 50px;margin-top: -5px;">
                 <input type="password" name="oldPassword" class="form-control" style="font-size: 14px;
                     border-top-style: none;
                     border-left-style:none;
@@ -208,7 +198,7 @@ if (isset($_POST["submit"])) {
                     width: 50px;">
               </i>
 
-              <div class="col-6 mb-2" style="margin-left: 50px;margin-top: -5px;">
+              <div class="col-9 mb-2" style="margin-left: 50px;margin-top: -5px;">
                 <input type="password" name="newPassword" id="newPassword" class="form-control" style="font-size: 14px;
                     border-top-style: none;
                     border-left-style:none;
@@ -227,7 +217,7 @@ if (isset($_POST["submit"])) {
                     width: 50px;">
               </i>
 
-              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+              <div class="col-9 mb-3" style="margin-left: 50px;margin-top: -5px;">
                 <input type="password" name="checkNewPassword" id="checkNewPassword" class="form-control" style="font-size: 14px;
                     border-top-style: none;
                     border-left-style:none;
