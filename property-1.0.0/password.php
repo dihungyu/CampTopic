@@ -243,7 +243,7 @@ if (isset($_POST["submit"])) {
                     font-size: 14px;font-weight:bold;
                     border-radius: 20px;
                     background-color: #f1f1f1;color: #000;
-                    letter-spacing: 1ex;display: hidden;" name="submit" type="submit" value="更新" />
+                    letter-spacing: 1ex;display: hidden;" name="submit" type="submit" value="更新" id="submitButton" />
             </div>
 
         </div>
@@ -407,7 +407,7 @@ if (isset($_POST["submit"])) {
       return true;
     }
 
-    document.getElementById("registerButton").addEventListener("click", function(event) {
+    document.getElementById("submitButton").addEventListener("click", function(event) {
       if (!checkPassword()) {
         event.preventDefault();
       }
