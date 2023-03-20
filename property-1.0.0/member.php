@@ -1,7 +1,7 @@
 <?php
 session_start();
 // $accountId = $_SESSION["accountId"];
-$accountId = "c9bfc2d2bd8e11eda1d4e22a0f5e8454";
+$accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
 
 // 取得會員資料
 require_once("../php/conn.php");
@@ -31,8 +31,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   $stmt->bind_param("ssssss", $accountName, $accountGender, $accountBirthday, $accountEmail, $accountPhoneNumber, $accountId);
   $stmt->execute();
   //跳出提示窗，內容為修改成功
-  echo "<script>alert('修改成功');</script>";
-  header("Location: member.php?message=success");
+  echo "<script>alert('更新成功'); location.href = 'member.php';</script>";
 }
 ?>
 <!-- /*
@@ -89,12 +88,6 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 </head>
 
 <body>
-  <?php if (isset($_GET['message']) && $_GET['message'] == 'success') : ?>
-    <script>
-      alert('修改成功');
-    </script>
-  <?php endif; ?>
-
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
@@ -250,7 +243,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 font-weight: bold;">
                   密碼
                 </span>
-                <a href="password.html" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
+                <a href="password.php" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
                 <span style="display: flex;
                 width: 50px;
                 transform: translate(-90%, 100%);
