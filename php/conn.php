@@ -3,7 +3,7 @@ $server_name = "localhost";
 $username = "root";
 $password = "";
 $db_name = "camp_topic";
-$port = "3307";
+$port = "3306";
 $conn = new mysqli($server_name, $username, $password, $db_name, $port);
 // conn 為 connection 的簡寫，第一個參數是 server 名稱，第二個是帳號，第三個是密碼，第四個是 database
 if ($conn->connect_error) { // 物件存取屬性是用 -> 來表示
