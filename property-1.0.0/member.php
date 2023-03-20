@@ -141,22 +141,23 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   </div>
 
   <div class="section">
-    <div class="container" >
+    <div class="container">
       <div class="row">
-      <div class="col-md-5 mb-3">
-        <div class="card" style="width: 300px;margin: 50px;border:none;">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
-              <div class='mt-3'>
-                <h5><?php echo $accountName; ?></h5>
+        <div class="col-md-5 mb-3">
+          <div class="card" style="width: 300px;margin: 50px;border:none;">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
+                <div class='mt-3'>
+                  <h5><?php echo $accountName; ?></h5>
+                </div>
+                <div class="btn btn-primary-tag">露營新手</div>
               </div>
-              <div class="btn btn-primary-tag">露營新手</div> </div>
+            </div>
           </div>
         </div>
-      </div>
-    
-      <div class="col-md-6 mb-3">
+
+        <div class="col-md-6 mb-3">
           <form action="member.php" method="post">
             <input type="hidden" name="updateMember" value="yes">
             <div class="column">
@@ -179,9 +180,9 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 margin-bottom: 48px;
                 ">
                 姓名
-                 
+
                 <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
-             
+
               </span>
 
               <span style="display: flex;
@@ -193,8 +194,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 align-items: center;">
                 電話
                 <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
-              
-            </span>
+
+              </span>
 
               <span style="display: flex;
                 width: 400px;
@@ -204,11 +205,11 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 margin-bottom: 48px;
                 align-items: center;">
                 信箱
-                 
+
                 <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
-             
+
               </span>
-             
+
               <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
@@ -217,11 +218,11 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 margin-bottom: 48px;
                 align-items: center;">
                 生日
-              
-                <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
-               </span>
 
-                <span style="display: flex;
+                <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
+              </span>
+
+              <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -229,20 +230,20 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 margin-bottom: 48px;
                 align-items: center;">
                 性別
-                 
-                  <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;"<?php if ($accountGender == "Female") {
-                    echo "checked";
-                  } ?> required>
-                  <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
-                  <input type="radio" name="accountGender" value="Male"style=" margin-left: 32px; margin-right: 8px; <?php if ($accountGender == "Male") {
-                                                                          echo "checked";
-                                                                        } ?> required>
-                  <label for="Male" style="font-weight: bold;font-size:16px;">男</label>
-                                                                     </span>
-                
-                <hr width="100%"  size="3" style="margin-top: 20px; margin-bottom: 52px;">
 
-                <span style="display: flex;
+                <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
+                                                                                                                          echo "checked";
+                                                                                                                        } ?> required>
+                <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
+                <input type="radio" name="accountGender" value="Male" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Male") {
+                                                                                                                        echo "checked";
+                                                                                                                      } ?> required>
+                <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
+              </span>
+
+              <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
+
+              <span style="display: flex;
                 width:400px;
                 flex-wrap: wrap;
                 font-size: 15px;
@@ -250,22 +251,22 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 align-items: center;
                 margin-bottom: 56px;">
                 密碼
-                
-                <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
-            </span>
 
-                <div class="col-10 mb-3" style="margin-left: 32px;">
-                
+                <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
+              </span>
+
+              <div class="col-10 mb-3" style="margin-left: 32px;">
+
                 <span style="display: flex;
                 width:400px;
                 flex-wrap: wrap;
                 font-size: 12px;
                 margin-left:400px;
                 align-items: center;">
-                 <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;">
-                <input type="submit" value="確認修改" class="btn btn-primary">
-                </div></span>
-              </div>
+                  <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;">
+                  <input type="submit" value="確認修改" class="btn btn-primary">
+              </div></span>
+            </div>
           </form>
         </div>
       </div>
@@ -459,4 +460,3 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 </body>
 
 </html>
-  
