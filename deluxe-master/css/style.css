@@ -473,7 +473,7 @@ pre {
       max-width: 960px; } }
   @media (min-width: 1200px) {
     .container {
-      max-width: 1140px; } }
+      max-width: 1320px; } }
 
 .container-fluid {
   width: 100%;
@@ -9302,8 +9302,8 @@ textarea.form-control {
   .site-footer .btn:before {
     display: none; }
   .site-footer .widget {
-    margin-bottom: 40px;
-    display: block; }
+    margin-bottom: 40px!important;;
+    display: block  }
     .site-footer .widget h3, .site-footer .widget .h3 {
       font-size: 12px;
       font-weight: 700;
@@ -9335,7 +9335,16 @@ textarea.form-control {
       .site-footer .social li a:hover {
         background: #00204a;
         color: #fff; }
+.float-start {
+  float: left !important; }
 
+@media (min-width: 992px){
+.col-lg-4 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: 33.33333%;}
+}
 
 
   
