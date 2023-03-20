@@ -455,8 +455,4 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
 </body>
 
-
-
-</body>
-
 </html>
