@@ -58,20 +58,10 @@ $campsiteAddress = $row_result['campsiteAddress'];
 
 <?php
 if (isset($_POST["action"]) && $_POST["action"] == 'update') {
-    $newCityId = $_POST['cityId'];
-    $newCampsiteName = $_POST['campsiteName'];
-    $newCampsiteAddress = $_POST['campsiteAddress'];
-
-    $sql_query = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$id'";
-
-    mysqli_query($conn,$sql_query);
-    header('Location: readCampsite.php');
-
     // 刪除圖片
     if (isset($_POST['delete_file'])) {
         $isDeleted = 1;
         $delete_file = $_POST['delete_file'];
-        
         $sql_delete = "DELETE FROM files WHERE fileId = '$delete_file'";
         mysqli_query($conn, $sql_delete);
     }
@@ -120,5 +110,16 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
             }
     }
 }
+
+    $newCityId = $_POST['cityId'];
+    $newCampsiteName = $_POST['campsiteName'];
+    $newCampsiteAddress = $_POST['campsiteAddress'];
+
+    $sql_query = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$id'";
+
+    mysqli_query($conn,$sql_query);
+    header('Location: readCampsite.php');
+
+    
 }
  ?>
