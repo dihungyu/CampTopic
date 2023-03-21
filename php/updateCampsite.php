@@ -34,17 +34,19 @@ $campsiteAddress = $row_result['campsiteAddress'];
     while($row_files = mysqli_fetch_assoc($result_files)) {
         $fileId = $row_files['fileId'];
         $fileName = $row_files['fileName'];
-        $isDeleted == 0;
+        $isDeleted = 0;
         if ($isDeleted == 0) { // 檢查該圖片是否已標記為已刪除
             echo "<div>
                 <img src='/../upload/$fileName' alt=''>
                 <form method='post'>
                     <input type='hidden' name='delete_file' value='$fileId'>
+                    <input type='hidden' name='is_deleted' value='1'>
                     <input type='submit' name='delete' value='刪除此圖片'>
                 </form>
             </div>";
         }
     }
+    
 ?>
     <div>
         <label for="new_files">新增圖片：</label>
