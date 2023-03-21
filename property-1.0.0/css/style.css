@@ -4125,6 +4125,25 @@ textarea.form-control-lg {
         .card-group > .card:not(:first-child) .card-img-bottom,
         .card-group > .card:not(:first-child) .card-footer {
           border-bottom-left-radius: 0; } }
+.card-camp{
+  width: 1200px;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #dfe0e1;
+  margin-top: 32px;
+  display: flex;
+  font-size: 12px;
+}
+.card-camp-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem 1rem; }
+
+  .card-camp p{
+    font-size: 16px;
+    display: flex;
+  }
 
 .accordion-button {
   position: relative;
