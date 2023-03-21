@@ -263,7 +263,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 font-size: 12px;
                 margin-left:400px;
                 align-items: center;">
-                  <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;">
+                  <input type="reset" value="取消" class="btn btn-secondary" 
+                  style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
                   <input type="submit" value="確認修改" class="btn btn-primary">
               </div></span>
             </div>
