@@ -113,7 +113,7 @@ if ($_POST["FormType"] == "Register") {
 								<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" name="checkPassword" placeholder="再次確認密碼 " onfocus="this.placeholder = ''" onblur="this.placeholder = '再次確認密碼'" id="checkPassword">
 
 								<button class="primary-btn" :hover style=" width:230px;  margin-top: 20px; margin-right: 5px; " id="registerButton">註冊</button>
-								<a class="secondary-btn" :hover style=" width:140px;" href="login.php">已有帳號？</a>
+								<a class="secondary-btn-l" :hover style=" width:140px;" href="login.php">已有帳號？</a>
 
 							</form>
 						</div>

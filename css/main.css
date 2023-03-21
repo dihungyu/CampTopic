@@ -2429,7 +2429,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: all 0.3s ease 0s;
 }
 
-.secondary-btn:hover {
+.secondary-btn-l:hover {
   background-color: #fff;
   border-radius: 25px; 
   width:140px; 
@@ -2443,7 +2443,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #000;
 }
 
-.secondary-btn{
+.secondary-btn-l{
   background: #fff;
   line-height: 42px;
   padding-left: 30px;
@@ -2463,13 +2463,13 @@ body.mobile-nav-active #mobile-nav-toggle {
   position: relative;
 }
 
-.secondary-btn a:hover{
+.secondary-btn-l a:hover{
   color:#000;
   font-weight: 600;
 
 }
 
-.secondary-btn a{
+.secondary-btn-l a{
   color:#00000054;
 }
 
