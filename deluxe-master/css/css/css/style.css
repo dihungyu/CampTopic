@@ -10670,3 +10670,6 @@ nav[aria-label="breadcrumb"] li:before {
     font-size: 20px;
     text-transform: uppercase; }
  
+ .list i{
+  margin-right: 8px;
+ }
