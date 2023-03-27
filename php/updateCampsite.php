@@ -99,8 +99,16 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     $sql_query1 = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$id'";
     $result1 = mysqli_query($conn, $sql_query1);
 
-    $sql_query2 = "DELETE FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
+    $sql_query2 = "SELECT * FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
     $result2 = mysqli_query($conn, $sql_query2);
+
+    while ($row = mysqli_fetch_assoc($result2)) {
+        $file_path = $row['filePath'];
+        unlink($file_path); // 刪除圖片
+    }
+
+    $sql_query3 = "DELETE FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
+    mysqli_query($conn, $sql_query3);
 
     if (!$result1 || !$result2) {
         die(mysqli_error($conn));
@@ -128,11 +136,11 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
                     move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                    $sql_query3 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType, isDeleted) 
+                    $sql_query4 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType, isDeleted) 
                     VALUES ('$fileId', '$id', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite', 0)";
 
-                    $result3 = mysqli_query($conn, $sql_query3);
-                    
+                    $result4 = mysqli_query($conn, $sql_query4);
+
                     if (!$result3) {
                         die(mysqli_error($conn));
                      }
