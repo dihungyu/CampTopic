@@ -4250,6 +4250,12 @@ textarea.form-control-lg {
 .breadcrumb-item.active {
   color: #6c757d; }
 
+nav[aria-label="breadcrumb"] a {
+    color: #fff !important; }
+  
+nav[aria-label="breadcrumb"] li:before {
+    color: rgba(255, 255, 255, 0.3) !important; }
+
 .pagination {
   display: -webkit-box;
   display: -ms-flexbox;
