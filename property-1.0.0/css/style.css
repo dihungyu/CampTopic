@@ -104,6 +104,14 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   font-weight: 500;
   line-height: 1.2; }
 
+.card-body h4{
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: underline;
+  color: #005555;
+}
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw); }
   @media (min-width: 1200px) {
@@ -2982,11 +2990,11 @@ textarea.form-control-lg {
   font-size: 0.875rem;
   border-radius: 0.2rem; }
 
-.tag{
+.tag-fav{
   text-decoration: none !important;
   border-radius: 25px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   padding-left: 20px;
   padding-right: 20px;
   border-width: 2px;
@@ -2996,8 +3004,8 @@ textarea.form-control-lg {
   background-color: #EFE9DA;
   color: #000;
   
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 8px;
+  margin-bottom: 15px;
   margin-right: 2px;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
@@ -4035,7 +4043,7 @@ textarea.form-control-lg {
   margin-left: 24px;
 
   width: 500px;
-  height: 510px;
+  height: 534px;
   overflow: hidden;
   float: left;
   margin-bottom: 0;
@@ -4064,7 +4072,7 @@ textarea.form-control-lg {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem 1rem;
-  margin-top: 24px; }
+  margin-top: 17px; }
 
 .card-title {
   margin-bottom: 0.5rem; }
@@ -10990,6 +10998,15 @@ nav[aria-label="breadcrumb"] li:before {
     color: #157347;
     margin-right: 12px;
   }
+  .detail h5 {
+    color: #005555;
+    margin-left: 180px;
+    align-items: center;
+    text-decoration: underline;
+    margin-bottom: 0px;
+    font-weight: 600;
+  }
+
   .detail i{
     font-size: 16px;
     align-items: center;
@@ -11036,7 +11053,7 @@ nav[aria-label="breadcrumb"] li:before {
   
   article .detail {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 24px;
     font-size: 12px;
     align-items: center;
   }
