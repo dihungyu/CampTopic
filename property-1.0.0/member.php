@@ -100,9 +100,9 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 
           <li class="nav-item dropdown active">
@@ -142,19 +142,44 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
   <div class="section">
     <div class="container">
-      <div class="row">
-        <div class="col-md-5 mb-3">
-          <div class="card" style="width: 300px;margin: 50px;border:none;">
+      <div class="row"style="justify-content: space-evenly;">
+        <div class="col-md-6 mb-3">
+          <div class="card" style="border:none; padding-left:100px; padding-top:70px;">
+            <div class="card-member">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
                 <div class='mt-3'>
                   <h5><?php echo $accountName; ?></h5>
                 </div>
-                <div class="btn btn-primary-tag">露營新手</div>
+              </div>
+              <hr>
+              <span>
+              <h6>徽章進度</h6>
+              <span-i>
+              <i class="fa-solid fa-fire" style="color:#B02626"></i>
+              <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
+              <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
+              <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
+              </span-i>
+              </span>
+              <span  style="margin-bottom:0px;">
+                <p>已參加活動</p> &nbsp;
+                <p>2</p> &nbsp;
+                <p>次</p>
+              <span style="margin-left:210px;margin-bottom:0px;">
+                <p >差</p>&nbsp;
+                <p>1</p>&nbsp;
+                <p>次升級</p>
+            </span>
+            </span>
+            <div class="progress" style="height:0.7rem; border-radius:35px;">
+            <div class="progress-bar" role="progressbar" style="width: 66%;
+                        background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
+</div>
         </div>
 
         <div class="col-md-6 mb-3">
@@ -255,7 +280,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
               </span>
 
-              <div class="col-10 mb-3" style="margin-left: 32px;">
+              <div class="col-10 mb-3"">
 
                 <span style="display: flex;
                 width:400px;

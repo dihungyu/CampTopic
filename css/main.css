@@ -2461,12 +2461,12 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: all 0.3s ease 0s;
   cursor: pointer;
   position: relative;
+  color: #00000054;
 }
 
 .secondary-btn-l a:hover{
   color:#000;
   font-weight: 600;
-
 }
 
 .secondary-btn-l a{
