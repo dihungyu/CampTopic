@@ -9387,13 +9387,20 @@ textarea.form-control {
 }
 
 
-table{
-  border-collapse: collapse;
-  border-style: none;
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-th{
-  background-color: #e6f7f2;
-  height: 40px;
+
+.text {
+  flex: 1;
 }
+
+.icon {
+  content: url("fa-solid fa-child-dress");
+  margin-left: 10px;
+}
+
 
   
