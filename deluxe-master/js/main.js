@@ -350,3 +350,9 @@
 
 })(jQuery);
 
+
+let btn=document.querySelector("#join");
+let infoModal=document.querySelector("#infoModal");
+btn.addEventListener("click", function(){
+  infoModal.joinModal();
+})
