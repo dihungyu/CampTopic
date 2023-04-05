@@ -351,8 +351,12 @@
 })(jQuery);
 
 
-let btn=document.querySelector("#join");
+let btn=document.querySelector("#show");
 let infoModal=document.querySelector("#infoModal");
 btn.addEventListener("click", function(){
-  infoModal.joinModal();
+  infoModal.showModal();
+})
+let close=document.querySelector("#close");
+close.addEventListener("click", function(){
+  infoModal.close();
 })
