@@ -1,4 +1,5 @@
 <?php
+
 include "conn.php";
 
 $id = $_GET['id'];
@@ -23,34 +24,37 @@ $campsiteAddress = $row_result['campsiteAddress'];
     <title>修改營區資料</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-function deleteFile(fileId) {
-    if (confirm('確定要刪除此圖片？')) {
-        $.post('', {deleteFileId: fileId}, function(data) {
-            location.reload();
+        function deleteFile(fileId) {
+                if (confirm('確定要刪除此圖片？')) {
+                    $.post('', {deleteFileId: fileId}, function (data) {
+                        // Remove image from DOM instead of reloading the page
+                        $('#image-' + fileId).remove();
+                    });
+                }
+            }
+
+        $('#formAdd').submit(function() {
+            $(this).find(':submit').attr('disabled', 'disabled');
+            return true;
+        }).submit(function() {
+            $(this).find(':submit').removeAttr('disabled');
         });
-    }
-}
 
-function previewImage(event) {
-    var preview = document.getElementById('preview');
-    preview.innerHTML = '';
-    var files = event.target.files;
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var reader = new FileReader();
-        reader.onload = function(event) {
-            var img = document.createElement('img');
-            img.src = event.target.result;
-            preview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-$('#formAdd').submit(function() {
-    $(this).find(':submit').attr('disabled', 'disabled');
-    return true;
-});
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 </script>
 </head>
 <body>
@@ -64,19 +68,19 @@ $('#formAdd').submit(function() {
     $sql_query = "SELECT * FROM files WHERE campsiteId = '$id'";
     $result_files = mysqli_query($conn, $sql_query);
 
-    while($row_files = mysqli_fetch_assoc($result_files)) {
+    while ($row_files = mysqli_fetch_assoc($result_files)) {
         $fileId = $row_files['fileId'];
         $fileName = $row_files['fileName'];
         $isDeleted = $row_files['isDeleted'];
+        $file_path = $row_files['filePath'];
         if ($isDeleted == 0) { // 檢查該圖片是否已標記為已刪除
-            echo "<div>
-                        <img src='/../upload/$fileName' alt=''>
-                        <button type='button' onclick='deleteFile(\"$fileId\")'>刪除此圖片</button>
+            echo "<div id='image-$fileId'>
+                    <img src='/../upload/$fileName' alt=''>
+                    <button type='button' onclick='deleteFile(\"$fileId\")'>刪除此圖片</button>
                 </div>";
         }
     }
     ?>
-    
     <input type="hidden" name="action" value="update">
     <input type="submit" name="button" value="修改資料">
 </form>
@@ -108,9 +112,9 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     }
 
     $sql_query3 = "DELETE FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
-    mysqli_query($conn, $sql_query3);
+    $result3 = mysqli_query($conn, $sql_query3);
 
-    if (!$result1 || !$result2) {
+    if (!$result1 || !$result2 || !$result3) {
         die(mysqli_error($conn));
     }
 
@@ -136,14 +140,14 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
                     move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                    $sql_query4 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType, isDeleted) 
-                    VALUES ('$fileId', '$id', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite', 0)";
+                    $sql_query4 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType) 
+                    VALUES ('$fileId', '$id', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
 
                     $result4 = mysqli_query($conn, $sql_query4);
 
-                    if (!$result3) {
+                    if (!$result4) {
                         die(mysqli_error($conn));
-                     }
+                    }
                 } else {
                     echo "檔案 $name 必須為圖片格式！<br>";
                 }
