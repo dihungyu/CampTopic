@@ -2,9 +2,9 @@
 
 include "conn.php";
 
-$id = $_GET['id'];
- 
-$sql_getDataQuery = "SELECT * FROM campsites WHERE campsiteId = '$id'";
+$campsiteId = $_GET['campsiteId'];
+
+$sql_getDataQuery = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 
 $result = mysqli_query($conn, $sql_getDataQuery);
 
@@ -19,24 +19,25 @@ $campsiteAddress = $row_result['campsiteAddress'];
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>修改營區資料</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         function deleteFile(fileId) {
-                if (confirm('確定要刪除此圖片？')) {
-                    $.post('', {deleteFileId: fileId}, function (data) {
-                        // Remove image from DOM instead of reloading the page
-                        $('#image-' + fileId).remove();
-                    });
-                }
+            if (confirm('確定要刪除此圖片？')) {
+                $.post('', { deleteFileId: fileId }, function (data) {
+                    // Remove image from DOM instead of reloading the page
+                    $('#image-' + fileId).remove();
+                });
             }
+        }
 
-        $('#formAdd').submit(function() {
+        $('#formAdd').submit(function () {
             $(this).find(':submit').attr('disabled', 'disabled');
             return true;
-        }).submit(function() {
+        }).submit(function () {
             $(this).find(':submit').removeAttr('disabled');
         });
 
@@ -47,7 +48,7 @@ $campsiteAddress = $row_result['campsiteAddress'];
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
@@ -55,36 +56,40 @@ $campsiteAddress = $row_result['campsiteAddress'];
                 reader.readAsDataURL(file);
             }
         }
-</script>
+    </script>
 </head>
-<body>
-<form action="updateCampsite.php?id=<?php echo $id ?>" method="post" enctype="multipart/form-data" name="formAdd" id="formAdd">
-    請輸入縣市編號：<input type="text" name="cityId" id="cityId" value="<?php echo $cityId ?>"><br/>
-    請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName" value="<?php echo $campsiteName ?>"><br/>
-    請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress" value="<?php echo $campsiteAddress ?>"><br/>
-    請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
-    <div id="preview"></div>
-    <?php
-    $sql_query = "SELECT * FROM files WHERE campsiteId = '$id'";
-    $result_files = mysqli_query($conn, $sql_query);
 
-    while ($row_files = mysqli_fetch_assoc($result_files)) {
-        $fileId = $row_files['fileId'];
-        $fileName = $row_files['fileName'];
-        $isDeleted = $row_files['isDeleted'];
-        $file_path = $row_files['filePath'];
-        if ($isDeleted == 0) { // 檢查該圖片是否已標記為已刪除
-            echo "<div id='image-$fileId'>
+<body>
+    <form action="updateCampsite.php?campsiteId=<?php echo $id ?>" method="post" enctype="multipart/form-data"
+        name="formAdd" id="formAdd">
+        請輸入縣市編號：<input type="text" name="cityId" id="cityId" value="<?php echo $cityId ?>"><br />
+        請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName" value="<?php echo $campsiteName ?>"><br />
+        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"
+            value="<?php echo $campsiteAddress ?>"><br />
+        請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
+        <div id="preview"></div>
+        <?php
+        $sql_query = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
+        $result_files = mysqli_query($conn, $sql_query);
+
+        while ($row_files = mysqli_fetch_assoc($result_files)) {
+            $fileId = $row_files['fileId'];
+            $fileName = $row_files['fileName'];
+            $isDeleted = $row_files['isDeleted'];
+            $file_path = $row_files['filePath'];
+            if ($isDeleted == 0) { // 檢查該圖片是否已標記為已刪除
+                echo "<div id='image-$fileId'>
                     <img src='/../upload/$fileName' alt=''>
                     <button type='button' onclick='deleteFile(\"$fileId\")'>刪除此圖片</button>
                 </div>";
+            }
         }
-    }
-    ?>
-    <input type="hidden" name="action" value="update">
-    <input type="submit" name="button" value="修改資料">
-</form>
+        ?>
+        <input type="hidden" name="action" value="update">
+        <input type="submit" name="button" value="修改資料">
+    </form>
 </body>
+
 </html>
 
 <?php
@@ -100,10 +105,10 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     $newCampsiteName = $_POST['campsiteName'];
     $newCampsiteAddress = $_POST['campsiteAddress'];
 
-    $sql_query1 = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$id'";
+    $sql_query1 = "UPDATE campsites SET cityId = '$newCityId', campsiteName = '$newCampsiteName', campsiteAddress = '$newCampsiteAddress' WHERE campsiteId = '$campsiteId'";
     $result1 = mysqli_query($conn, $sql_query1);
 
-    $sql_query2 = "SELECT * FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
+    $sql_query2 = "SELECT * FROM files WHERE campsiteId = '$campsiteId' AND isDeleted = 1";
     $result2 = mysqli_query($conn, $sql_query2);
 
     while ($row = mysqli_fetch_assoc($result2)) {
@@ -111,7 +116,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
         unlink($file_path); // 刪除圖片
     }
 
-    $sql_query3 = "DELETE FROM files WHERE campsiteId = '$id' AND isDeleted = 1";
+    $sql_query3 = "DELETE FROM files WHERE campsiteId = '$campsiteId' AND isDeleted = 1";
     $result3 = mysqli_query($conn, $sql_query3);
 
     if (!$result1 || !$result2 || !$result3) {
@@ -140,8 +145,8 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
                     move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                    $sql_query4 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType) 
-                    VALUES ('$fileId', '$id', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
+                    $sql_query4 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+                    VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
 
                     $result4 = mysqli_query($conn, $sql_query4);
 

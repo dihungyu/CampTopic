@@ -1,10 +1,10 @@
 <?php
-$id = $_GET['id'];
+$campsiteId = $_GET['campsiteId'];
 
 include('conn.php');
 
 // Get file names of files to be deleted
-$sql_query = "SELECT fileName FROM files WHERE campsiteId = '$id'";
+$sql_query = "SELECT fileName FROM files WHERE campsiteId = '$campsiteId'";
 $result = mysqli_query($conn, $sql_query);
 $files_to_delete = array();
 while ($row = mysqli_fetch_assoc($result)) {
@@ -12,9 +12,9 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 // Delete data from database
-$sql_query1 = "DELETE FROM campsites WHERE campsiteId = '$id'";
+$sql_query1 = "DELETE FROM campsites WHERE campsiteId = '$campsiteId'";
 mysqli_query($conn, $sql_query1);
-$sql_query2 = "DELETE FROM files WHERE campsiteId = '$id'";
+$sql_query2 = "DELETE FROM files WHERE campsiteId = '$campsiteId'";
 mysqli_query($conn, $sql_query2);
 
 // Delete files from upload folder

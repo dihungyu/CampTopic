@@ -15,7 +15,9 @@ $total_records = mysqli_num_rows($result);
 
 <body>
     <h1 align="center">營區資料總表</h1>
-    <p align="center">目前資料筆數：<?php echo $total_records; ?></p>
+    <p align="center">目前資料筆數：
+        <?php echo $total_records; ?>
+    </p>
     <p align="center"><a href='createCampsite.php'>新增資料</a></p>
 
     <table border="1" align="center">
@@ -53,8 +55,8 @@ $total_records = mysqli_num_rows($result);
             echo "<td>" . $row_result['campsiteUpdateDate'] . "</td>";
             echo "<td>" . $row_result['campsiteCollectCount'] . "</td>";
             echo "<td>" . $row_result['campsiteLikeCount'] . "</td>";
-            echo "<td><a href='updateCampsite.php?id=" . $row_result['campsiteId'] . "'>修改</a> ";
-            echo "<a href='deleteCampsite.php?id=" . $row_result['campsiteId'] . "'>刪除</a></td>";
+            echo "<td><a href='updateCampsite.php?campsiteId=" . $row_result['campsiteId'] . "'>修改</a> ";
+            echo "<a href='deleteCampsite.php?campsiteId=" . $row_result['campsiteId'] . "'>刪除</a></td>";
             echo "</tr>";
         }
         ?>
