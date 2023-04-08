@@ -60,7 +60,7 @@ $campsiteAddress = $row_result['campsiteAddress'];
 </head>
 
 <body>
-    <form action="updateCampsite.php?campsiteId=<?php echo $id ?>" method="post" enctype="multipart/form-data"
+    <form action="updateCampsite.php?campsiteId=<?php echo $campsiteId ?>" method="post" enctype="multipart/form-data"
         name="formAdd" id="formAdd">
         請輸入縣市編號：<input type="text" name="cityId" id="cityId" value="<?php echo $cityId ?>"><br />
         請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName" value="<?php echo $campsiteName ?>"><br />

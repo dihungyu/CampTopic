@@ -12,7 +12,7 @@
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
     require_once 'uuid_generator.php';
     $campsiteId = uuid_generator();
 
-    $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress) 
+    $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress)
                 VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteAddress')";
 
     mysqli_query($conn, $sql_query1);
@@ -78,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
                 move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType, isDeleted) 
-                VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite', 0)";
+                $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+                VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
 
                 mysqli_query($conn, $sql_query2);
             } else {
