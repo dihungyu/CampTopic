@@ -1,7 +1,7 @@
 <?php
 $campsiteId = $_GET['campsiteId'];
 
-include('conn.php');
+require_once '../conn.php';
 
 // Get file names of files to be deleted
 $sql_query = "SELECT fileName FROM files WHERE campsiteId = '$campsiteId'";

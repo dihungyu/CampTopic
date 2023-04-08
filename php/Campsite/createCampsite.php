@@ -44,12 +44,12 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
-    require_once("conn.php");
+    require_once '../conn.php';
+    require_once '../uuid_generator.php';
 
     $cityId = $_POST["cityId"];
     $campsiteName = $_POST["campsiteName"];
     $campsiteAddress = $_POST["campsiteAddress"];
-    require_once 'uuid_generator.php';
     $campsiteId = uuid_generator();
 
     $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress)
