@@ -15,7 +15,9 @@ $total_records = mysqli_num_rows($result);
 
 <body>
     <h1 align="center">文章資料總表</h1>
-    <p align="center">目前資料筆數：<?php echo $total_records; ?></p>
+    <p align="center">目前資料筆數：
+        <?php echo $total_records; ?>
+    </p>
     <p align="center"><a href='createArticle.php'>新增資料</a></p>
 
     <table border="1" align="center">

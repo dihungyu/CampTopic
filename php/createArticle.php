@@ -12,7 +12,7 @@
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
@@ -24,7 +24,6 @@
 </head>
 
 <body>
-    <!--如果要使用上傳檔案的功能，必須要在form加上enctype="multipart/form-data"才能正常上傳檔案-->
     <form action="createArticle.php" method="post" name="formAdd" id="formAdd" enctype="multipart/form-data">
         文章分類：<select name="articleType" id="articleType">
             <option value="心得"> 心得 </option>
@@ -45,23 +44,21 @@
 
 <?php
 
-
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
-    require_once("conn.php");
+    require_once "conn.php";
+    require_once 'uuid_generator.php';
 
     $articleType = $_POST["articleType"];
     $articleTitle = $_POST["articleTitle"];
     $articleContent = $_POST["articleContent"];
-    require_once 'uuid_generator.php';
     $articleId = uuid_generator();
     $accountId = uuid_generator();
 
-    $sql_query1 = "INSERT INTO articles (articleId, accountId, articleTitle, articleContent, articleCreateDate, articleUpdateDate, articleType, articleCollectCount, articleLikeCount) 
-                VALUES ('$articleId', '$accountId', '$articleTitle', '$articleContent', now(), now(), '$articleType', 0, 0)";
+    $sql_query1 = "INSERT INTO articles (articleId, accountId, articleTitle, articleContent, articleCreateDate, articleType, articleCollectCount, articleLikeCount)
+                VALUES ('$articleId', '$accountId', '$articleTitle', '$articleContent', now(), '$articleType', 0, 0)";
 
     mysqli_query($conn, $sql_query1);
-
 
     // loop through all uploaded files
     foreach ($_FILES["files"]["name"] as $key => $name) {
@@ -83,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
                 move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                $sql_query2 = "INSERT INTO files (fileId, articleId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType) 
+                $sql_query2 = "INSERT INTO files (fileId, articleId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
                 VALUES ('$fileId', '$articleId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'article')";
 
                 mysqli_query($conn, $sql_query2);
