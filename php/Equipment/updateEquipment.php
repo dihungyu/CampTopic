@@ -1,5 +1,5 @@
 <?php
-include "conn.php";
+require_once '../conn.php';
 
 $equipmentId = $_GET['equipmentId'];
 
@@ -129,7 +129,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     }
 
     if (!empty($_FILES["files"]["name"][0])) {
-        include "uuid_generator.php";
+        require_once '../uuid_generator.php';
         // loop through all uploaded files
         foreach ($_FILES["files"]["name"] as $key => $name) {
 
