@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>新增營區資料</title>
+    <title>新增設備資料</title>
     <script>
         function previewImage(event) {
             var preview = document.getElementById('preview');
@@ -26,10 +26,14 @@
 <body>
     <!--如果要使用上傳檔案的功能，必須要在form加上enctype="multipart/form-data"才能正常上傳檔案-->
     <form action="" method="post" name="formAdd" id="formAdd" enctype="multipart/form-data">
-        請輸入縣市編號：<input type="text" name="cityId" id="cityId"><br />
-        請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName"><br />
-        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"><br />
-        請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
+        設備分類：<select name="equipmentType" id="equipmentType">
+            <option value="地墊"> 地墊 </option>
+            <option value="帳篷"> 帳篷 </option>
+        </select><br />
+        請選擇設備地址：<input type="text" name="equipmentLocation" id="equipmentLocation"><br />
+        請輸入設備名稱：<input type="text" name="equipmentName" id="equipmentName"><br />
+        請輸入設備敘述：<input type="text" name="equipmentDescription" id="equipmentDescription"><br />
+        請上傳設備圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
         <div id="preview"></div>
         <input type="hidden" name="action" value="insert">
         <input type="submit" name="button" value="新增資料">
@@ -46,14 +50,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
     require_once("conn.php");
 
-    $cityId = $_POST["cityId"];
-    $campsiteName = $_POST["campsiteName"];
-    $campsiteAddress = $_POST["campsiteAddress"];
+    $equipmentType = $_POST["equipmentType"];
+    $equipmentLocation = $_POST["equipmentLocation"];
+    $equipmentName = $_POST["equipmentName"];
+    $equipmentDescription = $_POST["equipmentDescription"];
     require_once 'uuid_generator.php';
-    $campsiteId = uuid_generator();
+    $equipmentId = uuid_generator();
+    $accountId = uuid_generator();
 
-    $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress)
-                VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteAddress')";
+    $sql_query1 = "INSERT INTO equipments (equipmentId, accountId, equipmentType, equipmentLocation, equipmentName, equipmentDescription)
+                VALUES ('$equipmentId', '$accountId', '$equipmentType', '$equipmentLocation', '$equipmentName', '$equipmentDescription')";
 
     mysqli_query($conn, $sql_query1);
 
@@ -78,8 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
                 move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
 
-                $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType, isDeleted)
-                VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite', 0)";
+                $sql_query2 = "INSERT INTO files (fileId, equipmentId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+                VALUES ('$fileId', '$equipmentId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'equipment')";
 
                 mysqli_query($conn, $sql_query2);
             } else {
@@ -100,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         }
     }
 
-    header("Location: readCampsite.php");
+    header("Location: readEquipment.php");
     exit();
 }
 ?>
