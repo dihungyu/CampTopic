@@ -30,10 +30,10 @@
             <option value="地墊"> 地墊 </option>
             <option value="帳篷"> 帳篷 </option>
         </select><br />
-        請選擇設備地址：<input type="text" name="equipmentLocation" id="equipmentLocation"><br />
-        請輸入設備名稱：<input type="text" name="equipmentName" id="equipmentName"><br />
-        請輸入設備敘述：<input type="text" name="equipmentDescription" id="equipmentDescription"><br />
-        請上傳設備圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
+        設備地址：<input type="text" name="equipmentLocation" id="equipmentLocation"><br />
+        設備名稱：<input type="text" name="equipmentName" id="equipmentName"><br />
+        設備敘述：<input type="text" name="equipmentDescription" id="equipmentDescription"><br />
+        設備圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
         <div id="preview"></div>
         <input type="hidden" name="action" value="insert">
         <input type="submit" name="button" value="新增資料">
@@ -49,17 +49,17 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
     require_once("conn.php");
+    require_once 'uuid_generator.php';
 
     $equipmentType = $_POST["equipmentType"];
     $equipmentLocation = $_POST["equipmentLocation"];
     $equipmentName = $_POST["equipmentName"];
     $equipmentDescription = $_POST["equipmentDescription"];
-    require_once 'uuid_generator.php';
     $equipmentId = uuid_generator();
     $accountId = uuid_generator();
 
-    $sql_query1 = "INSERT INTO equipments (equipmentId, accountId, equipmentType, equipmentLocation, equipmentName, equipmentDescription)
-                VALUES ('$equipmentId', '$accountId', '$equipmentType', '$equipmentLocation', '$equipmentName', '$equipmentDescription')";
+    $sql_query1 = "INSERT INTO equipments (equipmentId, accountId, equipmentType, equipmentLocation, equipmentName, equipmentDescription, equipmentCreateDate)
+                VALUES ('$equipmentId', '$accountId', '$equipmentType', '$equipmentLocation', '$equipmentName', '$equipmentDescription', now())";
 
     mysqli_query($conn, $sql_query1);
 

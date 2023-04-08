@@ -25,9 +25,9 @@ $total_records = mysqli_num_rows($result);
             <th>設備編號</th>
             <th>帳戶編號</th>
             <th>設備圖片</th>
+            <th>設備分類</th>
             <th>設備名稱</th>
             <th>設備描述</th>
-            <th>設備分類</th>
             <th>設備所在地</th>
             <th>設備建立日期</th>
             <th>設備更新日期</th>
@@ -43,13 +43,14 @@ $total_records = mysqli_num_rows($result);
             $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentId'";
             $files_result = mysqli_query($conn, $files_query);
             while ($file_result = mysqli_fetch_assoc($files_result)) {
-                echo "<img src='" . $file_result['filePath'] . "' alt=''>";
+                $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '..', $file_result['filePath']);
+                echo "<img src='" . $file_path . "' alt=''>";
                 echo "<br>"; // 加上換行，方便閱讀
             }
             echo "</td>";
+            echo "<td>" . $row_result['equipmentType'] . "</td>";
             echo "<td>" . $row_result['equipmentName'] . "</td>";
             echo "<td>" . $row_result['equipmentDescription'] . "</td>";
-            echo "<td>" . $row_result['equipmentType'] . "</td>";
             echo "<td>" . $row_result['equipmentLocation'] . "</td>";
             echo "<td>" . $row_result['equipmentCreateDate'] . "</td>";
             echo "<td>" . $row_result['equipmentUpdateDate'] . "</td>";
