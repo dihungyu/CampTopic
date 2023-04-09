@@ -7,14 +7,14 @@ require '../phpmailer/src/PHPMailer.php';
 require '../phpmailer/src/Exception.php';
 require '../phpmailer/src/SMTP.php';
 
-if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["status"] == "AGREE"){
+if (isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["status"] == "AGREE") {
 
     $activityId = $_GET["activityId"];
     $accountId = $_GET["accountId"];
 
     //資料庫連線
-    require_once("conn.php");
-    
+    require_once 'conn.php';
+
     //更新報名狀態
     $stmt = $conn->prepare("UPDATE activities_accounts SET signupStatus='AGREE' WHERE activityId = ? AND accountId = ? ");
     $stmt->bind_param("ss", $activityId, $accountId); // 將參數綁定到查詢語句中
@@ -28,8 +28,8 @@ if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["sta
     // 使用JOIN語句來避免進行兩個SQL查詢
     // 使用參數化查詢來避免SQL注入攻擊
 
-    $stmt = $conn->prepare("SELECT a.accountEmail FROM accounts a 
-                 JOIN activities_accounts b ON b.accountId = a.accountId 
+    $stmt = $conn->prepare("SELECT a.accountEmail FROM accounts a
+                 JOIN activities_accounts b ON b.accountId = a.accountId
                 WHERE b.activityId = ? AND b.accountId = ?");
     $stmt->bind_param("ss", $activityId, $accountId); // 將參數綁定到查詢語句中
     $stmt->execute();
@@ -37,10 +37,9 @@ if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["sta
 
     if ($result && $row = mysqli_fetch_assoc($result)) {
         $activityApplicantEmail = $row["accountEmail"]; // 活動發起者信箱
-    } 
-    else {
-    // 找不到符合條件的資料
-    http_response_code(404);
+    } else {
+        // 找不到符合條件的資料
+        http_response_code(404);
     }
 
     // 建立PHPMailer對象
@@ -48,13 +47,13 @@ if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["sta
 
     try {
         // 郵件設置
-        $mail->isSMTP();                                            // 設置使用SMTP發送郵件
-        $mail->Host       = 'smtp.mail.yahoo.com';                       // SMTP服務器地址
-        $mail->SMTPAuth   = true;                                   // 啟用SMTP驗證
-        $mail->Username   = $officialEmail;                   // 發送方郵箱地址
-        $mail->Password   = 'pdknaazebckinydd';                         // 發送方郵箱密碼
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          // SMTP加密方式
-        $mail->Port       = 587;                                    // SMTP端口號
+        $mail->isSMTP(); // 設置使用SMTP發送郵件
+        $mail->Host = 'smtp.mail.yahoo.com'; // SMTP服務器地址
+        $mail->SMTPAuth = true; // 啟用SMTP驗證
+        $mail->Username = $officialEmail; // 發送方郵箱地址
+        $mail->Password = 'pdknaazebckinydd'; // 發送方郵箱密碼
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // SMTP加密方式
+        $mail->Port = 587; // SMTP端口號
         $mail->CharSet = "UTF-8";
         $mail->Encoding = "base64";
 
@@ -65,10 +64,10 @@ if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["sta
             echo "無效的郵件地址: " . $activityApplicantEmail;
             exit;
         }
-        $mail->addAddress($activityApplicantEmail);                    // 收件人郵箱地址
-        $mail->addReplyTo($officialEmail, '營在起跑點');        //預設收件人回覆地址
+        $mail->addAddress($activityApplicantEmail); // 收件人郵箱地址
+        $mail->addReplyTo($officialEmail, '營在起跑點'); //預設收件人回覆地址
         $mail->Subject = '報名成功通知';
-        $mail->Body    = '您報名的活動已通過審核，請儘速到我們的網站做確認，謝謝！';
+        $mail->Body = '您報名的活動已通過審核，請儘速到我們的網站做確認，謝謝！';
 
         // 發送郵件
         $mail->send();
@@ -76,15 +75,14 @@ if(isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["sta
     } catch (Exception $e) {
         echo "郵件發送失敗：{$mail->ErrorInfo}";
     }
-}
-elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["status"] == "REJECT"){
+} elseif (isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["status"] == "REJECT") {
 
     $activityId = $_GET["activityId"];
     $accountId = $_GET["accountId"];
-    
+
     //資料庫連線
-    require_once("conn.php");
-    
+    require_once 'conn.php';
+
     //更新報名狀態
     $stmt = $conn->prepare("UPDATE activities_accounts SET signupStatus='REJECT' WHERE activityId = ? AND accountId = ? ");
     $stmt->bind_param("ss", $activityId, $accountId); // 將參數綁定到查詢語句中
@@ -98,8 +96,8 @@ elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["
     // 使用JOIN語句來避免進行兩個SQL查詢
     // 使用參數化查詢來避免SQL注入攻擊
 
-    $stmt = $conn->prepare("SELECT a.accountEmail FROM accounts a 
-                 JOIN activities_accounts b ON b.accountId = a.accountId 
+    $stmt = $conn->prepare("SELECT a.accountEmail FROM accounts a
+                 JOIN activities_accounts b ON b.accountId = a.accountId
                 WHERE b.activityId = ? AND b.accountId = ?");
     $stmt->bind_param("ss", $activityId, $accountId); // 將參數綁定到查詢語句中
     $stmt->execute();
@@ -107,10 +105,9 @@ elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["
 
     if ($result && $row = mysqli_fetch_assoc($result)) {
         $activityApplicantEmail = $row["accountEmail"]; // 活動發起者信箱
-    } 
-    else {
-    // 找不到符合條件的資料
-    http_response_code(404);
+    } else {
+        // 找不到符合條件的資料
+        http_response_code(404);
     }
 
     // 建立PHPMailer對象
@@ -118,13 +115,13 @@ elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["
 
     try {
         // 郵件設置
-        $mail->isSMTP();                                            // 設置使用SMTP發送郵件
-        $mail->Host       = 'smtp.mail.yahoo.com';                       // SMTP服務器地址
-        $mail->SMTPAuth   = true;                                   // 啟用SMTP驗證
-        $mail->Username   = $officialEmail;                   // 發送方郵箱地址
-        $mail->Password   = 'pdknaazebckinydd';                         // 發送方郵箱密碼
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          // SMTP加密方式
-        $mail->Port       = 587;                                    // SMTP端口號
+        $mail->isSMTP(); // 設置使用SMTP發送郵件
+        $mail->Host = 'smtp.mail.yahoo.com'; // SMTP服務器地址
+        $mail->SMTPAuth = true; // 啟用SMTP驗證
+        $mail->Username = $officialEmail; // 發送方郵箱地址
+        $mail->Password = 'pdknaazebckinydd'; // 發送方郵箱密碼
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // SMTP加密方式
+        $mail->Port = 587; // SMTP端口號
         $mail->CharSet = "UTF-8";
         $mail->Encoding = "base64";
 
@@ -135,10 +132,10 @@ elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["
             echo "無效的郵件地址: " . $activityApplicantEmail;
             exit;
         }
-        $mail->addAddress($activityApplicantEmail);                    // 收件人郵箱地址
-        $mail->addReplyTo($officialEmail, '營在起跑點');        //預設收件人回覆地址
+        $mail->addAddress($activityApplicantEmail); // 收件人郵箱地址
+        $mail->addReplyTo($officialEmail, '營在起跑點'); //預設收件人回覆地址
         $mail->Subject = '報名駁回通知';
-        $mail->Body    = '您報名的活動經審核未通過，請儘速到我們的網站做確認，謝謝！';
+        $mail->Body = '您報名的活動經審核未通過，請儘速到我們的網站做確認，謝謝！';
 
         // 發送郵件
         $mail->send();
@@ -148,4 +145,4 @@ elseif(isset($_GET["status"], $_GET["accountId"],$_GET["activityId"]) && $_GET["
     }
 
 }
-    ?>
+?>
