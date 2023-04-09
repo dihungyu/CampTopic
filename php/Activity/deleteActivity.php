@@ -1,7 +1,7 @@
 <?php
 $activityId = $_GET['activityId'];
 
-include 'conn.php';
+require_once '../conn.php';
 
 $sql_query = "DELETE FROM activities WHERE activityId = '$activityId'";
 

@@ -5,13 +5,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // 載入PHPMailer類別
-require '../phpmailer/src/PHPMailer.php';
-require '../phpmailer/src/Exception.php';
-require '../phpmailer/src/SMTP.php';
+require '../../phpmailer/src/PHPMailer.php';
+require '../../phpmailer/src/Exception.php';
+require '../../phpmailer/src/SMTP.php';
 
 //Logic section
-if (isset($_GET["id"])) {
-    $activityId = $_GET["id"];
+if (isset($_GET["activityId"])) {
+    $activityId = $_GET["activityId"];
 }
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ if (isset($_GET["id"])) {
             <th>相關操作</th>
         </tr>
         <?php
-        require_once 'conn.php';
+        require_once '../conn.php';
         //查詢有哪些報名者報名該活動，且審核狀態為Processing
         $stmt = $conn->prepare("SELECT a.accountId, a.accountName, a.accountGender, a.accountBirthday FROM accounts a JOIN activities_accounts b ON a.accountId = b.accountId WHERE b.signupStatus = 'PROCESSING' AND b.activityId = ?");
         $stmt->bind_param("s", $activityId); // 將參數綁定到查詢語句中

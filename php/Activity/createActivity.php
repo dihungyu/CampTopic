@@ -30,8 +30,10 @@ if (isset($_POST["action"]) && ($_POST["action"] == "insert")) {
     if (empty($_POST['activityTitle']) || empty($_POST['activityDescription']) || empty($_POST['activityStartDate']) || empty($_POST['activityEndDate']) || empty($_POST['minAttendee']) || empty($_POST['maxAttendee']) || empty($_POST['leastAttendeeFee']) || empty($_POST['maxAttendeeFee'])) {
         echo "<script>alert('欄位不得為空值！')</script>";
     } else {
-        include 'conn.php';
+        require_once '../conn.php';
+        require_once '../uuid_generator.php';
 
+        $activityId = uuid_generator();
         $activityTitle = $_POST["activityTitle"];
         $activityDescription = $_POST['activityDescription'];
         $activityStartDate = $_POST['activityStartDate'];
@@ -62,7 +64,7 @@ if (isset($_POST["action"]) && ($_POST["action"] == "insert")) {
             }
 
             $sql_query = "INSERT INTO activities (activityId, activityTitle, activityDescription, activityStartDate, activityEndDate, activityDeadLineDate, activityIsOpen, minAttendee, maxAttendee, activityAttendence, leastAttendeeFee, maxAttendeeFee)
-            VALUES (REPLACE(uuid(),'-',''), '$activityTitle', '$activityDescription', '$activityStartDate', '$activityEndDate', '$activityDeadLineDate', '$activityIsOpen', $minAttendee, $maxAttendee, 0, $leastAttendeeFee, $maxAttendeeFee)";
+            VALUES ('$activityId', '$activityTitle', '$activityDescription', '$activityStartDate', '$activityEndDate', '$activityDeadLineDate', '$activityIsOpen', $minAttendee, $maxAttendee, 0, $leastAttendeeFee, $maxAttendeeFee)";
 
             mysqli_query($conn, $sql_query);
 

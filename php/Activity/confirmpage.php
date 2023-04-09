@@ -13,7 +13,7 @@ if (isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["st
     $accountId = $_GET["accountId"];
 
     //資料庫連線
-    require_once 'conn.php';
+    require_once '../conn.php';
 
     //更新報名狀態
     $stmt = $conn->prepare("UPDATE activities_accounts SET signupStatus='AGREE' WHERE activityId = ? AND accountId = ? ");
@@ -81,7 +81,7 @@ if (isset($_GET["status"], $_GET["accountId"], $_GET["activityId"]) && $_GET["st
     $accountId = $_GET["accountId"];
 
     //資料庫連線
-    require_once 'conn.php';
+    require_once '../conn.php';
 
     //更新報名狀態
     $stmt = $conn->prepare("UPDATE activities_accounts SET signupStatus='REJECT' WHERE activityId = ? AND accountId = ? ");

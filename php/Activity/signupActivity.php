@@ -5,13 +5,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // 載入PHPMailer類別
-require '../phpmailer/src/PHPMailer.php';
-require '../phpmailer/src/Exception.php';
-require '../phpmailer/src/SMTP.php';
+require '../../phpmailer/src/PHPMailer.php';
+require '../../phpmailer/src/Exception.php';
+require '../../phpmailer/src/SMTP.php';
 
 //Logic section
-if (isset($_GET["id"])) {
-    $activityId = $_GET["id"];
+if (isset($_GET["activityId"])) {
+    $activityId = $_GET["activityId"];
 }
 //$accountId = $_SESSION["accountId"];
 $accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
@@ -19,7 +19,7 @@ $accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
 if (isset($_POST["submit"])) {
 
     //資料庫連線
-    require_once 'conn.php';
+    require_once '../conn.php';
 
     //新增該活動報名者至資料庫
     $stmt = $conn->prepare("INSERT INTO activities_accounts(activityAccountId, accountId, activityId) VALUES (REPLACE(uuid(),'-',''),?,?) ");
@@ -92,7 +92,7 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
-    <form action="signupActivity.php?id=<?= $activityId ?>" method="post" id="signupForm">
+    <form action="signupActivity.php?activityId=<?= $activityId ?>" method="post" id="signupForm">
         <input type="hidden" name="submit" value="signup">
         <button onclick="confirmSignup(event)">報名</button>
     </form>

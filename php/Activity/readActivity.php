@@ -1,5 +1,5 @@
 <?php
-include("conn.php");
+require_once '../conn.php';
 
 // 更新 activityIsOpen 的值
 $update_query = "UPDATE activities SET activityIsOpen = CASE WHEN activityStartDate <= NOW() AND NOW() <= activityEndDate THEN 1 ELSE 0 END";

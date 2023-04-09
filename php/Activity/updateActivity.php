@@ -1,5 +1,5 @@
 <?php
-include "conn.php";
+require_once '../conn.php';
 
 $activityId = $_GET['activityId'];
 
@@ -55,7 +55,6 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     if (empty($_POST['activityTitle']) || empty($_POST['activityDescription']) || empty($_POST['activityStartDate']) || empty($_POST['activityEndDate']) || empty($_POST['minAttendee']) || empty($_POST['maxAttendee']) || empty($_POST['leastAttendeeFee']) || empty($_POST['maxAttendeeFee'])) {
         echo "<script>alert('欄位不得為空值！')</script>";
     } else {
-
         $newActivityTitle = $_POST['activityTitle'];
         $newActivityDescription = $_POST['activityDescription'];
         $newActivityStartDate = $_POST['activityStartDate'];
