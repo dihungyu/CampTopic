@@ -76,7 +76,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
             $sql_query = "UPDATE activities SET activityTitle = '$newActivityTitle', activityDescription = '$newActivityDescription',
         activityStartDate = '$newActivityStartDate', activityEndDate = '$newActivityEndDate', activityDeadLineDate = '$newActivityDeadLineDate',
-        minAttendee = $newMinAttendee, maxAttendee = $newMaxAttendee, leastAttendeeFee = $newLeastAttendeeFee, maxAttendeeFee = $newMaxAttendeeFee WHERE activityId = '$id'";
+        minAttendee = $newMinAttendee, maxAttendee = $newMaxAttendee, leastAttendeeFee = $newLeastAttendeeFee, maxAttendeeFee = $newMaxAttendeeFee WHERE activityId = '$activityId'";
 
             mysqli_query($conn, $sql_query);
 
