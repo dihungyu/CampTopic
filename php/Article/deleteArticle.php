@@ -1,7 +1,7 @@
 <?php
 $articleId = $_GET['articleId'];
 
-include('conn.php');
+require_once '../conn.php';
 
 // Get file names of files to be deleted
 $sql_query = "SELECT fileName FROM files WHERE articleId = '$articleId'";

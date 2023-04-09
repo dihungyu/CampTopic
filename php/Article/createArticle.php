@@ -46,8 +46,8 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
-    require_once "conn.php";
-    require_once 'uuid_generator.php';
+    require_once '../conn.php';
+    require_once '../uuid_generator.php';
 
     $articleType = $_POST["articleType"];
     $articleTitle = $_POST["articleTitle"];
