@@ -11221,3 +11221,20 @@ nav[aria-label="breadcrumb"] li:before {
   dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.1);
   }
+
+  
+  .btn1{
+    margin-right:1200px;
+    margin-top: 10px;
+    width:150px;
+    height:40px;
+    border: 2px solid #d9d9d9;
+    color:#d9d9d9;
+    background-color:#fff;
+    border-radius:20px;
+    font-size: 13px;
+    margin-top: 10px;
+    padding-right:22px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+  }
