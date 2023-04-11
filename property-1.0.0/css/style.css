@@ -14203,9 +14203,11 @@ a {
 
 .form-control {
   font-size: 16px;
-  height: 52px;
+  width: 200px;
+  height: 40px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-left: 1070px;
 }
 
 .form-control:hover,
@@ -16159,4 +16161,15 @@ love.active {
     padding-right:22px;
     padding-top: 1px;
     padding-bottom: 10px;
+  }
+  .btn2{
+    
+    width:100px;
+    height:40px;
+    border:0;
+    background-color:#d9d9d9;
+    border-radius:20px;
+    font-size: 13px;
+    margin-top: -60px;
+    padding-right: 60px;
   }
