@@ -4,7 +4,7 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -9387,4 +9387,30 @@ textarea.form-control {
 }
 
 
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  flex: 1;
+}
+
+.icon {
+  content: url("fa-solid fa-child-dress");
+  margin-left: 30px;
+}
+
+dialog{
+  border: none;
+  box-shadow: 0 2px 6px #ccc;
+  border-radius: 10px;
+  padding: 30px;
+  width: 500px;
+  height: 750px;
+}
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.1);
+}
   

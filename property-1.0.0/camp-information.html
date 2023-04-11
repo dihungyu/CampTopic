@@ -121,6 +121,7 @@
             <button type="button" class="btn1">
               <i class="icon-filter_list" style="margin-right: 30px;padding: 10px;padding-top: 20px;"></i>
               <span style="margin-left: 30px;padding-bottom: 15px;">篩選</span>
+
             </button>
             <button type="button" class="btn2" style="margin-left: 150px;">
               <span style="margin-left: 5px;padding-left: 5px;"> 漂亮</span>
@@ -129,7 +130,9 @@
             <input class="btn btn-primary" style="margin-right:1000px;width:80px;height:40px;border:0;background-color:#d9d9d9;border-radius:20px;font-size: 13px;margin-top: -60px;" type="submit" value="近溪流">
             <div id="navbar-search-autocomplete" class="form-outline "style="margin-top:-50px">
               <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
-              
+              <button type="button" class="button-search" >
+            <i class="fas fa-search"></i>
+          </button>
             </div>
             
             <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
@@ -139,9 +142,7 @@
             </button>
           </div>
           &nbsp;
-          <button type="button" class="button-search" style="margin-top:-120px;border-radius: 40px;">
-            <i class="fas fa-search"></i>
-          </button>
+          
           <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
             <span style="margin-left: -120px;margin-top: 20px;">發起露營活動</span>
             <hr style="height: 8vh;width: .5vh;border-width: 0;right: 50%;">
@@ -166,104 +167,43 @@
               </div>
               <dialog id="infoModal" class="info-modal">
                 <div class="box">
-                  <h4 style="font-weight:bold;">參加</h4>
-                  <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;"></i>
+                  <h4 style="font-weight:bold;">創建露營活動</h4>
+                  <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;margin-left: 420px;margin-top: -20px;"></i>
                 </div>
-                <h6 style="color: #9D9D9D ">參加活動蒐集勳章！<h6>
+                <h6 style="color: #9D9D9D ">尋找其他小鹿一起冒險！<h6>
                     <br>
-                    <input type="text" value="聯絡電話"
+                    <input type="text" value="活動名稱"
                       style="background-color: #F0F0F0; border-style: none; color:	#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
                     <br><br>
-                    <input type="email" value="email"
+                    <input type="email" value="活動地點"
                       style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
                     <br><br>
+                    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                    <input type="email" value="開始日期"
+                      style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                      <br><br>
+                      <input type="email" value="結束日期"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <br><br></span>
+                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                        <input type="email" value="最少人數"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                        <br><br>
+                        <input type="email" value="最多人數"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <br><br></span>
+                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                        <input type="email" value="最低費用"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                        <br><br>
+                        <input type="email" value="最高費用"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <br><br></span>
                     <textarea rows="4"
                       style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">備註/建議</textarea>
                     <br>
-                    <h6 style="font-weight:bold;">可提供裝備</h6>
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    <br><br>
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    <br><br>
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">熱水壺</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">瓦斯爐</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span
-                      style="font-weight:bold;">鍋子</span>&nbsp;&nbsp;
-                    <select
-                      style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                    <br><br>
-                    <textarea rows="2"
-                      style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">其他</textarea>
+                    
+                    
                     <br>
                     <button
                       style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">提交</button>
@@ -599,6 +539,71 @@
   </div>
   </div>
   </div>
+
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row d-flex">
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
+            </a>
+            <div class="text mt-3 d-block">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_4.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        </div>
+        </section>
+
   <div class="site-footer">
     <div class="container">
       <div class="row">
