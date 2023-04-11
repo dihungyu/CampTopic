@@ -9438,8 +9438,6 @@ dialog::backdrop {
 }
 .name{
   padding: 20px;
-  width: 200px;
-  height: 450px;
 }
 .grid-container {
   display: grid;
