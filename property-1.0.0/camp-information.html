@@ -124,7 +124,7 @@
         <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
           <div class="input-group " style="width: 30%; margin-left:75%; justify-content: flex-end">
 
-            <button type="button" class="btn btn-primary" style="margin-right:1200px;width:150px;height:40px;border:0;background-color:#d9d9d9;border-radius:20px;font-size: 13px;margin-top: 10px;padding-right:22px;padding-top: 1px;padding-bottom: 10px;">
+            <button type="button" class="btn btn-primary" style="margin-right:1200px;width:150px;height:40px;border: 2px solid #d9d9d9;border-radius:20px;font-size: 13px;margin-top: 10px;padding-right:22px;padding-top: 1px;padding-bottom: 10px;background: transparent;">
               <i class="icon-filter_list" style="margin-right: 30px;padding: 10px;padding-top: 20px;"></i>
               <span style="margin-left: 30px;padding-bottom: 15px;">篩選</span>
             </button>
@@ -160,10 +160,90 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 ">
             <div class="property-item mb-30">
-              <a href="property-single.html" class="img">
+              <div class="thumb">
                 <img src="images/Rectangle 137.png" alt="Image" class="img-fluid" style="width:605px;height: 500px;"/>
-                
-              </a>
+              </div>
+              <dialog id="infoModal">
+                <div class="box">
+                <h4 style="font-weight:bold;">參加</h4>
+                <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;"></i>
+                </div>
+                <h6 style="color: #9D9D9D ">參加活動蒐集勳章！<h6>
+                <br>
+                <input type="text" value="聯絡電話" style="background-color: #F0F0F0; border-style: none; color:	#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
+                <br><br>
+                <input type="email" value="email" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
+                <br><br>
+                <textarea rows="4" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">備註/建議</textarea>
+                <br>
+                <h6 style="font-weight:bold;">可提供裝備</h6> 
+                <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              <br><br>
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              <br><br>
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">熱水壺</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">瓦斯爐</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              &nbsp;&nbsp;
+              <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">鍋子</span>&nbsp;&nbsp;
+                <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+              <br><br>
+              <textarea rows="2" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">其他</textarea>
+              <br>
+              <button style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">提交</button>
+            </dialog>
               <div class="property-content" style="height: 250px;">
                 <span class="city d-block mb-3">元宵 2/3-2/5 星空露營 </span>
 
@@ -225,88 +305,11 @@
                     <div class="specs d-flex mb-4">
                     
                     <button class="btn btn-primary py-2 px-4.5" style="font-size: 14px;margin-top: 10px;margin-bottom: 30px;margin-right: 50px;">
-                      <a href="property-single.html" style="color: #fff;">參加 !</a></button>
-                      <dialog id="infoModal">
-                        <div class="box">
-                        <h4 style="font-weight:bold;">參加</h4>
-                        <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;"></i>
-                      </div>
-                        <h6 style="color: #9D9D9D ">參加活動蒐集勳章！<h6>
-                        <br>
-                        <input type="text" value="聯絡電話" style="background-color: #F0F0F0; border-style: none; color:	#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
-                        <br><br>
-                        <input type="email" value="email" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
-                        <br><br>
-                        <textarea rows="4" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">備註/建議</textarea>
-                        <br>
-                        <h6 style="font-weight:bold;">可提供裝備</h6> 
-                        <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">帳篷</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      <br><br>
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">睡袋</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      <br><br>
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">熱水壺</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">瓦斯爐</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 50px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      &nbsp;&nbsp;
-                      <input type="checkbox" style="color: #F0F0F0;">&nbsp;&nbsp;<span style="font-weight:bold;">鍋子</span>&nbsp;&nbsp;
-                        <select style="background-color:#F0F0F0 ; border-radius: 10px; border-style: none; width: 60px; color: 	#9D9D9D; text-align: center;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                      </select>
-                      <br><br>
-                      <textarea rows="2" style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">其他</textarea>
-                      <br>
-                      <button style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">提交</button>
-                    </dialog>
+                      <div class="thumb"  data-toggle="modal" data-target="#infoModal">參加 !</div></button>
+
+                      
+
+                      
                 </div>
               </div>
             </div>
