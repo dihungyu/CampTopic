@@ -640,9 +640,10 @@ progress {
 .info-modal {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%, -50%);
   z-index: 9999;
+  height: 700px;
 }
 
 
