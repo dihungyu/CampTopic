@@ -9477,7 +9477,17 @@ dialog::backdrop {
           transition: .3s all ease; }
         .testimonial-slider-wrap .tns-nav button.tns-nav-active:before {
           background-color: #00204a; }
-  
+          .img-fluid1 {
+            max-width: 100%;
+            height: auto; }
+          
+          .img-thumbnail {
+            padding: 0.25rem;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            max-width: 100%;
+            height: auto; }
   #testimonial-nav span {
     display: inline-block;
     cursor: pointer;
