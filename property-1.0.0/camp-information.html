@@ -1,0 +1,811 @@
+<!-- /*
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Untree.co" />
+  <link rel="shortcut icon" href="favicon.png" />
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap5" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css" />
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/aos.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="fonts/docs/css/ionicons.min.css">
+  <link rel="stylesheet" href="css/skins/all.css">
+
+
+
+
+  <title>
+    Start Camping &mdash; 一起展開露營冒險！
+  </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="css/animate.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+
+  <link rel="stylesheet" href="css/ionicons.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link rel="stylesheet" href="css/icomoon.css">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> 選單
+      </button>
+
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              帳號
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="member.html">會員帳號</a>
+              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">登出</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 134.png')">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-9 text-center mt-5">
+          <h1 class="heading" data-aos="fade-up">收藏清單</h1>
+
+          <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+            <ol class="breadcrumb text-center justify-content-center">
+              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
+              <li class="breadcrumb-item active text-white-50" aria-current="page">
+                我的收藏
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container" style="max-width: 1260px">
+      <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
+        <div class="input-group " style="width: 30%; margin-left:75%; justify-content: flex-end">
+
+          <div id="navbar-search-autocomplete" class="form-outline " style="margin-top:-50px">
+          
+            <button type="button" class="btn1">
+              <i class="icon-filter_list" style="margin-right: 30px;padding: 10px;padding-top: 20px;"></i>
+              <span style="margin-left: 30px;padding-bottom: 15px;">篩選</span>
+
+            </button>
+            <button type="button" class="btn2" style="margin-left: 150px;">
+              <span style="margin-left: 5px;padding-left: 5px;"> 漂亮</span>
+            </button>
+            
+            <input class="btn btn-primary" style="margin-right:1000px;width:80px;height:40px;border:0;background-color:#d9d9d9;border-radius:20px;font-size: 13px;margin-top: -60px;" type="submit" value="近溪流">
+            <div id="navbar-search-autocomplete" class="form-outline "style="margin-top:-50px">
+              <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
+              <button type="button" class="button-search" >
+            <i class="fas fa-search"></i>
+          </button>
+            </div>
+            
+            <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
+              <div class="thumb" data-toggle="modal" data-target="#infoModal">參加 !</div>
+              <span style="margin-left: -120px;margin-top: 20px;">發起露營活動</span>
+              <dialog id="infoModal" class="info-modal" style="height: 150px;">
+                <div class="box">
+                  <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;width: 200px;">
+                  <h4 style="font-weight:bold;">徽章進度</h4>
+                  <i class="fa-solid fa-fire" style="color:#D0D0D0;margin-left: 330px;margin-top: -30px;"></i>
+                  <i class="fa-solid fa-compass" style="color:#D0D0D0;margin-left: 360px;margin-top: -30px;"></i>
+                  <i class="fa-solid fa-binoculars" style="color:#D0D0D0;margin-left: 390px;margin-top: -30px;"></i>
+                  <i class="fa-solid fa-tents" style="color:#D0D0D0;margin-left: 420px;margin-top: -30px;"></i>
+                  </span>
+                </div>
+                <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;">
+                <h6>已參加活動2次</h6>
+                <h6 style="margin-left: 260px;">差1次升級</h6>
+              </span>
+              <div class="progress" style="width: 450px;margin-top: 3px;">
+                <div class="progress-bar " role="progressbar" style="width: 75%;background-color: rgb(136, 115, 15);" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              
+                    
+              </dialog>
+              <hr style="height: 8vh;width: .5vh;border-width: 0;right: 50%;">
+              <span style="margin-left: 50px;"> </span>
+            </button>
+          </div>
+          &nbsp;
+          
+          <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
+            <span style="margin-left: -120px;margin-top: 20px;">發起露營活動</span>
+            <hr style="height: 8vh;width: .5vh;border-width: 0;right: 50%;">
+            <span style="margin-left: 50px;"> </span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tab-content" id="myTabContent">
+
+
+    <div class="section section-properties">
+      <div class="container" style="max-width: 1260px">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="property-item mb-30">
+              <div class="thumb">
+                <img src="images/Rectangle 137.png" alt="Image" class="img-fluid" style="width:605px;height: 500px;" />
+              </div>
+              <dialog id="infoModal" class="info-modal">
+                <div class="box">
+                  <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;width: 200px;">
+                  <h4 style="font-weight:bold;">創建露營活動</h4>
+                  <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;margin-left: 420px;margin-top: -20px;"onclick="window.close();"></i></span>
+                </div>
+                <h6 style="color: #9D9D9D ">尋找其他小鹿一起冒險！<h6>
+                    <br>
+                    <input type="text" value="活動名稱"
+                      style="background-color: #F0F0F0; border-style: none; color:	#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
+                    <br><br>
+                    <input type="text" value="活動地點"
+                      style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
+                    <br><br>
+                    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                    <input type="date" value="開始日期" name="accountday" id="start"
+                      style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                      <br><br>
+                      <input type="date" value="結束日期" name="accountday" id="end"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <br><br></span>
+                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                        <select  value="最少人數"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 60px; border-radius: 30px;padding: 20px;">
+                        <option value=""selected>最少人數</option>
+                        <option value="1" >1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        </select>
+                        <br><br>
+                        <select  value="最多人數"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 60px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <option value=""selected>最多人數</option>
+                        <option value="1" >1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <br><br></select></span>
+                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                        <input type="email" value="最低費用"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                        <br><br>
+                        <input type="email" value="最高費用"
+                        style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                        <br><br></span>
+                    <textarea rows="4"
+                      style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">備註/建議</textarea>
+                    <br>
+                    
+                    
+                    <br>
+                    <button
+                      style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">提交</button>
+              </dialog>
+              <div class="property-content" style="height: 250px;">
+                <span class="city d-block mb-3">元宵 2/3-2/5 星空露營 </span>
+
+                <img src="images/person_4-min.jpg" alt="Admin" class="rounded-circle" width="60"
+                  style="margin-left: 70%;margin-top: -150px; ">
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    margin-left:83%;
+                    margin-top: -90px;
+                    margin-bottom: 50px;
+                    ">yizz</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    ;"><i class="fa-solid fa-calendar-days" style="margin-top: 12px; margin-right: 5px;"></i>2晚,
+                  2/3-2/5</span>
+
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    "><i class="fa-solid fa-person" style="margin-top: 12px; margin-right: 5px;"></i>4-6 人</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: -80px;
+
+                    "><i class="icon-map" style="margin-top: 12px; margin-right: 5px;"></i>合歡山北峰步道</span>
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: 5px;
+
+                    "><i class="fa-solid fa-sack-dollar" style="margin-top: 7px; margin-right: 5px;"></i>2000-2500
+                  元</span>
+
+                <hr>
+                <div class="d-flex flex-column align-items-center text-center">
+                  <span style="margin-right: 86%;margin-top: 20px;margin-bottom: 10px;">已有4人參加</span>
+                </div>
+
+
+                <div class="specs d-flex mb-4">
+
+                  <button class="btn btn-primary py-2 px-4.5"
+                    style="font-size: 14px;margin-top: 10px;margin-bottom: 30px;margin-right: 50px;">
+                    <div class="thumb" data-toggle="modal" data-target="#infoModal">參加 !</div>
+                  </button>
+
+
+
+
+                </div>
+              </div>
+            </div>
+            <!-- .item -->
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="property-item mb-30">
+              <a href="property-single.html" class="img">
+                <img src="images/Rectangle 137.png" alt="Image" class="img-fluid" style="width:605px;height: 500px;" />
+
+              </a>
+              <div class="property-content" style="height: 250px;">
+                <span class="city d-block mb-3">元宵 2/3-2/5 星空露營 </span>
+
+                <img src="images/person_4-min.jpg" alt="Admin" class="rounded-circle" width="60"
+                  style="margin-left: 70%;margin-top: -150px; ">
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    margin-left:83%;
+                    margin-top: -90px;
+                    margin-bottom: 50px;
+                    ">yizz</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    ;"><i class="fa-solid fa-calendar-days" style="margin-top: 12px; margin-right: 5px;"></i>2晚,
+                  2/3-2/5</span>
+
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    "><i class="fa-solid fa-person" style="margin-top: 12px; margin-right: 5px;"></i>4-6 人</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: -80px;
+
+                    "><i class="icon-map" style="margin-top: 12px; margin-right: 5px;"></i>合歡山北峰步道</span>
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: 5px;
+
+                    "><i class="fa-solid fa-sack-dollar" style="margin-top: 7px; margin-right: 5px;"></i>2000-2500
+                  元</span>
+
+                <hr>
+                <div class="d-flex flex-column align-items-center text-center">
+                  <span style="margin-right: 86%;margin-top: 20px;margin-bottom: 10px;">已有4人參加</span>
+                </div>
+
+
+                <div class="specs d-flex mb-4">
+
+                  <button class="btn btn-primary py-2 px-4.5"
+                    style="font-size: 14px;margin-top: 10px;margin-bottom: 30px;margin-right: 50px;background-color:#D9D9D9;">
+                    <a href="property-single.html" style="color: #000;font-weight: 900;">已額滿</a></button>
+
+                </div>
+              </div>
+            </div>
+            <!-- .item -->
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="property-item mb-30">
+              <a href="property-single.html" class="img">
+                <img src="images/Rectangle 137.png" alt="Image" class="img-fluid" style="width:605px;height: 500px;" />
+
+              </a>
+              <div class="property-content" style="height: 250px;">
+                <span class="city d-block mb-3">元宵 2/3-2/5 星空露營 </span>
+
+                <img src="images/person_4-min.jpg" alt="Admin" class="rounded-circle" width="60"
+                  style="margin-left: 70%;margin-top: -150px; ">
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    margin-left:83%;
+                    margin-top: -90px;
+                    margin-bottom: 50px;
+                    ">yizz</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    ;"><i class="fa-solid fa-calendar-days" style="margin-top: 12px; margin-right: 5px;"></i>2晚,
+                  2/3-2/5</span>
+
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    "><i class="fa-solid fa-person" style="margin-top: 12px; margin-right: 5px;"></i>4-6 人</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: -80px;
+
+                    "><i class="icon-map" style="margin-top: 12px; margin-right: 5px;"></i>合歡山北峰步道</span>
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: 5px;
+
+                    "><i class="fa-solid fa-sack-dollar" style="margin-top: 7px; margin-right: 5px;"></i>2000-2500
+                  元</span>
+
+                <hr>
+                <div class="d-flex flex-column align-items-center text-center">
+                  <span style="margin-right: 86%;margin-top: 20px;margin-bottom: 10px;">已有4人參加</span>
+                </div>
+
+
+                <div class="specs d-flex mb-4">
+
+                  <button class="btn btn-primary py-2 px-4.5"
+                    style="font-size: 14px;margin-top: 10px;margin-bottom: 30px;margin-right: 50px;">
+                    <a href="property-single.html" style="color: #fff;">參加 !</a></button>
+                </div>
+              </div>
+            </div>
+            <!-- .item -->
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="property-item mb-30">
+              <a href="property-single.html" class="img">
+                <img src="images/Rectangle 137.png" alt="Image" class="img-fluid" style="width:605px;height: 500px;" />
+
+              </a>
+              <div class="property-content" style="height: 250px;">
+                <span class="city d-block mb-3">元宵 2/3-2/5 星空露營 </span>
+
+                <img src="images/person_4-min.jpg" alt="Admin" class="rounded-circle" width="60"
+                  style="margin-left: 70%;margin-top: -150px; ">
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    margin-left:83%;
+                    margin-top: -90px;
+                    margin-bottom: 50px;
+                    ">yizz</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    ;"><i class="fa-solid fa-calendar-days" style="margin-top: 12px; margin-right: 5px;"></i>2晚,
+                  2/3-2/5</span>
+
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    "><i class="fa-solid fa-person" style="margin-top: 12px; margin-right: 5px;"></i>4-6 人</span>
+
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 40px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: -80px;
+
+                    "><i class="icon-map" style="margin-top: 12px; margin-right: 5px;"></i>合歡山北峰步道</span>
+                <span style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    letter-spacing: 1px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    margin-left: 150px;
+                    margin-top: 5px;
+
+                    "><i class="fa-solid fa-sack-dollar" style="margin-top: 7px; margin-right: 5px;"></i>2000-2500
+                  元</span>
+
+                <hr>
+                <div class="d-flex flex-column align-items-center text-center">
+                  <span style="margin-right: 86%;margin-top: 20px;margin-bottom: 10px;">已有4人參加</span>
+                </div>
+
+
+                <div class="specs d-flex mb-4">
+
+                  <button class="btn btn-primary py-2 px-4.5"
+                    style="font-size: 14px;margin-top: 10px;margin-bottom: 30px;margin-right: 50px;">
+                    <a href="property-single.html" style="color: #fff;">參加 !</a></button>
+                </div>
+              </div>
+            </div>
+            <!-- .item -->
+          </div>
+          <div class="row align-items-center py-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 text-center">
+              <div class="custom-pagination">
+                <a href="#">1</a>
+                <a href="#" class="active">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </article>
+
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row d-flex">
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
+            </a>
+            <div class="text mt-3 d-block">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20" style="background-image: url('images/image_4.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">Dec 6, 2018</a></div>
+                <div><a href="#">Admin</a></div>
+                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        </div>
+        </section>
+
+  <div class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="widget">
+            <h3>Contact</h3>
+            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
+            <ul class="list-unstyled links">
+              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+              <li>
+                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <div class="widget">
+            <h3>Sources</h3>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Vision</a></li>
+              <li><a href="#">Mission</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">Privacy</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">Partners</a></li>
+              <li><a href="#">Business</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Creative</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <div class="widget">
+            <h3>Links</h3>
+            <ul class="list-unstyled links">
+              <li><a href="#">Our Vision</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Contact us</a></li>
+            </ul>
+
+            <ul class="list-unstyled social">
+              <li>
+                <a href="#"><span class="icon-instagram"></span></a>
+              </li>
+              <li>
+                <a href="#"><span class="icon-twitter"></span></a>
+              </li>
+              <li>
+                <a href="#"><span class="icon-facebook"></span></a>
+              </li>
+              <li>
+                <a href="#"><span class="icon-linkedin"></span></a>
+              </li>
+              <li>
+                <a href="#"><span class="icon-pinterest"></span></a>
+              </li>
+              <li>
+                <a href="#"><span class="icon-dribbble"></span></a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+      </div>
+      <!-- /.row -->
+
+      <div class="row mt-5">
+        <div class="col-12 text-center">
+          <!--
+                      **==========
+                      NOTE:
+                      Please don't remove this copyright link unless you buy the license here https://untree.co/license/
+                      **==========
+                    -->
+
+          <p>
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            . All Rights Reserved. &mdash; Designed with love by
+            <a href="https://untree.co">Untree.co</a>
+            <!-- License information: https://untree.co/license/ -->
+          </p>
+          <div>
+            Distributed by
+            <a href="https://themewagon.com/" target="_blank">themewagon</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.container -->
+  </div>
+  <!-- /.site-footer -->
+
+  <!-- Preloader -->
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+  <script src="js/e-magz.js"></script>
+  <p>
+    Copyright &copy;
+    <script>
+      document.write(new Date().getFullYear());
+    </script>
+    . All Rights Reserved. &mdash; Designed with love by
+    <a href="https://untree.co">Untree.co</a>
+    <!-- License information: https://untree.co/license/ -->
+  </p>
+
+
+
+</body>
+
+</html>

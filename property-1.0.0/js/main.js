@@ -58,6 +58,7 @@
 		}, 1);
 	};
 	loader();
+	
 
 	// Scrollax
    $.Scrollax();
@@ -282,6 +283,10 @@
 	};
 	contentWayPoint();
 
+	document.querySelector('.heart').addEventListener('click', function() {
+		document.querySelector('.icon-heart').classList.toggle('active');
+	  });
+	  
 
 	// navigation
 	var OnePageNav = function() {
@@ -348,5 +353,15 @@
 
 
 
+
 })(jQuery);
 
+let btn=document.querySelector("#show");
+let infoModal=document.querySelector("#infoModal");
+btn.addEventListener("click", function(){
+	infoModal.showModal();
+})
+let close=document.querySelector("#close");
+close.addEventListener("click", function(){
+  infoModal.close();
+})
