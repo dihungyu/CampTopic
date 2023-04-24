@@ -124,7 +124,11 @@
         <div class="col-lg-8">
           <div class="row">
             <div class="col-md-12 ftco-animate">
-              <h5 class="mb-4" style="font-weight:bold;">露營嘍！來場跟櫻花的浪漫約會</h5>
+              <span style="display:flex;justify-content: space-between;">
+                <h5 class="mb-4" style="font-weight:bold;">露營嘍！來場跟櫻花的浪漫約會</h5>
+                <button type="button" class="btn-icon" data-toggle="modal" data-target="#main">
+                  <i class="fa-regular fa-pen-to-square"></i></button>
+                </span>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
                 <img src="images/person_4.jpg" alt="Image description" 
            style="border-radius: 50%;
@@ -435,7 +439,11 @@
                   </div>
                 </div>
               </div>
-              <h4>攜帶物品</h4>
+              <span style="display:flex;justify-content: space-between;margin-right: 30px;">
+              <h4 style="margin-bottom: 0px;">攜帶物品</h4>
+              <button type="button" class="btn-icon" data-toggle="modal" data-target="#supply">
+                <i class="fa-regular fa-pen-to-square"></i></button>
+              </span>
               <br>
               <div class="list">
                 <li>睡袋</li>
@@ -862,6 +870,66 @@
                     </div>
                   </div>
                 </div>
+   
+    <!-- 編輯物品 -->       
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="supply">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">編輯基本資訊</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+            </div>
+            <div class="modal-list" style="margin: 32px;">
+              <textarea class="lg" rows="8 type="text" value="supply" placeholder="物品內容"></textarea>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- 編輯首要內容 -->       
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="main">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">編輯物品</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+            </div>
+            <div class="modal-list" style="margin: 32px;">
+              <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
+                <input type="text" placeholder="標題">
+              </div>
+              <div class="col-md-6" style="padding-right: 0px; ">
+                <input type="text" placeholder="負責人">
+              </div>
+              <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
+                <input type="date" placeholder="日期">
+              </div>
+              <div class="col-md-6" style="padding-right: 0px; ">
+                  <input type="text" placeholder="地點">
+              </div>
+              <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
+                <input type="text" placeholder="人數">
+              </div>
+              <div class="col-md-6" style="padding-right: 0px;">
+                <input type="text" placeholder="費用">
+              </div>
+              
+              <textarea class="lg" rows="8 type="text" value="supply" placeholder="詳細內容"></textarea>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 
 
