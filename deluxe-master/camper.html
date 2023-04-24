@@ -481,7 +481,7 @@
              </div>
              <span class="more"><a href="#">查看更多</a></span>
              <div class="box-side">
-              <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal">我要參加！</button>
+              <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>
              </div>
             </div>
           </div>
@@ -605,23 +605,24 @@
       </div>
     </div>
     <!-- /.container -->
+  
   </div>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modalContent">
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document" >
+    <div class="modalContent" >
       <div class="box-mod">
-        <h4>參加</h4>
+        <h4 id="exampleModalLabel">參加</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
         </button>
       </div>
       <p style="color: #a0a0a0 ">參加活動蒐集勳章！<p>
-     
+      
       <div class="modal-list">
-          <input type="text" value="聯絡電話">
-          <input type="email" value="email">
-          <textarea rows="4">備註 / 建議</textarea>
+          <input type="text" placeholder="電話">
+          <input type="email" placeholder="信箱" >
+          <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
           
           <h6 style="font-weight:bold;">可提供裝備</h6>
           <div class="supply">
@@ -737,7 +738,7 @@
               </div>
             </div>
         </div>
-        <textarea rows="2">其他</textarea></div>
+        <textarea rows="2" placeholder="其他" type="text"></textarea></div>
         <div style=" display: flex;
         justify-content: flex-end;">
         <button class="btn-secondary">提交</button>
@@ -745,24 +746,17 @@
   </div>
     </div>
 </div>
+
+
     <!-- .section -->
-    
-
-
-
-
-
-
-
-
-
-
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
-      </svg></div>
+    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"stroke="#F96D00" />
+    </svg></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -782,20 +776,8 @@
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
-    <script>
-      const showBtn = document.getElementById("show");
-      const infoModal = document.getElementById("infoModal");
+  
 
-      showBtn.addEventListener("click", () => {
-        infoModal.style.display = "block";
-      });
-
-      window.onclick = function (event) {
-        if (event.target == infoModal) {
-          infoModal.style.display = "none";
-        }
-      }
-    </script>
 </body>
 
 </html>
