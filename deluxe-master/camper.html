@@ -95,7 +95,7 @@
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 151.png'); 
+  <div class="hero page-inner overlay" style="background-image: url('images/Wireshark.png'); 
       height:70vh;
       min-height: 300px;">
     <div class="container">
@@ -197,8 +197,6 @@
                   </div>
                   <div class="spot">
                     <p> 飛牛牧場 - 勝興車站 - 林泉休閒露營區</p>
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target=".bd-example-modal-lg">
-                      <i class="fa-regular fa-pen-to-square"></i></button>
                   </div>
               </span>
                   <div style="clear: both;">
@@ -243,8 +241,6 @@
                     </div>
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#modal2">
-                        <i class="fa-regular fa-pen-to-square"></i></button>
                     </div>
                 </span>
                   <div style="clear: both;">
@@ -293,8 +289,6 @@
                     </div>
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#modal3">
-                        <i class="fa-regular fa-pen-to-square"></i></button>
                     </div>
                 </span>
                   <div style="clear: both;">
@@ -343,8 +337,6 @@
                     </div>
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#modal4">
-                        <i class="fa-regular fa-pen-to-square"></i></button>
                     </div>
                 </span>
                   <div style="clear: both;">
@@ -393,8 +385,6 @@
                     </div>
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#modal5">
-                        <i class="fa-regular fa-pen-to-square"></i></button>
                     </div>
                 </span>
                   <div style="clear: both;">
@@ -491,7 +481,7 @@
              </div>
              <span class="more"><a href="#">查看更多</a></span>
              <div class="box-side">
-              <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">審核人員</button>
+              <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>
              </div>
             </div>
           </div>
@@ -615,262 +605,157 @@
       </div>
     </div>
     <!-- /.container -->
+  
   </div>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modalContent">
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document" >
+    <div class="modalContent" >
       <div class="box-mod">
-        <h4 id="exampleModalLabel">審核</h4>
+        <h4 id="exampleModalLabel">參加</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
         </button>
       </div>
-      <p style="color: #a0a0a0 ">審核參加人員<p>
-
+      <p style="color: #a0a0a0 ">參加活動蒐集勳章！<p>
+      
       <div class="modal-list">
-        <h6 style="font-weight:bold;">申請人員</h6>
+          <input type="text" placeholder="電話">
+          <input type="email" placeholder="信箱" >
+          <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
+          
+          <h6 style="font-weight:bold;">可提供裝備</h6>
           <div class="supply">
             <div class="row">
               <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start" >
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px; ">yizz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
 
               <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start" >
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
+                <input type="checkbox"><p>睡袋</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
 
               <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start" >
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzzzzz</label></span>
+                <input type="checkbox"><p>手電筒</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
-              </div>
-
 
               <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start" >
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px; ">yizzz</label></span>
+                <input type="checkbox"><p>瓦斯爐</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
 
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
 
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
-        </div> 
-      </div>
-      <div style=" display: flex;
-        justify-content: flex-end;">
-        <button class="btn-secondary">確認</button>
-      </div>
-      </div>
-      </div>
-      </div>
-    <!-- .section -->
-    <!-- 編輯行程 D1-D5 -->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">編輯行程</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-              </button>
-            </div>
-            <div class="modal-list" style="margin: 32px;">
-              <input type="day" placeholder="標題" >
-              <textarea class="lg" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>
-              
-                <div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">
-                  <input type="file" class="file-upload">
-                </div>
-                <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-                  <input type="file" class="file-upload">
-                </div>
+
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
               </div>
-            <div class="modal-footer">
-              <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
+
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+
+              <div class="w-100"></div>
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <input type="checkbox"><p>帳篷</p>
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
             </div>
-            </div>
-          </div>
         </div>
-
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal2">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">編輯行程</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                  </button>
-                </div>
-                <div class="modal-list" style="margin: 32px;">
-                  <input type="day" placeholder="標題" >
-                  <textarea class="lg" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>
-                  
-                    <div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">
-                      <input type="file" class="file-upload">
-                    </div>
-                    <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-                      <input type="file" class="file-upload">
-                    </div>
-                  </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal3">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">編輯行程</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                    </button>
-                  </div>
-                  <div class="modal-list" style="margin: 32px;">
-                    <input type="day" placeholder="標題" >
-                    <textarea class="lg" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>
-                    
-                      <div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">
-                        <input type="file" class="file-upload">
-                      </div>
-                      <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-                        <input type="file" class="file-upload">
-                      </div>
-                    </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal4">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">編輯行程</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                      </button>
-                    </div>
-                    <div class="modal-list" style="margin: 32px;">
-                      <input type="day" placeholder="標題" >
-                      <textarea class="lg" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>
-                      
-                        <div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">
-                          <input type="file" class="file-upload">
-                        </div>
-                        <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-                          <input type="file" class="file-upload">
-                        </div>
-                      </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal5">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">編輯行程</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                        </button>
-                      </div>
-                      <div class="modal-list" style="margin: 32px;">
-                        <input type="day" placeholder="標題" >
-                        <textarea class="lg" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>
-                        
-                          <div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">
-                            <input type="file" class="file-upload">
-                          </div>
-                          <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-                            <input type="file" class="file-upload">
-                          </div>
-                        </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <textarea rows="2" placeholder="其他" type="text"></textarea></div>
+        <div style=" display: flex; justify-content: flex-end;">
+        <button class="btn-secondary">提交</button>
+      </div>
+  </div>
+    </div>
+</div>
 
 
-
+    <!-- .section -->
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
-      </svg></div>
+    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"stroke="#F96D00" />
+    </svg></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -890,20 +775,8 @@
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
-    <script>
-      const showBtn = document.getElementById("show");
-      const infoModal = document.getElementById("infoModal");
+  
 
-      showBtn.addEventListener("click", () => {
-        infoModal.style.display = "block";
-      });
-
-      window.onclick = function (event) {
-        if (event.target == infoModal) {
-          infoModal.style.display = "none";
-        }
-      }
-    </script>
 </body>
 
 </html>
