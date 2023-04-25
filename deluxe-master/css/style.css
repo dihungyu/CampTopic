@@ -9419,3 +9419,9 @@ dialog{
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+#ad-banner {
+  
+  top: 120px;
+  width: 100%;
+}
