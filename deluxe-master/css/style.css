@@ -177,7 +177,8 @@ figure {
 
 img {
   vertical-align: middle;
-  border-style: none; }
+  border-style: none;
+  width: 1519.2px; }
 
 svg:not(:root) {
   overflow: hidden; }
@@ -9420,10 +9421,10 @@ dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-#ad-banner {
-  
+.ad-banner {
   top: 120px;
-  width: 10%;
+  width: 10px;
+  
 }
 
 .card-container {
