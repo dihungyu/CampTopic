@@ -645,7 +645,14 @@ progress {
   z-index: 9999;
   height: 700px;
 }
-
+.info-modal1 {
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  height: 500px;
+}
 
 .blockquote {
   margin-bottom: 1rem;

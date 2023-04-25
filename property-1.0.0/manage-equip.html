@@ -130,8 +130,8 @@
             
             <div id="navbar-search-autocomplete" class="form-outline">
             
-              <span style="flex-wrap: wrap; ">
-                <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;margin-left: 5px;"/>
+              <span style="flex-wrap: wrap; height: 65px; ">
+                <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;margin-left: -5px;"/>
                 <button type="button" class="button-search" style="margin-left: 200px;margin-top: -50px;">
                     <i class="fas fa-search"></i>
                 </button>
@@ -154,12 +154,50 @@
           <article class="col-md-12 article-list" style="display: flex;">
             <div class="inner" style="display: flex; ">
               <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
                 
                 <div class="card-body">
+                    <div class="thumb" data-toggle="modal" data-target="#infoModal">
+                        <i style="color: #ba4040;margin-left: 346px;"
+                            class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+                    
+                    <dialog id="infoModal" class="info-modal1">
+                        <div class="box">
+                          <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;width: 200px;">
+                          <h4 style="font-weight:bold;">發送警告</h4>
+                          <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;margin-left: 420px;margin-top: -20px;"onclick="window.close();"></i></span>
+                        </div>
+                           <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                            作者
+                            
+                           </span>
+                            <br>
+                            <input type="text" value="活動名稱"
+                              style="background-color: #F0F0F0; border-style: none; color:	#9D9D9D; width: 420px; height: 50px; border-radius: 30px;padding: 20px;">
+                            <br><br>
+                            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+                            <input type="date" value="開始日期" name="accountday" id="start"
+                              style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;">
+                              <br><br>
+                              <input type="date" value="結束日期" name="accountday" id="end"
+                                style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 200px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 20px;">
+                                <br><br></span>
+                                
+                                
+                                
+                            <textarea rows="4"
+                              style="background-color: #F0F0F0; border-style: none; color: 		#9D9D9D; width: 420px; border-radius: 10px;padding: 20px;">備註/建議</textarea>
+                            <br>
+                            
+                            
+                            <br>
+                            <button
+                              style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">提交</button>
+                      </dialog>
                  
                   <div class="detail">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                    <span class="fa-stack fa-1x" style="margin-right: 5px; margin-bottom: 10px;">
                         <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
                         <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
                       </span>
@@ -178,9 +216,11 @@
                 </div>
               </div>
               <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
                 
                 <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
                  
                   <div class="detail">
                     <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -202,10 +242,11 @@
                 </div>
               </div>
       <div class="card">
-        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-        
-        
-            <div class="card-body">
+        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
              
               <div class="detail">
                 <span class="fa-stack fa-1x" style="margin-right: 5px;">
@@ -230,9 +271,36 @@
       <article class="col-md-12 article-list" style="display: flex;">
         <div class="inner" style="display: flex; ">
             <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
                 
                 <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
+                  <div class="detail">
+                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                      </span>
+                    <h1><a href="single.html">露營帳篷</a></h1>
+                    <h5>$1,000</h5>
+                    
+                     </div>
+                    <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                    <footer >
+                        <span>
+                        <div class="card-icon-footer"><p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                        </span>
+                    </footer>
+                </div>
+              </div>
+              <div class="card">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
                  
                   <div class="detail">
                     <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -254,33 +322,11 @@
                 </div>
               </div>
               <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
                 
                 <div class="card-body">
-                 
-                  <div class="detail">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                    <h1><a href="single.html">露營帳篷</a></h1>
-                    <h5>$1,000</h5>
-                    
-                     </div>
-                    <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                    <footer >
-                        <span>
-                        <div class="card-icon-footer"><p>100 留言</p>
-                        <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                        </span>
-                    </footer>
-                </div>
-              </div>
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                
-                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
                  
                   <div class="detail">
                     <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -304,9 +350,36 @@
   </div></article>
   <article class="col-md-12 article-list" style="display: flex;">
     <div class="card">
-        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-        
-        <div class="card-body">
+        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
+          <div class="detail">
+            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+              </span>
+            <h1><a href="single.html">露營帳篷</a></h1>
+            <h5>$1,000</h5>
+            
+             </div>
+            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+            <footer >
+                <span>
+                <div class="card-icon-footer"><p>100 留言</p>
+                <p>30 分享</p>
+               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                </span>
+            </footer>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
          
           <div class="detail">
             <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -328,33 +401,11 @@
         </div>
       </div>
       <div class="card">
-        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-         
-          <div class="detail">
-            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-              </span>
-            <h1><a href="single.html">露營帳篷</a></h1>
-            <h5>$1,000</h5>
-            
-             </div>
-            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-            <footer >
-                <span>
-                <div class="card-icon-footer"><p>100 留言</p>
-                <p>30 分享</p>
-               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                </span>
-            </footer>
-        </div>
-      </div>
-      <div class="card">
-        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-        
-        <div class="card-body">
+        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: #ba4040;margin-left: 346px;"
+                    class="fa-solid fa-circle-exclamation"></i>
          
           <div class="detail">
             <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -383,74 +434,29 @@
           </div>
           </div>               
              </div>
-                  </div>
-                  <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-                                  
-                    <div class="section section-properties">
-                         <div class="container" >
-                              <div class="row">
-                       
-                      <article class="col-md-12 article-list" style="display: flex;">
-                        <div class="inner" style="display: flex; ">
-                          <div class="card">
-                            <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                            
-                            <div class="card-body">
-                             
-                              <div class="detail">
-                                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                                    <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                                  </span>
-                                <h1><a href="single.html">露營帳篷</a></h1>
-                                <h5>$1,000</h5>
-                                
-                                 </div>
-                                <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                                <footer >
-                                    <span>
-                                    <div class="card-icon-footer"><p>100 留言</p>
-                                    <p>30 分享</p>
-                                   <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                                    </span>
-                                </footer>
-                            </div>
-                          </div>
-                          <div class="card">
-                            <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                            
-                            <div class="card-body">
-                             
-                              <div class="detail">
-                                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                    <i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>
-                                    <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>
-                                  </span>
-                                <h1><a href="single.html">露營帳篷</a></h1>
-                                <h5>$1,000</h5>
-                                
-                                 </div>
-                                <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                                <footer >
-                                    <span>
-                                    <div class="card-icon-footer"><p>100 留言</p>
-                                    <p>30 分享</p>
-                                   <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                                    </span>
-                                </footer>
-                            </div>
-                          </div>
-                  <div class="card">
-                    <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                    
-                    
-                        <div class="card-body">
+
+             <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                              
+                <div class="section section-properties">
+                     <div class="container" >
+                          <div class="row">
+                   
+                  <article class="col-md-12 article-list" style="display: flex;">
+                    <div class="inner" style="display: flex; ">
+                      <div class="card">
+                        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
                          
                           <div class="detail">
-                            <span class="fa-stack fa-1x" style="margin-right: 5px;">
-                                <i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>
-                                <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>
+                            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
                               </span>
                             <h1><a href="single.html">露營帳篷</a></h1>
                             <h5>$1,000</h5>
@@ -466,164 +472,246 @@
                             </footer>
                         </div>
                       </div>
-                  </div></article>
-                  <article class="col-md-12 article-list" style="display: flex;">
-                    <div class="inner" style="display: flex; ">
-                        <div class="card">
-                            <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
+                      <div class="card">
+                        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                    class="fa-solid fa-circle-check"></i>
+                <i style="color: #ba4040;"
+                    class="fa-solid fa-circle-xmark"></i>
+
+                          <div class="detail">
+                            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                                <i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>
+                                <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>
+                              </span>
+                            <h1><a href="single.html">露營帳篷</a></h1>
+                            <h5>$1,000</h5>
                             
-                            <div class="card-body">
-                             
-                              <div class="detail">
-                                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                                    <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                                  </span>
-                                <h1><a href="single.html">露營帳篷</a></h1>
-                                <h5>$1,000</h5>
-                                
-                                 </div>
-                                <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                                <footer >
-                                    <span>
-                                    <div class="card-icon-footer"><p>100 留言</p>
-                                    <p>30 分享</p>
-                                   <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                                    </span>
-                                </footer>
-                            </div>
-                          </div>
-                          <div class="card">
-                            <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                            
-                            <div class="card-body">
-                             
-                              <div class="detail">
-                                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                                    <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                                  </span>
-                                <h1><a href="single.html">露營帳篷</a></h1>
-                                <h5>$1,000</h5>
-                                
-                                 </div>
-                                <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                                <footer >
-                                    <span>
-                                    <div class="card-icon-footer"><p>100 留言</p>
-                                    <p>30 分享</p>
-                                   <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                                    </span>
-                                </footer>
-                            </div>
-                          </div>
-                          <div class="card">
-                            <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                            
-                            <div class="card-body">
-                             
-                              <div class="detail">
-                                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                                    <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                                  </span>
-                                <h1><a href="single.html">露營帳篷</a></h1>
-                                <h5>$1,000</h5>
-                                
-                                 </div>
-                                <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                                <footer >
-                                    <span>
-                                    <div class="card-icon-footer"><p>100 留言</p>
-                                    <p>30 分享</p>
-                                   <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                                    </span>
-                                </footer>
-                            </div>
-                          </div>
-              </div></article>
-              <article class="col-md-12 article-list" style="display: flex;">
-                <div class="card">
-                    <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                    
-                    <div class="card-body">
-                     
-                      <div class="detail">
-                        <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                            <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                            <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                          </span>
-                        <h1><a href="single.html">露營帳篷</a></h1>
-                        <h5>$1,000</h5>
-                        
-                         </div>
-                        <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                        <footer >
-                            <span>
-                            <div class="card-icon-footer"><p>100 留言</p>
-                            <p>30 分享</p>
-                           <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                            </span>
-                        </footer>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                    
-                    <div class="card-body">
-                     
-                      <div class="detail">
-                        <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                            <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                            <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                          </span>
-                        <h1><a href="single.html">露營帳篷</a></h1>
-                        <h5>$1,000</h5>
-                        
-                         </div>
-                        <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                        <footer >
-                            <span>
-                            <div class="card-icon-footer"><p>100 留言</p>
-                            <p>30 分享</p>
-                           <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                            </span>
-                        </footer>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                    
-                    <div class="card-body">
-                     
-                      <div class="detail">
-                        <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                            <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                            <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                          </span>
-                        <h1><a href="single.html">露營帳篷</a></h1>
-                        <h5>$1,000</h5>
-                        
-                         </div>
-                        <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                        <footer >
-                            <span>
-                            <div class="card-icon-footer"><p>100 留言</p>
-                            <p>30 分享</p>
-                           <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                            </span>
-                        </footer>
-                    </div>
-                  </div>
-                </div></article>
-                          
-                        
-                        </div>
+                             </div>
+                            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                            <footer >
+                                <span>
+                                <div class="card-icon-footer"><p>100 留言</p>
+                                <p>30 分享</p>
+                               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                                </span>
+                            </footer>
                         </div>
                       </div>
-                      </div>               
+              <div class="card">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                     
+                      <div class="detail">
+                        <span class="fa-stack fa-1x" style="margin-right: 5px;">
+                            <i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>
+                            <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>
+                          </span>
+                        <h1><a href="single.html">露營帳篷</a></h1>
+                        <h5>$1,000</h5>
+                        
                          </div>
-                              </div>
+                        <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                        <footer >
+                            <span>
+                            <div class="card-icon-footer"><p>100 留言</p>
+                            <p>30 分享</p>
+                           <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                            </span>
+                        </footer>
+                    </div>
+                  </div>
+              </div></article>
+              <article class="col-md-12 article-list" style="display: flex;">
+                <div class="inner" style="display: flex; ">
+                    <div class="card">
+                        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                         
+                          <div class="detail">
+                            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                              </span>
+                            <h1><a href="single.html">露營帳篷</a></h1>
+                            <h5>$1,000</h5>
+                            
+                             </div>
+                            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                            <footer >
+                                <span>
+                                <div class="card-icon-footer"><p>100 留言</p>
+                                <p>30 分享</p>
+                               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                                </span>
+                            </footer>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                         
+                          <div class="detail">
+                            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                              </span>
+                            <h1><a href="single.html">露營帳篷</a></h1>
+                            <h5>$1,000</h5>
+                            
+                             </div>
+                            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                            <footer >
+                                <span>
+                                <div class="card-icon-footer"><p>100 留言</p>
+                                <p>30 分享</p>
+                               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                                </span>
+                            </footer>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+
+                          <div class="detail">
+                            <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                                <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                                <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                              </span>
+                            <h1><a href="single.html">露營帳篷</a></h1>
+                            <h5>$1,000</h5>
+                            
+                             </div>
+                            <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                            <footer >
+                                <span>
+                                <div class="card-icon-footer"><p>100 留言</p>
+                                <p>30 分享</p>
+                               <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                                </span>
+                            </footer>
+                        </div>
+                      </div>
+          </div></article>
+          <article class="col-md-12 article-list" style="display: flex;">
+            <div class="card">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                 
+                  <div class="detail">
+                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                      </span>
+                    <h1><a href="single.html">露營帳篷</a></h1>
+                    <h5>$1,000</h5>
+                    
+                     </div>
+                    <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                    <footer >
+                        <span>
+                        <div class="card-icon-footer"><p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                        </span>
+                    </footer>
+                </div>
+              </div>
+              <div class="card">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                 
+                  <div class="detail">
+                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                      </span>
+                    <h1><a href="single.html">露營帳篷</a></h1>
+                    <h5>$1,000</h5>
+                    
+                     </div>
+                    <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                    <footer >
+                        <span>
+                        <div class="card-icon-footer"><p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                        </span>
+                    </footer>
+                </div>
+              </div>
+              <div class="card">
+                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+                
+                <div class="card-body">
+                    <i style="color: rgb(46, 116, 46);margin-left: 323px;"
+                        class="fa-solid fa-circle-check"></i>
+                    <i style="color: #ba4040;"
+                        class="fa-solid fa-circle-xmark"></i>
+                 
+                  <div class="detail">
+                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
+                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
+                      </span>
+                    <h1><a href="single.html">露營帳篷</a></h1>
+                    <h5>$1,000</h5>
+                    
+                     </div>
+                    <p> 四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
+                    <footer >
+                        <span>
+                        <div class="card-icon-footer"><p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p>1,098</p></div>
+                        </span>
+                    </footer>
+                </div>
+              </div>
+            </div></article>
+                      
+                    
+                    </div>
+                    </div>
+                  </div>
+                  </div>               
+                     </div>
+                          
+                  </div>
+                  
                 </div>
                   </div>
                   <br><br>
