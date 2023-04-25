@@ -9426,6 +9426,15 @@ dialog::backdrop {
   width: 10%;
 }
 
+.card-container {
+  display: flex; /* 使用flexbox布局 */
+  justify-content: space-between; /* 将卡片间的间距设置为相等 */
+}
+
+.card-eq {
+  width: 30%; /* 设置卡片的宽度 */
+}
+
 
 .card-body-eq {
   -webkit-box-flex: 1;
