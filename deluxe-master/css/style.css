@@ -9570,3 +9570,17 @@ article .detail {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px; }
+
+  .card-icon-footer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .card-icon-footer p {
+  margin-left: 6px;
+  margin-right: 10px;
+  }
+  .card-icon-footer i {
+    margin-right: 4px;
+    margin-left: 160px;
+  }
