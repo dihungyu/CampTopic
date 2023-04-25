@@ -43,7 +43,8 @@ $total_records = mysqli_num_rows($result);
             $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
             $files_result = mysqli_query($conn, $files_query);
             while ($file_result = mysqli_fetch_assoc($files_result)) {
-                $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                $file_name = $file_result['fileName'];
+                $file_path = '../../upload/' . $file_name;
                 echo "<img src='" . $file_path . "' alt=''>";
                 echo "<br>"; // 加上換行，方便閱讀
             }

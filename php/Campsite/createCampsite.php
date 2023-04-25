@@ -70,18 +70,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
             if (in_array($detected_type, $allowed_types)) {
                 $fileId = uuid_generator();
-                $upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
-                $fileName = $_FILES["files"]["name"][$key];
-                $filePath = $upload_dir . $fileName;
-                $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
-                $fileSize = round($_FILES["files"]["size"][$key] / 1024, 2); //KB
+                $upload_dir = __DIR__ . '/../../upload/'; // 上傳目錄相對路徑
+                $fileName = $_FILES['files']['name'][$key];
+                $filePath = '../../upload/' . $fileName;
+                $fileExtensionName = pathinfo($fileName, PATHINFO_EXTENSION);
+                $fileSize = round($_FILES['files']['size'][$key] / 1024, 2); //KB
 
-                move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
+                move_uploaded_file($_FILES['files']['tmp_name'][$key], $filePath);
 
                 $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
                 VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
 
                 mysqli_query($conn, $sql_query2);
+
             } else {
                 echo "檔案 $name 必須為圖片格式！<br>";
             }

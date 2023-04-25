@@ -1,4 +1,8 @@
 <?php
+// 開啟錯誤報告
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $campsiteId = $_GET['campsiteId'];
 
 require_once '../conn.php';
@@ -12,15 +16,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 // Delete data from database
-$sql_query1 = "DELETE FROM campsites WHERE campsiteId = '$campsiteId'";
-mysqli_query($conn, $sql_query1);
 $sql_query2 = "DELETE FROM files WHERE campsiteId = '$campsiteId'";
 mysqli_query($conn, $sql_query2);
+$sql_query1 = "DELETE FROM campsites WHERE campsiteId = '$campsiteId'";
+mysqli_query($conn, $sql_query1);
 
 // Delete files from upload folder
-$upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
-foreach ($files_to_delete as $file_name) {
-    $file_path = $upload_dir . $file_name;
+$upload_dir = __DIR__ . '/../../upload/';
+foreach ($files_to_delete as $fileName) { // 修改變量名 $file_name 為 $fileName
+    $file_path = $upload_dir . $fileName; // 修改變量名 $filePath 為 $file_path 並使用 $upload_dir
     if (file_exists($file_path)) {
         unlink($file_path);
     }
