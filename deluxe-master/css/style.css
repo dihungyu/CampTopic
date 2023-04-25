@@ -9423,7 +9423,7 @@ dialog::backdrop {
 #ad-banner {
   
   top: 120px;
-  width: 100%;
+  width: 10%;
 }
 
 
@@ -9560,7 +9560,7 @@ article .detail {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-
+  
  }
  .row-eq {
   display: -webkit-box;
