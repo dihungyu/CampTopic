@@ -166,9 +166,9 @@
                          <a href="category.html">Film</a>
                         </div>
                         <div class="time">December 26, 2016</div>
-                        <div class="thumb" data-toggle="modal" data-target="#infoModal">
-                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
-                        </div>
+                        
+                           <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                      
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
@@ -276,30 +276,44 @@
                 </article>
                 
             </div></div></div>
+            <!-- Button trigger modal -->
 
-            <dialog id="infoModal">
-              <div class="box">
-              <h4 style="font-weight:bold;">發送警告</h4>
-              <i id="close" class="fa-solid fa-circle-xmark fa-xl" style="color:#D0D0D0;"></i>
-            </div>
-            <div class="box">
-              <h6>作者<h6>
-                <i class="fa-solid fa-circle-user fa-2xl"></i><span>yizz
-                </span>
-              </div>
-              <br>
-              <select style="border-radius: 30px; color: #D0D0D0;">
-                <option>原因</option>
-                <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
-                <option>不實資訊</option>
-                <option>搜擾</option>
-                <option>其他</option>
-                </select>
-              <br><br>
-            <button style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">確認
-            </button>
-          </dialog>
-          
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold">發送警告</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border-radius: 30px; border: none; color: 	#7B7B7B">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <br>
+      <div class="modal-body">
+      <div class="box">
+        <h6 style="padding-left: 20px;">作者<h6>
+        <i class="fa-solid fa-circle-user fa-xl" style="margin-left: 20px;"></i>&nbsp;&nbsp;<span>yizz</span>
+      </div>
+  <br>
+    <select style="border-radius: 30px; color: #D0D0D0; height: 40px; padding: 10px; width: 400px; margin: 0 auto; display: flex;">
+      <option>原因</option>
+      <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
+      <option>不實資訊</option>
+      <option>搜擾</option>
+      <option>其他</option>
+    </select>
+    <br><br><br><br><br>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
+  </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <br><br>
+<button style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">確認
+</button>
 
             <div class="tab-pane fade show" id="check" role="tabpanel" aria-labelledby="check-tab">
               <div class="container">
