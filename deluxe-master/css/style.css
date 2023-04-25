@@ -9425,3 +9425,23 @@ dialog::backdrop {
   top: 120px;
   width: 100%;
 }
+
+
+.card-body-eq {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+  margin-top: 17px; }
+
+.card-title-eq {
+  margin-bottom: 0.5rem; }
+
+.card-subtitle-eq {
+  margin-top: -0.25rem;
+  margin-bottom: 0; }
+.card-text-eq{
+  margin-left: 6px; 
+  font-size: 15px; 
+  margin-right: 4px;
+}
