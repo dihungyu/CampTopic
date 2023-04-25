@@ -12,6 +12,7 @@ $cityId = !empty($row_campsite['cityId']) ? $row_campsite['cityId'] : '無資料
 $campsiteName = !empty($row_campsite['campsiteName']) ? $row_campsite['campsiteName'] : '無資料';
 $campsiteDescription = !empty($row_campsite['campsiteDescription']) ? $row_campsite['campsiteDescription'] : '無資料';
 $campsiteAddress = !empty($row_campsite['campsiteAddress']) ? $row_campsite['campsiteAddress'] : '無資料';
+$campsiteAddressLink = !empty($row_campsite['campsiteAddressLink']) ? $row_campsite['campsiteAddressLink'] : '無資料';
 $campsiteVideoLink = !empty($row_campsite['campsiteVideoLink']) ? $row_campsite['campsiteVideoLink'] : '無資料';
 
 // 查詢 serviceId 和 iconCode
@@ -31,6 +32,16 @@ while ($row_service = mysqli_fetch_assoc($result_services)) {
   $services[$serviceName] = $iconCode;
 }
 $services_count = count($services);
+
+$files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
+$files_result = mysqli_query($conn, $files_query);
+
+$sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+  FROM campsites_labels
+  JOIN labels ON campsites_labels.labelId = labels.labelId
+  WHERE campsites_labels.campsiteId = '$campsiteId'";
+$result_labels = mysqli_query($conn, $sql_query_labels);
+
 
 ?>
 <!DOCTYPE html>
@@ -150,18 +161,19 @@ $services_count = count($services);
                 <?php echo $campsiteName ?>
               </h3>
               <div class="single-slider owl-carousel">
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/148.png);"></div>
-                </div>
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/149.png);"></div>
-                </div>
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/150.png);"></div>
-                </div>
+                <?php
+                while ($file_result = mysqli_fetch_assoc($files_result)) {
+                  $file_name = $file_result['fileName'];
+                  $file_path = '../upload/' . $file_name;
+                  echo "<div class='item'>";
+                  echo "<div class='room-img' style='background-image: url($file_path);'></div>";
+                  echo "</div>";
+                }
+                ?>
+
               </div>
             </div>
-            <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
+            <div class="col-md-12 room-single mt-4 mb-4 ftco-animate">
               <p>
                 <?php echo $campsiteDescription ?>
               </p>
@@ -270,14 +282,12 @@ $services_count = count($services);
           <div class="sidebar-box ftco-animate">
             <h3>營地標籤</h3>
             <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">BBQ</a>
-              <a href="#" class="tag-cloud-link">溫泉</a>
-              <a href="#" class="tag-cloud-link">大自然</a>
-              <a href="#" class="tag-cloud-link">手作</a>
-              <a href="#" class="tag-cloud-link">懶人露營</a>
-              <a href="#" class="tag-cloud-link">網美</a>
-              <a href="#" class="tag-cloud-link">拍照</a>
-              <a href="#" class="tag-cloud-link">獨立衛浴</a>
+              <?php
+              while ($result_label = mysqli_fetch_assoc($result_labels)) {
+                $labelName = $result_label['labelName'];
+                echo "<a class='tag-cloud-link'>$labelName</a>";
+              }
+              ?>
             </div>
           </div>
 
@@ -290,88 +300,11 @@ $services_count = count($services);
         </div>
       </div>
 
-      <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-        <h4 class="mb-4">顧客回饋</h4>
-        <div class="row">
-          <div class="col-sm col-md-4 ftco-animate">
-            <div class="item">
-              <div class="testimonial">
-                <img src="images/person_1-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">James Smith</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm col-md-4 ftco-animate">
-            <div class="item">
-              <div class="testimonial">
-                <img src="images/person_1-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">James Smith</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm col-md-4 ftco-animate">
-            <div class="item">
-              <div class="testimonial">
-                <img src="images/person_1-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">James Smith</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- .section -->
     <!-- map-->
-    <div class="container" style="margin-top:108px;">
+    <div class="container" style="margin-top:40px;">
       <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
         <h4 class="mb-4">找到我們</h4>
         <div class="contact-page-area section-gap">
@@ -382,12 +315,13 @@ $services_count = count($services);
             </p>
           </span>
           <div class="row">
-            <div class="map-wrap" style="height: 445px;" id="map"></div>
-            <div class="col-lg-4 d-flex flex-column address-wrap">
-              <div class="single-contact-address d-flex flex-row">
-              </div>
+            <div class="map-wrap" style="height: 445px;">
+              <iframe src="<?php echo $campsiteAddressLink ?>" width="1300" height="445" style="border:0;"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
             </div>
           </div>
+
         </div>
 
       </div>

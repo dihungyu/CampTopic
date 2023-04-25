@@ -1,5 +1,4 @@
 <?php
-
 require_once '../conn.php';
 
 $campsiteId = $_GET['campsiteId'];
@@ -79,7 +78,7 @@ $campsiteAddress = $row_result['campsiteAddress'];
             $file_path = $row_files['filePath'];
             if ($isDeleted == 0) { // 檢查該圖片是否已標記為已刪除
                 echo "<div id='image-$fileId'>
-                    <img src='/../upload/$fileName' alt=''>
+                    <img src='../../upload/$fileName' alt=''>
                     <button type='button' onclick='deleteFile(\"$fileId\")'>刪除此圖片</button>
                 </div>";
             }
@@ -119,15 +118,10 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
     $sql_query3 = "DELETE FROM files WHERE campsiteId = '$campsiteId' AND isDeleted = 1";
     $result3 = mysqli_query($conn, $sql_query3);
 
-    if (!$result1 || !$result2 || !$result3) {
-        die(mysqli_error($conn));
-    }
-
     if (!empty($_FILES["files"]["name"][0])) {
         require_once '../uuid_generator.php';
         // loop through all uploaded files
         foreach ($_FILES["files"]["name"] as $key => $name) {
-
             // check if file was uploaded successfully
             if ($_FILES["files"]["error"][$key] === UPLOAD_ERR_OK) {
 
@@ -149,10 +143,6 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
                         VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
 
                     mysqli_query($conn, $sql_query4);
-
-                    if (!$result4) {
-                        die(mysqli_error($conn));
-                    }
                 } else {
                     echo "檔案 $name 必須為圖片格式！<br>";
                 }
