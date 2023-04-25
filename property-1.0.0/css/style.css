@@ -308,7 +308,9 @@ textarea {
 
 button,
 select {
-  text-transform: none; }
+  text-transform: none;
+ 
+}
 
 [role="button"] {
   cursor: pointer; }
@@ -11201,3 +11203,19 @@ nav[aria-label="breadcrumb"] li:before {
     font-family: 'Raleway', sans-serif;
     margin-bottom: 30px;
   }
+
+  .box {
+    display: flex;
+    
+    align-items: center;
+  }
+  
+  .text {
+    flex: 1;
+  }
+  
+  .icon {
+    content: url("fa-solid fa-child-dress");
+    margin-left: 30px;
+  }
+  
