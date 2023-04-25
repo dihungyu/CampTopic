@@ -76,8 +76,10 @@
                 帳號
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="member.html">會員帳號</a>
-                <a class="dropdown-item" href="member-like.html">我的收藏</a>
+                <a class="dropdown-item" href="member.html">管理員帳號</a>
+                <a class="dropdown-item" href="member-like.html">營地管理</a>
+                <a class="dropdown-item" href="member-like.html">文章管理</a>
+                <a class="dropdown-item" href="member-like.html">設備管理</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">登出</a>
               </div>
@@ -95,7 +97,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">收藏清單</h1>
+            <h1 class="heading" data-aos="fade-up">文章管理</h1>
 
             <nav
               aria-label="breadcrumb"
@@ -104,12 +106,12 @@
             >
               <ol class="breadcrumb text-center justify-content-center">
                 <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-                <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
+                <li class="breadcrumb-item"><a href="member.html">管理員帳號</a></li>
                 <li
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  我的收藏
+                  文章管理
                 </li>
               </ol>
             </nav>
@@ -123,14 +125,12 @@
         <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
             
           <ul class="nav nav-tabs" style="margin-left: 16px; width: 62%; " id="myTab" role="tablist">
+              
               <li class="nav-item" style="margin-right:20px">
-                <a class="nav-link land" id="land-tab" data-toggle="tab" href="#land" role="tab" aria-controls="land" aria-selected="true">營地</a>
-              </li>
-              <li class="nav-item" style="margin-right:20px"">
-                <a class="nav-link paper" id="paper-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="paper" aria-selected="true">文章</a>
+                <a class="nav-link paper" id="paper-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="paper" aria-selected="true">所有文章</a>
               </li>
               <li class="nav-item" style="margin-right:20px">
-                <a class="nav-link equip" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="equip" aria-selected="true">設備</a>
+                <a class="nav-link equip" id="check-tab" data-toggle="tab" href="#check" role="tab" aria-controls="check" aria-selected="true">待審核</a>
               </li>
               
             </ul>
@@ -150,271 +150,14 @@
     </div>
         
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="land" role="tabpanel" aria-labelledby="land-tab">
-            
-    <div class="section section-properties">
-      <div class="container" >
-        <div class="row">
-           
-          <article class="col-md-12 article-list" style="display: flex;">
-            <div class="inner" style="display: flex; ">
-              <div class="card">
-                <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-                
-                <div class="card-body">
-                 <h4>$1,200</h4>
-                  <div class="detail">
-                    <h1><a href="single.html">自然圈農場</a></h1>
-                    <span>
-                      <i class="icon-star" style="color:#FEBB56;"></i> 
-                      <p class="detail-icon">4.0</p>
-                    </span>
-                     </div>
-                    <p>369苗栗縣卓蘭鎮西坪36-20號</p>
-                    <footer>
-                     <span>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                        <button class="tag-fav">
-                          <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                          <button class="tag-fav">
-                            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                      
-                     </span>
-                    </footer>
-                </div>
-              </div>
-              <div class="card">
-                <img src="images/Rectangle 136.png" class="card-img-top" alt="...">
-                
-                <div class="card-body">
-                  <h4>$1,200</h4>
-                  <div class="detail">
-                    <h1><a href="single.html">蟬說：霧繞 Chanshuo Woorao</a></h1>
-                    <span>
-                      <i class="icon-star" style="color:#FEBB56;"></i> 
-                      <p class="detail-icon">4.0</p>
-                    </span>
-                     </div>
-                    <p>311新竹縣五峰鄉桃白村白蘭298之3號</p>
-                    <footer>
-                     <span>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                        <button class="tag-fav">
-                          <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                          <button class="tag-fav">
-                            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                      
-                     </span>
-                    </footer>
-                </div>
-              </div>
-      <div class="card">
-        <img src="images/Rectangle 138.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">燈火嵐杉野奢露營區inHere</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>545南投縣埔里鎮種瓜路33～5號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-      </div></article>
-      <article class="col-md-12 article-list" style="display: flex;">
-        <div class="inner" style="display: flex; ">
-          <div class="card">
-            <img src="images/Rectangle 135.png" class="card-img-top" alt="...">
-            
-            <div class="card-body">
-              <h4>$1,200</h4>
-              <div class="detail">
-                <h1><a href="single.html">趣兒Chill:藍鵲菲菲</a></h1>
-                <span>
-                  <i class="icon-star" style="color:#FEBB56;"></i> 
-                  <p class="detail-icon">4.0</p>
-                </span>
-                 </div>
-                <p>
-                  111台北市士林區菁山路101巷71弄16號</p>
-                <footer>
-                 <span>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                    <button class="tag-fav">
-                      <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                  
-                 </span>
-                </footer>
-            </div>
-          </div>
-          <div class="card">
-            <img src="images/Rectangle 134.png" class="card-img-top" alt="...">
-            
-            <div class="card-body">
-              <h4>$1,200</h4>
-              <div class="detail">
-                <h1><a href="single.html">向海那漾 Nayang Beach</a></h1>
-                <span>
-                  <i class="icon-star" style="color:#FEBB56;"></i> 
-                  <p class="detail-icon">4.0</p>
-                </span>
-                 </div>
-                <p>439台中市大安區北汕路86巷 1號
-                </p>
-                <footer>
-                 <span>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                    <button class="tag-fav">
-                      <a href="property-single.html" style="color: #000;">台中市</a></button>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">看海</a></button>
-                  
-                 </span>
-                </footer>
-            </div>
-          </div>
-  <div class="card">
-    <img src="images/Rectangle 139.png" class="card-img-top" alt="...">
-    
-    <div class="card-body">
-      <h4>$1,200</h4>
-      <div class="detail">
-        <h1><a href="single.html">露營樂2號店</a></h1>
-        <span>
-          <i class="icon-star" style="color:#FEBB56;"></i> 
-          <p class="detail-icon">4.0</p>
-        </span>
-         </div>
-        <p> 80545高雄市旗津區旗津三路51號</p>
-        <footer>
-         <span>
-          <button class="tag-fav">
-            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-            <button class="tag-fav">
-              <a href="property-single.html" style="color: #000;">高雄市</a></button>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">海鮮</a></button>
-          
-         </span>
-        </footer>
-    </div>
-  </div>
-  </div></article>
-  <article class="col-md-12 article-list" style="display: flex;">
-    <div class="inner" style="display: flex; ">
-      <div class="card">
-        <img src="images/Rectangle 140.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">森渼原ALIVE Glamping Base</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>438台中市外埔區二崁路700號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">台中市</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">近市區</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-      <div class="card">
-        <img src="images/Rectangle 141.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">橘舍三食</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>369苗栗縣卓蘭鎮西坪43-15號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">苗栗縣</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">大草原</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-<div class="card">
-<img src="images/Rectangle 142.png" class="card-img-top" alt="...">
-
-<div class="card-body">
-  <h4>$1,200</h4>
-  <div class="detail">
-    <h1><a href="single.html">勤美學</a></h1>
-    <span>
-      <i class="icon-star" style="color:#FEBB56;"></i> 
-      <p class="detail-icon">4.0</p>
-    </span>
-     </div>
-    <p>361苗栗縣造橋鄉豐湖村1鄰乳姑山15-3號</p>
-    <footer>
-     <span>
-      <button class="tag-fav">
-        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-        <button class="tag-fav">
-          <a href="property-single.html" style="color: #000;">苗栗縣</a></button>
-          <button class="tag-fav">
-            <a href="property-single.html" style="color: #000;">有溪流</a></button>
-      
-     </span>
-    </footer>
-</div>
-</div>
-</div></article>
-          
-        
-        </div>
-        </div>
-      </div>
-      </div>
-         <div class="tab-pane fade show " id="paper" role="tabpanel" aria-labelledby="paper-tab">
+         <div class="tab-pane fade show active" id="paper" role="tabpanel" aria-labelledby="paper-tab">
               <div class="container">
               <div class="row" >
-                <article class="col-md-8 article-list">
+                <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
                       <a href="single.html">
-                        <img src="images/news/img15.jpg">
+                        <img src="images/img15.jpg">
                       </a>
                     </figure>
                     <div class="details">
@@ -423,6 +166,7 @@
                          <a href="category.html">Film</a>
                         </div>
                         <div class="time">December 26, 2016</div>
+                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
@@ -436,25 +180,12 @@
                        </footer>
                     </div>
                   </div>
-                </article> <div class="col-md-4 sidebar">
-                  <aside>
-                    <div class="aside-body">
-                      <figure class="ads">
-                        <a href="single.html">
-                          <img src="images/Group 74.png">
-                        </a>
-                        <figcaption>Advertisement</figcaption>
-                      </figure>
-                    </div>
-                 
-                  </aside>
-                 
-                  </div>
-                <article class="col-md-8 article-list">
+                </article> 
+                <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
                       <a href="single.html">
-                        <img src="images/news/img15.jpg">
+                        <img src="images/img15.jpg">
                       </a>
                     </figure>
                     <div class="details">
@@ -463,46 +194,7 @@
                          <a href="category.html">Film</a>
                         </div>
                         <div class="time">December 26, 2016</div>
-                      </div>
-                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                      <p>
-                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                      </p>
-                      <footer>
-                        <p>100 留言</p>
-                        <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
-                    </div>
-                  </div>
-                </article> <div class="col-md-4 sidebar">
-                  <aside>
-                    <div class="aside-body">
-                      <figure class="ads">
-                        <a href="single.html">
-                          <img src="images/Group 74.png">
-                        </a>
-                        <figcaption>Advertisement</figcaption>
-                      </figure>
-                    </div>
-                 
-                  </aside>
-                 
-                  </div>
-                <article class="col-md-8 article-list">
-                  <div class="inner">
-                    <figure>
-                      <a href="single.html">
-                        <img src="images/news/img15.jpg">
-                      </a>
-                    </figure>
-                    <div class="details">
-                      <div class="detail">
-                        <div class="category">
-                         <a href="category.html">Film</a>
-                        </div>
-                        <div class="time">December 26, 2016</div>
+                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
@@ -517,11 +209,11 @@
                     </div>
                   </div>
                 </article>
-                <article class="col-md-8 article-list">
+                <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
                       <a href="single.html">
-                        <img src="images/news/img15.jpg">
+                        <img src="images/img15.jpg">
                       </a>
                     </figure>
                     <div class="details">
@@ -530,6 +222,35 @@
                          <a href="category.html">Film</a>
                         </div>
                         <div class="time">December 26, 2016</div>
+                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
+                      </div>
+                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
+                      <p>
+                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
+                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
+                      </p>
+                      <footer>
+                        <p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
+                       </footer>
+                    </div>
+                  </div>
+                </article>
+                <article class="col-md-12 article-list">
+                  <div class="inner">
+                    <figure>
+                      <a href="single.html">
+                        <img src="images/img15.jpg">
+                      </a>
+                    </figure>
+                    <div class="details">
+                      <div class="detail">
+                        <div class="category">
+                         <a href="category.html">Film</a>
+                        </div>
+                        <div class="time">December 26, 2016</div>
+                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
@@ -546,125 +267,130 @@
                 </article>
                 
             </div></div></div>
-           
-              <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
-                <div class="container">
-                  <div class="row" >
-                    
-                    <article class="col-md-8 article-list" style="display: flex;">
-                      <div class="inner" style="display: flex; ">
-                     <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                  
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
-                    </div>
-                    <p class="card-text" >
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                      <footer style="margin-top:40px">
-                       <span>
-                       <div class="card-icon-footer"><p>100 留言</p>
-                       <p>30 分享</p>
-                      <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                       </span>
-                      </footer></div>
-                </div>
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                  
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
-                    </div>
-                    <p class="card-text" >
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                      <footer style="margin-top:40px">
-                       <span>
-                       <div class="card-icon-footer"><p>100 留言</p>
-                       <p>30 分享</p>
-                      <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                       </span>
-                      </footer>
-                  </div>
-                </div>
-                </div></article>
-              
-               
-                  <div class="col-md-4 sidebar">
-                    <aside>
-                      <div class="aside-body">
-                        <figure class="ads">
-                          <a href="single.html">
-                            <img src="images/Group 74.png">
-                          </a>
-                          <figcaption>Advertisement</figcaption>
-                        </figure>
+          
+
+            <div class="tab-pane fade show" id="check" role="tabpanel" aria-labelledby="check-tab">
+              <div class="container">
+              <div class="row" >
+                <article class="col-md-12 article-list">
+                  <div class="inner">
+                    <figure>
+                      <a href="single.html">
+                        <img src="images/img15.jpg">
+                      </a>
+                    </figure>
+                    <div class="details">
+                      <div class="detail">
+                        <div class="category">
+                         <a href="category.html">Film</a>
+                        </div>
+                        <div class="time">December 26, 2016</div>
+                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
+                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
                       </div>
-                   
-                    </aside>
-                   
+                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
+                      <p>
+                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
+                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
+                      </p>
+                      <footer>
+                        <p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
+                       </footer>
                     </div>
-                    <article class="col-md-8 article-list" style="display: flex;">
-                      <div class="inner" style="display: flex; ">
-                        <div class="card">
-                          <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                          
-                          <div class="card-body">
-                            <div class="detail">
-                              <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                                <i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>
-                                <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>
-                              </span>
-                              <h1><a href="single.html">露營帳篷</a></h1>
-                              <h5>$1,000</h5>
-                            </div>
-                            <p class="card-text" >
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                              <footer style="margin-top:40px">
-                               <span>
-                               <div class="card-icon-footer"><p>100 留言</p>
-                               <p>30 分享</p>
-                              <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                               </span>
-                              </footer></div>
+                  </div>
+                </article> 
+                <article class="col-md-12 article-list">
+                  <div class="inner">
+                    <figure>
+                      <a href="single.html">
+                        <img src="images/img15.jpg">
+                      </a>
+                    </figure>
+                    <div class="details">
+                      <div class="detail">
+                        <div class="category">
+                         <a href="category.html">Film</a>
                         </div>
-                        <div class="card">
-                          <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                          
-                          <div class="card-body">
-                            <div class="detail">
-                              <span class="fa-stack fa-1x" style="margin-right: 5px;">
-                                <i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>
-                                <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>
-                              </span>
-                              <h1><a href="single.html">露營帳篷</a></h1>
-                              <h5>$1,000</h5>
-                            </div>
-                            <p class="card-text" >
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                              <footer style="margin-top:40px">
-                               <span>
-                               <div class="card-icon-footer"><p>100 留言</p>
-                               <p>30 分享</p>
-                              <i class="fa-regular fa-eye"></i><p>1,098</p></div>
-                               </span>
-                              </footer></div>
+                        <div class="time">December 26, 2016</div>
+                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
+                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                      </div>
+                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
+                      <p>
+                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
+                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
+                      </p>
+                      <footer>
+                        <p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
+                       </footer>
+                    </div>
+                  </div>
+                </article>
+                <article class="col-md-12 article-list">
+                  <div class="inner">
+                    <figure>
+                      <a href="single.html">
+                        <img src="images/img15.jpg">
+                      </a>
+                    </figure>
+                    <div class="details">
+                      <div class="detail">
+                        <div class="category">
+                         <a href="category.html">Film</a>
                         </div>
-                </div></article>
-           </div>
-                </div>
-              </div>
+                        <div class="time">December 26, 2016</div>
+                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
+                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                      </div>
+                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
+                      <p>
+                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
+                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
+                      </p>
+                      <footer>
+                        <p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
+                       </footer>
+                    </div>
+                  </div>
+                </article>
+                <article class="col-md-12 article-list">
+                  <div class="inner">
+                    <figure>
+                      <a href="single.html">
+                        <img src="images/img15.jpg">
+                      </a>
+                    </figure>
+                    <div class="details">
+                      <div class="detail">
+                        <div class="category">
+                         <a href="category.html">Film</a>
+                        </div>
+                        <div class="time">December 26, 2016</div>
+                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
+                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                      </div>
+                      <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
+                      <p>
+                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
+                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
+                      </p>
+                      <footer>
+                        <p>100 留言</p>
+                        <p>30 分享</p>
+                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
+                       </footer>
+                    </div>
+                  </div>
+                </article>
+                
+            </div></div></div>
+          
                 </div>
                 <br><br>
                 <div class="row align-items-center py-5">
@@ -672,7 +398,7 @@
                   <div class="col-lg-6 text-center">
                     <div class="custom-pagination">
                       <a href="#">1</a>
-                      <a href="#" class="active"">2</a>
+                      <a href="#" class="active">2</a>
                       <a href="#">3</a>
                       <a href="#">4</a>
                       <a href="#">5</a>
