@@ -1,3 +1,48 @@
+<?php
+require_once '../php/conn.php';
+
+// $activityId = $_GET['activityId'];
+$activityId = '3525062ec997889fc584f54177abda3a';
+
+$sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
+$result = mysqli_query($conn, $sql_getDataQuery);
+$row_result = mysqli_fetch_assoc($result);
+
+$activityId = $row_result['activityId'];
+$campsiteId = $row_result['campsiteId'];
+$accountId = $row_result['accountId'];
+$activityTitle = $row_result['activityTitle'];
+$activityDescription = $row_result['activityDescription'];
+$activityStartDate = $row_result['activityStartDate'];
+$activityEndDate = $row_result['activityEndDate'];
+$minAttendee = $row_result['minAttendee'];
+$maxAttendee = $row_result['maxAttendee'];
+$leastAttendeeFee = $row_result['leastAttendeeFee'];
+$maxAttendeeFee = $row_result['maxAttendeeFee'];
+
+$sql_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
+$result_campsite = mysqli_query($conn, $sql_campsite);
+$row_result_campsite = mysqli_fetch_assoc($result_campsite);
+
+$campsiteName = $row_result_campsite['campsiteName'];
+
+$sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
+$result_account = mysqli_query($conn, $sql_account);
+$row_result_account = mysqli_fetch_assoc($result_account);
+
+$accountName = $row_result_account['accountName'];
+
+$sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
+$result_file = mysqli_query($conn, $sql_file);
+
+$sql_route = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY dayNumber ASC";
+$result_route = mysqli_query($conn, $sql_route);
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,7 +125,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            帳號
+              帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.html">會員帳號</a>
@@ -95,7 +140,7 @@
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Wireshark.png'); 
+  <div class="hero page-inner overlay" style="background-image: url('images/Wireshark.png');
       height:70vh;
       min-height: 300px;">
     <div class="container">
@@ -124,24 +169,27 @@
         <div class="col-lg-8">
           <div class="row">
             <div class="col-md-12 ftco-animate">
-              <h5 class="mb-4" style="font-weight:bold;">露營嘍！來場跟櫻花的浪漫約會</h5>
+              <h5 class="mb-4" style="font-weight:bold;">
+                <?php echo $activityTitle ?>
+              </h5>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" 
-           style="border-radius: 50%;
+                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                   width: 4%;
                   margin-right: 16px;">
-              <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
+                <label style="font-size: 16px; margin-bottom: 0px;">
+                  <?php echo $accountName ?>
+                </label></span>
               <h6 class="mb-4" style="font-weight:bold;">基本資訊</h6>
               <div class="single-slider owl-carousel">
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/Rectangle\ 322.png);"></div>
-                </div>
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/Rectangle\ 321.png);"></div>
-                </div>
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/Rectangle\ 320.png);"></div>
-                </div>
+                <?php
+                while ($file_result = mysqli_fetch_assoc($result_file)) {
+                  $file_name = $file_result['fileName'];
+                  $file_path = '../upload/' . $file_name;
+                  echo "<div class='item'>";
+                  echo "<div class='room-img' style='background-image: url($file_path);'></div>";
+                  echo "</div>";
+                }
+                ?>
               </div>
             </div>
             <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
@@ -149,31 +197,49 @@
               <span class="camp-icon">
                 <i class="fa-regular fa-user fa-xl"></i>
                 <label>負責人</label>
-                <p>yizz</p>
+                <p>
+                  <?php echo $accountName ?>
+                </p>
               </span>
 
               <span class="camp-icon">
                 <i class="fa-regular fa-calendar-days fa-xl"></i>
                 <label>日期</label>
-                <p>2023.03.12(日)-3.13(一)</p>
+                <p>
+                  <?php echo $activityStartDate ?>
+                  -
+                  <?php echo $activityEndDate ?>
+                </p>
               </span>
 
               <span class="camp-icon">
-              <i class="fa-solid fa-campground fa-lg"></i>
-              <label>地點</label>
-              <p>苗栗南庄林泉休閒露營區</p>
+                <i class="fa-solid fa-campground fa-lg"></i>
+                <label>地點</label>
+                <p>
+                  <?php echo $campsiteName ?>
+                </p>
               </span>
 
               <span class="camp-icon">
-              <i class="fa-solid fa-user-group fa-lg"></i>
-              <label>人數</label>
-              <p>4-8人</p>
+                <i class="fa-solid fa-user-group fa-lg"></i>
+                <label>人數</label>
+                <p>
+                  <?php echo $minAttendee ?>
+                  -
+                  <?php echo $maxAttendee ?>
+                  人
+                </p>
               </span>
 
               <span class="camp-icon">
-              <i class="fa-solid fa-coins fa-xl"></i>
-              <label>費用</label>
-              <p>1050-1350/人</p>
+                <i class="fa-solid fa-coins fa-xl"></i>
+                <label>費用</label>
+                <p>
+                  <?php echo $leastAttendeeFee ?>
+                  -
+                  <?php echo $maxAttendeeFee ?>
+                  / 人
+                </p>
               </span>
 
             </div>
@@ -181,10 +247,11 @@
             <div class="modal-body">
               <h4 style="font-weight:bold;">詳細內容</h4>
               <br>
-              <p>大家好！想要人多一起露營卻找不到志同道合的人一起嗎？<br>
-                我們在找的就是喜愛露營的你，如果害羞也可以找認識的朋友一起來玩！我們也規畫許多景點一起探索~</p>
-                <span style="display: flex; justify-content: flex-end; margin-right: 15px;">
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more1">
+              <p>
+                <?php echo $activityDescription ?>
+              </p>
+              <span style="display: flex; justify-content: flex-end; margin-right: 15px;">
+                <button type="button" class="btn-icon" data-toggle="modal" data-target="#more1">
                   <a href="#more1">查看更多</a>
                 </button>
               </span>
@@ -193,29 +260,29 @@
               </div>
               <div class="col-md-12 room-single ftco-animate mb-5 mt-5" style="margin-left: -15px ;">
                 <h4 class="mb-4" style="font-weight:bold;">行程介紹</h4>
-                <div class="block-16">
-                  <span style="display: flex;">
-                  <div class="day">
-                    <p>Day 1</p>
-                  </div>
-                  <div class="spot">
-                    <p> 飛牛牧場 - 勝興車站 - 林泉休閒露營區</p>
-                  </div>
-              </span>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">飛牛牧場</h6>
-                    <p>
-                      飛牛牧場的前身是1975年成立的中部青年酪農村，由吳敦瑤、施尚斌因應政府的中部青年酪農村計劃而創立。
-                      飛牛牧場是電視劇《翡翠谷》、夕陽山外山》的取景地，然而因為大批追星族湧入牧場，不但沒有提高牧場營收還造成經營上的困擾，讓施尚斌和吳敦瑤氣得挖斷聯外道路，之後也一度不外借給公益影片以外的團隊拍攝。而偶像劇《薰衣草》、《海豚灣戀人》和江蕙歌曲〈半醉半清醒〉MV、金城武的歌曲〈鮮花‧禮物‧情人節〉MV也在此取景。
-                    </p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">勝興車站</h6>
-                    <p>勝興車站位於台灣苗栗縣三義鄉，原為臺灣鐵路管理局舊山線的鐵路車站，原已因鐵路改線而裁撤，後於2010年6月5日舊山線復駛而重新設站，現為苗栗縣著名觀光景點。</p>
-                 </div> 
-                </div>
+                <?php
+                while ($route_result = mysqli_fetch_assoc($result_route)) {
+                  $dayNumber = $route_result['dayNumber'];
+                  $locations = $route_result['locations'];
+                  $localtionIntroduction = $route_result['locationIntroduction'];
+                  // 判斷第幾天
+                  $dayText = 'Day ' . $dayNumber;
+
+                  echo '<div class="block-16">';
+                  echo '  <span style="display: flex;">';
+                  echo '    <div class="day">';
+                  echo '      <p>' . $dayText . '</p>';
+                  echo '    </div>';
+                  echo '    <div class="spot">';
+                  echo '      <p>' . $locations . '</p>';
+                  echo '    </div>';
+                  echo '  </span>';
+                  echo '  <div style="clear: both;">';
+                  echo '    <p>' . $localtionIntroduction . '</p>';
+                  echo '  </div>';
+                  echo '</div>';
+                }
+                ?>
               </div>
               <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
                 <div class="row">
@@ -245,7 +312,7 @@
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
                     </div>
-                </span>
+                  </span>
                   <div style="clear: both;">
                     <br>
                     <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
@@ -293,7 +360,7 @@
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
                     </div>
-                </span>
+                  </span>
                   <div style="clear: both;">
                     <br>
                     <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
@@ -341,7 +408,7 @@
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
                     </div>
-                </span>
+                  </span>
                   <div style="clear: both;">
                     <br>
                     <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
@@ -389,7 +456,7 @@
                     <div class="spot">
                       <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
                     </div>
-                </span>
+                  </span>
                   <div style="clear: both;">
                     <br>
                     <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
@@ -446,11 +513,13 @@
             <div class="categories">
               <div class="box-side">
                 <span>
-                <h6>目前參加人員</h6>
+                  <h6>目前參加人員</h6>
                 </span>
                 <span style="display: flex; align-items: center">
-                <i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i><p style="margin-right: 8px;">3</p>
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i><p>3</p>
+                  <i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i>
+                  <p style="margin-right: 8px;">3</p>
+                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+                  <p>3</p>
                 </span>
               </div>
 
@@ -458,56 +527,59 @@
                 <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                   width: 10%;
                   margin-right: 16px;">
-              <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
+                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
 
               <span style="display: flex;margin-bottom: 16px; align-items: center;">
                 <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                   width: 10%;
                   margin-right: 16px;">
-              <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
+                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
 
               <span style="display: flex;margin-bottom: 16px; align-items: center;">
                 <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                   width: 10%;
                   margin-right: 16px;">
-              <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
+                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
               <span class="more">
                 <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
-                <a href="#more2">查看更多</a></button>
+                  <a href="#more2">查看更多</a></button>
               </span>
 
               <div class="box-side">
-              <h6>目前所需用品</h6></div>
+                <h6>目前所需用品</h6>
+              </div>
               <div class="list" style="font-size: 14px;"">
               <li>睡袋</li>
               <li>洗漱用品</li>
               <li>保暖衣物</li>
               <li>點心</li>
              </div>
-             <span class="more">
-              <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
-              <a href="#more3">查看更多</a></button>
-            </span>
-             <div class="box-side">
-              <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>
-             </div>
+             <span class=" more">
+                <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
+                  <a href="#more3">查看更多</a></button>
+                </span>
+                <div class="box-side">
+                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
+                    data-whatever="@mdo">我要參加！</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="notice">
+              <span class="box-side" style="justify-content: flex-start; margin-bottom: 16px; ">
+                <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
+                <h6>注意事項</h6>
+              </span>
+              <div class="list">
+                <li>確認參加後，表接受可能隨時取消活動，及金錢無法退款等問題。</li>
+                <li>有安全疑慮者，建議結伴朋友報名參與，並隨身攜帶防身用品。</li>
+                <li>本平台不參與金錢之交易，請小心詐騙。</li>
+              </div>
             </div>
           </div>
-      
-          <div class="notice">
-            <span class="box-side" style="justify-content: flex-start; margin-bottom: 16px; ">
-              <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
-              <h6>注意事項</h6></span>
-            <div class="list">
-            <li>確認參加後，表接受可能隨時取消活動，及金錢無法退款等問題。</li>
-            <li>有安全疑慮者，建議結伴朋友報名參與，並隨身攜帶防身用品。</li>
-            <li>本平台不參與金錢之交易，請小心詐騙。</li>
-           </div>
-          </div>
+
         </div>
-        
       </div>
-    </div>
   </section>
 
   <div class="site-footer" style="clear: both;">
@@ -589,10 +661,10 @@
 
       <div class="row mt-5">
         <div class="col-12 text-center">
-          <!-- 
+          <!--
                     **==========
-                    NOTE: 
-                    Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
+                    NOTE:
+                    Please don't remove this copyright link unless you buy the license here https://untree.co/license/
                     **==========
                   -->
 
@@ -613,30 +685,33 @@
       </div>
     </div>
     <!-- /.container -->
-  
+
   </div>
-  
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" role="document" >
-    <div class="modalContent" >
-      <div class="box-mod">
-        <h4 id="exampleModalLabel">參加</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-        </button>
-      </div>
-      <p style="color: #a0a0a0 ">參加活動蒐集勳章！<p>
-      
-      <div class="modal-list">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modalContent">
+        <div class="box-mod">
+          <h4 id="exampleModalLabel">參加</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+          </button>
+        </div>
+        <p style="color: #a0a0a0 ">參加活動蒐集勳章！
+        <p>
+
+        <div class="modal-list">
           <input type="text" placeholder="電話">
-          <input type="email" placeholder="信箱" >
+          <input type="email" placeholder="信箱">
           <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
-          
+
           <h6 style="font-weight:bold;">可提供裝備</h6>
           <div class="supply">
             <div class="row">
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -645,7 +720,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>睡袋</p>
+                <input type="checkbox">
+                <p>睡袋</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -654,7 +730,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>手電筒</p>
+                <input type="checkbox">
+                <p>手電筒</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -663,7 +740,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>瓦斯爐</p>
+                <input type="checkbox">
+                <p>瓦斯爐</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -672,7 +750,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -681,7 +760,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -691,7 +771,8 @@
             </div>
             <div class="row">
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -700,7 +781,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -709,7 +791,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -719,7 +802,8 @@
 
               <div class="w-100"></div>
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -728,7 +812,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -737,7 +822,8 @@
               </div>
 
               <div class="col-md-4">
-                <input type="checkbox"><p>帳篷</p>
+                <input type="checkbox">
+                <p>帳篷</p>
                 <select>
                   <option>1</option>
                   <option>2</option>
@@ -745,19 +831,21 @@
                 </select>
               </div>
             </div>
+          </div>
+          <textarea rows="2" placeholder="其他" type="text"></textarea>
         </div>
-        <textarea rows="2" placeholder="其他" type="text"></textarea></div>
         <div style=" display: flex;
         justify-content: flex-end;">
-        <button class="btn-secondary">提交</button>
+          <button class="btn-secondary">提交</button>
+        </div>
       </div>
-  </div>
     </div>
-</div>
-<!-- 詳細內容查看更多 -->       
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="more1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  </div>
+  <!-- 詳細內容查看更多 -->
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" id="more1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">更多詳細內容</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -771,9 +859,9 @@
             我們將在美麗的自然環境中建立露營地，並舉辦一系列的活動，包括徒步旅行、野餐、烤火晚會、星空觀測等，這將是一個絕佳的機會，讓你們放鬆身心，與自然環境建立更深厚的聯繫。<br>
             無論你是一個喜歡戶外活動的新手還是一個經驗豐富的露營達人，我們都歡迎你的加入，這將是一個充滿友誼和探險的旅程，讓我們一起度過一個難忘的夏日！
             馬上報名參加我們的露營活動吧，我們期待著與你們共度美好時光！
-            
-            </p>
-          </div>
+
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -787,130 +875,131 @@
             <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
           </button>
         </div>
-  
+
         <div class="modal-list">
-            <div class="supply">
-              <div class="row">
-                <div class="col-md-4">
-                  <span style="display: flex; align-items: center; justify-content: flex-start" >
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+          <div class="supply">
+            <div class="row">
+              <div class="col-md-4">
+                <span style="display: flex; align-items: center; justify-content: flex-start">
+                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                       width: 30%;
                       margin-right: 16px;">
                   <label style="font-size: 16px; margin-bottom: 0px; ">yizz</label></span>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                  <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                  <p style="font-size: 14px;">新手營火</p>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-                </div>
-  
-                <div class="col-md-4">
-                  <span style="display: flex; align-items: center; justify-content: flex-start" >
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
+                <p style="font-size: 14px;">新手營火</p>
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+              </div>
+
+              <div class="col-md-4">
+                <span style="display: flex; align-items: center; justify-content: flex-start">
+                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                       width: 30%;
                       margin-right: 16px;">
                   <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label></span>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                  <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                  <p style="font-size: 14px;">新手營火</p>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-                </div>
-  
-                <div class="col-md-4">
-                  <span style="display: flex; align-items: center; justify-content: flex-start" >
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
+                <p style="font-size: 14px;">新手營火</p>
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+              </div>
+
+              <div class="col-md-4">
+                <span style="display: flex; align-items: center; justify-content: flex-start">
+                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                       width: 30%;
                       margin-right: 16px;">
                   <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzzzzz</label></span>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                  <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                  <p style="font-size: 14px;">新手營火</p>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-                </div>
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
+                <p style="font-size: 14px;">新手營火</p>
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+              </div>
 
-                <div class="col-md-4">
-                  <span style="display: flex; align-items: center; justify-content: flex-start" >
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+              <div class="col-md-4">
+                <span style="display: flex; align-items: center; justify-content: flex-start">
+                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
                       width: 30%;
                       margin-right: 16px;">
                   <label style="font-size: 16px; margin-bottom: 0px; ">yizzz</label></span>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                  <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                  <p style="font-size: 14px;">新手營火</p>
-                </div>
-                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-                </div>
-                </div>
-          </div> 
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
+                <p style="font-size: 14px;">新手營火</p>
+              </div>
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+              </div>
+            </div>
+          </div>
         </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="modal fade" id="more3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modalContent">
-              <div class="box-mod">
-                <h5 id="exampleModalLabel">所有所需用品</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                </button>
-              </div>
-              <div class="modal-list">
-                      <div class="list">
-                        <li>睡袋</li>
-                        <li>洗漱用品</li>
-                        <li>保暖衣物</li>
-                        <li>瓦斯爐</li>
-                        <li>瓦斯罐</li>
-                        <li>露營燈</li>
-                        <li>點心</li>
-                      </div>
-                </div> 
-              </div>
-              </div>
-              </div>
+  <div class="modal fade" id="more3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modalContent">
+        <div class="box-mod">
+          <h5 id="exampleModalLabel">所有所需用品</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+          </button>
+        </div>
+        <div class="modal-list">
+          <div class="list">
+            <li>睡袋</li>
+            <li>洗漱用品</li>
+            <li>保暖衣物</li>
+            <li>瓦斯爐</li>
+            <li>瓦斯罐</li>
+            <li>露營燈</li>
+            <li>點心</li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-    <!-- .section -->
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"stroke="#F96D00" />
+  <!-- .section -->
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
     </svg></div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
-  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+
 
 </body>
 
