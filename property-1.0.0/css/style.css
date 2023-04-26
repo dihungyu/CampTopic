@@ -16211,7 +16211,6 @@ love.active {
     padding-bottom: 10px;
   }
   .btn2{
-    
     width:100px;
     height:40px;
     border:0;
@@ -16220,4 +16219,12 @@ love.active {
     font-size: 13px;
     margin-top: -60px;
     padding-right: 60px;
+  }
+  .btn-icon{
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .btn-icon i{
+  font-size: 18px;
   }

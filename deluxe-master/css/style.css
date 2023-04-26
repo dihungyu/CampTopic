@@ -9413,4 +9413,8 @@ dialog{
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.1);
 }
-  
+.btn-icon{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
