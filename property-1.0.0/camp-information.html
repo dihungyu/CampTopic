@@ -156,7 +156,7 @@
              <i class="fa-solid fa-fire" style="color: #B02626; font-size:18px; margin-right: 8px;"></i>
               <h6 style="margin: 0rem;">新手營火</h6></span>
         </button>
-        <button type="button" class="gray-lg">
+        <button type="button" class="gray-lg" data-toggle="modal" data-target="#create">
           <h6>發起露營活動！</h6>
           <div class="verticle-line"></div>
           <span style="display: flex; align-items: center; justify-content: flex-start" >
@@ -631,6 +631,53 @@
       </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" >
+      <div class="modal-dialog" role="document" >
+      <div class="modalContent" >
+        <div class="box-mod">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+          </button>
+          <h4 id="exampleModalLabel">創建露營活動</h4>
+          
+        </div>
+        <p style="color: #a0a0a0 ">尋找其他小鹿一起冒險！<p>
+        
+        <div class="modal-list">
+          <input type="text"  placeholder="活動名稱">
+          <input type="text"  placeholder="活動地點">
+           <div class="supply">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="date" style="width: 200px;" placeholder="開始日期">
+                </div>
+                <div class="col-md-6">
+                  <input type="date" style="width: 200px;" placeholder="結束日期" >
+                </div>
+                <div class="col-md-6">
+                  <input type="text" style="width: 200px;" placeholder="最少人數" >
+                </div>
+                <div class="col-md-6">
+                  <input type="text" style="width: 200px;" placeholder="最多人數" >
+                </div>
+                <div class="col-md-6">
+                  <input type="price" style="width: 200px;" placeholder="最低費用" >
+                </div>
+                <div class="col-md-6">
+                  <input type="price" style="width: 200px;" placeholder="最高費用" >
+                </div>
+              </div>
+          </div>
+          <textarea rows="3" placeholder="備註" type="text"></textarea></div>
+          <div style=" display: flex;
+          justify-content: flex-end;">
+          <button class="btn-secondary">提交</button>
+        </div>
+    </div>
+      </div>
+  </div>
 
       <div class="row mt-5">
         <div class="col-12 text-center">
