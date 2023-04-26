@@ -5755,7 +5755,7 @@ fieldset:disabled .btn {
   margin-left: 24px;
 
   width: 500px;
-  height: 534px;
+  height: 557px;
   overflow: hidden;
   float: left;
   margin-bottom: 0;
@@ -5867,7 +5867,7 @@ fieldset:disabled .btn {
 .card-img-top,
 .card-img-bottom {
 
-  height: 300px;
+  height: 280px;
 }
 
 .card-img,
@@ -16209,15 +16209,68 @@ love.active {
     padding-right: 60px;
   }
   .gray-lg{
-    width:250px;
-    height:60px;
+    width:280px;
+    height:70px;
     border:none;
     background-color:#efefef;
-    border-radius:35px;
+    border-radius:35px !important;
     font-size: 13px;
-    margin-top: 24px;
-    padding: 0, 30px;
+    margin-top: 40px;
+    padding-right:15px;
+    padding-left: 15px;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    
+  }
+  .gray-lg p{
+    margin: 0rem;
+  }
+  .gray-lg h6{
+    margin: 0rem;
+    font-size: 14px;
+  }
+  .verticle-line{
+    border-left: 1px solid #a0a0a0;
+    height: 30px;
+  }
+  .card-head{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 48px;
+    margin-top: -20px;
+    margin-bottom: 0px;
+  }
+  .card-head img{
+    width:60px;
+    margin-top: 0px; 
+    border: solid 3px #Ffffff;
+    border-radius: 50%;
+  }
+  .card-head p{
+    margin-top: 32px; 
+    margin-left: 8px;
+  }
+  .findcamper{
+    display: flex;
+    flex-wrap: wrap;
+    letter-spacing: 1px;
+    line-height: 30px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .findcamper i{
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  .findcamper-icon{
+    margin-right: 40px;
+    box-sizing: content-box;
+    width: 160px;
+  }
+  .findcamper-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
