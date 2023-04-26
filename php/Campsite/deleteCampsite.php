@@ -16,6 +16,8 @@ $sql_query1 = "DELETE FROM campsites WHERE campsiteId = '$campsiteId'";
 mysqli_query($conn, $sql_query1);
 $sql_query2 = "DELETE FROM files WHERE campsiteId = '$campsiteId'";
 mysqli_query($conn, $sql_query2);
+$sql_query3 = "DELETE FROM campsites_labels WHERE campsiteId = '$campsiteId'";
+mysqli_query($conn, $sql_query3);
 
 // Delete files from upload folder
 $upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
@@ -27,4 +29,3 @@ foreach ($files_to_delete as $file_name) {
 }
 
 header("Location: readCampsite.php");
-?>
