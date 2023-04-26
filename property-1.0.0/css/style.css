@@ -637,16 +637,6 @@ progress {
   text-transform: uppercase;
 }
 
-.info-modal {
-  position: fixed;
-  top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  height: 700px;
-}
-
-
 .blockquote {
   margin-bottom: 1rem;
   font-size: 1.25rem;
@@ -7007,7 +6997,6 @@ fieldset:disabled .btn {
   position: relative;
   width: auto;
   margin: 0.5rem;
-  pointer-events: none;
 }
 
 .modal.fade .modal-dialog {
@@ -7085,11 +7074,12 @@ fieldset:disabled .btn {
 .modal-backdrop {
   position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  z-index: 1050;
-  width: 100vw;
-  height: 100vh;
+  z-index: 1040;
   background-color: #000;
+  pointer-events: none;
 }
 
 .modal-backdrop.fade {
@@ -7099,6 +7089,7 @@ fieldset:disabled .btn {
 .modal-backdrop.show {
   opacity: 0.5;
 }
+
 
 .modal-header {
   display: -webkit-box;
@@ -16343,6 +16334,10 @@ display: flex;
 flex-wrap: wrap;
 align-items: center;
 margin-top: 32px;
+color: black;
+}
+.modal-list p{
+  margin-top: 0px;
 }
 
 .modal-list input{
@@ -16409,4 +16404,31 @@ margin-bottom: 24px;
   background-color: transparent;
   border: none;
   outline: none;
+}
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  opacity: .75;
+}
+
+.close:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
 }

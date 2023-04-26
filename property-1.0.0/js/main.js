@@ -352,8 +352,6 @@
 
 
 
-
-
 })(jQuery);
 
 let btn=document.querySelector("#show");
