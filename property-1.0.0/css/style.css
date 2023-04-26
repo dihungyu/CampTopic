@@ -2568,8 +2568,8 @@ progress {
 
 .form-control {
   display: block;
-  width: 80%;
-  height:42px;
+  width: 100%;
+  height:40px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -4321,7 +4321,7 @@ fieldset:disabled .btn {
 
 .tag-fav {
   text-decoration: none !important;
-  border-radius: 25px;
+  border-radius: 35px !important;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 20px;
@@ -4336,6 +4336,25 @@ fieldset:disabled .btn {
   margin-top: 8px;
   margin-bottom: 15px;
   margin-right: 2px;
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease;
+}
+.tag-filter {
+  text-decoration: none !important;
+  border-radius: 35px !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 20px;
+  padding-right: 10px;
+  border-width: 2px;
+  border-color: transparent;
+  border: none !important;
+  font-size: 12px;
+  background-color: #EFE9DA;
+  color: #000;
+
+  margin-right: 8px;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
@@ -14203,22 +14222,6 @@ a {
   text-decoration: none;
 }
 
-.form-control {
-  font-size: 16px;
-  width: 200px;
-  height: 40px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: 1070px;
-}
-
-.form-control:hover,
-.form-control:active,
-.form-control:focus {
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
 
 textarea {
   height: auto !important;
@@ -15711,16 +15714,28 @@ i.fa-solid {
 }
 
 .button-search {
-  border-radius: 35px;
+  border-radius: 35px !important;
   width: 70px;
   height: 40px;
   border: none;
   padding: 8px;
   background-color: #efefef;
-  border-top-left-radius: 35px !important;
-  border-bottom-left-radius: 35px !important;
+  /*border-top-left-radius: 35px !important;
+  border-bottom-left-radius: 35px !important;*/
 
 }
+.button-filter{
+  border-radius: 35px !important;
+  width: 100px;
+  height: 40px;
+  border: solid;
+  border-color: #d9d9d9;
+  padding: 8px;
+  background-color: #ffffff;
+  color:#a0a0a0;
+  margin-right: 10px;
+}
+
 
 .love {
   color: #989898;
@@ -16184,7 +16199,6 @@ love.active {
     padding-bottom: 10px;
   }
   .btn2{
-    
     width:100px;
     height:40px;
     border:0;
@@ -16193,4 +16207,17 @@ love.active {
     font-size: 13px;
     margin-top: -60px;
     padding-right: 60px;
+  }
+  .gray-lg{
+    width:250px;
+    height:60px;
+    border:none;
+    background-color:#efefef;
+    border-radius:35px;
+    font-size: 13px;
+    margin-top: 24px;
+    padding: 0, 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
   }

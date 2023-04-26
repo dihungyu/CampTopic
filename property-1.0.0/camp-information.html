@@ -114,70 +114,49 @@
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-        <div class="input-group " style="width: 30%; margin-left:75%; justify-content: flex-end">
-
-          <div id="navbar-search-autocomplete" class="form-outline " style="margin-top:-50px">
-          
-            <button type="button" class="btn1">
-              <i class="icon-filter_list" style="margin-right: 30px;padding: 10px;padding-top: 20px;"></i>
-              <span style="margin-left: 30px;padding-bottom: 15px;">篩選</span>
-
-            </button>
-            <button type="button" class="btn2" style="margin-left: 150px;">
-              <span style="margin-left: 5px;padding-left: 5px;"> 漂亮</span>
-            </button>
-            
-            <input class="btn btn-primary" style="margin-right:1000px;width:80px;height:40px;border:0;background-color:#d9d9d9;border-radius:20px;font-size: 13px;margin-top: -60px;" type="submit" value="近溪流">
-            <div id="navbar-search-autocomplete" class="form-outline "style="margin-top:-50px">
-              <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
-              <button type="button" class="button-search" >
+       
+        <div class="input-group" style="display: flex; justify-content: space-between;">
+          <span style="display:flex;align-items: center;justify-content: center">
+          <button type="button" class="button-filter">
+            <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
+          </button>
+            <a class="tag-filter" href="#">櫻花
+            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+            </a>
+            <a class="tag-filter" href="#">標籤
+            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+            </a>
+            <a class="tag-filter" href="#">標籤
+            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+            </a>
+            <a class="tag-filter" href="#">標籤
+            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+            </a> 
+            <a class="tag-filter" href="#">標籤
+            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+            </a>
+          </span>
+          <span style="display:flex ;">
+          <div id="navbar-search-autocomplete" class="form-outline">
+            <input type="search" id="form1" class="form-control" style="border-radius: 35px;"/>
+          </div>
+          <button type="button" class="button-search" style="margin-left: 10px; ">
             <i class="fas fa-search"></i>
           </button>
-            </div>
-            
-            <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
-              <div class="thumb" data-toggle="modal" data-target="#infoModal">參加 !</div>
-              <span style="margin-left: -120px;margin-top: 20px;">發起露營活動</span>
-              <dialog id="infoModal" class="info-modal" style="height: 150px;">
-                <div class="box">
-                  <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;width: 200px;">
-                  <h4 style="font-weight:bold;">徽章進度</h4>
-                  <i class="fa-solid fa-fire" style="color:#D0D0D0;margin-left: 330px;margin-top: -30px;"></i>
-                  <i class="fa-solid fa-compass" style="color:#D0D0D0;margin-left: 360px;margin-top: -30px;"></i>
-                  <i class="fa-solid fa-binoculars" style="color:#D0D0D0;margin-left: 390px;margin-top: -30px;"></i>
-                  <i class="fa-solid fa-tents" style="color:#D0D0D0;margin-left: 420px;margin-top: -30px;"></i>
-                  </span>
-                </div>
-                <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap;">
-                <h6>已參加活動2次</h6>
-                <h6 style="margin-left: 260px;">差1次升級</h6>
-              </span>
-              <div class="progress" style="width: 450px;margin-top: 3px;">
-                <div class="progress-bar " role="progressbar" style="width: 75%;background-color: rgb(136, 115, 15);" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              
-                    
-              </dialog>
-              <hr style="height: 8vh;width: .5vh;border-width: 0;right: 50%;">
-              <span style="margin-left: 50px;"> </span>
-            </button>
-          </div>
-          &nbsp;
-          
-          <button type="button" class="button-search" style="margin-top:10px; width:300px;height:70px;">
-            <span style="margin-left: -120px;margin-top: 20px;">發起露營活動</span>
-            <hr style="height: 8vh;width: .5vh;border-width: 0;right: 50%;">
-            <span style="margin-left: 50px;"> </span>
-          </button>
+        </span>
         </div>
+        <div class="input-group" style="display: flex; justify-content: space-between;">
+        <button type="button" class="gray-lg">
+          <p>Large button</p>
+          <p>|</p>
+          <i class="fa-solid fa-fire"></i> 新手營火
+        </button>
       </div>
-
+        </div>
     </div>
   </div>
 
   <div class="tab-content" id="myTabContent">
-
-
     <div class="section section-properties">
       <div class="container" style="max-width: 1260px">
         <div class="row">
