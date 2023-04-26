@@ -1,44 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8" />
-    <title>新增營區資料</title>
-    <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview');
-            preview.innerHTML = '';
-            var files = event.target.files;
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    var img = document.createElement('img');
-                    img.src = event.target.result;
-                    preview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
-</head>
-
-<body>
-    <!--如果要使用上傳檔案的功能，必須要在form加上enctype="multipart/form-data"才能正常上傳檔案-->
-    <form action="" method="post" name="formAdd" id="formAdd" enctype="multipart/form-data">
-        請輸入縣市編號：<input type="text" name="cityId" id="cityId"><br />
-        請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName"><br />
-        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"><br />
-        請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
-        <div id="preview"></div>
-        <input type="hidden" name="action" value="insert">
-        <input type="submit" name="button" value="新增資料">
-        <input type="reset" name="button2" value="重新填寫">
-    </form>
-</body>
-
-</html>
-
 <?php
 
 
@@ -49,13 +8,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
     $cityId = $_POST["cityId"];
     $campsiteName = $_POST["campsiteName"];
+    $campsiteDescription = $_POST["campsiteDescription"];
     $campsiteAddress = $_POST["campsiteAddress"];
+    $campsiteAddressLink = $_POST["campsiteAddressLink"];
+    $campsiteVideoLink = $_POST["campsiteVideoLink"];
+    $campsiteLowerLimit = $_POST["campsiteLowerLimit"];
+    $campsiteUpperLimit = $_POST["campsiteUpperLimit"];
+    $tags = $_POST['tags']; // 取得選擇的標籤值，以陣列的形式傳回
+
     $campsiteId = uuid_generator();
 
-    $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteAddress)
-                VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteAddress')";
+    $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit)
+                VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit')";
 
-    mysqli_query($conn, $sql_query1);
+    if (!mysqli_query($conn, $sql_query1)) {
+        echo "Error: " . mysqli_error($conn);
+    }
+
+
+    // 將每個標籤值插入到 campsites_labels 資料表中
+    foreach ($tags as $tag) {
+        $labelId = uuid_generator();
+        $insert_label_sql = "INSERT INTO campsites_labels (campsiteLabelId, campsiteId, labelId) VALUES ('$labelId','$campsiteId', '$tag')";
+
+        if (!mysqli_query($conn, $insert_label_sql)) {
+            echo "Error: " . mysqli_error($conn);
+        }
+    }
 
 
     // loop through all uploaded files
@@ -104,3 +83,90 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
     exit();
 }
 ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <title>新增營區資料</title>
+
+</head>
+
+<body>
+    <!--如果要使用上傳檔案的功能，必須要在form加上enctype="multipart/form-data"才能正常上傳檔案-->
+    <form action="" method="post" name="formAdd" id="formAdd" enctype="multipart/form-data">
+        <?php
+        require_once '../conn.php';
+        $sql = "SELECT cityId, cityName FROM cities";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo '請選擇縣市：<select name="cityId" id="cityId">';
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<option value="' . $row['cityId'] . '">' . $row['cityName'] . '</option>';
+            }
+            echo '</select><br />';
+        } else {
+            echo "沒有找到縣市資料。";
+        }
+        ?>
+        請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName"><br />
+        請輸入營區介紹：<input type="text" name="campsiteDescription" id="campsiteDescription"><br />
+        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"><br />
+        請輸入營區地址地圖連結：<input type="text" name="campsiteAddressLink" id="campsiteAddressLink"><br />
+        請輸入營區介紹影片連結：<input type="text" name="campsiteVideoLink" id="campsiteVideoLink"><br />
+        請輸入營區價格下限：<input type="text" name="campsiteLowerLimit" id="campsiteLowerLimit"><br />
+        請輸入營區價格上限：<input type="text" name="campsiteUpperLimit" id="campsiteUpperLimit"><br />
+        請選擇營區標籤：<br />
+        <?php
+        require_once '../conn.php';
+        $sql = "SELECT labelId, labelName FROM labels WHERE labelType = '營地'";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) { // 檢查是否有資料
+            echo '<select id="tags-select" name="tags[]" multiple style="width: 100%;">';
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<option value="' . $row['labelId'] . '">' . $row['labelName'] . '</option>';
+            }
+            echo '</select>';
+        }
+        ?>
+        請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
+        <div id="preview"></div>
+        <input type="hidden" name="action" value="insert">
+        <input type="submit" name="button" value="新增資料">
+        <input type="reset" name="button2" value="重新填寫">
+    </form>
+
+    <!-- Select2 JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tags-select').select2({
+                placeholder: '請選擇標籤'
+            });
+        });
+    </script>
+
+</body>
+
+</html>

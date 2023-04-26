@@ -28,9 +28,14 @@ $total_records = mysqli_num_rows($result);
             <th>營區名稱</th>
             <th>營區介紹</th>
             <th>營區地址</th>
+            <th>營區地址地圖連結</th>
+            <th>營區介紹影片連結</th>
             <th>營區更新日期</th>
             <th>營區收藏次數</th>
             <th>營區喜愛次數</th>
+            <th>營區價格下限</th>
+            <th>營區價格上限</th>
+            <th>營區相關標籤</th>
             <th>相關操作</th>
         </tr>
 
@@ -52,9 +57,25 @@ $total_records = mysqli_num_rows($result);
             echo "<td>" . $row_result['campsiteName'] . "</td>";
             echo "<td>" . $row_result['campsiteDescription'] . "</td>";
             echo "<td>" . $row_result['campsiteAddress'] . "</td>";
+            echo "<td>" . $row_result['campsiteAddressLink'] . "</td>";
+            echo "<td>" . $row_result['campsiteVideoLink'] . "</td>";
             echo "<td>" . $row_result['campsiteUpdateDate'] . "</td>";
             echo "<td>" . $row_result['campsiteCollectCount'] . "</td>";
             echo "<td>" . $row_result['campsiteLikeCount'] . "</td>";
+            echo "<td>" . $row_result['campsiteLowerLimit'] . "</td>";
+            echo "<td>" . $row_result['campsiteUpperLimit'] . "</td>";
+            echo "<td>";
+            $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+            FROM campsites_labels
+            JOIN labels ON campsites_labels.labelId = labels.labelId
+            WHERE campsites_labels.campsiteId = '$campsiteId'";
+            $result_labels = mysqli_query($conn, $sql_query_labels);
+            while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+
+                echo $tags_row['labelName'];
+                echo "<br>";
+            }
+            echo "</td>"; //此處需改為放相關標籤
             echo "<td><a href='updateCampsite.php?campsiteId=" . $row_result['campsiteId'] . "'>修改</a> ";
             echo "<a href='deleteCampsite.php?campsiteId=" . $row_result['campsiteId'] . "'>刪除</a></td>";
             echo "</tr>";
