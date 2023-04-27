@@ -90,27 +90,17 @@
 	    </div>
 	  </nav>
 
-    <div
-      class="hero page-inner overlay"
-      style="background-image: url('images/Rectangle\ 134.png')"
-    >
+    <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 134.png')" >
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
             <h1 class="heading" data-aos="fade-up">文章管理</h1>
 
-            <nav
-              aria-label="breadcrumb"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
+            <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200" >
               <ol class="breadcrumb text-center justify-content-center">
                 <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
                 <li class="breadcrumb-item"><a href="member.html">管理員帳號</a></li>
-                <li
-                  class="breadcrumb-item active text-white-50"
-                  aria-current="page"
-                >
+                <li class="breadcrumb-item active text-white-50" aria-current="page">
                   文章管理
                 </li>
               </ol>
@@ -120,38 +110,34 @@
       </div>
     </div>
 
+  
     <div class="section">
-      <div class="container" style="max-width: 1260px">
-        <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-            
-          <ul class="nav nav-tabs" style="margin-left: 16px; width: 62%; " id="myTab" role="tablist">
-              
+      <div class="container" style="max-width: 1260px;">
+        <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px; display:flex;justify-content: space-between;align-items: center;">
+          <ul class="nav nav-tabs" style="margin-left: 16px;width: 800px;" id="myTab" role="tablist">
               <li class="nav-item" style="margin-right:20px">
-                <a class="nav-link paper" id="paper-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="paper" aria-selected="true">所有文章</a>
+                <a class="nav-link equip" id="equip-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="equip" aria-selected="true">所有文章</a>
               </li>
               <li class="nav-item" style="margin-right:20px">
-                <a class="nav-link equip" id="check-tab" data-toggle="tab" href="#check" role="tab" aria-controls="check" aria-selected="true">待審核</a>
+                <a class="nav-link review" id="review-tab" data-toggle="tab" href="#check" role="tab" aria-controls="review" aria-selected="true">待審核</a>
               </li>
-              
             </ul>
-          <div class="input-group " style="width: 30%; margin-left:72px; justify-content: flex-end">
-            <div id="navbar-search-autocomplete" class="form-outline">
-              <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
-              
-            </div>
-            &nbsp;
-            <button type="button" class="button-search">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-          </div>
-          
+            <span style="display:flex; box-sizing: content-box; width: 285px;">
+           <div id="navbar-search-autocomplete" class="form-outline">
+             <input type="search" id="form1" class="form-control" style="border-radius: 35px; height: 40px;"/>
+           </div>
+           <button type="button" class="button-search" style="margin-left: 10px; ">
+             <i class="fas fa-search"></i>
+           </button>
+         </span>
       </div>
+       
+    </div>
     </div>
         
         <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade show active" id="paper" role="tabpanel" aria-labelledby="paper-tab">
-              <div class="container">
+              <div class="container" style="max-width: 1260px;">
               <div class="row" >
                 <article class="col-md-12 article-list">
                   <div class="inner">
@@ -161,25 +147,32 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        
-                           <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                      
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon"data-toggle="modal" data-target="#exampleModalCenter">
+                           <i style="color: #B02626;"class="fa-solid fa-circle-exclamation"></i>
+                          </button>
+                          </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
                 </article> 
@@ -191,29 +184,35 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <div class="thumb" data-toggle="modal" data-target="#infoModal">
-
-                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
-                      </div>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon"data-toggle="modal" data-target="#exampleModalCenter">
+                           <i style="color: #B02626;"class="fa-solid fa-circle-exclamation"></i>
+                          </button>
+                          </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
+                </article> 
                 <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
@@ -222,28 +221,35 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <div class="thumb" data-toggle="modal" data-target="#infoModal">
-                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon"data-toggle="modal" data-target="#exampleModalCenter">
+                           <i style="color: #B02626;"class="fa-solid fa-circle-exclamation"></i>
+                          </button>
+                          </span>
                       </div>
-                    </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
+                </article> 
                 <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
@@ -252,71 +258,78 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <div class="thumb" data-toggle="modal" data-target="#infoModal">
-                        <i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #CE0000; margin-left: 670px;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon"data-toggle="modal" data-target="#exampleModalCenter">
+                           <i style="color: #B02626;"class="fa-solid fa-circle-exclamation"></i>
+                          </button>
+                          </span>
                       </div>
-                    </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
+                </article> 
                 
-            </div></div></div>
+            </div>
+          </div>
+        </div>
             <!-- Button trigger modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold">發送警告</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border-radius: 30px; border: none; color: 	#7B7B7B">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <br>
-      <div class="modal-body">
-      <div class="box">
-        <h6 style="padding-left: 20px;">作者<h6>
-        <i class="fa-solid fa-circle-user fa-xl" style="margin-left: 20px;"></i>&nbsp;&nbsp;<span>yizz</span>
-      </div>
-  <br>
-    <select style="border-radius: 30px; color: #D0D0D0; height: 40px; padding: 10px; width: 400px; margin: 0 auto; display: flex;">
-      <option>原因</option>
-      <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
-      <option>不實資訊</option>
-      <option>搜擾</option>
-      <option>其他</option>
-    </select>
-    <br><br><br><br><br>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
-  </div>
+
+   
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">發送警告</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span style="display: flex; align-items: center; justify-content: flex-start" >
+            <p style="margin-right: 15px;margin-left: 10px;">作者</p>
+            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+              width: 8%;
+              margin-right: 16px;">
+            <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label></span>
+            <select class="warning">
+              <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
+              <option>不實資訊</option>
+              <option>搜擾</option>
+              <option>其他</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <div style=" display: flex; justify-content: flex-end;">
+          <button class="btn-secondary">提交</button>
+        </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-  
-  <br><br>
-<button style="width: 100px; height: 30px; background-color: 	#005757;color: white; margin-left: 320px; border:none; border-radius: 30px;">確認
-</button>
 
             <div class="tab-pane fade show" id="check" role="tabpanel" aria-labelledby="check-tab">
-              <div class="container">
+              <div class="container" style="max-width: 1260px;">
               <div class="row" >
                 <article class="col-md-12 article-list">
                   <div class="inner">
@@ -326,24 +339,33 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
-                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
+                            <i style="color: #005555; margin-right: 8px;"class="fa-solid fa-circle-check"></i>
+                            <i style="color: #B02626;"class="fa-solid fa-circle-xmark"></i>
+                          </button>
+                        </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
                 </article> 
@@ -355,27 +377,36 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
-                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
+                            <i style="color: #005555; margin-right: 8px;"class="fa-solid fa-circle-check"></i>
+                            <i style="color: #B02626;"class="fa-solid fa-circle-xmark"></i>
+                          </button>
+                        </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
+                </article> 
                 <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
@@ -384,27 +415,36 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
-                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
+                            <i style="color: #005555; margin-right: 8px;"class="fa-solid fa-circle-check"></i>
+                            <i style="color: #B02626;"class="fa-solid fa-circle-xmark"></i>
+                          </button>
+                        </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
+                </article> 
                 <article class="col-md-12 article-list">
                   <div class="inner">
                     <figure>
@@ -413,32 +453,41 @@
                       </a>
                     </figure>
                     <div class="details">
-                      <div class="detail">
+                      <div class="detail"  style="justify-content: space-between;">
+                        <span style="display: flex;">
                         <div class="category">
                          <a href="category.html">Film</a>
                         </div>
-                        <div class="time">December 26, 2016</div>
-                        <i class="fa-sharp fa-solid fa-circle-check fa-2xl" style="margin-left: 670px; color: #005757;"></i>
-                        <i class="fa-solid fa-circle-xmark fa-2xl" style="margin-left: 10px; color: 	#CE0000;"></i>
+                        <div class="time">December 26, 2016</div></span>
+                        <span style="display: flex; margin-right: 80px;">
+                          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
+                            <i style="color: #005555; margin-right: 8px;"class="fa-solid fa-circle-check"></i>
+                            <i style="color: #B02626;"class="fa-solid fa-circle-xmark"></i>
+                          </button>
+                        </span>
                       </div>
                       <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
                       <p>
                         最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
                         不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
                       </p>
-                      <footer>
+                      <footer style="display: flex;align-items: center; justify-content: space-between;">
+                        <span style="display: flex;align-items: center;">
                         <p>100 留言</p>
                         <p>30 分享</p>
-                       <i class="fa-regular fa-eye"></i><p style="margin-right: 0px;">1,098</p>
-                       </footer>
+                      </span>
+                      <span style="display: flex; align-items: center; margin-right: 80px;"><i class="fa-regular fa-eye"></i>
+                        <p style="margin-right: 0px;">1,098</p>
+                      </span>
+                      </footer>
                     </div>
                   </div>
-                </article>
-                
-            </div></div></div>
+                </article> 
+            </div>
+          </div>
+        </div>
+      </div>
           
-                </div>
-                <br><br>
                 <div class="row align-items-center py-5">
                   <div class="col-lg-3"></div>
                   <div class="col-lg-6 text-center">
