@@ -731,15 +731,15 @@ if ($result_account->num_rows > 0) {
                   $text = '新手營火';
                 } elseif ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) {
                   $iconClass = 'fa-solid fa-compass"';
-                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $color = '#002049';
                   $text = '方向盤';
                 } elseif ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) {
                   $iconClass = 'fa-solid fa-binoculars';
-                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $color = '#7d7d7d';
                   $text = '望遠鏡';
                 } elseif ($attendeeActivityCount > 15) {
                   $iconClass = 'fa-solid fa-campground';
-                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $color = '#525F58';
                   $text = '帳篷';
                 }
                 echo '<i class="' . $iconClass . '" style="color: ' . $color . '; font-size:20px; margin-right: 8px;"></i>';
