@@ -35,11 +35,32 @@ $accountName = $row_result_account['accountName'];
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
 $result_file = mysqli_query($conn, $sql_file);
 
-$sql_route = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY dayNumber ASC";
-$result_route = mysqli_query($conn, $sql_route);
+$sql_route1 = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY dayNumber ASC";
+$result_route = mysqli_query($conn, $sql_route1);
 
+$sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts
+  ON activities_accounts.accountId = accounts.accountId
+  WHERE activities_accounts.activityId = '$activityId'";
+$result_account = mysqli_query($conn, $sql_account);
 
+$maleCount = 0;
+$femaleCount = 0;
+$accounts = [];
 
+// 計算男性和女性的數量並將查詢結果儲存在陣列中
+if ($result_account->num_rows > 0) {
+  while ($account_result = $result_account->fetch_assoc()) {
+    $accounts[] = $account_result;
+
+    if ($account_result["accountGender"] == "Male") {
+      $maleCount++;
+    } elseif ($account_result["accountGender"] == "Female") {
+      $femaleCount++;
+    }
+  }
+} else {
+  echo "找不到符合的資料";
+}
 
 ?>
 
@@ -262,12 +283,10 @@ $result_route = mysqli_query($conn, $sql_route);
                 <h4 class="mb-4" style="font-weight:bold;">行程介紹</h4>
                 <?php
                 while ($route_result = mysqli_fetch_assoc($result_route)) {
+                  $routeId = $route_result['routeId'];
                   $dayNumber = $route_result['dayNumber'];
                   $locations = $route_result['locations'];
-                  $localtionIntroduction = $route_result['locationIntroduction'];
-                  // 判斷第幾天
                   $dayText = 'Day ' . $dayNumber;
-
                   echo '<div class="block-16">';
                   echo '  <span style="display: flex;">';
                   echo '    <div class="day">';
@@ -277,286 +296,100 @@ $result_route = mysqli_query($conn, $sql_route);
                   echo '      <p>' . $locations . '</p>';
                   echo '    </div>';
                   echo '  </span>';
-                  echo '  <div style="clear: both;">';
-                  echo '    <p>' . $localtionIntroduction . '</p>';
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+                  $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
+                  while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
+                    $tripIntroductionTitle = $tripIntroduction_result['tripIntroductionTitle'];
+                    $tripIntroductionContent = $tripIntroduction_result['tripIntroductionContent'];
+                    echo '  <div style="clear: both;">';
+                    echo '    <br>';
+                    echo '    <h6>' . $tripIntroductionTitle . '</h6>';
+                    echo '    <p>' . $tripIntroductionContent . '</p>';
+                    echo '  </div>';
+                  }
+                  echo '</div>';
+                  $sql_route_file = "SELECT * FROM files WHERE routeId = $routeId";
+                  $result_route_file = mysqli_query($conn, $sql_route_file);
+                  echo '<div class="col-md-12 room-single ftco-animate mb-5 mt-5">';
+                  echo '  <div class="row">';
+                  while ($route_file_result = mysqli_fetch_assoc($result_route_file)) {
+                    $file_name = $route_file_result['fileName'];
+                    $file_path = '../upload/' . $file_name;
+                    echo '    <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">';
+                    echo '      <div class="room">';
+                    echo '        <a class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(' . $file_path . ');">';
+                    echo '        </a>';
+                    echo '      </div>';
+                    echo '    </div>';
+                  }
                   echo '  </div>';
                   echo '</div>';
                 }
+                echo '</div>';
                 ?>
-              </div>
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-                <div class="row">
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right:30px">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/station.jpg);">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/cow.jpg);">
-                      </a>
-                    </div>
-                  </div>
+                <h4>攜帶物品</h4>
+                <br>
+                <div class="list">
+                  <li>睡袋</li>
+                  <li>洗漱用品</li>
+                  <li>保暖衣物</li>
+                  <li>點心</li>
                 </div>
-              </div>
-
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-4" style="margin-left: -15px ;">
-                <div class="block-16">
-                  <span style="display: flex;">
-                    <div class="day">
-                      <p>Day 2</p>
-                    </div>
-                    <div class="spot">
-                      <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                    </div>
-                  </span>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
-                    <p>山腰餐廳，特色是擁有城堡風格的建築、風景如畫的花園和景觀。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">莫內祕密花園</h6>
-                    <p>坐落在山坡上的公園，有許多裝置藝術和經過重建的歷史建築，深受攝影師喜愛。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">南庄老街</h6>
-                    <p>南庄老街位於台灣苗栗縣南庄鄉鄉治所在地南庄聚落，當地居民以客家族群為主。具有濃濃的客家懷舊風味，每到假日，總是吸引眾多遊客造訪。主要的景點有永昌宮、老郵局、乃木崎、桂花巷及洗衫坑等。
-                      傳統的老街範圍以中正路為主，兩旁商家林立。</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-                <div class="row">
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/sky.jpg);">
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/garden.jpg);">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-4" style="margin-left: -15px ;">
-                <div class="block-16">
-                  <span style="display: flex;">
-                    <div class="day">
-                      <p>Day 3</p>
-                    </div>
-                    <div class="spot">
-                      <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                    </div>
-                  </span>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
-                    <p>山腰餐廳，特色是擁有城堡風格的建築、風景如畫的花園和景觀。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">莫內祕密花園</h6>
-                    <p>坐落在山坡上的公園，有許多裝置藝術和經過重建的歷史建築，深受攝影師喜愛。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">南庄老街</h6>
-                    <p>南庄老街位於台灣苗栗縣南庄鄉鄉治所在地南庄聚落，當地居民以客家族群為主。具有濃濃的客家懷舊風味，每到假日，總是吸引眾多遊客造訪。主要的景點有永昌宮、老郵局、乃木崎、桂花巷及洗衫坑等。
-                      傳統的老街範圍以中正路為主，兩旁商家林立。</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-                <div class="row">
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/sky.jpg);">
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/garden.jpg);">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-4" style="margin-left: -15px ;">
-                <div class="block-16">
-                  <span style="display: flex;">
-                    <div class="day">
-                      <p>Day 4</p>
-                    </div>
-                    <div class="spot">
-                      <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                    </div>
-                  </span>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
-                    <p>山腰餐廳，特色是擁有城堡風格的建築、風景如畫的花園和景觀。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">莫內祕密花園</h6>
-                    <p>坐落在山坡上的公園，有許多裝置藝術和經過重建的歷史建築，深受攝影師喜愛。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">南庄老街</h6>
-                    <p>南庄老街位於台灣苗栗縣南庄鄉鄉治所在地南庄聚落，當地居民以客家族群為主。具有濃濃的客家懷舊風味，每到假日，總是吸引眾多遊客造訪。主要的景點有永昌宮、老郵局、乃木崎、桂花巷及洗衫坑等。
-                      傳統的老街範圍以中正路為主，兩旁商家林立。</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-                <div class="row">
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/sky.jpg);">
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/garden.jpg);">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-4" style="margin-left: -15px ;">
-                <div class="block-16">
-                  <span style="display: flex;">
-                    <div class="day">
-                      <p>Day 5</p>
-                    </div>
-                    <div class="spot">
-                      <p> 天空之城 - 莫內祕密花園 - 南庄老街</p>
-                    </div>
-                  </span>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">天空之城景觀餐廳</h6>
-                    <p>山腰餐廳，特色是擁有城堡風格的建築、風景如畫的花園和景觀。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">莫內祕密花園</h6>
-                    <p>坐落在山坡上的公園，有許多裝置藝術和經過重建的歷史建築，深受攝影師喜愛。</p>
-                  </div>
-                  <div style="clear: both;">
-                    <br>
-                    <h6 style="font-weight:bold;">南庄老街</h6>
-                    <p>南庄老街位於台灣苗栗縣南庄鄉鄉治所在地南庄聚落，當地居民以客家族群為主。具有濃濃的客家懷舊風味，每到假日，總是吸引眾多遊客造訪。主要的景點有永昌宮、老郵局、乃木崎、桂花巷及洗衫坑等。
-                      傳統的老街範圍以中正路為主，兩旁商家林立。</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
-                <div class="row">
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/sky.jpg);">
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="col-sm col-md-6 ftco-animate" style="padding-left: 0px; padding-right: 30px;">
-                    <div class="room">
-                      <a class="img img-2 d-flex justify-content-center align-items-center"
-                        style="background-image: url(images/garden.jpg);">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h4>攜帶物品</h4>
-              <br>
-              <div class="list">
-                <li>睡袋</li>
-                <li>洗漱用品</li>
-                <li>保暖衣物</li>
-                <li>點心</li>
               </div>
             </div>
-          </div>
-        </div> <!-- .col-md-8 -->
+          </div> <!-- .col-md-8 -->
 
 
-        <div class="col-lg-4 ftco-animate" style=" width:400px; margin-left: 40px;">
-          <div class="sidebar-box ftco-animate" style="border-style: solid; border-color: #F0F0F0;">
-            <div class="categories">
-              <div class="box-side">
-                <span>
-                  <h6>目前參加人員</h6>
+          <div class="col-lg-4 ftco-animate" style=" width:400px; margin-left: 40px;">
+            <div class="sidebar-box ftco-animate" style="border-style: solid; border-color: #F0F0F0;">
+              <div class="categories">
+                <div class="box-side">
+                  <span>
+                    <h6>目前參加人員</h6>
+                  </span>
+                  <span style="display: flex; align-items: center">
+                    <i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i>
+                    <p style="margin-right: 8px;">
+                      <?php echo $maleCount ?>
+                    </p>
+                    <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
+                    <p>
+                      <?php echo $femaleCount ?>
+                    </p>
+                  </span>
+                </div>
+
+                <?php
+                // 輸出 accountName
+                $displayCount = 0;
+                foreach ($accounts as $account) {
+                  if ($displayCount >= 3) {
+                    break;
+                  }
+                  $accountName = $account['accountName'];
+                  echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
+                  echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                  echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
+                  $displayCount++;
+                }
+                ?>
+                <span class="more">
+                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
+                    <a href="#more2">查看更多</a></button>
                 </span>
-                <span style="display: flex; align-items: center">
-                  <i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i>
-                  <p style="margin-right: 8px;">3</p>
-                  <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-                  <p>3</p>
-                </span>
-              </div>
 
-              <span style="display: flex;margin-bottom: 16px; align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                  width: 10%;
-                  margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
-
-              <span style="display: flex;margin-bottom: 16px; align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                  width: 10%;
-                  margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
-
-              <span style="display: flex;margin-bottom: 16px; align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                  width: 10%;
-                  margin-right: 16px;">
-                <label style="font-size: 16px; margin-bottom: 0px;">yizz</label></span>
-              <span class="more">
-                <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
-                  <a href="#more2">查看更多</a></button>
-              </span>
-
-              <div class="box-side">
-                <h6>目前所需用品</h6>
-              </div>
-              <div class="list" style="font-size: 14px;"">
-              <li>睡袋</li>
-              <li>洗漱用品</li>
-              <li>保暖衣物</li>
-              <li>點心</li>
-             </div>
-             <span class=" more">
-                <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
-                  <a href="#more3">查看更多</a></button>
+                <div class="box-side">
+                  <h6>目前所需用品</h6>
+                </div>
+                <div class="list" style="font-size: 14px;">
+                  <li>睡袋</li>
+                  <li>洗漱用品</li>
+                  <li>保暖衣物</li>
+                  <li>點心</li>
+                </div>
+                <span class=" more">
+                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
+                    <a href="#more3">查看更多</a></button>
                 </span>
                 <div class="box-side">
                   <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
@@ -879,65 +712,48 @@ $result_route = mysqli_query($conn, $sql_route);
         <div class="modal-list">
           <div class="supply">
             <div class="row">
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                      width: 30%;
-                      margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizz</label></span>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                <p style="font-size: 14px;">新手營火</p>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                      width: 30%;
-                      margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label></span>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                <p style="font-size: 14px;">新手營火</p>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                      width: 30%;
-                      margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzzzzz</label></span>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                <p style="font-size: 14px;">新手營火</p>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                      width: 30%;
-                      margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzz</label></span>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <i class="fa-solid fa-fire" style="color: #B02626; font-size:20px; margin-right: 8px;"></i>
-                <p style="font-size: 14px;">新手營火</p>
-              </div>
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
+              <?php
+              foreach ($accounts as $account) {
+                $accountName = $account['accountName'];
+                echo '<div class="col-md-4">';
+                echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
+                echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                echo '<label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label></span>';
+                echo '</div>';
+                echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
+                $attendeeActivityCount = $account['attendeeActivityCount'];
+                $iconClass = '';
+                $color = '';
+                $text = '';
+                if ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) {
+                  $iconClass = 'fa-solid fa-fire';
+                  $color = '#B02626';
+                  $text = '新手營火';
+                } elseif ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) {
+                  $iconClass = 'fa-solid fa-compass"';
+                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $text = '方向盤';
+                } elseif ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) {
+                  $iconClass = 'fa-solid fa-binoculars';
+                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $text = '望遠鏡';
+                } elseif ($attendeeActivityCount > 15) {
+                  $iconClass = 'fa-solid fa-campground';
+                  $color = 'rgba(0, 0, 0, 0.16)';
+                  $text = '帳篷';
+                }
+                echo '<i class="' . $iconClass . '" style="color: ' . $color . '; font-size:20px; margin-right: 8px;"></i>';
+                echo '<p style="font-size: 14px;">' . $text . '</p>';
+                echo '</div>';
+                echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">';
+                if ($account['accountGender'] == 'Male') {
+                  echo '<i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i>';
+                } else if ($account['accountGender'] == 'Female') {
+                  echo '<i class="fa-solid fa-child-dress fa-lg" style="color: #F1ACAC;"></i>';
+                }
+                echo '</div>';
+              }
+              ?>
             </div>
           </div>
         </div>
