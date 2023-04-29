@@ -9601,3 +9601,27 @@ article .detail {
     margin-right: 8px;
     font-size: 16px;
    }
+   .button-search{
+    border-radius: 35px; 
+    width: 70px;
+    height: 40px;
+    border: none;
+    padding: 8px;
+    background-color: #efefef;
+    border-top-left-radius:35px !important;
+    border-bottom-left-radius:35px !important;
+
+  }
+  .tagcloud a {
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 6px 16px;
+    margin-bottom: 7px;
+    margin-right: 4px;
+    border-radius: 25px;
+    color: #000000;
+    border: 0px solid #ccc;
+    font-size: 11px;
+    background-color: #EFE9DA; }
+    .tagcloud a:hover {
+      border: 1px solid #000; }
