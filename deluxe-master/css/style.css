@@ -9489,7 +9489,7 @@ dialog::backdrop {
 }
 .detail h5 {
   color: #005555;
-  margin-left: 180px;
+  margin-left: 580px;
   align-items: center;
   text-decoration: underline;
   margin-bottom: 0px;
@@ -9584,11 +9584,14 @@ article .detail {
   .card-icon-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   
   .card-icon-footer p {
   margin-left: 6px;
   margin-right: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   }
   .card-icon-footer i {
     margin-right: 4px;
