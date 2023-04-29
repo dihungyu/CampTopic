@@ -9539,3 +9539,24 @@ margin-bottom: 0px;
   background-color: #EFE9DA; }
   .tagcloud a:hover {
     border: 1px solid #000; }
+
+    
+    article .detail {
+      display: flex;
+      margin-bottom: 24px;
+      font-size: 12px;
+      align-items: center;
+  }
+  .detail h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+}
+  .detail h5 {
+    color: #005555;
+    margin-left: 580px;
+    align-items: center;
+    text-decoration: underline;
+    margin-bottom: 0px;
+    font-weight: 600;
+}
