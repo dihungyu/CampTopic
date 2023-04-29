@@ -188,13 +188,13 @@ function format_like_count($count)
                 <div class="row">
                   <div class="col-md-12">
                     <form method="GET" action="" class="mb-4">
-                      <div class="input-group">
-                        <input type="search" name="camp_search_keyword" class="form-control rounded-pill" placeholder="搜尋營地名稱..." value="<?= isset($_GET['camp_search_keyword']) ? $_GET['camp_search_keyword'] : '' ?>" />
-                        &nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary rounded-pill ml-2">
-                          <i class="fas fa-search"></i>
-                          搜尋
-                        </button>
+                    <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+                      <div id="navbar-search-autocomplete" class="form-outline">
+                      <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
+                      </div>&nbsp;
+                      <button type="button" class="button-search">
+                      <i class="fas fa-search"></i>
+                      </button>
                       </div>
                     </form>
                   </div>
