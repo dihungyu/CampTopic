@@ -9505,3 +9505,37 @@ dialog::backdrop {
     border-bottom-left-radius: 35px !important;
 }
 
+.card-icon-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-icon-footer p {
+margin-left: 6px;
+margin-right: 10px;
+margin-top: 0px;
+margin-bottom: 0px;
+}
+.card-icon-footer i {
+  margin-right: 4px;
+  margin-left: 160px;
+}
+.list i{
+  margin-right: 8px;
+  font-size: 16px;
+ }
+
+.tagcloud a {
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 6px 16px;
+  margin-bottom: 7px;
+  margin-right: 4px;
+  border-radius: 25px;
+  color: #000000;
+  border: 0px solid #ccc;
+  font-size: 11px;
+  background-color: #EFE9DA; }
+  .tagcloud a:hover {
+    border: 1px solid #000; }
