@@ -9594,3 +9594,7 @@ article .detail {
     margin-right: 4px;
     margin-left: 160px;
   }
+  .list i{
+    margin-right: 8px;
+    font-size: 16px;
+   }
