@@ -9178,6 +9178,12 @@ textarea.form-control {
 
 .breadcrumb-item.active {
   color: #6c757d; }
+  
+nav[aria-label="breadcrumb"] a {
+  color: #fff; }
+
+nav[aria-label="breadcrumb"] li:before {
+  color: rgba(255, 255, 255, 0.3) !important; }
 
   .hero {
     position: relative;
