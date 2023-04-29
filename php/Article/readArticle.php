@@ -1,5 +1,5 @@
 <?php
-include("conn.php");
+require_once '../conn.php';
 $sql_query = "SELECT * FROM articles ORDER BY articleId ASC";
 $result = mysqli_query($conn, $sql_query);
 $total_records = mysqli_num_rows($result);
@@ -22,10 +22,10 @@ $total_records = mysqli_num_rows($result);
         <tr>
             <th>文章編號 </th>
             <th>帳戶編號</th>
-            <th>文章分類 </th>
             <th>文章圖片</th>
             <th>文章標題 </th>
             <th>文章內容 </th>
+            <th>營區相關標籤</th>
             <th>文章建立日期 </th>
             <th>文章更新日期 </th>
             <th>文章收藏次數 </th>
@@ -48,9 +48,20 @@ $total_records = mysqli_num_rows($result);
                 echo "<br>"; // 加上換行，方便閱讀
             }
             echo "</td>";
-            echo "<td>" . $row_result['articleType'] . "</td>";
             echo "<td>" . $row_result['articleTitle'] . "</td>";
             echo "<td>" . $row_result['articleContent'] . "</td>";
+            echo "<td>";
+            $sql_query_labels = "SELECT articles_labels.labelId, labels.labelName
+            FROM articles_labels
+            JOIN labels ON articles_labels.labelId = labels.labelId
+            WHERE articles_labels.articleId = '$articleId'";
+            $result_labels = mysqli_query($conn, $sql_query_labels);
+            while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+
+                echo $tags_row['labelName'];
+                echo "<br>";
+            }
+            echo "</td>";
             echo "<td>" . $row_result['articleCreateDate'] . "</td>";
             echo "<td>" . $row_result['articleUpdateDate'] . "</td>";
             echo "<td>" . $row_result['articleCollectCount'] . "</td>";

@@ -9,6 +9,17 @@ require_once("../php/conn.php");
 
 
 
+function format_like_count($count)
+{
+  if ($count < 1000) {
+    return $count;
+  } elseif ($count < 1000000) {
+    return round($count / 1000, 1) . 'k';
+  } else {
+    return round($count / 1000000, 1) . 'm';
+  }
+}
+
 ?>
 
 
@@ -172,8 +183,9 @@ require_once("../php/conn.php");
   </div>
 
   <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="land" role="tabpanel" aria-labelledby="land-tab">
 
+    <!-- 收藏營區 -->
+    <div class="tab-pane fade show active" id="land" role="tabpanel" aria-labelledby="land-tab">
       <div class="section section-properties">
         <div class="container">
           <div class="row">
@@ -207,14 +219,13 @@ require_once("../php/conn.php");
               $total_pages = ceil($total_rows / 9);
 
               $perPage = 9;
-              $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-              $offset = ($current_page - 1) * $perPage;
-
-
+              $camp_current_page = isset($_GET['camp_page']) ? (int)$_GET['camp_page'] : 1;
+              $offset = ($camp_current_page - 1) * $perPage;
 
               // 使用收藏的營地id去查詢相關營地資料
               $sql = "SELECT * FROM campsites WHERE campsiteId IN ($campsiteIdsStr) LIMIT $offset, $perPage";
               $campsiteResult = $conn->query($sql);
+
 
               // 檢查是否有結果，如果有則輸出營地資料
               if ($campsiteResult && $campsiteResult->num_rows > 0) {
@@ -240,10 +251,6 @@ require_once("../php/conn.php");
                     <h4>$" . $campsiteData["campsiteLowerLimit"] . "~$" . $campsiteData["campsiteUpperLimit"] . "</h4>
                     <div class='detail'>
                       <h1><a href='single.html'>" . $campsiteData["campsiteName"] . "</a></h1>
-                      <span>
-                        <i class='icon-star' style='color:#FEBB56;'></i>
-                        <p class='detail-icon'>4.0</p>
-                      </span>
                     </div>
                     <p>" . $campsiteData["campsiteAddress"] . "</p>
                     <footer>";
@@ -286,8 +293,6 @@ require_once("../php/conn.php");
                 }
               }
             }
-
-            $conn->close();
             ?>
 
             <div class="row align-items-center py-5">
@@ -295,7 +300,7 @@ require_once("../php/conn.php");
               <div class="col-lg-6 text-center">
                 <div class="custom-pagination">
                   <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                    <a href="?page=<?= $i ?>" <?= ($i == $current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                    <a href="?camp_page=<?= $i ?>#land" <?= ($i == $camp_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                   <?php endfor; ?>
                 </div>
               </div>
@@ -303,153 +308,161 @@ require_once("../php/conn.php");
 
 
 
+
+
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 收藏文章區 -->
     <div class="tab-pane fade show " id="paper" role="tabpanel" aria-labelledby="paper-tab">
       <div class="container">
         <div class="row">
-          <article class="col-md-8 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/news/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail">
-                  <div class="category">
-                    <a href="category.html">Film</a>
+          <?php
+
+
+          // 先找出該使用者收藏的文章id
+          $sql = "SELECT articleId FROM collections WHERE accountId='$accountId'";
+          $result = $conn->query($sql);
+
+          // 檢查是否有結果，如果有則進行營地查詢
+          if ($result && $result->num_rows > 0) {
+            // 建立一個空陣列，用於存儲收藏的文章id
+            $articleIds = array();
+
+            // 循環遍歷所有收藏的文章id，將其存入$articleIds陣列中
+            while ($row = $result->fetch_assoc()) {
+              $articleIds[] = $row['articleId'];
+            }
+
+            // 將陣列轉換為 SQL 語句中的 IN 條件，並在每個文章 ID 前後添加單引號
+            $articleIdsStr = implode(',', array_map(function ($id) {
+              return "'$id'";
+            }, $articleIds));
+
+
+            // 使用收藏的文章id去查詢相關文章資料的總數
+            $article_count_sql = "SELECT COUNT(*) as total FROM articles WHERE articleId IN ($articleIdsStr)";
+            $article_count_result = $conn->query($article_count_sql);
+            $row = $article_count_result->fetch_assoc();
+            $article_total_rows = $row['total'];
+            $article_total_pages = ceil($article_total_rows / 9);
+
+            $article_perPage = 9;
+            $article_current_page = isset($_GET['article_page']) ? (int)$_GET['article_page'] : 1;
+            $article_offset = ($article_current_page - 1) * $article_perPage;
+
+            // 使用收藏的文章id去查詢相關文章資料
+            $sql = "SELECT articles.*, accounts.accountName FROM articles
+            LEFT JOIN accounts ON articles.accountId = accounts.accountId
+            WHERE articleId IN ($articleIdsStr)
+            LIMIT $article_offset, $article_perPage";
+
+            $articleResult = $conn->query($sql);
+
+
+            // 檢查是否有結果，如果有則輸出文章資料
+            if ($articleResult && $articleResult->num_rows > 0) {
+
+              $counter = 0;
+              while ($articleData = $articleResult->fetch_assoc()) {
+
+
+                $files_query = "SELECT * FROM files WHERE articleId = '$articleData[articleId]'";
+                $files_result = mysqli_query($conn, $files_query);
+                $image_src = 'images/news/img15.jpg'; // Default image
+
+                if ($file_result = mysqli_fetch_assoc($files_result)) {
+                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                  $image_src = $file_path;
+                }
+
+                // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+                $timestamp = strtotime($articleData["articleCreateDate"]);
+
+                // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+                $formatted_date = date('F j, Y', $timestamp);
+
+                //若文章內容超過30字做限制
+                $content_length = mb_strlen($articleData["articleContent"], 'UTF-8');
+                if ($content_length > 30) {
+                  $truncated_content = mb_substr($articleData["articleContent"], 0, 30, 'UTF-8') . '...';
+                } else {
+                  $truncated_content = $articleData["articleContent"];
+                }
+
+                // 在顯示卡片之前查詢留言數
+                $articleId = $articleData["articleId"];
+                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                $comment_count = $row['comment_count'];
+
+                // 格式化按讚數
+                $formatted_like_count = format_like_count($articleData["articleLikeCount"]);
+
+
+
+                // Card content
+                echo "<article class='col-md-8 article-list'>
+                  <div class='inner'>
+                    <figure>
+                      <a href='single.html'>
+                        <img src='" . $image_src . "'>
+                      </a>
+                    </figure>
+                    <div class='details'>
+                      <div class='detail'>
+                        <div class='category'>
+                          <a href='category.html'>" . $articleData["accountName"] . "</a>
+                        </div>
+                        <div class='time'>" . $formatted_date . "</div>
+                      </div>
+                      <h1><a href='single.html'>" . $articleData["articleTitle"] . "</a></h1>
+                      <p>
+                        " . $truncated_content . "
+                      </p>
+                      <footer>
+                        <p style='white-space: nowrap;'>" . $comment_count . " 則留言</p>
+                        <i class='fa-regular fa-heart'></i>
+                        <p style='margin-right: 0px;'>" . $formatted_like_count . "</p>
+                      </footer>
+                    </div>
                   </div>
-                  <div class="time">December 26, 2016</div>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer>
-                  <p>100 留言</p>
-                  <p>30 分享</p>
-                  <i class="fa-regular fa-eye"></i>
-                  <p style="margin-right: 0px;">1,098</p>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <div class="col-md-4 sidebar">
+                </article>";
+                if ($counter <= 1) {
+                  $counter++;
+                  echo "<div class='col-md-4 sidebar'>
             <aside>
-              <div class="aside-body">
-                <figure class="ads">
-                  <a href="single.html">
-                    <img src="images/Group 74.png">
+              <div class='aside-body'>
+                <figure class='ads'>
+                  <a href='single.html'>
+                    <img src='images/Group 74.png'>
                   </a>
                   <figcaption>Advertisement</figcaption>
                 </figure>
               </div>
-
             </aside>
+          </div>";
+                }
+              }
+            }
+          }
+          ?>
 
+          <div class="row align-items-center py-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 text-center">
+              <div class="custom-pagination">
+                <?php for ($i = 1; $i <= $article_total_pages; $i++) : ?>
+                  <a href="?article_page=<?= $i ?>#paper" <?= ($i == $article_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                <?php endfor; ?>
+              </div>
+            </div>
           </div>
-          <article class="col-md-8 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/news/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail">
-                  <div class="category">
-                    <a href="category.html">Film</a>
-                  </div>
-                  <div class="time">December 26, 2016</div>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer>
-                  <p>100 留言</p>
-                  <p>30 分享</p>
-                  <i class="fa-regular fa-eye"></i>
-                  <p style="margin-right: 0px;">1,098</p>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <div class="col-md-4 sidebar">
-            <aside>
-              <div class="aside-body">
-                <figure class="ads">
-                  <a href="single.html">
-                    <img src="images/Group 74.png">
-                  </a>
-                  <figcaption>Advertisement</figcaption>
-                </figure>
-              </div>
 
-            </aside>
 
-          </div>
-          <article class="col-md-8 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/news/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail">
-                  <div class="category">
-                    <a href="category.html">Film</a>
-                  </div>
-                  <div class="time">December 26, 2016</div>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer>
-                  <p>100 留言</p>
-                  <p>30 分享</p>
-                  <i class="fa-regular fa-eye"></i>
-                  <p style="margin-right: 0px;">1,098</p>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-8 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/news/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail">
-                  <div class="category">
-                    <a href="category.html">Film</a>
-                  </div>
-                  <div class="time">December 26, 2016</div>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer>
-                  <p>100 留言</p>
-                  <p>30 分享</p>
-                  <i class="fa-regular fa-eye"></i>
-                  <p style="margin-right: 0px;">1,098</p>
-                </footer>
-              </div>
-            </div>
-          </article>
 
         </div>
       </div>
@@ -736,6 +749,45 @@ require_once("../php/conn.php");
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Check if the URL hash is "#paper", "#land", or "#equip"
+      if (window.location.hash === "#paper") {
+        // Remove "active" class from other tabs
+        $('.nav-link.land').removeClass('active');
+        $('.tab-pane#land').removeClass('active');
+        $('.nav-link.equip').removeClass('active');
+        $('.tab-pane#equip').removeClass('active');
+
+        // Add "active" class to the "文章" tab
+        $('.nav-link.paper').addClass('active');
+        $('.tab-pane#paper').addClass('active');
+      } else if (window.location.hash === "#land") {
+        // Remove "active" class from other tabs
+        $('.nav-link.paper').removeClass('active');
+        $('.tab-pane#paper').removeClass('active');
+        $('.nav-link.equip').removeClass('active');
+        $('.tab-pane#equip').removeClass('active');
+
+        // Add "active" class to the "營地" tab
+        $('.nav-link.land').addClass('active');
+        $('.tab-pane#land').addClass('active');
+      } else if (window.location.hash === "#equip") {
+        // Remove "active" class from other tabs
+        $('.nav-link.paper').removeClass('active');
+        $('.tab-pane#paper').removeClass('active');
+        $('.nav-link.land').removeClass('active');
+        $('.tab-pane#land').removeClass('active');
+
+        // Add "active" class to the "設備" tab
+        $('.nav-link.equip').addClass('active');
+        $('.tab-pane#equip').addClass('active');
+      }
+    });
+  </script>
+
+
 
 
 
