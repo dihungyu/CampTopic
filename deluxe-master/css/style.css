@@ -9413,4 +9413,31 @@ dialog{
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.1);
 }
-  
+
+.input-group {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+  .button-search {
+    border-radius: 35px;
+    width: 70px;
+    height: 40px;
+    border: none;
+    padding: 8px;
+    background-color: #efefef;
+    border-top-left-radius: 35px !important;
+    border-bottom-left-radius: 35px !important;
+}
