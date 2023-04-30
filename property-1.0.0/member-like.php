@@ -492,10 +492,9 @@ function format_like_count($count)
           <div class="row">
 
             <article class="col-md-8 article-list" style="display: flex;">
-              <div class="inner" style="display: flex; ">
+              <div class="inner">
                 <div class="card">
                   <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-
                   <div class="card-body">
                     <div class="detail">
                       <span class="fa-stack fa-1x" style="margin-right: 5px; ">
@@ -564,7 +563,7 @@ function format_like_count($count)
 
             </div>
             <article class="col-md-8 article-list" style="display: flex;">
-              <div class="inner" style="display: flex; ">
+              <div class="inner">
                 <div class="card">
                   <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
 
