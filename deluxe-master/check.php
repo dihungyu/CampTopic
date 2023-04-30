@@ -57,9 +57,9 @@ if ($result_account->num_rows > 0) {
   while ($account_result = $result_account->fetch_assoc()) {
     $accounts[] = $account_result;
 
-    if ($account_result["accountGender"] == "Male") {
+    if ($account_result["accountGender"] == "Male" && $account_result["isApproved"] == 1) {
       $maleCount++;
-    } elseif ($account_result["accountGender"] == "Female") {
+    } elseif ($account_result["accountGender"] == "Female" && $account_result["isApproved"] == 1) {
       $femaleCount++;
     }
   }
@@ -156,6 +156,22 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       setDateInputBehavior('#start-date-input');
       setDateInputBehavior('#end-date-input');
     });
+
+    function previewImage(input, targetImg) {
+      if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          targetImg.setAttribute("src", e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function removeImage(imgContainer, targetImg, input) {
+      targetImg.setAttribute("src", "");
+      imgContainer.style.display = "none";
+      input.value = "";
+    }
 
   </script>
 
@@ -336,9 +352,13 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                   echo '  </span>';
                   $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
                   $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
+                  $tripIntroductions = [];
                   while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-                    $tripIntroductionTitle = $tripIntroduction_result['tripIntroductionTitle'];
-                    $tripIntroductionContent = $tripIntroduction_result['tripIntroductionContent'];
+                    $tripIntroductions[] = ['tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'], 'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']];
+                  }
+                  foreach ($tripIntroductions as $tripIntroduction) {
+                    $tripIntroductionTitle = $tripIntroduction['tripIntroductionTitle'];
+                    $tripIntroductionContent = $tripIntroduction['tripIntroductionContent'];
                     echo '  <div style="clear: both;">';
                     echo '    <br>';
                     echo '    <h6>' . $tripIntroductionTitle . '</h6>';
@@ -679,6 +699,13 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   <!-- 編輯行程 D1-D5 -->
   <?php
   foreach ($routes as $route) {
+    $routeId = $route['routeId'];
+    $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+    $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
+    $tripIntroductions = [];
+    while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
+      $tripIntroductions[] = ['tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'], 'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']];
+    }
     $dayNumber = $route['dayNumber'];
     $locations = $route['locations'];
     echo '<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal' . $dayNumber . '">';
@@ -692,24 +719,25 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     echo '</div>';
     echo '<div class="modal-list" style="margin: 32px;">';
     echo '<input style="width: 100%; type="day" placeholder="標題" value="' . $locations . '">';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<input style="width: 90%;" type="text" placeholder="標題" value="">';
-    echo '</div>';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<input style="width: 90%; margin-left: 5%;" type="text" placeholder="標題" value="">';
-    echo '</div>';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<input style="width: 90%; margin-left: 10%;" type="text" placeholder="標題" value="">';
-    echo '</div>';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<textarea style="width: 90%;" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>';
-    echo '</div>';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<textarea style="width: 90%; margin-left: 5%;" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>';
-    echo '</div>';
-    echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-    echo '<textarea style="width: 90%; margin-left: 10%;" rows="10" type="text" value="suggest" placeholder="行程說明"></textarea>';
-    echo '</div>';
+    // 用於填充空白輸入框和文本區域的預設值
+    $default = ['tripIntroductionTitle' => '', 'tripIntroductionContent' => ''];
+    // 確保 $results 至少包含三個元素（可能是空的）
+    while (count($tripIntroductions) < 3) {
+      $tripIntroductions[] = $default;
+    }
+    // 顯示輸入框和文本區域
+    for ($i = 0; $i < 3; $i++) {
+      $marginLeft = $i * 2.5;
+      echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
+      echo '<input style="width: 95%; margin-left: ' . $marginLeft . '%;" type="text" placeholder="請輸入景點名稱" value="' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionTitle']) . '">';
+      echo '</div>';
+    }
+    for ($i = 0; $i < 3; $i++) {
+      $marginLeft = $i * 2.5;
+      echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
+      echo '<textarea style="width: 95%; margin-left: ' . $marginLeft . '%;" rows="10" type="text" placeholder="請輸入景點介紹">' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionContent']) . '</textarea>';
+      echo '</div>';
+    }
     echo '<div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">';
     echo '<input type="file" class="file-upload">';
     echo '</div>';
