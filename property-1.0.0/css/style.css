@@ -10769,6 +10769,18 @@ nav[aria-label="breadcrumb"] li:before {
 .mr-4,
 .mx-4 {
   margin-right: 1.5rem !important; }
-
+.tagcloud a{
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 6px 16px;
+  margin-bottom: 7px;
+  margin-right: 4px;
+  border-radius: 25px;
+  color: #000000;
+  border: 0px solid #ccc;
+  font-size: 11px;
+  background-color: #EFE9DA; }
+  .tagcloud a:hover {
+    border: 1px solid #000; }
   
   
