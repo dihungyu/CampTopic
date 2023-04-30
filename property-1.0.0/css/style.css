@@ -3032,7 +3032,7 @@ textarea.form-control-lg {
   position: absolute;
   z-index: 1000;
   display: none;
-  min-width: 10rem;
+  min-width: 8rem;
   padding: 0.5rem 0;
   margin: 0;
   font-size: 1rem;
@@ -3514,7 +3514,7 @@ textarea.form-control-lg {
   flex-basis: 100%;
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1;
+  flex-grow: 0;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
@@ -9645,6 +9645,7 @@ textarea {
   right: 0;
   bottom: 0; }
 
+
 .loader {
   z-index: 7700;
   position: fixed;
@@ -9746,7 +9747,7 @@ textarea {
         bottom: 0;
         top: 0;
         z-index: 1;
-        background: rgba(34, 34, 34, 0.4); }
+        background: rgba(34, 34, 34, 0.3); }
 
 .section {
   padding-top: 4rem;
@@ -10203,6 +10204,8 @@ textarea {
   .agent-box .text h3, .agent-box .text .h3 {
     font-size: 16px; }
 
+.testimonial-slider-wrap .tns-outer .tns-inner, .img-testimonial-slide-wrap .tns-outer .tns-inner {
+    padding-bottom: 100px !important;}
 .testimonial-slider-wrap {
   position: relative; }
   .testimonial-slider-wrap .tns-nav {
@@ -10219,6 +10222,14 @@ textarea {
       display: inline-block;
       margin: 2px;
       height: 15px; }
+      .testimonial-slider-wrap .tns-nav, .img-testimonial-slide-wrap .tns-nav {
+        position: absolute;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        bottom: 40px;
+        z-index: 2;}
       .testimonial-slider-wrap .tns-nav button:active, .testimonial-slider-wrap .tns-nav button:focus {
         outline: none; }
       .testimonial-slider-wrap .tns-nav button:before {
@@ -10234,6 +10245,10 @@ textarea {
       .testimonial-slider-wrap .tns-nav button.tns-nav-active:before {
         background-color: #00204a; }
 
+#testimonial-nav {
+  position: absolute;
+  width: 100%;
+  bottom: 64px; }
 #testimonial-nav span {
   display: inline-block;
   cursor: pointer;
@@ -10248,6 +10263,19 @@ textarea {
   #testimonial-nav span:hover, #testimonial-nav span.active {
     background: #00204a;
     color: #fff !important; }
+  #testimonial-nav span:hover, #testimonial-nav span.active {
+      background: #00204a;
+      color: #fff !important; }
+  #testimonial-nav .prev, #testimonial-nav .next {
+    position: absolute;
+    cursor: pointer; }
+    #testimonial-nav .prev:hover, #ptestimonial-nav .next:hover {
+      color: #00204a; }
+  #testimonial-nav .prev {
+    left: 0; }
+  #testimonial-nav .next {
+    right: 0; }
+    
 
 .custom-mb {
   margin-bottom: 80px; }
