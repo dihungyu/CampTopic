@@ -9692,10 +9692,11 @@ textarea {
     position: relative;
     z-index: 2; }
   .hero .heading {
-    color: #fff;
+    color: #ffffffd9;
     font-size: clamp(1.5rem, 2.5vw, 2.5rem);
     margin-bottom: 30px;
-    font-weight: 600; }
+    font-weight: 500;
+    line-height: 60px;}
   .hero .lead {
     color: #fff;
     font-size: 14px;
@@ -9962,7 +9963,7 @@ textarea {
       object-fit: cover; }
 
 .feature-h {
-  margin-bottom: 30px; }
+  margin-bottom: 15px; }
   .feature-h .wrap-icon {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 80px;
@@ -10082,7 +10083,9 @@ textarea {
         color: #000;
         text-decoration: none; }
     .person .person-contents p {
-      font-size: 14px; }
+      font-size: 14px;
+      box-sizing: content-box;
+      height: 100px; }
 
 .meta {
   color: #888; }
@@ -10719,10 +10722,14 @@ nav[aria-label="breadcrumb"] li:before {
   width: 80px; }
 
 .block-21 .text {
-  width: calc(100% - 100px); }
+  width: calc(100% - 100px);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+ }
   .block-21 .text .heading {
-    font-size: 18px;
-    font-weight: 300; }
+    font-size: 16px;
+    font-weight: 400; }
     .block-21 .text .heading a {
       color: #000000; }
       .block-21 .text .heading a:hover, .block-21 .text .heading a:active, .block-21 .text .heading a:focus {
@@ -10783,4 +10790,51 @@ nav[aria-label="breadcrumb"] li:before {
   .tagcloud a:hover {
     border: 1px solid #000; }
   
-  
+.card-icon-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-icon-footer p {
+margin-right: 10px;
+margin-bottom: 0px;
+}
+.card-icon-footer i {
+  margin-right: 4px;
+}
+.btn-ad{
+width: 120px; 
+height: 35px; 
+background-color: #EFE9DA;
+color: black;
+border:none; 
+border-radius: 30px;
+}
+.btn-ad:hover{
+  width: 120px; 
+  height: 35px; 
+  background-color: #d9d9d9;
+  color: black;
+  border:none; 
+  border-radius: 30px;
+  }
+.btn-ad:focus{
+  width: 120px; 
+  height: 35px; 
+  background-color: #d9d9d9;
+  color: black;
+  border:solid; 
+  border-color: #a0a0a0;
+  border-radius: 30px;
+  }
+.circle{
+  background-color: #fff;
+  font-size: 50px;
+  color: #00204a;
+  position: relative;
+  width: 90px;
+  padding-top: 20px;
+  border-radius: 50%;
+  margin: 0px auto 0 auto;
+}
