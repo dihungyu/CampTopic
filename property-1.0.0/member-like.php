@@ -117,17 +117,17 @@ function format_like_count($count)
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">登出</a>
+              <a class="dropdown-item" href="../login.php">登出</a>
             </div>
           </li>
 
@@ -145,7 +145,7 @@ function format_like_count($count)
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
               <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-              <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
+              <li class="breadcrumb-item"><a href="member.php">會員帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 我的收藏
               </li>
@@ -320,11 +320,7 @@ function format_like_count($count)
                   </div>
                 </div>
               </div>
-
-
-
-
-
+ㄨ
             </div>
           </div>
         </div>
@@ -443,7 +439,9 @@ function format_like_count($count)
 
 
                   // Card content
-                  echo "<article class='col-md-8 article-list'>
+                  
+                  echo "
+                  <article class='col-md-8 article-list'>
                   <div class='inner'>
                     <figure>
                       <a href='#'>
@@ -451,20 +449,21 @@ function format_like_count($count)
                       </a>
                     </figure>
                     <div class='details'>
-                      <div class='detail'>
+                      <div class='detail'style='display: flex;'>
                         <div class='category'>
                           <a href='#'>" . $articleData["accountName"] . "</a>
                         </div>
                         <div class='time'>" . $formatted_date . "</div>
                       </div>
-                      <h1><a href='#'>" . $articleData["articleTitle"] . "</a></h1>
+                      <h5><a href='#'>" . $articleData["articleTitle"] . "</a></h5>
                       <p>
                         " . $truncated_content . "
                       </p>
-                      <footer>
+                      <footer style='justify-content: space-between; padding-top: 10px;'>
                         <p style='white-space: nowrap;'>" . $comment_count . " 則留言</p>
+                        <span style='display:flex; align-items:center;'>
                         <i class='fa-regular fa-heart'></i>
-                        <p style='margin-right: 0px;'>" . $formatted_like_count . "</p>
+                        <p style='margin-right: 0px;'>" . $formatted_like_count . "</p></span>
                       </footer>
                     </div>
                   </div>
@@ -474,11 +473,8 @@ function format_like_count($count)
                     echo "<div class='col-md-4 sidebar'>
             <aside>
               <div class='aside-body'>
-                <figure class='ads'>
-                  <a href='#'>
-                    <img src='images/Group 74.png'>
-                  </a>
-                  <figcaption>Advertisement</figcaption>
+                <figure class='ads'style='display: flex; justify-content: center;'>
+                    <img src='images/Group 74.png'style='width:50%'>
                 </figure>
               </div>
             </aside>
@@ -527,8 +523,6 @@ function format_like_count($count)
                 </div>
               </div>
             </div>
-
-
 
 
 
