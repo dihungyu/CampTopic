@@ -11,13 +11,27 @@ while ($row = mysqli_fetch_assoc($result)) {
     $files_to_delete[] = $row['fileName'];
 }
 
+// Delete related data from collections table
+$sql_query4 = "DELETE FROM collections WHERE articleId = '$articleId'";
+if (!mysqli_query($conn, $sql_query4)) {
+    echo "Error: " . mysqli_error($conn);
+}
+
+// Delete data from files table
+$sql_query3 = "DELETE FROM files WHERE articleId = '$articleId'";
+if (!mysqli_query($conn, $sql_query3)) {
+    echo "Error: " . mysqli_error($conn);
+}
+
 // Delete data from database
 $sql_query1 = "DELETE FROM articles_labels WHERE articleId = '$articleId'";
-mysqli_query($conn, $sql_query1);
+if (!mysqli_query($conn, $sql_query1)) {
+    echo "Error: " . mysqli_error($conn);
+}
 $sql_query2 = "DELETE FROM articles WHERE articleId = '$articleId'";
-mysqli_query($conn, $sql_query2);
-$sql_query3 = "DELETE FROM files WHERE articleId = '$articleId'";
-mysqli_query($conn, $sql_query3);
+if (!mysqli_query($conn, $sql_query2)) {
+    echo "Error: " . mysqli_error($conn);
+}
 
 
 // Delete files from upload folder

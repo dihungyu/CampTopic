@@ -187,14 +187,14 @@ function format_like_count($count)
               <div class="container">
                 <div class="row">
                   <div class="col-md-12">
-                    <form method="GET" action="" class="mb-4">
-                    <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
-                      <div id="navbar-search-autocomplete" class="form-outline">
-                      <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
-                      </div>&nbsp;
-                      <button type="button" class="button-search">
-                      <i class="fas fa-search"></i>
-                      </button>
+                    <form method="GET" action="member-like.php#land" class="mb-4">
+                      <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+                        <div id="navbar-search-autocomplete" class="form-outline">
+                          <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
+                        </div>&nbsp;
+                        <button type="submit" class="button-search">
+                          <i class="fas fa-search"></i>
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -267,9 +267,9 @@ function format_like_count($count)
                     echo "<div class='card'>
                   <img src='" . $image_src . "' class='card-img-top' alt='...'>
                   <div class='card-body'>
-                    <h4>$" . $campsiteData["campsiteLowerLimit"] . "~$" . $campsiteData["campsiteUpperLimit"] . "</h4>
+                    <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
                     <div class='detail'>
-                      <h1><a href='single.html'>" . $campsiteData["campsiteName"] . "</a></h1>
+                      <h1><a href='#'>" . $campsiteData["campsiteName"] . "</a></h1>
                     </div>
                     <p>" . $campsiteData["campsiteAddress"] . "</p>
                     <footer>";
@@ -282,12 +282,11 @@ function format_like_count($count)
 
                     $printed_tags = 0;
                     while ($tags_row = mysqli_fetch_assoc($result_labels)) {
-                      if ($printed_tags >= 3) {
+                      if ($printed_tags >= 4) {
                         break;
                       }
 
-                      echo "<button class='tag-fav'>
-              <a href='property-single.html' style='color: #000;'>" . $tags_row['labelName'] . "</a>
+                      echo "<button class='tag-fav' disabled>" . $tags_row['labelName'] . "
           </button>";
 
                       $printed_tags++;
@@ -338,14 +337,36 @@ function format_like_count($count)
       <div class="tab-pane fade show " id="paper" role="tabpanel" aria-labelledby="paper-tab">
         <div class="container">
           <div class="row">
+
+
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <form method="GET" action="member-like.php#paper" class="mb-4">
+                    <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+                      <div id="navbar-search-autocomplete" class="form-outline">
+                        <input type="search" id="form1" name="article_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋文章標題..." />
+                      </div>&nbsp;
+                      <button type="submit" class="button-search">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <?php
+
+            // 搜尋關鍵字
+            $article_search_keyword = isset($_GET['article_search_keyword']) ? trim($_GET['article_search_keyword']) : '';
 
 
             // 先找出該使用者收藏的文章id
             $sql = "SELECT articleId FROM collections WHERE accountId='$accountId'";
             $result = $conn->query($sql);
 
-            // 檢查是否有結果，如果有則進行營地查詢
+            // 檢查是否有結果，如果有則進行文章查詢
             if ($result && $result->num_rows > 0) {
               // 建立一個空陣列，用於存儲收藏的文章id
               $articleIds = array();
@@ -361,8 +382,9 @@ function format_like_count($count)
               }, $articleIds));
 
 
-              // 使用收藏的文章id去查詢相關文章資料的總數
-              $article_count_sql = "SELECT COUNT(*) as total FROM articles WHERE articleId IN ($articleIdsStr)";
+              // 使用收藏的文章id去查詢相關營地資料的總數
+              $article_keyword_condition = $article_search_keyword ? "AND articleTitle LIKE '%$article_search_keyword%'" : "";
+              $article_count_sql = "SELECT COUNT(*) as total FROM articles WHERE articleId IN ($articleIdsStr) $article_keyword_condition";
               $article_count_result = $conn->query($article_count_sql);
               $row = $article_count_result->fetch_assoc();
               $article_total_rows = $row['total'];
@@ -375,7 +397,7 @@ function format_like_count($count)
               // 使用收藏的文章id去查詢相關文章資料
               $sql = "SELECT articles.*, accounts.accountName FROM articles
             LEFT JOIN accounts ON articles.accountId = accounts.accountId
-            WHERE articleId IN ($articleIdsStr)
+            WHERE articleId IN ($articleIdsStr) $article_keyword_condition
             LIMIT $article_offset, $article_perPage";
 
               $articleResult = $conn->query($sql);
@@ -427,18 +449,18 @@ function format_like_count($count)
                   echo "<article class='col-md-8 article-list'>
                   <div class='inner'>
                     <figure>
-                      <a href='single.html'>
+                      <a href='#'>
                         <img src='" . $image_src . "'>
                       </a>
                     </figure>
                     <div class='details'>
                       <div class='detail'>
                         <div class='category'>
-                          <a href='category.html'>" . $articleData["accountName"] . "</a>
+                          <a href='#'>" . $articleData["accountName"] . "</a>
                         </div>
                         <div class='time'>" . $formatted_date . "</div>
                       </div>
-                      <h1><a href='single.html'>" . $articleData["articleTitle"] . "</a></h1>
+                      <h1><a href='#'>" . $articleData["articleTitle"] . "</a></h1>
                       <p>
                         " . $truncated_content . "
                       </p>
@@ -456,7 +478,7 @@ function format_like_count($count)
             <aside>
               <div class='aside-body'>
                 <figure class='ads'>
-                  <a href='single.html'>
+                  <a href='#'>
                     <img src='images/Group 74.png'>
                   </a>
                   <figcaption>Advertisement</figcaption>
@@ -487,137 +509,210 @@ function format_like_count($count)
         </div>
       </div>
 
+      <!-- 收藏設備區 -->
       <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
         <div class="container">
           <div class="row">
 
-            <article class="col-md-8 article-list" style="display: flex;">
-              <div class="inner">
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <form method="GET" action="member-like.php#equip" class="mb-4">
+                    <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+                      <div id="navbar-search-autocomplete" class="form-outline">
+                        <input type="search" id="form1" name="equip_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋設備名稱..." />
+                      </div>&nbsp;
+                      <button type="submit" class="button-search">
+                        <i class="fas fa-search"></i>
+                      </button>
                     </div>
-                    <p class="card-text">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                    <footer style="margin-top:40px">
-                      <span>
-                        <div class="card-icon-footer">
-                          <p>100 留言</p>
-                          <p>30 分享</p>
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </div>
-                      </span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
-
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
-                    </div>
-                    <p class="card-text">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                    <footer style="margin-top:40px">
-                      <span>
-                        <div class="card-icon-footer">
-                          <p>100 留言</p>
-                          <p>30 分享</p>
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </div>
-                      </span>
-                    </footer>
-                  </div>
+                  </form>
                 </div>
               </div>
-            </article>
-
-
-            <div class="col-md-4 sidebar">
-              <aside>
-                <div class="aside-body">
-                  <figure class="ads">
-                    <a href="single.html">
-                      <img src="images/Group 74.png">
-                    </a>
-                    <figcaption>Advertisement</figcaption>
-                  </figure>
-                </div>
-
-              </aside>
-
             </div>
-            <article class="col-md-8 article-list" style="display: flex;">
-              <div class="inner">
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
 
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
-                    </div>
-                    <p class="card-text">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                    <footer style="margin-top:40px">
-                      <span>
-                        <div class="card-icon-footer">
-                          <p>100 留言</p>
-                          <p>30 分享</p>
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </div>
-                      </span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">
 
-                  <div class="card-body">
-                    <div class="detail">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px;">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>
-                      </span>
-                      <h1><a href="single.html">露營帳篷</a></h1>
-                      <h5>$1,000</h5>
-                    </div>
-                    <p class="card-text">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</p>
-                    <footer style="margin-top:40px">
-                      <span>
-                        <div class="card-icon-footer">
-                          <p>100 留言</p>
-                          <p>30 分享</p>
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </div>
-                      </span>
-                    </footer>
-                  </div>
+
+
+
+
+            <?php
+            // 搜尋關鍵字
+            $equip_search_keyword = isset($_GET['equip_search_keyword']) ? trim($_GET['equip_search_keyword']) : '';
+
+            // 先找出該使用者收藏的設備id
+            $sql = "SELECT equipmentId FROM collections WHERE accountId='$accountId'";
+            $result = $conn->query($sql);
+
+            // 檢查是否有結果，如果有則進行設備查詢
+            if ($result && $result->num_rows > 0) {
+              // 建立一個空陣列，用於存儲收藏的設備id
+              $equipmentIds = array();
+
+              // 循環遍歷所有收藏的設備id，將其存入$equipmentIds陣列中
+              while ($row = $result->fetch_assoc()) {
+                $equipmentIds[] = $row['equipmentId'];
+              }
+
+              // 將陣列轉換為 SQL 語句中的 IN 條件，並在每個設備 ID 前後添加單引號
+              $equipmentIdsStr = implode(',', array_map(function ($id) {
+                return "'$id'";
+              }, $equipmentIds));
+
+              // 使用收藏的設備id去查詢相關設備資料的總數
+              $equip_keyword_condition = $equip_search_keyword ? "AND equipmentName LIKE '%$equip_search_keyword%'" : "";
+              $equip_count_sql = "SELECT COUNT(*) as total FROM equipments WHERE equipmentId IN ($equipmentIdsStr) $equip_keyword_condition";
+              $equip_count_result = $conn->query($equip_count_sql);
+              $row = $equip_count_result->fetch_assoc();
+              $equip_total_rows = $row['total'];
+              $equip_total_pages = ceil($equip_total_rows / 8);
+
+              $equip_perPage = 8;
+              $equip_current_page = isset($_GET['equip_page']) ? (int)$_GET['equip_page'] : 1;
+              $equip_offset = ($equip_current_page - 1) * $equip_perPage;
+
+              // 使用收藏的設備id去查詢相關設備資料
+              $sql = "SELECT * FROM equipments WHERE equipmentId IN ($equipmentIdsStr) $equip_keyword_condition LIMIT $equip_offset, $equip_perPage";
+              $equipmentResult = $conn->query($sql);
+
+              // 檢查是否有結果，如果有則輸出營地資料
+              if ($equipmentResult && $equipmentResult->num_rows > 0) {
+
+                $equip_card_counter = 0;
+                $ad_counter = 0;
+                echo
+                '<div class="container">';
+                echo '<div class="row">';
+                while ($row = $equipmentResult->fetch_assoc()) {
+
+                  $files_query = "SELECT * FROM files WHERE equipmentId = '$row[equipmentId]'";
+                  $files_result = mysqli_query($conn, $files_query);
+                  $image_src = 'images/M85318677_big.jpeg'; // Default image
+
+                  if ($file_result = mysqli_fetch_assoc($files_result)) {
+                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                    $image_src = $file_path;
+                  }
+                  // 每兩個card會被一個article標籤包裹
+                  if ($equip_card_counter % 2 === 0) {
+                    echo '<article class="col-md-8 article-list" style="display: flex;">
+              <div class="inner">';
+                  }
+
+                  // 輸出card
+                  echo '<div class="card">';
+                  echo '<img src="' . $image_src . '" class="card-img-top" alt="...">';
+                  echo '<div class="card-body">';
+                  echo '<div class="detail">';
+                  if ($row["equipmentType"] === "租") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
+                    echo '</span>';
+                  } else if ($row["equipmentType"] === "徵") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
+                    echo '</span>';
+                  } else if ($row["equipmentType"] === "賣") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
+                    echo '</span>';
+                  }
+
+                  echo '<h1><a href="#">' . $row['equipmentName'] . '</a></h1>';
+                  echo '<h5>$' . $row['equipmentPrice'] . '</h5>';
+                  echo '</div>';
+                  echo '<p class="card-text">' . $row['equipmentDescription'] . '</p>';
+                  echo "<footer>";
+                  echo "<span>";
+
+                  // 以下程式碼用於查詢設備相關的標籤
+                  // 請根據您的資料庫結構和命名進行調整
+                  $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$row[equipmentId]'";
+
+
+                  $equipment_label_result = mysqli_query($conn, $equipment_label_query);
+
+                  // 檢查錯誤
+                  if (!$equipment_label_result) {
+                    echo "Error: " . mysqli_error($conn);
+                  }
+
+
+                  $printed_equipment_tags = 0;
+                  while ($equipment_tags_row = mysqli_fetch_assoc($equipment_label_result)) {
+                    if ($printed_equipment_tags >= 4) {
+                      break;
+                    }
+
+                    echo "<button class='tag-fav' disabled> " . $equipment_tags_row['labelName'] . " 
+                        </button>";
+
+                    $printed_equipment_tags++;
+                  }
+
+                  echo "</span>";
+                  echo "</footer>";
+                  echo '</div>';
+                  echo '</div>';
+
+                  $equip_card_counter++;
+
+                  // 每兩個card生成後，右邊會顯示一個廣告
+                  if ($equip_card_counter % 2 === 0) {
+                    echo '</div>';
+                    echo '</article>';
+
+                    // 當生成兩個廣告後，將不再顯示廣告
+                    if ($ad_counter < 2) {
+                      echo '<div class="col-md-2 sidebar">';
+                      echo '<aside>';
+                      echo '<div class="aside-body">';
+                      echo '<figure class="ads">';
+                      echo '<a href="#">';
+                      echo '<img src="images/Group 74.png">';
+                      echo '</a>';
+                      echo '<figcaption>Advertisement</figcaption>';
+                      echo '</figure>';
+                      echo '</div>';
+                      echo '</aside>';
+                      echo '</div>';
+
+                      $ad_counter++;
+                    }
+                  }
+                }
+
+                // 如果card數量為奇數，則需要閉合最後一個article標籤
+                if ($equip_card_counter % 2 !== 0) {
+                  echo '</article>';
+                }
+
+                echo '</div>'; // row
+                echo '</div>'; // container
+              } else {
+                echo '找不到符合的設備資料。';
+              }
+            } else {
+              echo '找不到收藏的設備。';
+            }
+            ?>
+
+
+            <div class="row align-items-center py-5">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6 text-center">
+                <div class="custom-pagination">
+                  <?php for ($i = 1; $i <= $equip_total_pages; $i++) : ?>
+                    <a href="?equip_page=<?= $i ?>#equip" <?= ($i == $equip_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                  <?php endfor; ?>
                 </div>
               </div>
-            </article>
+            </div>
+
+
           </div>
         </div>
       </div>
