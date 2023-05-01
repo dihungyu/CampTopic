@@ -57,7 +57,7 @@ if (isset($_POST["submit"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <meta name="author" content="Untree.co" />
-  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="shortcut icon" href="images/Frame 5.png" />
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap5" />
@@ -108,20 +108,20 @@ if (isset($_POST["submit"])) {
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle " href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle " href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+              <a class="dropdown-item" href="../login.php">登出</a>
             </div>
           </li>
 

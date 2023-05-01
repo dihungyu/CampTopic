@@ -49,7 +49,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <meta name="author" content="Untree.co" />
-  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="shortcut icon" href="Frame 5.png" />
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap5" />

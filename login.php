@@ -28,7 +28,7 @@ if ($_POST["FormType"] == "Login") {
 				$_SESSION["accountPhoneNumber"] = $row["accountPhoneNumber"];
 				$_SESSION["accountPassword"] = $row["accountPassword"];
 				$_SESSION["accountLevel"] = $row["accountLevel"];
-				echo "<script>{window.alert('登入成功！'); location.href='../index.html'}</script>";
+				echo "<script>{window.alert('登入成功！'); location.href='/CampTopic/property-1.0.0/index.html'}</script>";
 			} else {
 				// 若密碼不正確，則顯示錯誤訊息，並轉址至登入頁面
 				echo "<script>{window.alert('密碼錯誤！請再試一次'); location.href='login.php'}</script>";
@@ -47,7 +47,7 @@ if ($_POST["FormType"] == "Login") {
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
+	<link rel="shortcut icon" href="img/Frame 5.png">
 	<!-- Author Meta -->
 	<meta name="author" content="colorlib">
 	<!-- Meta Description -->
