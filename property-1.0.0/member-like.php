@@ -52,6 +52,7 @@ function format_like_count($count)
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="https://kit.fontawesome.com/d02d7e1ecb.css">
 
   <!-- 引入 Bootstrap 的 CSS 檔案 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
@@ -202,10 +203,6 @@ function format_like_count($count)
               </div>
 
 
-
-
-
-
               <?php
               // 搜尋關鍵字
               $camp_search_keyword = isset($_GET['camp_search_keyword']) ? trim($_GET['camp_search_keyword']) : '';
@@ -268,8 +265,8 @@ function format_like_count($count)
                   <img src='" . $image_src . "' class='card-img-top' alt='...'>
                   <div class='card-body'>
                     <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
-                    <div class='detail'>
-                      <h1><a href='#'>" . $campsiteData["campsiteName"] . "</a></h1>
+                    <div class='card-detail'>
+                      <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
                     </div>
                     <p>" . $campsiteData["campsiteAddress"] . "</p>
                     <footer>";
@@ -862,6 +859,7 @@ function format_like_count($count)
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
     <script src="js/e-magz.js"></script>
+    <script src="https://kit.fontawesome.com/d02d7e1ecb.js">
     <!-- 引入 Bootstrap 的 JavaScript 檔案，放在 </body> 前面 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-KsH8Gw+WJ4ZfTw3YqzWmn9pPpxdG+R14gTVjTdwryW8f/WQHm4mZ4z3qf0Wm9vBISlRlSjFVCyTlkWbBBwF0iA==" crossorigin="anonymous" defer></script>
 
