@@ -117,8 +117,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">鹿的收藏</a>
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">鹿的收藏</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">登出</a>
             </div>

@@ -127,7 +127,7 @@ function format_like_count($count)
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../login.php">登出</a>
+              <a class="dropdown-item" href="../../login.php">登出</a>
             </div>
           </li>
 
