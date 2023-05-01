@@ -10965,3 +10965,16 @@ margin-right: 10px;
   justify-content: flex-end;
   margin-right: 10px;
 }
+.modal-connect{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal-connect p{
+  margin-bottom: 0px;
+  
+}
+.modal-connect i{
+  margin-right: 10px;
+  font-size: 16px;
+}
