@@ -8,3 +8,4 @@ function uuid_generator() {
             substr($chars, 20, 12);
     return $uuid;
 }
+?>

@@ -1,5 +1,8 @@
 <?php
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/issue/6
 require_once '../conn.php';
 
 $campsiteId = $_GET['campsiteId'];
@@ -82,7 +85,6 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
         require_once '../uuid_generator.php';
         // loop through all uploaded files
         foreach ($_FILES["files"]["name"] as $key => $name) {
-
             // check if file was uploaded successfully
             if ($_FILES["files"]["error"][$key] === UPLOAD_ERR_OK) {
 

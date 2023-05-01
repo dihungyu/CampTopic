@@ -1,3 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>新增營區資料</title>
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!--如果要使用上傳檔案的功能，必須要在form加上enctype="multipart/form-data"才能正常上傳檔案-->
+    <form action="" method="post" name="formAdd" id="formAdd" enctype="multipart/form-data">
+        請輸入縣市編號：<input type="text" name="cityId" id="cityId"><br />
+        請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName"><br />
+        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"><br />
+        請上傳營區圖片：<input type="file" name="files[]" multiple onchange="previewImage(event)"><br />
+        <div id="preview"></div>
+        <input type="hidden" name="action" value="insert">
+        <input type="submit" name="button" value="新增資料">
+        <input type="reset" name="button2" value="重新填寫">
+    </form>
+</body>
+
+</html>
+
 <?php
 
 
