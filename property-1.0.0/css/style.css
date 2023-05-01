@@ -10828,6 +10828,32 @@ border-radius: 30px;
   border-color: #a0a0a0;
   border-radius: 30px;
   }
+.btn-more{
+width: 100px; 
+height: 32px; 
+background-color: #005555;
+color: white;
+border:none; 
+border-radius: 30px;
+font-size: 12px;
+}
+.btn-more:hover{
+  width: 100px; 
+  height: 32px; 
+  background-color: #d9d9d9;
+  color: black;
+  border:none; 
+  border-radius: 30px;
+  }
+.btn-more:focus{
+  width: 100px; 
+  height: 32px; 
+  background-color: #d9d9d9;
+  color: black;
+  border:solid; 
+  border-color: #a0a0a0;
+  border-radius: 30px;
+  }
 .circle{
   background-color: #fff;
   font-size: 50px;
@@ -10837,4 +10863,105 @@ border-radius: 30px;
   padding-top: 20px;
   border-radius: 50%;
   margin: 0px auto 0 auto;
+}
+.btn-icon{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.btn-icon i{
+font-size: 18px;
+}
+
+.close {
+float: right;
+font-size: 1.5rem;
+font-weight: 700;
+line-height: 1;
+color: #000;
+text-shadow: 0 1px 0 #fff;
+opacity: .5;
+}
+
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+opacity: .75;
+}
+
+.close:not(:disabled):not(.disabled) {
+cursor: pointer;
+}
+
+button.close {
+padding: 0;
+background-color: transparent;
+border: 0;
+-webkit-appearance: none;
+}
+.modal-footer .btn-secondary{
+width: 90px; 
+height: 35px; 
+background-color: #005555;
+color: white;
+border:none; 
+border-radius: 30px;
+}
+.modal-footer .btn-secondary:hover {
+width: 90px; 
+height: 35px; 
+background-color: #d9d9d9;
+color: black;
+border:none; 
+border-radius: 30px;
+padding: 5px;
+margin-left: 15px;
+}
+.modal-index{
+  display: flex; 
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal-index i{
+margin-right: 10px;
+}
+.modal-index-footer{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+    justify-content: flex-start;
+   }
+    .modal-footer > * {
+      margin: 0.25rem; }
+.modal-index-footerimg img{
+  width:172px; 
+  height:96px;
+  margin: 10px;
+}
+.modal-index-footerimg p{
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+.modal-index-footerimg{
+  display: flex; 
+  flex-direction: column;
+}
+.modal-more{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
 }
