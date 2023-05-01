@@ -157,21 +157,46 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       setDateInputBehavior('#end-date-input');
     });
 
-    function previewImage(input, targetImg) {
-      if (input.files && input.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-          targetImg.setAttribute("src", e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
+    $(document).ready(function () {
+      $(".file-upload").change(function () {
+        var id = $(this).data("id");
+        readURL(this, id);
+      });
 
-    function removeImage(imgContainer, targetImg, input) {
-      targetImg.setAttribute("src", "");
-      imgContainer.style.display = "none";
-      input.value = "";
-    }
+      function readURL(input, id) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#preview-image-db-" + id).attr("src", e.target.result).css("display", "block");
+            $("#remove-image-db-" + id).css("display", "block");
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      $(document).on("click", "button.remove-image-button", function (event) {
+        event.preventDefault();
+        const id = $(this).attr("id").split("-").slice(-2).join("-");
+        $("#preview-image-db-" + id).attr("src", "#").css("display", "none");
+        $("#remove-image-db-" + id).css("display", "none");
+        $(".file-upload[data-id='" + id + "']").val("");
+      });
+
+      document.querySelectorAll('.remove-image-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+          const fileId = this.getAttribute('data-file-id');
+          // 將 fileId 添加到對應的隱藏輸入框中
+          this.parentElement.querySelector('.delete-image-input').value = fileId;
+          // 隱藏圖片和刪除按鈕
+          this.parentElement.querySelector('img').style.display = 'none';
+          this.style.display = 'none';
+        });
+      });
+    });
+
+
+
+
 
   </script>
 
@@ -350,11 +375,15 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                   echo '<i class="fa-regular fa-pen-to-square"></i></button>';
                   echo '    </div>';
                   echo '  </span>';
-                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
                   $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
                   $tripIntroductions = [];
                   while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-                    $tripIntroductions[] = ['tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'], 'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']];
+                    $tripIntroductions[] = [
+                      'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
+                      'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
+                      'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
+                    ];
                   }
                   foreach ($tripIntroductions as $tripIntroduction) {
                     $tripIntroductionTitle = $tripIntroduction['tripIntroductionTitle'];
@@ -366,7 +395,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                     echo '  </div>';
                   }
                   echo '</div>';
-                  $sql_route_file = "SELECT * FROM files WHERE routeId = $routeId";
+                  $sql_route_file = "SELECT * FROM files WHERE routeId = '$routeId'";
                   $result_route_file = mysqli_query($conn, $sql_route_file);
                   echo '<div class="col-md-12 room-single ftco-animate mb-5 mt-5">';
                   echo '  <div class="row">';
@@ -700,14 +729,19 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   <?php
   foreach ($routes as $route) {
     $routeId = $route['routeId'];
-    $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+    $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
     $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
     $tripIntroductions = [];
     while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-      $tripIntroductions[] = ['tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'], 'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']];
+      $tripIntroductions[] = [
+        'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
+        'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
+        'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
+      ];
     }
     $dayNumber = $route['dayNumber'];
     $locations = $route['locations'];
+    echo '<form action="../php/Route/updateRoute.php" method="post" enctype="multipart/form-data">';
     echo '<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal' . $dayNumber . '">';
     echo '<div class="modal-dialog modal-lg">';
     echo '<div class="modal-content">';
@@ -718,7 +752,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     echo '</button>';
     echo '</div>';
     echo '<div class="modal-list" style="margin: 32px;">';
-    echo '<input style="width: 100%; type="day" placeholder="標題" value="' . $locations . '">';
+    echo '<input name="locations" style="width: 100%; type="day" placeholder="標題" value="' . $locations . '">';
     // 用於填充空白輸入框和文本區域的預設值
     $default = ['tripIntroductionTitle' => '', 'tripIntroductionContent' => ''];
     // 確保 $results 至少包含三個元素（可能是空的）
@@ -729,28 +763,50 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     for ($i = 0; $i < 3; $i++) {
       $marginLeft = $i * 2.5;
       echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-      echo '<input style="width: 95%; margin-left: ' . $marginLeft . '%;" type="text" placeholder="請輸入景點名稱" value="' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionTitle']) . '">';
+      echo '<input type="hidden" name="tripIntroductionId[]" value="' . $tripIntroductions[$i]['tripIntroductionId'] . '">';
+      echo '<input name="tripIntroductionTitle[]" style="width: 95%; margin-left: ' . $marginLeft . '%;" type="text" placeholder="請輸入景點名稱" value="' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionTitle']) . '">';
       echo '</div>';
     }
     for ($i = 0; $i < 3; $i++) {
       $marginLeft = $i * 2.5;
       echo '<div class="col-md-4" style="padding-right: 0px; padding-left: 0;">';
-      echo '<textarea style="width: 95%; margin-left: ' . $marginLeft . '%;" rows="10" type="text" placeholder="請輸入景點介紹">' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionContent']) . '</textarea>';
+      echo '<input type="hidden" name="tripIntroductionId[]" value="' . $tripIntroductions[$i]['tripIntroductionId'] . '">';
+      echo '<textarea name="tripIntroductionContent[]" style="width: 95%; margin-left: ' . $marginLeft . '%;" rows="10" type="text" placeholder="請輸入景點介紹">' . htmlspecialchars($tripIntroductions[$i]['tripIntroductionContent']) . '</textarea>';
       echo '</div>';
     }
-    echo '<div class="col-md-6" style="padding-right: 16px; padding-left: 0px; ">';
-    echo '<input type="file" class="file-upload">';
-    echo '</div>';
-    echo '<div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">';
-    echo '<input type="file" class="file-upload">';
-    echo '</div>';
+    $sql_route_file = "SELECT * FROM files WHERE routeId = '$routeId'";
+    $result_route_file = mysqli_query($conn, $sql_route_file);
+    $image_urls = array();
+    while ($route_file_result = mysqli_fetch_assoc($result_route_file)) {
+      $file_name = $route_file_result['fileName'];
+      $file_path = '../upload/' . $file_name;
+      $file_id = $route_file_result['fileId'];
+      $image_urls[] = ['fileId' => $file_id, 'filePath' => $file_path];
+    }
+    for ($i = 0; $i < 2; $i++) {
+      $image_url = isset($image_urls[$i]['filePath']) ? $image_urls[$i]['filePath'] : "";
+      $image_display = !empty($image_url) ? "block" : "none";
+      $button_display = !empty($image_url) ? "block" : "none";
+      $isNew = !isset($image_urls[$i]['fileId']);
+      echo '<div class="col-md-6" style="padding-right: 16px; padding-left: 0px; position:relative;">';
+      echo '<input name="file[]" type="file" class="file-upload" data-id="' . $routeId . '-' . ($i + 1) . '"' . ($isNew ? ' data-new="true"' : '') . '>';
+      echo '<input type="hidden" name="isNew[]" value="' . ($isNew ? '1' : '0') . '">';
+      echo '<input type="hidden" name="fileId[]" value="' . $image_urls[$i]['fileId'] . '">';
+      echo '<input type="hidden" name="delete_image[]" value="" class="delete-image-input">';
+      echo '<img id="preview-image-db-' . $routeId . '-' . ($i + 1) . '" src="' . $image_url . '" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding-right: 16px; border-radius: 4px; object-fit: cover; display:' . $image_display . ';"/>';
+      echo '<button class="remove-image-button" id="remove-image-db-' . $routeId . '-' . ($i + 1) . '" data-file-id="' . $image_urls[$i]['fileId'] . '" style="display:' . $button_display . ';">X</button>';
+      echo '</div>';
+    }
+
     echo '</div>';
     echo '<div class="modal-footer">';
-    echo '<button type="button" class="btn-secondary" data-dismiss="modal">確認</button>';
+    echo '<input type="hidden" name="routeId" value="' . $routeId . '">';
+    echo '<button type="submit" class="btn-secondary">確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
+    echo '</form>';
   }
   ?>
 
