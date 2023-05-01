@@ -6,978 +6,1050 @@
 */ -->
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
 
-  <meta name="author" content="Untree.co" />
-  <link rel="shortcut icon" href="images/Frame 5.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <meta name="description" content="" />
-  <meta name="keywords" content="bootstrap, bootstrap5" />
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://kit.fontawesome.com/d02d7e1ecb.css">
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <title>
+      Property &mdash; Free Bootstrap 5 Website Template by Untree.co
+    </title>
 
-  <link rel="stylesheet" href="fonts/icomoon/style.css" />
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/tiny-slider.css" />
-  <link rel="stylesheet" href="css/aos.css" />
-  <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
 
-  <title>
-    Start Camping &mdash; 一起展開露營冒險！
-  </title>
+    <link rel="stylesheet" href="css/ionicons.min.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/icomoon.css">
 
-  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="css/animate.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	     <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/magnific-popup.css">
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
 
-  <link rel="stylesheet" href="css/ionicons.min.css">
-
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="css/jquery.timepicker.css">
-  <link rel="stylesheet" href="css/icomoon.css">
-
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> 選單
-      </button>
-
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Account
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">登出</a>
-            </div>
-          </li>
-        </ul>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
+	          <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+	          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="member.html">會員帳號</a>
+                <a class="dropdown-item" href="member-like.html">我的收藏</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+              </div>
+            </li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icofont-close js-menu-toggle"></span>
+        </div>
       </div>
+      <div class="site-mobile-menu-body"></div>
     </div>
-  </nav>
 
-  <div class="site-mobile-menu site-navbar-target">
-    <div class="site-mobile-menu-header">
-      <div class="site-mobile-menu-close">
-        <span class="icofont-close js-menu-toggle"></span>
+   
+    <div class="hero">
+      <div class="hero-slide">
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_3.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_2.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_1.jpg')"
+        ></div>
       </div>
-    </div>
-    <div class="site-mobile-menu-body"></div>
-  </div>
 
-
-  <div class="hero">
-    <div class="hero-slide">
-      <div class="img overlay" style="background-image: url('images/Rectangle\ 134.png')"></div>
-      <div class="img overlay" style="background-image: url('images/Rectangle\ 135.png')"></div>
-      <div class="img overlay" style="background-image: url('images/Rectangle\ 136.png')"></div>
-    </div>
-    <div class="container">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-lg-9 text-center">
-          <h1 class="heading" data-aos="fade-up">
-            Start Camping！<br>贏在起跑點
-          </h1>
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center">
+            <h1 class="heading" data-aos="fade-up">
+              Easiest way to find your dream home
+            </h1>
+            <form
+              action="#"
+              class="narrow-w form-search d-flex align-items-stretch mb-3"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <input
+                type="text"
+                class="form-control px-4"
+                placeholder="Your ZIP code or City. e.g. New York"
+              />
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-
-  <section class="features-1">
-    <div class="container">
-      <div class="row">
-        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-          <div class="box-feature">
-            <span class="flaticon-member">
-              <i class="fa-solid fa-tent"></i></span>
-            <h3 class="mb-3 mt-3">露營地</h3>
+    <div class="section">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-lg-6">
+            <h2 class="font-weight-bold text-primary heading">
+              Popular Properties
+            </h2>
+          </div>
+          <div class="col-lg-6 text-lg-end">
             <p>
-              眾多營地不知從何下手？<br>透過標籤篩選，幫你找出心目中理想的營地！
+              <a
+                href="#"
+                target="_blank"
+                class="btn btn-primary text-white py-3 px-4"
+                >View all properties</a
+              >
             </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
           </div>
         </div>
-        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-          <div class="box-feature">
-            <span class="flaticon-member"><i class="fa-solid fa-people-roof"></i></span>
-            <h3 class="mb-3 mt-3">找營友</h3>
-            <p>
-              找不到夥伴一起露營？<br>
-              「找小鹿」功能帶你找到志同道合的營友一同露營冒險！
-            </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
-          </div>
-        </div>
-        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-          <div class="box-feature">
-            <span class="flaticon-member"><i class="fa-solid fa-fire-burner"></i></span>
-            <h3 class="mb-3 mt-3">出租裝備</h3>
-            <p>
-              有閒置或多餘的裝備不用好浪費？<br>
-              「鹿的裝備」讓你的裝備能被妥善運用！
-            </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
-          </div>
-        </div>
-        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
-          <div class="box-feature">
-            <span class="flaticon-member"><i class="fa-regular fa-newspaper"></i></span>
-            <h3 class="mb-3 mt-3">文章分享</h3>
-            <p>
-              透過文章分享，輕鬆地將露營心得、照片和建議分享給其他露營愛好者，也能從中發掘更多露營靈感！
-            </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="row">
+          <div class="col-12">
+            <div class="property-slider-wrap">
+              <div class="property-slider">
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_1.jpg" alt="Image" class="img-fluid" />
+                  </a>
 
-  <div class="section">
-    <div class="container">
-      <div class="row mb-5 align-items-center">
-        <div class="col-lg-6">
-          <h3 class="text-primary heading">
-            推薦營地
-          </h3>
-        </div>
-        <div class="col-lg-6 text-lg-end">
-          <p>
-            <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有營地</a>
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="property-slider-wrap">
-            <div class="property-slider">
-              <div class="property-item">
-                <img src="images/Rectangle 324.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
 
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">杉嵐營地</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉竹林村1鄰羅山23之2號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">有雨棚</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 325.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">天景露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉花園村10鄰天湖205號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">有插座</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 326.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">北埔星月天空露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣北埔鄉大湖村下大湖12鄰22-30號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 327.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">天方夜譚</span> </a>
-                    <span class="d-block mb-4 text-black-50">桃園市龍潭區德湖街369號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 328.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">松野農園露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">桃園市復興區高義里7鄰色霧鬧10-16號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 329.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">司馬庫斯舊部落營地</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 330.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">老牛露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉桃山村18鄰白蘭312-3號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">販賣部</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 331.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">夏蝶冬櫻山谷園地-保羅先生</span></a>
-                    <span class="d-block mb-4 text-black-50">桃園市復興區高義里高義蘭36-1號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">插座</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-            </div>
-            <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-              <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-              <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="container">
-      <div class="row mb-5 align-items-center">
-        <div class="col-lg-6">
-          <h3 class="font-weight-bold text-primary heading">
-            推薦設備
-          </h3>
-        </div>
-        <div class="col-lg-6 text-lg-end">
-          <p>
-            <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-lg-4"></div>
-          </div>
-          <div class="testimonial-slider-wrap">
-            <div class="testimonial-slider">
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 3.png" alt="Image" class="img-fluid" />
-                </a>
-
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
                         </span>
                       </div>
-                    </footer>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
                   </div>
                 </div>
-              </div>
+                <!-- .item -->
 
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 4.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_2.jpg" alt="Image" class="img-fluid" />
+                  </a>
 
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
                         </span>
                       </div>
-                    </footer>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
                   </div>
                 </div>
-              </div>
+                <!-- .item -->
 
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 5.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_3.jpg" alt="Image" class="img-fluid" />
+                  </a>
 
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
                         </span>
                       </div>
-                    </footer>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
                   </div>
                 </div>
-              </div>
+                <!-- .item -->
 
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 2.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_4.jpg" alt="Image" class="img-fluid" />
+                  </a>
 
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
                         </span>
                       </div>
-                    </footer>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
                   </div>
                 </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_5.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_6.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_7.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_8.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_1.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
               </div>
-            </div>
-            <div id="testimonial-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-              <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-              <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
+
+              <div
+                id="property-nav"
+                class="controls"
+                tabindex="0"
+                aria-label="Carousel Navigation"
+              >
+                <span
+                  class="prev"
+                  data-controls="prev"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Prev</span
+                >
+                <span
+                  class="next"
+                  data-controls="next"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Next</span
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="section section-4 bg-light" style="padding-bottom: 0rem;">
-    <div class="container">
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-lg-5">
-          <h3 class="font-weight-bold heading text-primary mb-4">
-            文章推薦
-          </h3>
-          <p class="text-black-50">
-            透過相關文章，帶你更快進入露營的世界！
-          </p>
-        </div>
-      </div>
-      <div class="row justify-content-between mb-5">
-        <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
-          <div class="img-about dots">
-            <img src="images/Rectangle 135.png" alt="Image" class="img-fluid" />
-          </div>
-        </div>
-        <div class="col-lg-4 mt-4">
-          <div class="d-flex feature-h">
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/Rectangle\ 337.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">新竹露營！<br>櫻花谷露營區-體驗竹筒飯</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> yixxx</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex feature-h">
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/Rectangle\ 336.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">台灣無裝備露營！狩獵帳初體驗！適合親子露營！</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Ryan</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex feature-h">
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/Rectangle\ 335.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Cristine</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex feature-h">
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/Rectangle\ 334.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">新竹尖石 玉峰 遇見嵨繞 第 7 露</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Kefanggg</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex feature-h">
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/Rectangle\ 333.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Dihung</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="row justify-content-center footer-cta" data-aos="fade-up">
-      <div class="col-lg-7 mx-auto text-center">
-        <h3 class="mb-4">訂閱廣告方案，提高你的營地/商品曝光率！</h3>
-        <p>
-          <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">訂閱說明</a>
-        </p>
-      </div>
-      <!-- /.col-lg-7 -->
-    </div>
-    <!-- /.row -->
-  </div>
-
-  <div class="section section-5 bg-light mb-0">
-    <div class="container">
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-lg-6 mb-5">
-          <h3 class="font-weight-bold heading text-primary mb-4">
-            各式廣告方案
-          </h3>
-          <p class="text-black-50">
-            透過我們的廣告投放、販賣露營商品，有效提高的營地知名度和可信度，<br>吸引更多潛在客戶，帶來更多收益！
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-          <div class="h-100 person">
-            <div class="circle">
-              <i class="fa-regular fa-clock"></i>
-            </div>
-            <div class="person-contents">
-              <h2 class="mb-4"><a href="#">時段選擇</a></h2>
+    <section class="features-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="box-feature">
+              <span class="flaticon-house"></span>
+              <h3 class="mb-3">Our Properties</h3>
               <p>
-                選擇您所偏好的投放廣告時段，擁有完整屬於您的宣傳時間，
-                不與其他業者分攤。選擇時段進行廣告投放，也可以讓廣告投放更有針對性，降低無效廣告投放的浪費，從而節省廣告預算
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptates, accusamus.
               </p>
-
-              <button class="btn-ad" data-toggle="modal" data-target="#contectus">聯絡我們</button>
+              <p><a href="#" class="learn-more">Learn More</a></p>
             </div>
           </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-          <div class="h-100 person">
-            <div class="circle">
-              <i class="fa-solid fa-chart-line"></i>
-            </div>
-            <div class="person-contents">
-              <h2 class="mb-4"><a href="#">提升曝光率</a></h2>
+          <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
+            <div class="box-feature">
+              <span class="flaticon-building"></span>
+              <h3 class="mb-3">Property for Sale</h3>
               <p>
-                此平台「贏在起跑點」專為露營愛好者群打造，，您可以精準地傳達您的訊息，吸引更多熱愛野外露營的客戶。
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptates, accusamus.
               </p>
-              <button class="btn-ad" data-toggle="modal" data-target="#contectus">聯絡我們</button>
+              <p><a href="#" class="learn-more">Learn More</a></p>
             </div>
           </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-          <div class="h-100 person">
-            <div class="circle">
-              <i class="fa-solid fa-box-open"></i>
-            </div>
-            <div class="person-contents">
-              <h2 class="mb-4"><a href="#">商品販賣</a></h2>
-              <p>透過「設備出租」幫助您刊登露營商品，精準地將商品陳列在露營愛好者前，以此提升商品曝光率與成交次數
+          <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="box-feature">
+              <span class="flaticon-house-3"></span>
+              <h3 class="mb-3">Real Estate Agent</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptates, accusamus.
               </p>
-              <button class="btn-ad" data-toggle="modal" data-target="#contectus">聯絡我們</button>
+              <p><a href="#" class="learn-more">Learn More</a></p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
+            <div class="box-feature">
+              <span class="flaticon-house-1"></span>
+              <h3 class="mb-3">House for Sale</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptates, accusamus.
+              </p>
+              <p><a href="#" class="learn-more">Learn More</a></p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: black;">天景露營區</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fa-solid fa-heart"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-6" style="padding-bottom: 15px;">
-              <img src="images/Rectangle 325.png" style="width: 100%;height: 320px; border-radius: 4px;">
+    <div class="section sec-testimonials">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-md-6">
+            <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">
+              Customer Says
+            </h2>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev">Prev</span>
+
+              <span class="next" data-controls="next">Next</span>
             </div>
-            <div class="col-6" style="padding: 20px;margin-top: 20px;">
-              <span class="modal-index">
-                <i class="fa-solid fa-location-dot"></i>新竹縣五峰鄉花園村10鄰天湖205號</span>
-              <span class="modal-index">
-                <i class="fa-solid fa-mountain"></i>海拔1100公尺</span>
-              <span class="modal-index">
-                <i class="fa-solid fa-signs-post"></i>公休日:星期五</span>
-              <span class="modal-index">
-                <i class="fa-solid fa-phone"></i>0987-347-774</span>
-              <span class="modal-index">
-                <i class="fa-solid fa-globe"></i>尚無官網</span>
+          </div>
+        </div>
 
-              <div class="tagcloud" style="margin-top: 40px;margin-bottom: 20px;">
-                <a href="">草地</a>
-                <a href="">夜景</a>
-                <a href="">櫻花</a>
+        <div class="row">
+          <div class="col-lg-4"></div>
+        </div>
+        <div class="testimonial-slider-wrap">
+          <div class="testimonial-slider">
+            <div class="item">
+              <div class="testimonial">
+                <img
+                  src="images/person_1-min.jpg"
+                  alt="Image"
+                  class="img-fluid rounded-circle w-25 mb-4"
+                />
+                <div class="rate">
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                </div>
+                <h3 class="h5 text-primary mb-4">James Smith</h3>
+                <blockquote>
+                  <p>
+                    &ldquo;Far far away, behind the word mountains, far from the
+                    countries Vokalia and Consonantia, there live the blind
+                    texts. Separated they live in Bookmarksgrove right at the
+                    coast of the Semantics, a large language ocean.&rdquo;
+                  </p>
+                </blockquote>
+                <p class="text-black-50">Designer, Co-founder</p>
               </div>
-              <div class="modal-more">
-                <button class="btn-more">查看更多</button>
+            </div>
+
+            <div class="item">
+              <div class="testimonial">
+                <img
+                  src="images/person_2-min.jpg"
+                  alt="Image"
+                  class="img-fluid rounded-circle w-25 mb-4"
+                />
+                <div class="rate">
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                </div>
+                <h3 class="h5 text-primary mb-4">Mike Houston</h3>
+                <blockquote>
+                  <p>
+                    &ldquo;Far far away, behind the word mountains, far from the
+                    countries Vokalia and Consonantia, there live the blind
+                    texts. Separated they live in Bookmarksgrove right at the
+                    coast of the Semantics, a large language ocean.&rdquo;
+                  </p>
+                </blockquote>
+                <p class="text-black-50">Designer, Co-founder</p>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="testimonial">
+                <img
+                  src="images/person_3-min.jpg"
+                  alt="Image"
+                  class="img-fluid rounded-circle w-25 mb-4"
+                />
+                <div class="rate">
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                </div>
+                <h3 class="h5 text-primary mb-4">Cameron Webster</h3>
+                <blockquote>
+                  <p>
+                    &ldquo;Far far away, behind the word mountains, far from the
+                    countries Vokalia and Consonantia, there live the blind
+                    texts. Separated they live in Bookmarksgrove right at the
+                    coast of the Semantics, a large language ocean.&rdquo;
+                  </p>
+                </blockquote>
+                <p class="text-black-50">Designer, Co-founder</p>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="testimonial">
+                <img
+                  src="images/person_4-min.jpg"
+                  alt="Image"
+                  class="img-fluid rounded-circle w-25 mb-4"
+                />
+                <div class="rate">
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                </div>
+                <h3 class="h5 text-primary mb-4">Dave Smith</h3>
+                <blockquote>
+                  <p>
+                    &ldquo;Far far away, behind the word mountains, far from the
+                    countries Vokalia and Consonantia, there live the blind
+                    texts. Separated they live in Bookmarksgrove right at the
+                    coast of the Semantics, a large language ocean.&rdquo;
+                  </p>
+                </blockquote>
+                <p class="text-black-50">Designer, Co-founder</p>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div class="modal-index-footer" style="align-items: flex-start;">
-            <h6 style="margin-bottom: 0px;">其他營地推薦</h6>
+    <div class="section section-4 bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-5">
+            <h2 class="font-weight-bold heading text-primary mb-4">
+              Let's find home that's perfect for you
+            </h2>
+            <p class="text-black-50">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+              enim pariatur similique debitis vel nisi qui reprehenderit.
+            </p>
           </div>
-          <div style="display: flex;">
-            <span class="modal-index-footerimg">
-              <a href=""><img src="images/Rectangle 326.png" alt="" /></a>
-              <p>北埔星月天空露營區</p>
-            </span>
-            <span class="modal-index-footerimg">
-              <a href=""><img src="images/Rectangle 327.png" alt="" /></a>
-              <p>天方夜譚</p>
-            </span>
-            <span class="modal-index-footerimg">
-              <a href=""><img src="images/Rectangle 329.png" alt="" /></a>
-              <p>司馬庫斯舊部落營地</p>
-            </span>
-            <span class="modal-index-footerimg">
-              <a href=""><img src="images/Rectangle 328.png" alt="" /></a>
-              <p>松野農園露營區</p>
-            </span>
+        </div>
+        <div class="row justify-content-between mb-5">
+          <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
+            <div class="img-about dots">
+              <img src="images/hero_bg_3.jpg" alt="Image" class="img-fluid" />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-home2"></span>
+              </span>
+              <div class="feature-text">
+                <h3 class="heading">2M Properties</h3>
+                <p class="text-black-50">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nostrum iste.
+                </p>
+              </div>
+            </div>
 
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-person"></span>
+              </span>
+              <div class="feature-text">
+                <h3 class="heading">Top Rated Agents</h3>
+                <p class="text-black-50">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nostrum iste.
+                </p>
+              </div>
+            </div>
+
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-security"></span>
+              </span>
+              <div class="feature-text">
+                <h3 class="heading">Legit Properties</h3>
+                <p class="text-black-50">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nostrum iste.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row section-counter mt-5">
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">3298</span></span
+              >
+              <span class="caption text-black-50"># of Buy Properties</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">2181</span></span
+              >
+              <span class="caption text-black-50"># of Sell Properties</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">9316</span></span
+              >
+              <span class="caption text-black-50"># of All Properties</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">7191</span></span
+              >
+              <span class="caption text-black-50"># of Agents</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="contectus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: black;">聯絡我們</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
+    <div class="section">
+      <div class="row justify-content-center footer-cta" data-aos="fade-up">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="mb-4">Be a part of our growing real state agents</h2>
+          <p>
+            <a
+              href="#"
+              target="_blank"
+              class="btn btn-primary text-white py-3 px-4"
+              >Apply for Real Estate agent</a
+            >
+          </p>
         </div>
-        <div class="modal-body">
-          <span class="modal-connect">
-            <i class="fa-regular fa-envelope"></i>
-            <p>startcamping@gmail.com</p>
-          </span>
-          <span class="modal-connect">
-            <i class="fa-solid fa-phone"></i>
-            <p>0911222345</p>
-          </span>
-          <span class="modal-connect">
-            <i class="fa-brands fa-line"></i>
-            <p>@startcamping</p>
-          </span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-more" data-dismiss="modal">查看更多</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="site-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Contact</h3>
-            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Sources</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Vision</a></li>
-              <li><a href="#">Mission</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Business</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Creative</a></li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Links</h3>
-            <ul class="list-unstyled links">
-              <li><a href="#">Our Vision</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Contact us</a></li>
-            </ul>
-
-            <ul class="list-unstyled social">
-              <li>
-                <a href="#"><span class="icon-instagram"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-twitter"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-facebook"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-linkedin"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-pinterest"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-dribbble"></span></a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
+        <!-- /.col-lg-7 -->
       </div>
       <!-- /.row -->
+    </div>
 
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <!-- 
+    <div class="section section-5 bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-6 mb-5">
+            <h2 class="font-weight-bold heading text-primary mb-4">
+              Our Agents
+            </h2>
+            <p class="text-black-50">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+              enim pariatur similique debitis vel nisi qui reprehenderit totam?
+              Quod maiores.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                src="images/person_1-min.jpg"
+                alt="Image"
+                class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">James Doe</a></h2>
+                <span class="meta d-block mb-3">Real Estate Agent</span>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Facere officiis inventore cumque tenetur laboriosam, minus
+                  culpa doloremque odio, neque molestias?
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-twitter"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-linkedin"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-instagram"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                src="images/person_2-min.jpg"
+                alt="Image"
+                class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Jean Smith</a></h2>
+                <span class="meta d-block mb-3">Real Estate Agent</span>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Facere officiis inventore cumque tenetur laboriosam, minus
+                  culpa doloremque odio, neque molestias?
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-twitter"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-linkedin"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-instagram"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                src="images/person_3-min.jpg"
+                alt="Image"
+                class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Alicia Huston</a></h2>
+                <span class="meta d-block mb-3">Real Estate Agent</span>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Facere officiis inventore cumque tenetur laboriosam, minus
+                  culpa doloremque odio, neque molestias?
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-twitter"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-linkedin"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-instagram"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Contact</h3>
+              <address>43 Raymouth Rd. Baltemoer, London 3910</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">info@mydomain.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Sources</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Vision</a></li>
+                <li><a href="#">Mission</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Creative</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Links</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Our Vision</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
+
+              <ul class="list-unstyled social">
+                <li>
+                  <a href="#"><span class="icon-instagram"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-twitter"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-facebook"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-linkedin"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-pinterest"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-dribbble"></span></a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!-- 
               **==========
               NOTE: 
               Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
               **==========
             -->
 
-          <p>
-            Copyright &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            . All Rights Reserved. &mdash; Designed with love by
-            <a href="https://untree.co">Untree.co</a>
-            <!-- License information: https://untree.co/license/ -->
-          </p>
-          <div>
-            Distributed by
-            <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            </div>
           </div>
         </div>
       </div>
+      <!-- /.container -->
     </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.site-footer -->
+    <!-- /.site-footer -->
 
-  <!-- Preloader -->
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
-  </div>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/tiny-slider.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/navbar.js"></script>
-  <script src="js/counter.js"></script>
-  <script src="js/custom.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
 
-  <div id="ftco-loader" class="show fullscreen">
-    <svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
-    </svg>
-  </div>
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
   <script src="js/jquery.min.js"></script>
@@ -994,21 +1066,12 @@
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
-
-</body>
-
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
+  </body>
 </html>
