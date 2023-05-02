@@ -9606,3 +9606,8 @@ margin-bottom: 0px;
       margin: 0rem;
       font-size: 14px;
     }
+
+    .verticle-line{
+      border-left: 1px solid #a0a0a0;
+      height: 30px;
+    }
