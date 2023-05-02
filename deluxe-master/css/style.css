@@ -9504,6 +9504,7 @@ dialog::backdrop {
     border-top-left-radius: 35px !important;
     border-bottom-left-radius: 35px !important;
     margin-right: 10px;
+    }
 
 .card-icon-footer {
   display: flex;
