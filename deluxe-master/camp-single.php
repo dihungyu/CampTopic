@@ -71,6 +71,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://kit.fontawesome.com/d02d7e1ecb.css" crossorigin="anonymous">
 
+
   <title>
     Start Camping &mdash; 一起展開露營冒險！
   </title>
@@ -291,12 +292,6 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
             </div>
           </div>
 
-          <div class="sidebar-box ftco-animate">
-            <h3>文章</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate
-              quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos
-              fugit cupiditate numquam!</p>
-          </div>
         </div>
       </div>
 
@@ -353,16 +348,16 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-              <li><a href="#">首頁</a></li>
+              <li><a href="property1.0.0/index.php">首頁</a></li>
               <li><a href="#">找小鹿</a></li>
               <li><a href="#">鹿的分享</a></li>
               <li><a href="#">鹿的裝備</a></li>
               <li><a href="#">廣告方案</a></li>
             </ul>
             <ul class="list-unstyled float-start links">
-              <li><a href="#">帳號</a></li>
-              <li><a href="#">會員帳號</a></li>
-              <li><a href="#">我的收藏</a></li>
+              <li><a href="property1.0.0/member.php">帳號</a></li>
+              <li><a href="property1.0.0/member.php">會員帳號</a></li>
+              <li><a href="property1.0.0/member-like.php">我的收藏</a></li>
             </ul>
           </div>
           <!-- /.widget -->
@@ -425,8 +420,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
