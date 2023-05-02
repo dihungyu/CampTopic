@@ -155,9 +155,30 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     $(document).ready(function () {
       setDateInputBehavior('#start-date-input');
       setDateInputBehavior('#end-date-input');
-    });
 
-    $(document).ready(function () {
+      let approvalStatus = {};
+
+      $('.accept').on('click', function () {
+        let accountId = $(this).data('account-id');
+        $(this).css('opacity', '1');
+        $(this).siblings('.reject').css('opacity', '0.5');
+        approvalStatus[accountId] = 'accepted';
+      });
+      $('.reject').on('click', function () {
+        let accountId = $(this).data('account-id');
+        $(this).css('opacity', '1');
+        $(this).siblings('.accept').css('opacity', '0.5');
+        approvalStatus[accountId] = 'rejected';
+      });
+
+      $('#approval-form').on('submit', function (e) {
+        $('<input>').attr({
+          type: 'hidden',
+          name: 'approvalStatus',
+          value: JSON.stringify(approvalStatus)
+        }).appendTo('#approval-form');
+      });
+
       $(".file-upload").change(function () {
         var id = $(this).data("id");
         readURL(this, id);
@@ -191,31 +212,6 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
           this.parentElement.querySelector('img').style.display = 'none';
           this.style.display = 'none';
         });
-      });
-    });
-
-    $(document).ready(function () {
-      let approvalStatus = {};
-
-      $('.accept').on('click', function () {
-        let accountId = $(this).data('account-id');
-        $(this).css('opacity', '1');
-        $(this).siblings('.reject').css('opacity', '0.5');
-        approvalStatus[accountId] = 'accepted';
-      });
-      $('.reject').on('click', function () {
-        let accountId = $(this).data('account-id');
-        $(this).css('opacity', '1');
-        $(this).siblings('.accept').css('opacity', '0.5');
-        approvalStatus[accountId] = 'rejected';
-      });
-
-      $('#approval-form').on('submit', function (e) {
-        $('<input>').attr({
-          type: 'hidden',
-          name: 'approvalStatus',
-          value: JSON.stringify(approvalStatus)
-        }).appendTo('#approval-form');
       });
     });
 
