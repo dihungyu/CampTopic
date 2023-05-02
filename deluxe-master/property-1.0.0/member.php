@@ -1,7 +1,7 @@
 <?php
 session_start();
 // $accountId = $_SESSION["accountId"];
-$accountId = "f726b90ee84711ed8c7eacde48001122";
+$accountId = "c995dbc4be4811eda1d4e22a0f5e8454";
 
 // 取得會員資料
 require_once("../../php/conn.php");
@@ -182,7 +182,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 </div>
         </div>
 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3 mt-5"">
           <form action="member.php" method="post">
             <input type="hidden" name="updateMember" value="yes">
             <div class="column">
@@ -196,71 +196,36 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
               ">
                 <i class="fa-solid fa-pencil" style="margin-right: 16px; margin-bottom: 48px;"></i>編輯會員資料</span>
 
-              <span style="display: flex;
-                width: 400px;
-                align-items: center;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                margin-bottom: 48px;
-                ">
-                姓名
-
+              <span class="member-input">
+                <p>姓名</p>
                 <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
 
               </span>
 
-              <span style="display: flex;
-                width: 400px;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                margin-bottom: 48px;
-                align-items: center;">
-                電話
+              <span class="member-input">
+                <p>電話</p>
                 <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
 
               </span>
 
-              <span style="display: flex;
-                width: 400px;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                margin-bottom: 48px;
-                align-items: center;">
-                信箱
-
+              <span class="member-input">
+                <p>信箱</p>
                 <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
 
               </span>
 
-              <span style="display: flex;
-                width: 400px;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                margin-bottom: 48px;
-                align-items: center;">
-                生日
-
+              <span class="member-input">
+                <p>生日</p>
                 <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
               </span>
 
-              <span style="display: flex;
-                width: 400px;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                margin-bottom: 48px;
-                align-items: center;">
-                性別
-
+              <span class="member-input">
+                <p>性別</p>
                 <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
                                                                                                                           echo "checked";
                                                                                                                         } ?> required>
                 <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
-                <input type="radio" name="accountGender" value="Male" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Male") {
+                <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-right: 8px;" <?php if ($accountGender == "Male") {
                                                                                                                         echo "checked";
                                                                                                                       } ?> required>
                 <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
@@ -268,26 +233,14 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
               <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
 
-              <span style="display: flex;
-                width:400px;
-                flex-wrap: wrap;
-                font-size: 15px;
-                font-weight: 400px;
-                align-items: center;
-                margin-bottom: 56px;">
-                密碼
-
+              <span class="member-input">
+                <p>密碼</p>
                 <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
               </span>
 
               <div class="col-10 mb-3"">
 
-                <span style="display: flex;
-                width:400px;
-                flex-wrap: wrap;
-                font-size: 12px;
-                margin-left:400px;
-                align-items: center;">
+                <span class="member-bottom">
                   <input type="reset" value="取消" class="btn btn-secondary" 
                   style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
                   <input type="submit" value="確認修改" class="btn btn-primary">
