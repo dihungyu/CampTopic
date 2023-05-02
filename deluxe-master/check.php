@@ -30,7 +30,7 @@ $sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
 $result_account = mysqli_query($conn, $sql_account);
 $row_result_account = mysqli_fetch_assoc($result_account);
 
-$accountName = $row_result_account['accountName'];
+$activityCreator = $row_result_account['accountName'];
 
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
 $result_file = mysqli_query($conn, $sql_file);
@@ -194,8 +194,30 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       });
     });
 
+    $(document).ready(function () {
+      let approvalStatus = {};
 
+      $('.accept').on('click', function () {
+        let accountId = $(this).data('account-id');
+        $(this).css('opacity', '1');
+        $(this).siblings('.reject').css('opacity', '0.5');
+        approvalStatus[accountId] = 'accepted';
+      });
+      $('.reject').on('click', function () {
+        let accountId = $(this).data('account-id');
+        $(this).css('opacity', '1');
+        $(this).siblings('.accept').css('opacity', '0.5');
+        approvalStatus[accountId] = 'rejected';
+      });
 
+      $('#approval-form').on('submit', function (e) {
+        $('<input>').attr({
+          type: 'hidden',
+          name: 'approvalStatus',
+          value: JSON.stringify(approvalStatus)
+        }).appendTo('#approval-form');
+      });
+    });
 
 
   </script>
@@ -281,7 +303,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                   width: 4%;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
-                  <?php echo $accountName ?>
+                  <?php echo $activityCreator ?>
                 </label></span>
               <h6 class="mb-4" style="font-weight:bold;">基本資訊</h6>
               <div class="single-slider owl-carousel">
@@ -302,7 +324,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                 <i class="fa-regular fa-user fa-xl"></i>
                 <label>負責人</label>
                 <p>
-                  <?php echo $accountName ?>
+                  <?php echo $activityCreator ?>
                 </p>
               </span>
 
@@ -627,100 +649,56 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
         <p style="color: #a0a0a0 ">審核參加人員
         <p>
 
-        <div class="modal-list">
-          <div class="supply">
-            <div class="row">
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
-              </div>
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
-              </div>
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzzzzz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
-              </div>
-
-
-              <div class="col-md-4">
-                <span style="display: flex; align-items: center; justify-content: flex-start">
-                  <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                    width: 30%;
-                    margin-right: 16px;">
-                  <label style="font-size: 16px; margin-bottom: 0px; ">yizzz</label></span>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-child-dress fa-lg" style="color: 	#F1ACAC;"></i>
-              </div>
-
-              <div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>
-                </button>
-                <button class="btn-icon">
-                  <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>
-                </button>
+        <form id="approval-form" action="../php/Route/updateApproval.php" method="post">
+          <div class="modal-list">
+            <div class="supply">
+              <div class="row">
+                <?php
+                $hasUnapprovedAccounts = false;
+                foreach ($accounts as $account) {
+                  $isApproved = $account['isApproved'];
+                  if ($isApproved == 0) {
+                    $hasUnapprovedAccounts = true;
+                    $accountId = $account['accountId'];
+                    $accountName = $account['accountName'];
+                    $accountGender = $account['accountGender'];
+                    echo '<div class="col-md-4">';
+                    echo '  <span style="display: flex; align-items: center; justify-content: flex-start">';
+                    echo '    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                    echo '    <label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label>';
+                    echo '  </span>';
+                    echo '</div>';
+                    if ($accountGender == 'Female') {
+                      echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">';
+                      echo '  <i class="fa-solid fa-child-dress fa-lg" style="color: #F1ACAC;"></i>';
+                      echo '</div>';
+                    } else {
+                      echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">';
+                      echo '  <i class="fa-solid fa-child fa-lg" style="color: #8DA0D0;"></i>';
+                      echo '</div>';
+                    }
+                    echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
+                    echo '  <button type="button" class="btn-icon accept" data-account-id="' . $accountId . '">';
+                    echo '    <i class="fa-solid fa-circle-check fa-lg" style="color: #005555;"></i>';
+                    echo '  </button>';
+                    echo '  <button type="button" class="btn-icon reject" data-account-id="' . $accountId . '">';
+                    echo '    <i class="fa-solid fa-circle-xmark fa-lg" style="color: #B02626;"></i>';
+                    echo '  </button>';
+                    echo '</div>';
+                  }
+                }
+                if (!$hasUnapprovedAccounts) {
+                  echo '<div class="col-md-12" style="text-align: center;">目前無待審核的會員！</div>';
+                }
+                ?>
               </div>
             </div>
           </div>
-        </div>
-        <div style=" display: flex;
-        justify-content: flex-end;">
-          <button class="btn-secondary">確認</button>
-        </div>
+          <div style="display: flex; justify-content: flex-end;">
+
+            <button type="submit" class="btn-secondary" <?php echo $hasUnapprovedAccounts ? '' : 'style="display: none;"'; ?>>確認</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
