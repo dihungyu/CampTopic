@@ -8113,7 +8113,7 @@ a {
         display: none; } }
 
 .form-control {
-  height: 52px !important;
+  height: 40px !important;
   background: #fff !important;
   color: #000000 !important;
   font-size: 18px;
@@ -9495,7 +9495,7 @@ dialog::backdrop {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
   .button-search {
-    border-radius: 35px;
+    border-radius: 35px !important;
     width: 70px;
     height: 40px;
     border: none;
@@ -9503,7 +9503,7 @@ dialog::backdrop {
     background-color: #efefef;
     border-top-left-radius: 35px !important;
     border-bottom-left-radius: 35px !important;
-}
+    margin-right: 10px;
 
 .card-icon-footer {
   display: flex;
@@ -9541,7 +9541,7 @@ margin-bottom: 0px;
     border: 1px solid #000; }
 
     
-    article .detail {
+  article .detail {
       display: flex;
       margin-bottom: 24px;
       font-size: 12px;
@@ -9554,7 +9554,6 @@ margin-bottom: 0px;
 }
   .detail h5 {
     color: #005555;
-    margin-left: 580px;
     align-items: center;
     text-decoration: underline;
     margin-bottom: 0px;
