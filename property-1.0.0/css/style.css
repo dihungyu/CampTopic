@@ -4393,6 +4393,27 @@ fieldset:disabled .btn {
     -o-transition: .3s all ease;
     transition: .3s all ease; }
   
+    .btn-new2{
+      text-decoration: none !important;
+      border-radius: 25px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-width: 2px;
+      border-color: transparent;
+      border: none !important;
+      font-size: 13px;
+      background-color: #EFE9DA;
+      color: #fff;
+      
+      margin-top: 8px;
+      margin-bottom: 15px;
+      margin-right: 2px;
+      -webkit-transition: .3s all ease;
+      -o-transition: .3s all ease;
+      transition: .3s all ease; }
+    
 
 .fade {
   -webkit-transition: opacity 0.15s linear;
