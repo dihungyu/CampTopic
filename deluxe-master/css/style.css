@@ -9560,3 +9560,26 @@ margin-bottom: 0px;
     margin-bottom: 0px;
     font-weight: 600;
 }
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.custom-pagination a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  border-radius: 50%;
+  background: rgba(0, 32, 74, 0.1);
+  color: #00204a;
+  text-align: center; }
+  .custom-pagination a:hover, .custom-pagination a.active {
+    background: #00204a;
+    color: #fff; }
