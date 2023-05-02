@@ -110,19 +110,19 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">鹿的設備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">加入起跑點</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
-              <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../login.php">登出</a>
-            </div>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="member.html">會員帳號</a>
+                <a class="dropdown-item" href="member-like.html">我的收藏</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+              </div>
           </li>
 
         </ul>
