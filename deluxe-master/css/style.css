@@ -9583,3 +9583,26 @@ margin-bottom: 0px;
   .custom-pagination a:hover, .custom-pagination a.active {
     background: #00204a;
     color: #fff; }
+
+    .gray-lg{
+      width:280px;
+      height:70px;
+      border:none;
+      background-color:#efefef;
+      border-radius:35px !important;
+      font-size: 13px;
+      margin-top: 40px;
+      padding-right:15px;
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      
+    }
+    .gray-lg p{
+      margin: 0rem;
+    }
+    .gray-lg h6{
+      margin: 0rem;
+      font-size: 14px;
+    }
