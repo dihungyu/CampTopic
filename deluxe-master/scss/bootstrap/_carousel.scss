@@ -42,18 +42,38 @@
   display: block;
 }
 
-/* rtl:begin:ignore */
-.carousel-item-next:not(.carousel-item-start),
-.active.carousel-item-end {
+.carousel-item-next,
+.carousel-item-prev {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+  transform: translateX(0);
+
+  @supports (transform-style: preserve-3d) {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.carousel-item-next,
+.active.carousel-item-right {
   transform: translateX(100%);
+
+  @supports (transform-style: preserve-3d) {
+    transform: translate3d(100%, 0, 0);
+  }
 }
 
-.carousel-item-prev:not(.carousel-item-end),
-.active.carousel-item-start {
+.carousel-item-prev,
+.active.carousel-item-left {
   transform: translateX(-100%);
-}
 
-/* rtl:end:ignore */
+  @supports (transform-style: preserve-3d) {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
 
 
 //
@@ -63,22 +83,31 @@
 .carousel-fade {
   .carousel-item {
     opacity: 0;
+    transition-duration: .6s;
     transition-property: opacity;
-    transform: none;
   }
 
   .carousel-item.active,
-  .carousel-item-next.carousel-item-start,
-  .carousel-item-prev.carousel-item-end {
-    z-index: 1;
+  .carousel-item-next.carousel-item-left,
+  .carousel-item-prev.carousel-item-right {
     opacity: 1;
   }
 
-  .active.carousel-item-start,
-  .active.carousel-item-end {
-    z-index: 0;
+  .active.carousel-item-left,
+  .active.carousel-item-right {
     opacity: 0;
-    @include transition(opacity 0s $carousel-transition-duration);
+  }
+
+  .carousel-item-next,
+  .carousel-item-prev,
+  .carousel-item.active,
+  .active.carousel-item-left,
+  .active.carousel-item-prev {
+    transform: translateX(0);
+
+    @supports (transform-style: preserve-3d) {
+      transform: translate3d(0, 0, 0);
+    }
   }
 }
 
@@ -117,11 +146,15 @@
 }
 .carousel-control-prev {
   left: 0;
-  background-image: if($enable-gradients, linear-gradient(90deg, rgba($black, .25), rgba($black, .001)), null);
+  @if $enable-gradients {
+    background: linear-gradient(90deg, rgba($black, .25), rgba($black, .001));
+  }
 }
 .carousel-control-next {
   right: 0;
-  background-image: if($enable-gradients, linear-gradient(270deg, rgba($black, .25), rgba($black, .001)), null);
+  @if $enable-gradients {
+    background: linear-gradient(270deg, rgba($black, .25), rgba($black, .001));
+  }
 }
 
 // Icons for within
