@@ -70,6 +70,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
   <link rel="stylesheet" href="css/aos.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://kit.fontawesome.com/d02d7e1ecb.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
 
   <title>
@@ -220,7 +221,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           </div>
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
-          <div class="input-group mb-3">
+          <div class="input-group mb-3" style="padding-left:20px">
             <input type="text" class="form-control" placeholder=" search" aria-label="search"
               aria-describedby="basic-addon2">
             <div class="input-group-append">
@@ -228,57 +229,42 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
             </div>
           </div>
 
-          <div class="sidebar-box ftco-animate">
-            <div class="categories">
-              <h4 style="margin-bottom: 16px">類別</h4>
-              <li><a href="#">北部 <span>(12)</span></a></li>
-              <li><a href="#">中部 <span>(22)</span></a></li>
-              <li><a href="#">南部 <span>(37)</span></a></li>
-              <li><a href="#">溪流 <span>(42)</span></a></li>
-              <li><a href="#">草原 <span>(14)</span></a></li>
-              <li><a href="#">星空 <span>(140)</span></a></li>
-            </div>
-          </div>
-
-          <div class="sidebar-box ftco-animate">
-            <h3>相關文章</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+            <div class="sidebar-box ftco-animate">
+              <h3>推薦文章</h3>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div class="sidebar-box ftco-animate">
             <h3>營地標籤</h3>
