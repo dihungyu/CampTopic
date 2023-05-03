@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-=======
-// stylelint-disable selector-no-qualifying-type
 
->>>>>>> issue/35
 //
 // Base styles
 //
 
 .btn {
   display: inline-block;
-<<<<<<< HEAD
   font-family: $btn-font-family;
   font-weight: $btn-font-weight;
   line-height: $btn-line-height;
@@ -23,7 +18,7 @@
   background-color: transparent;
   border: $btn-border-width solid transparent;
   @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-border-radius);
-  @include transition($btn-transition);
+  @include transition($btn-transition);}
 
   &:hover {
     color: $body-color;
@@ -32,7 +27,6 @@
 
   .btn-check:focus + &,
   &:focus {
-=======
   font-weight: $btn-font-weight;
   text-align: center;
   white-space: nowrap;
@@ -40,7 +34,7 @@
   user-select: none;
   border: $btn-border-width solid transparent;
   @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
-  @include transition($btn-transition);
+  @include transition($btn-transition);}
 
   // Share hover and focus styles
   @include hover-focus {
@@ -49,17 +43,16 @@
 
   &:focus,
   &.focus {
->>>>>>> issue/35
+
     outline: 0;
     box-shadow: $btn-focus-box-shadow;
   }
 
-<<<<<<< HEAD
+
   .btn-check:checked + &,
   .btn-check:active + &,
   &:active,
   &.active {
-=======
   // Disabled comes first so active can properly restyle
   &.disabled,
   &:disabled {
@@ -75,14 +68,13 @@
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
     background-image: none;
->>>>>>> issue/35
     @include box-shadow($btn-active-box-shadow);
 
     &:focus {
       @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
     }
   }
-<<<<<<< HEAD
+
 
   &:disabled,
   &.disabled,
@@ -91,14 +83,12 @@
     opacity: $btn-disabled-opacity;
     @include box-shadow(none);
   }
-=======
 }
 
 // Future-proof disabling of clicks on `<a>` elements
 a.btn.disabled,
 fieldset:disabled a.btn {
   pointer-events: none;
->>>>>>> issue/35
 }
 
 
@@ -106,25 +96,18 @@ fieldset:disabled a.btn {
 // Alternate buttons
 //
 
-<<<<<<< HEAD
+
 // scss-docs-start btn-variant-loops
-=======
->>>>>>> issue/35
+
+
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
     @include button-variant($value, $value);
   }
 }
 
-@each $color, $value in $theme-colors {
-  .btn-outline-#{$color} {
-    @include button-outline-variant($value);
-  }
-}
-<<<<<<< HEAD
+
 // scss-docs-end btn-variant-loops
-=======
->>>>>>> issue/35
 
 
 //
@@ -134,9 +117,9 @@ fieldset:disabled a.btn {
 // Make a button look and behave like a link
 .btn-link {
   font-weight: $font-weight-normal;
-<<<<<<< HEAD
+
   color: $btn-link-color;
-  text-decoration: $link-decoration;
+  text-decoration: $link-decoration;}
 
   &:hover {
     color: $btn-link-hover-color;
@@ -145,7 +128,6 @@ fieldset:disabled a.btn {
 
   &:focus {
     text-decoration: $link-hover-decoration;
-=======
   color: $link-color;
   background-color: transparent;
 
@@ -161,16 +143,14 @@ fieldset:disabled a.btn {
     text-decoration: $link-hover-decoration;
     border-color: transparent;
     box-shadow: none;
->>>>>>> issue/35
+
   }
 
   &:disabled,
   &.disabled {
     color: $btn-link-disabled-color;
-<<<<<<< HEAD
-=======
     pointer-events: none;
->>>>>>> issue/35
+
   }
 
   // No need for an active state here
@@ -182,19 +162,15 @@ fieldset:disabled a.btn {
 //
 
 .btn-lg {
-<<<<<<< HEAD
+
   @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
 }
 
 .btn-sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
-=======
   @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
 }
 
-.btn-sm {
-  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
-}
 
 
 //
@@ -218,5 +194,4 @@ input[type="button"] {
   &.btn-block {
     width: 100%;
   }
->>>>>>> issue/35
 }

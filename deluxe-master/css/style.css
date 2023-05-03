@@ -9541,7 +9541,7 @@ dialog::backdrop {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
   .button-search {
-    border-radius: 35px;
+    border-radius: 35px !important;
     width: 70px;
     height: 40px;
     border: none;
@@ -9549,7 +9549,30 @@ dialog::backdrop {
     background-color: #efefef;
     border-top-left-radius: 35px !important;
     border-bottom-left-radius: 35px !important;
+    margin-right: 10px;
+    }
+
+.card-icon-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.card-icon-footer p {
+margin-left: 6px;
+margin-right: 10px;
+margin-top: 0px;
+margin-bottom: 0px;
+}
+.card-icon-footer i {
+  margin-right: 4px;
+  margin-left: 160px;
+}
+.list i{
+  margin-right: 8px;
+  font-size: 16px;
+ }
+
 .tagcloud a {
   text-transform: uppercase;
   display: inline-block;
@@ -9593,3 +9616,73 @@ dialog::backdrop {
   flex-wrap: wrap;
 }*/
 
+    
+  article .detail {
+      display: flex;
+      margin-bottom: 24px;
+      font-size: 12px;
+      align-items: center;
+  }
+  .detail h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+}
+  .detail h5 {
+    color: #005555;
+    align-items: center;
+    text-decoration: underline;
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.custom-pagination a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  border-radius: 50%;
+  background: rgba(0, 32, 74, 0.1);
+  color: #00204a;
+  text-align: center; }
+  .custom-pagination a:hover, .custom-pagination a.active {
+    background: #00204a;
+    color: #fff; }
+
+    .gray-lg{
+      width:280px;
+      height:70px;
+      border:none;
+      background-color:#efefef;
+      border-radius:35px !important;
+      font-size: 13px;
+      margin-top: 40px;
+      padding-right:15px;
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      
+    }
+    .gray-lg p{
+      margin: 0rem;
+    }
+    .gray-lg h6{
+      margin: 0rem;
+      font-size: 14px;
+    }
+
+    .verticle-line{
+      border-left: 1px solid #a0a0a0;
+      height: 30px;
+    }
