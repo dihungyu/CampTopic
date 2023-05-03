@@ -1,13 +1,7 @@
 <?php
 session_start();
-// $accountId = $_SESSION["accountId"];
-// $accountName = $_SESSION["accountName"];
-// $accountEmail = $_SESSION["accountEmail"];
-// $accountPhoneNumber = $_SESSION["accountPhoneNumber"];
-$accountId = "c932dbc4be4811eda1d4e22a0f5e8454";
-$accountName = "dihung";
-$accountEmail = "dihung921@gmail.com";
-$accountPhoneNumber = "0978546921";
+
+$accountId = $_COOKIE["accountId"];
 
 if (isset($_POST["submit"])) {
   $oldPassword = $_POST["oldPassword"];
@@ -151,22 +145,22 @@ if (isset($_POST["submit"])) {
 
   <div class="section">
     <div class="container">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <div class="card" style="width: 350px;margin: 50px; border:none;">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
-              <div class='mt-3'>
-                <h5><?php echo $accountName; ?></h5>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="card" style="width: 350px;margin: 50px; border:none;">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img src="../property-1.0.0/images/Rectangle 141.png" alt="Admin" class="rounded-circle" width="110">
+                <div class='mt-3'>
+                  <h5><?php echo $accountName; ?></h5>
+                </div>
+                <div class="btn btn-primary-tag">露營新手</div>
               </div>
-              <div class="btn btn-primary-tag">露營新手</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-3">
           <form action="password.php" method="post" onsubmit="return checkPassword()">
             <input type="hidden" name="updatePassword" value="yes">
             <div class="column" style="margin-top: 40px;">
@@ -174,7 +168,7 @@ if (isset($_POST["submit"])) {
               <i class="fa-solid fa-key" style="display: flex;
                     transform: translate(50%, 100%);
                     flex-wrap: wrap;
-                    font-size: 15px
+                    font-size: 15px;
                     font-weight: bold;
                     width: 50px;">
               </i>
@@ -229,7 +223,7 @@ if (isset($_POST["submit"])) {
               </div>
               <input class="btn-primary" style="position: relative;
                     transform: translate( 7%, 50%);
-                    width:350px;height: 35px;px;border:0;
+                    width:350px;height: 35px; border:0;
                     font-size: 14px;font-weight:bold;
                     border-radius: 20px;
                     background-color: #f1f1f1;color: #000;

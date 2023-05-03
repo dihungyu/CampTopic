@@ -26,12 +26,14 @@ if ($_POST["FormType"] == "Register") {
 		$result = $stmt->get_result();
 
 		if (mysqli_num_rows($result) >= 1) {
-			echo "<script>{window.alert('此信箱已被註冊！請換信箱再試一次'); location.href='register.php'}</script>";
+			$_SESSION["system_message"] = "此信箱已被註冊，請換信箱再試一次！";
+			header("Location: register.php");
 		} else {
 			$stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountGender, accountBirthday, accountPassword, accountEmail, accountPhoneNumber) VALUES ( REPLACE(UUID(),'-',''), ?,?,?,?,?,?)");
 			$stmt->bind_param("ssssss", $accountName, $accountGender, $accountBirthday, $hashedPassword, $accountEmail, $accountPhoneNumber);
 			if ($stmt->execute()) {
-				echo "<script>{window.alert('註冊成功！'); location.href='login.php'}</script>";
+				$_SESSION["system_message"] = "註冊成功！";
+				header("Location: login.php");
 			} else {
 				echo "Error: " . $stmt->error;
 			}
@@ -74,12 +76,12 @@ if ($_POST["FormType"] == "Register") {
 </head>
 
 <body>
-	<!-- 登入訊息 -->
-	<?php if (isset($_SESSION["login_message"])) : ?>
+	<!-- 系統訊息 -->
+	<?php if (isset($_SESSION["system_message"])) : ?>
 		<div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
-			<?php echo $_SESSION["login_message"]; ?>
+			<?php echo $_SESSION["system_message"]; ?>
 		</div>
-		<?php unset($_SESSION["login_message"]); ?>
+		<?php unset($_SESSION["system_message"]); ?>
 	<?php endif; ?>
 
 	<section class="banner-area relative">

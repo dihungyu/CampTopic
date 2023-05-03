@@ -1,7 +1,6 @@
 <?php
 session_start();
-// $accountId = $_SESSION["accountId"];
-$accountId = "c995dbc4be4811eda1d4e22a0f5e8454";
+$accountId = $_COOKIE["accountId"];
 
 // 取得會員資料
 require_once("../../php/conn.php");
@@ -18,6 +17,7 @@ if ($row = mysqli_fetch_assoc($result)) {
   $accountPassword = $row["accountPassword"];
   $accountEmail = $row["accountEmail"];
   $accountPhoneNumber = $row["accountPhoneNumber"];
+  $attendeeActivityCount = $row["attendeeActivityCount"];
 }
 
 if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
@@ -99,7 +99,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
@@ -142,110 +142,109 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
   <div class="section">
     <div class="container">
-      <div class="row"style="justify-content: space-evenly;">
+      <div class="row" style="justify-content: space-evenly;">
         <div class="col-md-6 mb-3">
           <div class="card" style="border:none; padding-left:100px; padding-top:70px;">
             <div class="card-member">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
-                <div class='mt-3'>
-                  <h5><?php echo $accountName; ?></h5>
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="../property-1.0.0/images/Rectangle 141.png" alt="Admin" class="rounded-circle" width="110">
+                  <div class='mt-3'>
+                    <h5><?php echo $accountName; ?></h5>
+                  </div>
                 </div>
-              </div>
-              <hr>
-              <span>
-              <h6>徽章進度</h6>
-              <span-i>
-              <i class="fa-solid fa-fire" style="color:#B02626"></i>
-              <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
-              <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
-              <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
-              </span-i>
-              </span>
-              <span  style="margin-bottom:0px;">
-                <p>已參加活動</p> &nbsp;
-                <p>2</p> &nbsp;
-                <p>次</p>
-              <span style="margin-left:210px;margin-bottom:0px;">
-                <p >差</p>&nbsp;
-                <p>1</p>&nbsp;
-                <p>次升級</p>
-            </span>
-            </span>
-            <div class="progress" style="height:0.7rem; border-radius:35px;">
-            <div class="progress-bar" role="progressbar" style="width: 66%;
+                <hr>
+                <span>
+                  <h6>徽章進度</h6>
+                  <span-i>
+                    <i class="fa-solid fa-fire" style="color:#B02626"></i>
+                    <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
+                    <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
+                    <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
+                  </span-i>
+                </span>
+                <span style="margin-bottom:0px;">
+                  <p>已參加活動</p> &nbsp;
+                  <p><?php echo $attendeeActivityCount ?></p> &nbsp;
+                  <p>次</p>
+                  <span style="margin-left:210px;margin-bottom:0px;">
+                    <p>差</p>&nbsp;
+                    <p>1</p>&nbsp;
+                    <p>次升級</p>
+                  </span>
+                </span>
+                <div class="progress" style="height:0.7rem; border-radius:35px;">
+                  <div class="progress-bar" role="progressbar" style="width: 50%;
                         background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
               </div>
             </div>
           </div>
-</div>
         </div>
 
         <div class="col-md-6 mb-3 mt-5"">
-          <form action="member.php" method="post">
-            <input type="hidden" name="updateMember" value="yes">
-            <div class="column">
+          <form action=" member.php" method="post">
+          <input type="hidden" name="updateMember" value="yes">
+          <div class="column">
 
-              <span style="width: 400px;
+            <span style="width: 400px;
               flex-wrap: wrap;
               font-size: 16px;
               font-weight: bolder;
               margin-left: 4px;
               align-items: center;
               ">
-                <i class="fa-solid fa-pencil" style="margin-right: 16px; margin-bottom: 48px;"></i>編輯會員資料</span>
+              <i class="fa-solid fa-pencil" style="margin-right: 16px; margin-bottom: 48px;"></i>編輯會員資料</span>
 
-              <span class="member-input">
-                <p>姓名</p>
-                <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
+            <span class="member-input">
+              <p>姓名</p>
+              <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
 
-              </span>
+            </span>
 
-              <span class="member-input">
-                <p>電話</p>
-                <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
+            <span class="member-input">
+              <p>電話</p>
+              <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
 
-              </span>
+            </span>
 
-              <span class="member-input">
-                <p>信箱</p>
-                <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
+            <span class="member-input">
+              <p>信箱</p>
+              <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
 
-              </span>
+            </span>
 
-              <span class="member-input">
-                <p>生日</p>
-                <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
-              </span>
+            <span class="member-input">
+              <p>生日</p>
+              <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
+            </span>
 
-              <span class="member-input">
-                <p>性別</p>
-                <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
-                                                                                                                          echo "checked";
-                                                                                                                        } ?> required>
-                <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
-                <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-right: 8px;" <?php if ($accountGender == "Male") {
+            <span class="member-input">
+              <p>性別</p>
+              <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
                                                                                                                         echo "checked";
                                                                                                                       } ?> required>
-                <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
-              </span>
+              <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
+              <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-right: 8px;" <?php if ($accountGender == "Male") {
+                                                                                                                      echo "checked";
+                                                                                                                    } ?> required>
+              <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
+            </span>
 
-              <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
+            <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
 
-              <span class="member-input">
-                <p>密碼</p>
-                <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
-              </span>
+            <span class="member-input">
+              <p>密碼</p>
+              <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
+            </span>
 
-              <div class="col-10 mb-3"">
+            <div class="col-10 mb-3"">
 
-                <span class="member-bottom">
-                  <input type="reset" value="取消" class="btn btn-secondary" 
-                  style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
-                  <input type="submit" value="確認修改" class="btn btn-primary">
-              </div></span>
-            </div>
+                <span class=" member-bottom">
+              <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
+              <input type="submit" value="確認修改" class="btn btn-primary">
+            </div></span>
+          </div>
           </form>
         </div>
       </div>
@@ -256,8 +255,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   <div class="site-footer">
     <div class="container">
       <div class="row">
-        
-         <!-- /.col-lg-4 -->
+
+        <!-- /.col-lg-4 -->
         <div class="col-lg-5">
           <div class="widget">
             <h3>聯絡資訊</h3>
@@ -273,7 +272,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <!-- /.widget -->
         </div>
         <!-- /.col-lg-4 -->
-         <div class="col-lg-5">
+        <div class="col-lg-5">
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">

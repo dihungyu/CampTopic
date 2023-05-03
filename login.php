@@ -2,13 +2,6 @@
 session_start();
 
 
-//若登出成功則顯示登出成功訊息
-if (isset($_GET["logout_message"])) {
-	echo '<div class="alert alert-success">' . $_GET["logout_message"] . '</div>';
-}
-
-
-
 // 若已經登入則轉址至首頁
 if ($_POST["FormType"] == "Login") {
 	// 確認使用者提交的表單中，是否填寫了帳號和密碼欄位
@@ -32,6 +25,7 @@ if ($_POST["FormType"] == "Login") {
 			if (password_verify($accountPassword, $row["accountPassword"])) {
 
 				// 將使用者資訊存入 Cookie，並轉址至首頁
+				setcookie("accountId", $row["accountId"], time() + 3600 * 24 * 30, "/");
 				setcookie("accountName", $row["accountName"], time() + 3600 * 24 * 30, "/");
 				setcookie("accountEmail", $row["accountEmail"], time() + 3600 * 24 * 30, "/");
 				setcookie("accountPhoneNumber", $row["accountPhoneNumber"], time() + 3600 * 24 * 30, "/");
@@ -41,7 +35,7 @@ if ($_POST["FormType"] == "Login") {
 				$_SESSION["accountPassword"] = $row["accountPassword"];
 
 				// 儲存登出成功的訊息到 Session 中
-				$_SESSION["login_message"] = "歡迎回來！";
+				$_SESSION["system_message"] = "歡迎回來！";
 
 				// 轉址至登入頁面
 				header("Location: /CampTopic/deluxe-master/property-1.0.0/index.php");
@@ -50,7 +44,7 @@ if ($_POST["FormType"] == "Login") {
 				// echo "<script>{window.alert('登入成功！'); location.href='/CampTopic/deluxe-master/property-1.0.0/index.php'}</script>";
 			} else {
 				// 儲存登入失敗的訊息到 Session 中
-				$_SESSION["login_message"] = "密碼錯誤！";
+				$_SESSION["system_message"] = "密碼錯誤！";
 
 				// 轉址至登入頁面
 				header("Location: login.php");
@@ -61,7 +55,7 @@ if ($_POST["FormType"] == "Login") {
 			}
 		} else {
 			// 儲存登入失敗的訊息到 Session 中
-			$_SESSION["login_message"] = "此電子信箱尚未註冊！請先註冊帳號";
+			$_SESSION["system_message"] = "此電子信箱尚未註冊！請先註冊帳號";
 
 			// 轉址至登入頁面
 			header("Location: register.php");
@@ -109,12 +103,12 @@ if ($_POST["FormType"] == "Login") {
 </head>
 
 <body>
-	<!-- 登入訊息 -->
-	<?php if (isset($_SESSION["login_message"])) : ?>
+	<!-- 系統訊息 -->
+	<?php if (isset($_SESSION["system_message"])) : ?>
 		<div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
-			<?php echo $_SESSION["login_message"]; ?>
+			<?php echo $_SESSION["system_message"]; ?>
 		</div>
-		<?php unset($_SESSION["login_message"]); ?>
+		<?php unset($_SESSION["system_message"]); ?>
 	<?php endif; ?>
 
 	<section class="banner-area relative">

@@ -142,61 +142,144 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
   <div class="section">
     <div class="container">
-      <div class="row"style="justify-content: space-evenly;">
+      <div class="row" style="justify-content: space-evenly;">
         <div class="col-md-6 mb-3">
           <div class="card" style="border:none; padding-left:100px; padding-top:70px;">
             <div class="card-member">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
-                <div class='mt-3'>
-                  <h5><?php echo $accountName; ?></h5>
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
+                  <div class='mt-3'>
+                    <h5><?php echo $accountName; ?></h5>
+                  </div>
                 </div>
-              </div>
-              <hr>
-              <span>
-              <h6>徽章進度</h6>
-              <span-i>
-              <i class="fa-solid fa-fire" style="color:#B02626"></i>
-              <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
-              <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
-              <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
-              </span-i>
-              </span>
-              <span  style="margin-bottom:0px;">
-                <p>已參加活動</p> &nbsp;
-                <p>2</p> &nbsp;
-                <p>次</p>
-              <span style="margin-left:210px;margin-bottom:0px;">
-                <p >差</p>&nbsp;
-                <p>1</p>&nbsp;
-                <p>次升級</p>
-            </span>
-            </span>
-            <div class="progress" style="height:0.7rem; border-radius:35px;">
-            <div class="progress-bar" role="progressbar" style="width: 66%;
+                <hr>
+                <span>
+                  <h6>徽章進度</h6>
+                  <span-i>
+                    <i class="fa-solid fa-fire" style="color:#B02626"></i>
+                    <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
+                    <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
+                    <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
+                  </span-i>
+                </span>
+                <span style="margin-bottom:0px;">
+                  <p>已參加活動</p> &nbsp;
+                  <p>2</p> &nbsp;
+                  <p>次</p>
+                  <span style="margin-left:210px;margin-bottom:0px;">
+                    <p>差</p>&nbsp;
+                    <p>1</p>&nbsp;
+                    <p>次升級</p>
+                  </span>
+                </span>
+                <div class="progress" style="height:0.7rem; border-radius:35px;">
+                  <div class="progress-bar" role="progressbar" style="width: 66%;
                         background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
               </div>
             </div>
           </div>
-</div>
         </div>
 
         <div class="col-md-6 mb-3">
           <form action="member.php" method="post">
             <input type="hidden" name="updateMember" value="yes">
-            <div class="column">
+            <div class="column" style="position:absolute;height: 200px;top:-270px;left:100px;right: 0px;padding: 20px;">
+              <span style="font-size: 16;font-weight: bolder;margin-left: 4px;"><i class="fa-solid fa-pencil" style="margin-right: 3px;margin-bottom: 20px;"></i>編輯會員資料</span>
+              <span style="display: flex;
+                width: 50px;
+                transform: translate(1%, 150%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                姓名
+              </span>
+              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+                <input type="text" name="accountName" class="form-control" style="font-size: 14px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
+              </div>
+              <span style="display: flex;
+                width: 50px;
+                transform: translate(1%, 150%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                電話
+              </span>
+              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+                <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
+              </div>
+              <span style="display: flex;
+                width: 50px;
+                transform: translate(1%, 150%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                信箱
+              </span>
+              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+                <input type="email" name="accountEmail" class="form-control" style="font-size: 14px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
+              </div>
+              <span style="display: flex;
+                width: 50px;
+                transform: translate(1%, 150%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                生日
+              </span>
+              <div class="col-6 mb-3" style="margin-left: 50px;margin-top: -5px;">
+                <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
+                <span style="display: flex;
+                width: 50px;
+                transform: translate(-90%, 150%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;
+                ">
+                  性別
+                </span>
+                <div class="col-6 mb-3" style="margin-left: 15px;margin-top: 12px;">
+                  <input type="radio" name="accountGender" value="Female" style="text-align: left;" <?php if ($accountGender == "Female") {
+                                                                                                      echo "checked";
+                                                                                                    } ?> required>
+                  <label for="Female" style="font-weight: bold;font-size:16px;">女</label>&nbsp;&nbsp;
+                  <input type="radio" name="accountGender" value="Male" <?php if ($accountGender == "Male") {
+                                                                          echo "checked";
+                                                                        } ?> required>
+                  <label for="Male" style="font-weight: bold;font-size:16px;">男</label>
+                </div>
+                <hr width="100%" align="left" size="3" style="margin-top: 30px;">
+                <span style="display: flex;
+                width: 50px;
+                transform: translate(-90%, 100%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                  密碼
+                </span>
+                <a href="password.php" style="margin-left: 5px;margin-top: 10px;">設定新的密碼</a>
+                <span style="display: flex;
+                width: 50px;
+                transform: translate(-90%, 100%);
+                flex-wrap: wrap;
+                font-size: 15px;
+                font-weight: bold;">
+                  通知
+                </span>
+                <input type="checkbox" name="isSubscribeEmail" value="yes" style="margin-left: 5px;margin-top:5px;margin-right:5px;font-weight:bolder;font-size:16px;">訂閱電子郵件<br><br>
+                <input type="checkbox" name="isSubscribeSms" value="yes" style="margin-left: 5px;margin-right:5px;font-weight:600;font-size:16px;">訂閱SMS
 
-              <span style="width: 400px;
+                <span style="width: 400px;
               flex-wrap: wrap;
               font-size: 16px;
               font-weight: bolder;
               margin-left: 4px;
               align-items: center;
               ">
-                <i class="fa-solid fa-pencil" style="margin-right: 16px; margin-bottom: 48px;"></i>編輯會員資料</span>
+                  <i class="fa-solid fa-pencil" style="margin-right: 16px; margin-bottom: 48px;"></i>編輯會員資料</span>
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width: 400px;
                 align-items: center;
                 flex-wrap: wrap;
@@ -204,95 +287,89 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                 font-weight: 400px;
                 margin-bottom: 48px;
                 ">
-                姓名
+                  姓名
 
-                <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
+                  <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
 
-              </span>
+                </span>
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: 400px;
                 margin-bottom: 48px;
                 align-items: center;">
-                電話
-                <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
+                  電話
+                  <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
 
-              </span>
+                </span>
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: 400px;
                 margin-bottom: 48px;
                 align-items: center;">
-                信箱
+                  信箱
 
-                <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
+                  <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
 
-              </span>
+                </span>
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: 400px;
                 margin-bottom: 48px;
                 align-items: center;">
-                生日
+                  生日
 
-                <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
-              </span>
+                  <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
+                </span>
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width: 400px;
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: 400px;
                 margin-bottom: 48px;
                 align-items: center;">
-                性別
+                  性別
 
-                <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
+                  <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
+                                                                                                                            echo "checked";
+                                                                                                                          } ?> required>
+                  <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
+                  <input type="radio" name="accountGender" value="Male" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Male") {
                                                                                                                           echo "checked";
                                                                                                                         } ?> required>
-                <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
-                <input type="radio" name="accountGender" value="Male" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Male") {
-                                                                                                                        echo "checked";
-                                                                                                                      } ?> required>
-                <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
-              </span>
+                  <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
+                </span>
 
-              <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
+                <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
 
-              <span style="display: flex;
+                <span style="display: flex;
                 width:400px;
                 flex-wrap: wrap;
                 font-size: 15px;
                 font-weight: 400px;
                 align-items: center;
                 margin-bottom: 56px;">
-                密碼
+                  密碼
 
-                <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
-              </span>
+                  <a href="password.php" style="margin-left: 32px;">設定新的密碼</a>
+                </span>
 
-              <div class="col-10 mb-3"">
+                <div class="col-10 mb-3"">
 
-                <span style="display: flex;
-                width:400px;
-                flex-wrap: wrap;
-                font-size: 12px;
-                margin-left:400px;
-                align-items: center;">
-                  <input type="reset" value="取消" class="btn btn-secondary" 
-                  style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
+                <span style=" display: flex; width:400px; flex-wrap: wrap; font-size: 12px; margin-left:400px; align-items: center;">
+                  <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
                   <input type="submit" value="確認修改" class="btn btn-primary">
-              </div></span>
-            </div>
+                </div></span>
+              </div>
           </form>
         </div>
       </div>
