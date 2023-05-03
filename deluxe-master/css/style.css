@@ -9631,3 +9631,10 @@ article .detail {
     background-color: #EFE9DA; }
     .tagcloud a:hover {
       border: 1px solid #000; }
+.ad-img{
+  vertical-align: middle;
+  border-style: none;
+}
+.ad-img img{
+  width: 1440px;
+}
