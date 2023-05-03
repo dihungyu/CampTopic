@@ -1,4 +1,5 @@
-<?
+
+<?/*
 if (isset($_GET["action"]) && $_GET["action"] == "logout") {
   // 清除 Cookie
   setcookie("accountName", "", time() - 3600, "/");
@@ -14,10 +15,9 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
   // 轉址至登入頁面
   header("Location: ../../login.php");
   exit;
-}
-
-
+}*/
 ?>
+
 
 <!-- /*
 * Template Name: Property
@@ -234,6 +234,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
             <div class="property-slider">
 
               <?php
+              /*
               //取出營地按讚數前10名的營地
               require_once "../../php/conn.php";
               $sql = "SELECT * FROM `campsites` ORDER BY `campsiteLikeCount` DESC LIMIT 10";
@@ -289,7 +290,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
               }
 
               ?>
-
+*/
 
               <!-- .item -->
               <div class="property-item">
@@ -297,16 +298,26 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
 
 
                 <div class="property-content">
+                  <span class="span-adj" style="justify-content: space-between;"> 
                   <div class="price mb-2"><span>$1,291起</span></div>
+                  <button type="button" class="btn-icon">
+                    <i class="fa-regular fa-bookmark"></i>
+                  </button>
+                </span>
                   <div>
                     <a href="property-single.html" class="img">
                       <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
                     <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-
+                    <div class="card-icon-footer">
                     <div class="tagcloud">
                       <a href="property-single.html">雲海</a>
                       <a href="property-single.html">櫻花</a>
                       <a href="property-single.html">森林</a>
+                    </div>
+                    <span style="display: flex; align-items: center;">
+                      <i class="fa-regular fa-heart"></i>
+                      <p>1,098</p>
+                    </span>
                     </div>
                   </div>
                 </div>
@@ -366,14 +377,19 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
                 </a>
                 <div class="property-content">
                   <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
+                    <span style="display: flex; align-items: center;">
                       <span class="fa-stack fa-1x" style="margin-right: 5px; ">
                         <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
                         <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
                       </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
+                      <div class="city d-block">露營帳篷</div>
                     </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
+                    <span class="span-adj">
+                      <div class="price mb-1"><span>$1,291</span></div> 
+                       <button type="button" class="btn-icon">
+                        <i class="fa-regular fa-bookmark"></i>
+                      </button>
+                  </span>
                   </div>
                   <div>
                     <span class="d-block mb-4 mt-3 text-black-50">
@@ -387,7 +403,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
                           <a href="property-single.html">帳篷</a>
                         </div>
                         <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
+                          <i class="fa-regular fa-heart"></i>
                           <p>1,098</p>
                         </span>
                       </div>

@@ -11498,6 +11498,7 @@ font-size: 12px;
   background-color: transparent;
   border: none;
   outline: none;
+  line-height: normal;
 }
 .btn-icon i{
 font-size: 18px;
@@ -11759,4 +11760,13 @@ width: 50px;
 }
 .article-list {
   flex-wrap: wrap;
+}
+.span-adj{
+  display: flex; 
+  align-items: center;
+}
+.span-adj i{
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 5px;
 }
