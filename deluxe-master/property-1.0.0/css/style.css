@@ -10102,6 +10102,7 @@ textarea {
   -o-transition: .3s all ease;
   transition: .3s all ease; }
 
+
   .btn.btn-primary {
     background-color: #005555;
     color: #fff; }
@@ -10121,6 +10122,7 @@ textarea {
       font-size: 12px;
       padding: 5px;
       display: hidden;
+      margin-right: 0px;
      
     }
     .btn.btn-primary-tag:hover{

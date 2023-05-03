@@ -160,7 +160,7 @@ if (isset($_POST["submit"])) {
                 <div class='mt-3'>
                   <h5><?php echo $accountName; ?></h5>
                 </div>
-                <div class="btn btn-primary-tag">露營新手</div>
+                <div class="btnn btn-primary-tag" style="margin-right: 0px;">露營新手</div>
               </div>
             </div>
           </div>
