@@ -74,6 +74,13 @@ if ($_POST["FormType"] == "Register") {
 </head>
 
 <body>
+	<!-- 登入訊息 -->
+	<?php if (isset($_SESSION["login_message"])) : ?>
+		<div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+			<?php echo $_SESSION["login_message"]; ?>
+		</div>
+		<?php unset($_SESSION["login_message"]); ?>
+	<?php endif; ?>
 
 	<section class="banner-area relative">
 		<div class="overlay overlay-bg"></div>
@@ -163,6 +170,16 @@ if ($_POST["FormType"] == "Register") {
 					event.preventDefault();
 				}
 			});
+		</script>
+		<script>
+			function hideMessage() {
+				document.getElementById("message").style.opacity = "0";
+				setTimeout(function() {
+					document.getElementById("message").style.display = "none";
+				}, 500);
+			}
+
+			setTimeout(hideMessage, 3000);
 		</script>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

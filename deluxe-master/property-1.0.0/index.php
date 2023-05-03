@@ -1,3 +1,24 @@
+<?
+if (isset($_GET["action"]) && $_GET["action"] == "logout") {
+  // 清除 Cookie
+  setcookie("accountName", "", time() - 3600, "/");
+  setcookie("accountEmail", "", time() - 3600, "/");
+  setcookie("accountPhoneNumber", "", time() - 3600, "/");
+  setcookie("accountLevel", "", time() - 3600, "/");
+
+  // 清除 Session
+  session_start();
+  session_unset();
+  session_destroy();
+
+  // 轉址至登入頁面
+  header("Location: ../../login.php");
+  exit;
+}
+
+
+?>
+
 <!-- /*
 * Template Name: Property
 * Template Author: Untree.co
@@ -52,13 +73,32 @@
 </head>
 
 <body>
+
+
+  <!-- 登出訊息 -->
+  <?php session_start(); ?>
+  <?php if (isset($_SESSION["logout_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["logout_message"]; ?>
+    </div>
+    <?php unset($_SESSION["logout_message"]); ?>
+  <?php endif; ?>
+
+  <!-- 登入訊息 -->
+  <?php if (isset($_SESSION["login_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_COOKIE["accountName"] . "，" . $_SESSION["login_message"]; ?>
+    </div>
+    <?php unset($_SESSION["login_message"]); ?>
+  <?php endif; ?>
+
+
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -71,16 +111,25 @@
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../../login.php">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../../login.php">登入</a>';
+              }
+              ?>
             </div>
+
           </li>
         </ul>
       </div>
@@ -107,7 +156,7 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-9 text-center">
           <h1 class="heading" data-aos="fade-up">
-            Start Camping！<br>贏在起跑點
+            Start Camping！<br>營在起跑點
           </h1>
         </div>
       </div>
@@ -183,184 +232,68 @@
         <div class="col-12">
           <div class="property-slider-wrap">
             <div class="property-slider">
-              <div class="property-item">
-                <img src="images/Rectangle 324.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
+
+              <?php
+              //取出營地按讚數前10名的營地
+              require_once "../../php/conn.php";
+              $sql = "SELECT * FROM `campsites` ORDER BY `campsiteLikeCount` DESC LIMIT 10";
+              $campsiteResult = mysqli_query($conn, $sql);
+
+              if ($campsiteResult && $campsiteResult->num_rows > 0) {
+                while ($campsiteData = mysqli_fetch_assoc($campsiteResult)) {
+
+                  $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteData[campsiteId]'";
+                  $files_result = mysqli_query($conn, $files_query);
+                  $image_src = 'images/Rectangle 332.png'; // Default image
+
+                  if ($file_result = mysqli_fetch_assoc($files_result)) {
+                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                    $image_src = $file_path;
+                  }
+
+                  echo "<div class='property-item'>
+                <img src='" . $image_src . "' alt='Image' class='img-fluid' data-toggle='modal' data-target='#exampleModalCenter' />
 
 
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
+                <div class='property-content'>
+                  <div class='price mb-2'><span>$" . number_format($campsiteData["campsiteLowerLimit"]) . "起</span></div>
+
                   <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">杉嵐營地</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉竹林村1鄰羅山23之2號</span>
+                    <a href='#' class='img'>
+                      <span class='city d-block mb-3 mt-3'>" . $campsiteData["campsiteName"] . "</span></a>
+                    <span class='d-block mb-4 text-black-50'>" . $campsiteData["campsiteAddress"] . "</span>";
 
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">有雨棚</a>
-                    </div>
+                  echo "<div class='tagcloud'>";
+                  $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+                      FROM campsites_labels
+                      JOIN labels ON campsites_labels.labelId = labels.labelId
+                      WHERE campsites_labels.campsiteId = '$campsiteData[campsiteId]'";
+                  $result_labels = mysqli_query($conn, $sql_query_labels);
+
+                  $printed_tags = 0;
+                  while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                    if ($printed_tags >= 4) {
+                      break;
+                    }
+
+                    echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
+
+                    $printed_tags++;
+                  }
+
+                  echo "</div>
                   </div>
                 </div>
-              </div>
+              </div>";
+                }
+              }
+
+              ?>
+
+
               <!-- .item -->
-
               <div class="property-item">
-                <img src="images/Rectangle 325.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">天景露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉花園村10鄰天湖205號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">有插座</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 326.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html">
-                      <span class="city d-block mb-3 mt-3">北埔星月天空露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣北埔鄉大湖村下大湖12鄰22-30號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 327.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">天方夜譚</span> </a>
-                    <span class="d-block mb-4 text-black-50">桃園市龍潭區德湖街369號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 328.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">松野農園露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">桃園市復興區高義里7鄰色霧鬧10-16號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 329.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">司馬庫斯舊部落營地</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">草地</a>
-                      <a href="property-single.html">手作體驗</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 330.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">老牛露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣五峰鄉桃山村18鄰白蘭312-3號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">販賣部</a>
-                      <a href="property-single.html">夜景</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 331.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
-
-
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">夏蝶冬櫻山谷園地-保羅先生</span></a>
-                    <span class="d-block mb-4 text-black-50">桃園市復興區高義里高義蘭36-1號</span>
-
-                    <div class="tagcloud">
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">插座</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
-
-              <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
+                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal" data-target="#exampleModalCenter" />
 
 
                 <div class="property-content">
@@ -378,33 +311,18 @@
                   </div>
                 </div>
               </div>
-
-              <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal"
-                  data-target="#exampleModalCenter" />
+              <!-- .item end -->
 
 
-                <div class="property-content">
-                  <div class="price mb-2"><span>$1,291起</span></div>
-                  <div>
-                    <a href="property-single.html" class="img">
-                      <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
 
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item -->
+
+              <!-- 分頁導航 -->
             </div>
             <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
               <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
               <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
             </div>
+
           </div>
         </div>
       </div>
@@ -432,11 +350,20 @@
           </div>
           <div class="testimonial-slider-wrap">
             <div class="testimonial-slider">
+
+
+              <?php
+              //取出設備收藏數前10名的設備
+
+              $sql = "SELECT * FROM `equipments` ORDER BY `equipmentCollectCount` DESC LIMIT 10";
+              $equipmentResult = mysqli_query($conn, $sql);
+
+
+              ?>
               <div class="property-item">
                 <a href="property-single.html" class="img">
                   <img src="images/image 3.png" alt="Image" class="img-fluid" />
                 </a>
-
                 <div class="property-content">
                   <div style="display: flex; justify-content: space-between;">
                     <span style="display: flex;">
@@ -469,113 +396,8 @@
                 </div>
               </div>
 
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 4.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
 
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 5.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 2.png" alt="Image" class="img-fluid" />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block mb-3">露營帳篷</div>
-                    </span>
-                    <div class="price mb-1"><span>$1,291</span></div>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-eye"></i>
-                          <p>1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
+              <!-- 分頁導航 -->
             </div>
             <div id="testimonial-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
               <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
@@ -754,8 +576,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">
       <div class="modal-content">
         <div class="modal-header">
@@ -819,8 +640,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="contectus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade" id="contectus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -853,8 +673,8 @@
   <div class="site-footer">
     <div class="container">
       <div class="row">
-        
-         <!-- /.col-lg-4 -->
+
+        <!-- /.col-lg-4 -->
         <div class="col-lg-5">
           <div class="widget">
             <h3>聯絡資訊</h3>
@@ -870,7 +690,7 @@
           <!-- /.widget -->
         </div>
         <!-- /.col-lg-4 -->
-         <div class="col-lg-5">
+        <div class="col-lg-5">
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
@@ -955,20 +775,25 @@
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
+
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+
+    setTimeout(hideMessage, 3000);
+  </script>
+
 
 </body>
 

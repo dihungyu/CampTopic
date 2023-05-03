@@ -151,22 +151,22 @@ if (isset($_POST["submit"])) {
 
   <div class="section">
     <div class="container">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <div class="card" style="width: 350px;margin: 50px; border:none;">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
-              <div class='mt-3'>
-                <h5><?php echo $accountName; ?></h5>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="card" style="width: 350px;margin: 50px; border:none;">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img src="img/crayon.png" alt="Admin" class="rounded-circle" width="110">
+                <div class='mt-3'>
+                  <h5><?php echo $accountName; ?></h5>
+                </div>
+                <div class="btn btn-primary-tag">露營新手</div>
               </div>
-              <div class="btn btn-primary-tag">露營新手</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-3">
           <form action="password.php" method="post" onsubmit="return checkPassword()">
             <input type="hidden" name="updatePassword" value="yes">
             <div class="column" style="margin-top: 40px;">

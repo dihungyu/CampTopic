@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/issue/6
 require_once '../conn.php';
 
 $campsiteId = $_GET['campsiteId'];
