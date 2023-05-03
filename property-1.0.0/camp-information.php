@@ -1,9 +1,7 @@
-<!-- /*
-* Template Name: Property
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+<?php
+require_once '../php/conn.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,8 +26,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="fonts/docs/css/ionicons.min.css">
   <link rel="stylesheet" href="css/skins/all.css">
-  
-  
+
+
 
 
   <title>
@@ -76,7 +74,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            帳號
+              帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.html">會員帳號</a>
@@ -91,7 +89,7 @@
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 151.png'); 
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 151.png');
       height:70vh;
       min-height: 300px;">
     <div class="container">
@@ -116,55 +114,57 @@
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-       
+
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <span style="display:flex;align-items: center;justify-content: center">
-          <button type="button" class="button-filter">
-            <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
-          </button>
+            <button type="button" class="button-filter">
+              <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
+            </button>
             <a class="tag-filter" href="#">櫻花
-            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
             </a>
             <a class="tag-filter" href="#">標籤
-            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
             </a>
             <a class="tag-filter" href="#">標籤
-            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
             </a>
             <a class="tag-filter" href="#">標籤
-            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
-            </a> 
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
+            </a>
             <a class="tag-filter" href="#">標籤
-            <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
             </a>
           </span>
           <span style="display:flex ;">
-          <div id="navbar-search-autocomplete" class="form-outline">
-            <input type="search" id="form1" class="form-control" style="border-radius: 35px;"/>
-          </div>
-          <button type="button" class="button-search" style="margin-left: 10px; ">
-            <i class="fas fa-search"></i>
-          </button>
-        </span>
+            <div id="navbar-search-autocomplete" class="form-outline">
+              <input type="search" id="form1" class="form-control" style="border-radius: 35px;" />
+            </div>
+            <button type="button" class="button-search" style="margin-left: 10px; ">
+              <i class="fas fa-search"></i>
+            </button>
+          </span>
         </div>
         <div class="input-group" style="display: flex; justify-content: space-between;">
-        <button type="button" class="gray-lg" data-toggle="modal" data-target="#exampleModalCenter">
-          <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 15%;">
-          <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">yizz</label>
-          <div class="verticle-line"></div>
-          <span style="display: flex; align-items: center; justify-content: flex-start" >
-             <i class="fa-solid fa-fire" style="color: #B02626; font-size:18px; margin-right: 8px;"></i>
-              <h6 style="margin: 0rem;">新手營火</h6></span>
-        </button>
-        <button type="button" class="gray-lg" data-toggle="modal" data-target="#create">
-          <h6>發起露營活動！</h6>
-          <div class="verticle-line"></div>
-          <span style="display: flex; align-items: center; justify-content: flex-start" >
-            <i class="fa-solid fa-hand-fist" style="font-size: 18px;margin-right: 8px;"></i>
-             <h6>創建</h6></span>
-        </button>
-      </div>
+          <button type="button" class="gray-lg" data-toggle="modal" data-target="#exampleModalCenter">
+            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 15%;">
+            <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">yizz</label>
+            <div class="verticle-line"></div>
+            <span style="display: flex; align-items: center; justify-content: flex-start">
+              <i class="fa-solid fa-fire" style="color: #B02626; font-size:18px; margin-right: 8px;"></i>
+              <h6 style="margin: 0rem;">新手營火</h6>
+            </span>
+          </button>
+          <button type="button" class="gray-lg" data-toggle="modal" data-target="#create">
+            <h6>發起露營活動！</h6>
+            <div class="verticle-line"></div>
+            <span style="display: flex; align-items: center; justify-content: flex-start">
+              <i class="fa-solid fa-hand-fist" style="font-size: 18px;margin-right: 8px;"></i>
+              <h6>創建</h6>
+            </span>
+          </button>
         </div>
+      </div>
     </div>
   </div>
 
@@ -176,238 +176,248 @@
             <div class="card" style="width: 600px;margin-left: 0px; margin-bottom: 40px;">
               <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
               <span class="card-head">
-                  <img src="images/person_4-min.jpg" alt="Admin" />
-                  <p>yizzz</p>
-                </span>
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
 
-              <div class="card-body" style="margin-top: 0px;"> 
+              <div class="card-body" style="margin-top: 0px;">
                 <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
                 <div style="display: flex;flex-direction: column">
-                <div class="findcamper">
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-person"></i>4-6 人
-                  </span>
-                </div>
-               
-                <div class="findcamper">
-                  <span class="findcamper-icon" style="display: flex; align-items: center;">
-                  <i class="icon-map"></i>合歡山北峰步道</span>
-                  <span class="findcamper-icon">
-                   <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-               
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                <p>已有4人參加 </p>
-                <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                  參加！</button> </div>
-                  </div>
-                </div>
-
-                <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-                  <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-                  <span class="card-head">
-                      <img src="images/person_4-min.jpg" alt="Admin" />
-                      <p>yizzz</p>
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
                     </span>
-    
-                  <div class="card-body" style="margin-top: 0px;"> 
-                    <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                    <div style="display: flex;flex-direction: column">
-                    <div class="findcamper">
-                      <span class="findcamper-icon">
-                        <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                      <span class="findcamper-icon">
-                        <i class="fa-solid fa-person"></i>4-6 人
-                      </span>
-                    </div>
-                   
-                    <div class="findcamper">
-                      <span class="findcamper-icon" style="display: flex; align-items: center;">
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
                       <i class="icon-map"></i>合歡山北峰步道</span>
-                      <span class="findcamper-icon">
-                       <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                      </div>
-                   
-                    </div>
-                    <hr>
-                    <div class="findcamper-bottom">
-                    <p>已有4人參加 </p>
-                    <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                      參加！</button>
-                     </div>
-                      </div>
-                    </div>
-            
-                    <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-                      <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-                      <span class="card-head">
-                          <img src="images/person_4-min.jpg" alt="Admin" />
-                          <p>yizzz</p>
-                        </span>
-        
-                      <div class="card-body" style="margin-top: 0px;"> 
-                        <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                        <div style="display: flex;flex-direction: column">
-                        <div class="findcamper">
-                          <span class="findcamper-icon">
-                            <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                          <span class="findcamper-icon">
-                            <i class="fa-solid fa-person"></i>4-6 人
-                          </span>
-                        </div>
-                       
-                        <div class="findcamper">
-                          <span class="findcamper-icon" style="display: flex; align-items: center;">
-                          <i class="icon-map"></i>合歡山北峰步道</span>
-                          <span class="findcamper-icon">
-                           <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                          </div>
-                       
-                        </div>
-                        <hr>
-                        <div class="findcamper-bottom">
-                        <p>已有4人參加 </p>
-                        <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                          參加！</button> </div>
-                          </div>
-                        </div>
-                        </div>
-            <!-- .item -->
-
-          <div class="col-xs-12 col-sm-6">
-           
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                  <img src="images/person_4-min.jpg" alt="Admin" />
-                  <p>yizzz</p>
-                </span>
-
-              <div class="card-body" style="margin-top: 0px;"> 
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                <div class="findcamper">
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-person"></i>4-6 人
-                  </span>
-                </div>
-               
-                <div class="findcamper">
-                  <span class="findcamper-icon" style="display: flex; align-items: center;">
-                  <i class="icon-map"></i>合歡山北峰步道</span>
-                  <span class="findcamper-icon">
-                   <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
                   </div>
-               
+
                 </div>
                 <hr>
                 <div class="findcamper-bottom">
-                <p>已有4人參加 </p>
-                <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                  參加！</button></div>
-                  </div>
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
                 </div>
-
-                 
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                  <img src="images/person_4-min.jpg" alt="Admin" />
-                  <p>yizzz</p>
-                </span>
-
-              <div class="card-body" style="margin-top: 0px;"> 
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                <div class="findcamper">
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-person"></i>4-6 人
-                  </span>
-                </div>
-               
-                <div class="findcamper">
-                  <span class="findcamper-icon" style="display: flex; align-items: center;">
-                  <i class="icon-map"></i>合歡山北峰步道</span>
-                  <span class="findcamper-icon">
-                   <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-               
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                <p>已有4人參加 </p>
-                <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                參加！</button>
-                </div>
-                  </div>
-                </div>
-
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                  <img src="images/person_4-min.jpg" alt="Admin" />
-                  <p>yizzz</p>
-                </span>
-
-              <div class="card-body" style="margin-top: 0px;"> 
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                <div class="findcamper">
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                  <span class="findcamper-icon">
-                    <i class="fa-solid fa-person"></i>4-6 人
-                  </span>
-                </div>
-               
-                <div class="findcamper">
-                  <span class="findcamper-icon" style="display: flex; align-items: center;">
-                  <i class="icon-map"></i>合歡山北峰步道</span>
-                  <span class="findcamper-icon">
-                   <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-               
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                <p>已有4人參加 </p>
-                <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"data-toggle="modal" data-target="#exampleModal">
-                  參加！</button> </div>
-                  </div>
-                </div>
-                
+              </div>
             </div>
-          </div>
-            <!-- .item -->
-          </div>
-          </div>
-          </div>
-          </div>
 
-          <div class="row align-items-center py-5">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6 text-center">
-              <div class="custom-pagination">
-                <a href="#">1</a>
-                <a href="#" class="active">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
+            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
+              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
+              <span class="card-head">
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
+
+              <div class="card-body" style="margin-top: 0px;">
+                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
+                <div style="display: flex;flex-direction: column">
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
+                    </span>
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
+                      <i class="icon-map"></i>合歡山北峰步道</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="findcamper-bottom">
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
+              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
+              <span class="card-head">
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
+
+              <div class="card-body" style="margin-top: 0px;">
+                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
+                <div style="display: flex;flex-direction: column">
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
+                    </span>
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
+                      <i class="icon-map"></i>合歡山北峰步道</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="findcamper-bottom">
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <!-- .item -->
 
+          <div class="col-xs-12 col-sm-6">
+
+            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
+              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
+              <span class="card-head">
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
+
+              <div class="card-body" style="margin-top: 0px;">
+                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
+                <div style="display: flex;flex-direction: column">
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
+                    </span>
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
+                      <i class="icon-map"></i>合歡山北峰步道</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="findcamper-bottom">
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
+              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
+              <span class="card-head">
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
+
+              <div class="card-body" style="margin-top: 0px;">
+                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
+                <div style="display: flex;flex-direction: column">
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
+                    </span>
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
+                      <i class="icon-map"></i>合歡山北峰步道</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="findcamper-bottom">
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
+              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
+              <span class="card-head">
+                <img src="images/person_4-min.jpg" alt="Admin" />
+                <p>yizzz</p>
+              </span>
+
+              <div class="card-body" style="margin-top: 0px;">
+                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
+                <div style="display: flex;flex-direction: column">
+                  <div class="findcamper">
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-person"></i>4-6 人
+                    </span>
+                  </div>
+
+                  <div class="findcamper">
+                    <span class="findcamper-icon" style="display: flex; align-items: center;">
+                      <i class="icon-map"></i>合歡山北峰步道</span>
+                    <span class="findcamper-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="findcamper-bottom">
+                  <p>已有4人參加 </p>
+                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+                    data-toggle="modal" data-target="#exampleModal">
+                    參加！</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- .item -->
       </div>
     </div>
+  </div>
+  </div>
+
+  <div class="row align-items-center py-5">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 text-center">
+      <div class="custom-pagination">
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
+  </div>
   </div>
   </article>
 
@@ -492,73 +502,81 @@
         <!-- /.col-lg-4 -->
       </div>
       <!-- /.row -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" >
-        <div class="modal-dialog" role="document" >
-        <div class="modalContent" >
-          <div class="box-mod">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-            </button>
-            <h4 id="exampleModalLabel">參加</h4>
-            
-          </div>
-          <p style="color: #a0a0a0 ">參加活動蒐集勳章！<p>
-          
-          <div class="modal-list">
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="false">
+        <div class="modal-dialog" role="document">
+          <div class="modalContent">
+            <div class="box-mod">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+              <h4 id="exampleModalLabel">參加</h4>
+
+            </div>
+            <p style="color: #a0a0a0 ">參加活動蒐集勳章！
+            <p>
+
+            <div class="modal-list">
               <input type="text" placeholder="電話">
-              <input type="email" placeholder="信箱" >
+              <input type="email" placeholder="信箱">
               <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
-              
+
               <h6 style="color: black;">可提供裝備</h6>
               <div class="supply">
                 <div class="row">
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>睡袋</p>
+                    <input type="checkbox">
+                    <p>睡袋</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>手電筒</p>
+                    <input type="checkbox">
+                    <p>手電筒</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>瓦斯爐</p>
+                    <input type="checkbox">
+                    <p>瓦斯爐</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
@@ -568,151 +586,163 @@
                 </div>
                 <div class="row">
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
+
                   <div class="w-100"></div>
                   <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
+                    <input type="checkbox">
+                    <p>帳篷</p>
                     <select>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                     </select>
                   </div>
-    
-                  <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <input type="checkbox"><p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-                </div>
-            </div>
-            <textarea rows="2" placeholder="其他" type="text"></textarea></div>
-            <div style=" display: flex;
-            justify-content: flex-end;">
-            <button class="btn-secondary">提交</button>
-          </div>
-      </div>
-        </div>
-    </div>
 
+                  <div class="col-md-4">
+                    <input type="checkbox">
+                    <p>帳篷</p>
+                    <select>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
 
-    <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" >
-      <div class="modal-dialog" role="document" >
-      <div class="modalContent" >
-        <div class="box-mod">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-          <h4 id="exampleModalLabel">創建露營活動</h4>
-          
-        </div>
-        <p style="color: #a0a0a0 ">尋找其他小鹿一起冒險！<p>
-        
-        <div class="modal-list">
-          <input type="text"  placeholder="活動名稱">
-          <input type="text"  placeholder="活動地點">
-           <div class="supply">
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="date" style="width: 200px;" placeholder="開始日期">
-                </div>
-                <div class="col-md-6">
-                  <input type="date" style="width: 200px;" placeholder="結束日期" >
-                </div>
-                <div class="col-md-6">
-                  <input type="text" style="width: 200px;" placeholder="最少人數" >
-                </div>
-                <div class="col-md-6">
-                  <input type="text" style="width: 200px;" placeholder="最多人數" >
-                </div>
-                <div class="col-md-6">
-                  <input type="price" style="width: 200px;" placeholder="最低費用" >
-                </div>
-                <div class="col-md-6">
-                  <input type="price" style="width: 200px;" placeholder="最高費用" >
+                  <div class="col-md-4">
+                    <input type="checkbox">
+                    <p>帳篷</p>
+                    <select>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-          </div>
-          <textarea rows="3" placeholder="備註" type="text"></textarea></div>
-          <div style=" display: flex;
-          justify-content: flex-end;">
-          <button class="btn-secondary">提交</button>
-        </div>
-    </div>
-      </div>
-  </div>
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <span style="display: flex;">
-            <h6>徽章進度</h6>
-            <span-i style="margin-left: 20px;">
-            <i class="fa-solid fa-fire" style="color:#B02626"></i>
-            <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
-            <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
-            <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
-            </span-i>
-            </span>
-            <div style="display: flex; justify-content: space-between;">
-              <span style="display: flex;">
-              <p>已參加活動</p>
-              <p>2</p>
-              <p>次</p>
-              </span>
-              <span style="display: flex;">
-              <p >差</p>
-              <p>1</p>
-              <p>次升級</p>
-            </span></div>
-            
-              
-          </span>
-          <div class="progress" style="height:0.7rem; border-radius:35px;">
-          <div class="progress-bar" role="progressbar" style="width: 66%;
-                      background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              <textarea rows="2" placeholder="其他" type="text"></textarea>
             </div>
+            <div style=" display: flex;
+            justify-content: flex-end;">
+              <button class="btn-secondary">提交</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+
+
+      <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="false">
+        <div class="modal-dialog" role="document">
+          <div class="modalContent">
+            <div class="box-mod">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+              <h4 id="exampleModalLabel">創建露營活動</h4>
+
+            </div>
+            <p style="color: #a0a0a0 ">尋找其他小鹿一起冒險！
+            <p>
+
+            <div class="modal-list">
+              <input type="text" placeholder="活動名稱">
+              <input type="text" placeholder="活動地點">
+              <div class="supply">
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="date" style="width: 200px;" placeholder="開始日期">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" style="width: 200px;" placeholder="結束日期">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" style="width: 200px;" placeholder="最少人數">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" style="width: 200px;" placeholder="最多人數">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="price" style="width: 200px;" placeholder="最低費用">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="price" style="width: 200px;" placeholder="最高費用">
+                  </div>
+                </div>
+              </div>
+              <textarea rows="3" placeholder="備註" type="text"></textarea>
+            </div>
+            <div style=" display: flex;
+          justify-content: flex-end;">
+              <button class="btn-secondary">提交</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <span style="display: flex;">
+                <h6>徽章進度</h6>
+                <span-i style="margin-left: 20px;">
+                  <i class="fa-solid fa-fire" style="color:#B02626"></i>
+                  <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
+                  <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
+                  <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
+                </span-i>
+              </span>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="display: flex;">
+                  <p>已參加活動</p>
+                  <p>2</p>
+                  <p>次</p>
+                </span>
+                <span style="display: flex;">
+                  <p>差</p>
+                  <p>1</p>
+                  <p>次升級</p>
+                </span>
+              </div>
+
+
+              </span>
+              <div class="progress" style="height:0.7rem; border-radius:35px;">
+                <div class="progress-bar" role="progressbar" style="width: 66%;
+                      background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
       <div class="row mt-5">
@@ -789,7 +819,7 @@
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
- 
+
 
 
 </body>
