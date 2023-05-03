@@ -8617,7 +8617,7 @@ textarea.form-control {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 250px;
+  height: 150px;
   position: relative;
   display: block; }
 
@@ -8657,6 +8657,25 @@ textarea.form-control {
     color: #b3b3b3;
     font-size: 15px; }
     .blog-entry .meta > div a:hover {
+      color: #cccccc; }
+
+  .blog-entry .text .heading2 {
+    font-size: 18px;
+    margin-bottom: 16px; }
+    .blog-entry .text .heading2 a {
+      color: #000000; }
+      .blog-entry .text .heading2 a:hover, .blog-entry .text .heading2 a:focus, .blog-entry .text .heading2 a:active {
+        color: #8d703b; }
+
+.blog-entry .meta2 > div {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 13px; }
+  .blog-entry .meta2 > div a {
+    color: #b3b3b3;
+    font-size: 13px; }
+    .blog-entry .meta2 > div a:hover {
       color: #cccccc; }
 
 .block-23 ul {
@@ -9813,4 +9832,22 @@ article .detail {
 }
 .btn-icon i{
 font-size: 18px;
+}
+.article-list figure {
+  width: 300px;
+  height: 195px;
+  overflow: hidden;
+  background-color: #000;
+  float: left;
+  display: inline-block;
+  margin-bottom: 0;
+}
+.article-list figure img {
+  width: 100%;
+}
+.all-article-top4{
+  display: flex; 
+  flex-wrap: wrap;
+  flex-direction: row; 
+  justify-content: center;
 }
