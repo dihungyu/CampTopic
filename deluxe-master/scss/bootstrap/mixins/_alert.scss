@@ -6,6 +6,9 @@
 
   .alert-link {
     color: shade-color($color, 20%);
+}
+
+  hr {
+    border-top-color: darken($border, 5%);
   }
 }
-// scss-docs-end alert-variant-mixin
