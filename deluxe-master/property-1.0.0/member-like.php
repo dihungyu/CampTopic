@@ -58,28 +58,6 @@ function format_like_count($count)
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
 
 
-  <style>
-    .article-list {
-      flex-wrap: wrap;
-    }
-
-    .inner {
-      width: 100%;
-      padding-left: 15px;
-      padding-right: 15px;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      flex: 0 0 calc(33.3333% - 10px);
-      margin: 0 10px 10px 0;
-    }
-  </style>
-
-
-
-
   <title>
     Start Camping &mdash; 一起展開露營冒險！
   </title>
@@ -99,6 +77,7 @@ function format_like_count($count)
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
+  <link rel="stylesheet" href="deluxe-master/property-1.0.0/css/style.css" />
 
 </head>
 
@@ -588,8 +567,8 @@ function format_like_count($count)
                   }
                   // 每兩個card會被一個article標籤包裹
                   if ($equip_card_counter % 2 === 0) {
-                    echo '<article class="col-md-8 article-list" style="display: flex;">
-              <div class="inner">';
+                    echo '<article class="col-md-8 article-list"">
+              <div class="innereq">';
                   }
 
                   // 輸出card
