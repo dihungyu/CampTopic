@@ -3,6 +3,7 @@ session_start();
 $accountId = $_COOKIE["accountId"];
 
 require_once("../../php/conn.php");
+require_once("../../php/uuid_generator.php");
 
 
 
@@ -23,10 +24,12 @@ if (isset($_POST["collectCampDel"])) {
   $campsiteId = $_POST["collectCampDel"];
   $accountId = $_COOKIE["accountId"];
   $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `campsiteId` = '$campsiteId'";
+  $sql2 = "UPDATE `campsites` SET `campsiteCollectCount` = `campsiteCollectCount` - 1 WHERE `campsiteId` = '$campsiteId'";
   $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
   if ($result) {
     $_SESSION["system_message"] = "已取消收藏!";
-    header("Location: member-like.php");
+    header("Location: member-like.php#land");
     exit; // 確保重新導向後停止執行後續代碼
   }
 }
@@ -37,10 +40,78 @@ if (isset($_POST["collectEquipDel"])) {
   $equipmentId = $_POST["collectEquipDel"];
   $accountId = $_COOKIE["accountId"];
   $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
   if ($result) {
     $_SESSION["system_message"] = "已取消收藏!";
-    header("Location: member-like.php");
+    header("Location: member-like.php#equip");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚營區
+if (isset($_POST["likeCampAdd"])) {
+
+  $campsiteId = $_POST["likeCampAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `campsiteId`) VALUES ('$likeId', '$accountId', '$campsiteId')";
+  $sql2 = "UPDATE `campsites` SET `campsiteLikeCount` = `campsiteLikeCount` + 1 WHERE `campsiteId` = '$campsiteId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: member-like.php#land");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚營區
+if (isset($_POST["likeCampDel"])) {
+
+  $campsiteId = $_POST["likeCampDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `campsiteId` = '$campsiteId'";
+  $sql2 = "UPDATE `campsites` SET `campsiteLikeCount` = `campsiteLikeCount` - 1 WHERE `campsiteId` = '$campsiteId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
+    header("Location: member-like.php#land");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚設備
+if (isset($_POST["likeEquipAdd"])) {
+
+  $equipmentId = $_POST["likeEquipAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `equipmentId`) VALUES ('$likeId', '$accountId', '$equipmentId')";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` + 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: member-like.php#equip");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚設備
+if (isset($_POST["likeEquipDel"])) {
+
+  $equipmentId = $_POST["likeEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` - 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
+    header("Location: member-like.php#equip");
     exit; // 確保重新導向後停止執行後續代碼
   }
 }
@@ -224,6 +295,16 @@ if (isset($_POST["collectEquipDel"])) {
               $sql = "SELECT campsiteId FROM collections WHERE accountId='$accountId'";
               $result = $conn->query($sql);
 
+              // 取出已被按讚的營地
+              $camp_like_sql = "SELECT `campsiteId` FROM `likes` WHERE `accountId` = '$accountId'";
+              $camp_like_result = mysqli_query($conn, $camp_like_sql);
+
+              // 將查詢結果轉換為包含已按讚營地ID的陣列
+              $likedCamps = array();
+              while ($row = mysqli_fetch_assoc($camp_like_result)) {
+                $likedCamps[] = $row['campsiteId'];
+              }
+
               // 檢查是否有結果，如果有則進行營地查詢
               if ($result && $result->num_rows > 0) {
                 // 建立一個空陣列，用於存儲收藏的營地id
@@ -261,13 +342,15 @@ if (isset($_POST["collectEquipDel"])) {
                   $cardCounter = 0;
                   while ($campsiteData = $campsiteResult->fetch_assoc()) {
                     if ($cardCounter % 3 == 0) {
-                      echo "<article class='col-md-12 article-list' style='display: flex;'>
-                      <div class='inner' style='display: flex;'>";
+                      echo "<div class='row'>";
                     }
 
                     $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteData[campsiteId]'";
                     $files_result = mysqli_query($conn, $files_query);
                     $image_src = 'images/Rectangle 137.png'; // Default image
+
+                    // 檢查當前營區是否已按讚
+                    $isCampLiked = in_array($campsiteData["campsiteId"], $likedCamps);
 
                     //格式化按讚數
                     $campsitelikeCount = format_like_count($campsiteData["campsiteLikeCount"]);
@@ -277,28 +360,29 @@ if (isset($_POST["collectEquipDel"])) {
                       $image_src = $file_path;
                     }
                     // Card content
-                    echo "<div class='card'>
-                    <img src='" . $image_src . "' class='card-img-top' alt='...'>
-                    <div class='card-body'>
-                      <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
-                      <div class='row'>
+                    echo "<div class='col-md-4'>
+            <div class='card'>
+                <img src='" . $image_src . "' class='card-img-top' alt='...'>
+                <div class='card-body'>
+                    <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
+                    <div class='row'>
                         <div class='col-8'>
-                          <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
+                            <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
                         </div>
                         <div class='col-4 text-end'>
-                          <form action='member-like.php' method='post' class='d-inline'>
-                            <input type='hidden' name='collectCampDel' value='" . $campsiteData["campsiteId"] . "'>
-                            <button type='submit' class='btn-icon'><i class='fas fa-bookmark'></i></button>
-                          </form>
+                            <form action='member-like.php' method='post' class='d-inline'>
+                                <input type='hidden' name='collectCampDel' value='" . $campsiteData["campsiteId"] . "'>
+                                <button type='submit' class='btn-icon'><i class='fas fa-bookmark'></i></button>
+                            </form>
                         </div>
-                      </div>
-                      <p>" . $campsiteData["campsiteAddress"] . "</p>";
+                    </div>
+                    <p>" . $campsiteData["campsiteAddress"] . "</p>";
                     echo "<div style='display: flex; justify-content: space-between; align-items: center;'>";
                     echo "<div>";
                     $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
-                    FROM campsites_labels
-                    JOIN labels ON campsites_labels.labelId = labels.labelId
-                    WHERE campsites_labels.campsiteId = '$campsiteData[campsiteId]'";
+                FROM campsites_labels
+                JOIN labels ON campsites_labels.labelId = labels.labelId
+                WHERE campsites_labels.campsiteId = '$campsiteData[campsiteId]'";
                     $result_labels = mysqli_query($conn, $sql_query_labels);
 
                     $printed_tags = 0;
@@ -312,26 +396,35 @@ if (isset($_POST["collectEquipDel"])) {
                     }
                     echo "</div>";
 
-                    echo "<div style='display: flex; align-items: center;'>
-                    <i class='fa-regular fa-heart'></i>
+                    echo
+                    "<div style='display: flex; align-items: center;'>
+                    <form action='member-like.php' method='post'>
+                    <input type='hidden' name='" . ($isCampLiked ? "likeCampDel" : "likeCampAdd") . "' value='" . $campsiteData["campsiteId"] . "'>
+                    <button type='submit' class='btn-icon'>";
+                    echo "<i class='" . ($isCampLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+
+
+                    echo "</button>
+                    </form>
                     <p style='margin-left: 5px;'>" . $campsitelikeCount . "</p>
                     </div>";
                     echo "</div>";
+                    echo "</div>
+                          </div>
+                          </div>"; // Close the card div
 
 
 
                     $cardCounter++;
 
                     if ($cardCounter % 3 == 0) {
-                      echo "</div>
-                  </article>";
+                      echo "</div>"; // Close the row div
                     }
                   }
 
-                  // Close the last <article> if needed
+                  // Close the last row if needed
                   if ($cardCounter % 3 != 0) {
-                    echo "</div>
-              </article>";
+                    echo "</div>"; // Close the row div
                   }
                 } else {
                   echo "目前還沒有收藏的營地喔！";
@@ -568,6 +661,16 @@ if (isset($_POST["collectEquipDel"])) {
             $sql = "SELECT equipmentId FROM collections WHERE accountId='$accountId'";
             $result = $conn->query($sql);
 
+            // 取出已被按讚的設備
+            $equip_like_sql = "SELECT `equipmentId` FROM `likes` WHERE `accountId` = '$accountId'";
+            $equip_like_result = mysqli_query($conn, $equip_like_sql);
+
+            // 將查詢結果轉換為包含已按讚設備ID的陣列
+            $likedEquips = array();
+            while ($row = mysqli_fetch_assoc($equip_like_result)) {
+              $likedEquips[] = $row['equipmentId'];
+            }
+
             // 檢查是否有結果，如果有則進行設備查詢
             if ($result && $result->num_rows > 0) {
               // 建立一個空陣列，用於存儲收藏的設備id
@@ -607,14 +710,17 @@ if (isset($_POST["collectEquipDel"])) {
                 echo
                 '<div class="container">';
                 echo '<div class="row">';
-                while ($row = $equipmentResult->fetch_assoc()) {
+                while ($equipmentData = $equipmentResult->fetch_assoc()) {
 
-                  $files_query = "SELECT * FROM files WHERE equipmentId = '$row[equipmentId]'";
+                  $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
                   $files_result = mysqli_query($conn, $files_query);
                   $image_src = 'images/M85318677_big.jpeg'; // Default image
 
                   //格式化按讚數
-                  $equipmentlikeCount = format_like_count($row["equipmentLikeCount"]);
+                  $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
+
+                  // 檢查當前設備是否已按讚
+                  $isEquipLiked = in_array($equipmentData["equipmentId"], $likedEquips);
 
                   if ($file_result = mysqli_fetch_assoc($files_result)) {
                     $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
@@ -631,34 +737,34 @@ if (isset($_POST["collectEquipDel"])) {
                   echo '<img src="' . $image_src . '" class="card-img-top" alt="...">';
                   echo '<div class="card-body">';
                   echo '<div class="detail"style="margin-bottom: 0px;">';
-                  if ($row["equipmentType"] === "租") {
+                  if ($equipmentData["equipmentType"] === "租") {
                     echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
                     echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
                     echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
                     echo '</span>';
-                  } else if ($row["equipmentType"] === "徵") {
+                  } else if ($equipmentData["equipmentType"] === "徵") {
                     echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
                     echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
                     echo '</span>';
-                  } else if ($row["equipmentType"] === "賣") {
+                  } else if ($equipmentData["equipmentType"] === "賣") {
                     echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
                     echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
 
-                  echo '<h5><a href="#">' . $row['equipmentName'] . '</a></h5>';
-                  echo '<h4>$' . number_format($row["equipmentPrice"]) . '</h4>';
+                  echo '<h5><a href="#">' . $equipmentData['equipmentName'] . '</a></h5>';
+                  echo '<h4>$' . number_format($equipmentData["equipmentPrice"]) . '</h4>';
                   echo '</div>';
                   echo '<div class="row">';
                   echo '<div class="col-md-9">';
-                  echo '<p class="card-text">' . $row['equipmentDescription'] . '</p>';
+                  echo '<p class="card-text">' . $equipmentData['equipmentDescription'] . '</p>';
                   echo '</div>'; // col-md-9
                   echo '<div class="col-md-3 text-end">';
                   echo '<div class="favorite-btn">';
                   echo '<form action="member-like.php" method="post" class="d-inline">';
-                  echo '<input type="hidden" name="collectEquipDel" value="' . $row["equipmentId"] . '">';
+                  echo '<input type="hidden" name="collectEquipDel" value="' . $equipmentData["equipmentId"] . '">';
                   echo '<button type="submit" class="btn-icon"><i class="fas fa-bookmark"></i></button>';
                   echo '</form>';
                   echo '</div>';
@@ -671,7 +777,7 @@ if (isset($_POST["collectEquipDel"])) {
 
                   // 以下程式碼用於查詢設備相關的標籤
                   // 請根據您的資料庫結構和命名進行調整
-                  $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$row[equipmentId]'";
+                  $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$equipmentData[equipmentId]'";
 
                   $equipment_label_result = mysqli_query($conn, $equipment_label_query);
 
@@ -695,10 +801,16 @@ if (isset($_POST["collectEquipDel"])) {
                   echo "</span>";
 
                   // 插入愛心和按讚數代碼
-                  echo "<div style='display: flex; align-items: center;'>
-      <i class='fa-regular fa-heart'></i>
-      <p style='margin-left: 5px;'>" . $equipmentlikeCount . "</p>
-      </div>";
+                  echo
+                  "<div style='display: flex; align-items: center;'>
+                        <form action='member-like.php' method='post'>
+                        <input type='hidden' name='" . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
+                        <button type='submit' class='btn-icon'>";
+                  echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+                  echo "</button>
+                        </form>
+                        <p style='margin-left: 5px;'>" . $equipmentlikeCount . "</p>
+                        </div>";
 
                   echo "</footer>";
 

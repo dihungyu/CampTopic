@@ -58,7 +58,9 @@ if (isset($_POST["collectCampDel"])) {
   $campsiteId = $_POST["collectCampDel"];
   $accountId = $_COOKIE["accountId"];
   $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `campsiteId` = '$campsiteId'";
+  $sql2 = "UPDATE `campsites` SET `campsiteCollectCount` = `campsiteCollectCount` - 1 WHERE `campsiteId` = '$campsiteId'";
   $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
   if ($result) {
     $_SESSION["system_message"] = "已取消收藏!";
     header("Location: index.php");
@@ -89,9 +91,77 @@ if (isset($_POST["collectEquipDel"])) {
   $equipmentId = $_POST["collectEquipDel"];
   $accountId = $_COOKIE["accountId"];
   $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
   if ($result) {
     $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚營區
+if (isset($_POST["likeCampAdd"])) {
+
+  $campsiteId = $_POST["likeCampAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `campsiteId`) VALUES ('$likeId', '$accountId', '$campsiteId')";
+  $sql2 = "UPDATE `campsites` SET `campsiteLikeCount` = `campsiteLikeCount` + 1 WHERE `campsiteId` = '$campsiteId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚營區
+if (isset($_POST["likeCampDel"])) {
+
+  $campsiteId = $_POST["likeCampDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `campsiteId` = '$campsiteId'";
+  $sql2 = "UPDATE `campsites` SET `campsiteLikeCount` = `campsiteLikeCount` - 1 WHERE `campsiteId` = '$campsiteId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚設備
+if (isset($_POST["likeEquipAdd"])) {
+
+  $equipmentId = $_POST["likeEquipAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `equipmentId`) VALUES ('$likeId', '$accountId', '$equipmentId')";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` + 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚設備
+if (isset($_POST["likeEquipDel"])) {
+
+  $equipmentId = $_POST["likeEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` - 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
     header("Location: index.php");
     exit; // 確保重新導向後停止執行後續代碼
   }
@@ -180,7 +250,7 @@ if (isset($_POST["collectEquipDel"])) {
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="../../property-1.0.0/camp-information.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.html" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
@@ -324,11 +394,24 @@ if (isset($_POST["collectEquipDel"])) {
                 $collectedCamps[] = $row['campsiteId'];
               }
 
+              // 取出已被按讚的營地
+              $camp_like_sql = "SELECT `campsiteId` FROM `likes` WHERE `accountId` = '$accountId'";
+              $camp_like_result = mysqli_query($conn, $camp_like_sql);
+
+              // 將查詢結果轉換為包含已按讚營地ID的陣列
+              $likedCamps = array();
+              while ($row = mysqli_fetch_assoc($camp_like_result)) {
+                $likedCamps[] = $row['campsiteId'];
+              }
+
               if ($campsiteResult && $campsiteResult->num_rows > 0) {
                 while ($campsiteData = mysqli_fetch_assoc($campsiteResult)) {
 
                   // 檢查當前營區是否已收藏
                   $isCampCollected = in_array($campsiteData["campsiteId"], $collectedCamps);
+
+                  // 檢查當前營區是否已按讚
+                  $isCampLiked = in_array($campsiteData["campsiteId"], $likedCamps);
 
 
 
@@ -386,9 +469,17 @@ if (isset($_POST["collectEquipDel"])) {
                     $printed_tags++;
                   }
 
-                  echo "</div>
+                  echo
+                  "</div>
                         <span style='display: flex; align-items: center;'>
-                          <i class='fa-regular fa-heart'></i>
+                        <form action='index.php' method='post'>
+                    <input type='hidden' name='" . ($isCampLiked ? "likeCampDel" : "likeCampAdd") . "' value='" . $campsiteData["campsiteId"] . "'>
+                    <button type='submit' class='btn-icon'>";
+                  echo "<i class='" . ($isCampLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+
+
+                  echo "</button>
+                    </form>
                           <p style='margin-top:0px'>" . $campsitelikeCount . "</p>
                         </span>
                       </div>
@@ -487,11 +578,25 @@ if (isset($_POST["collectEquipDel"])) {
                 $collectedEquips[] = $row['equipmentId'];
               }
 
+              // 取出已被按讚的設備
+              $equip_like_sql = "SELECT `equipmentId` FROM `likes` WHERE `accountId` = '$accountId'";
+              $equip_like_result = mysqli_query($conn, $equip_like_sql);
+
+              // 將查詢結果轉換為包含已按讚設備ID的陣列
+              $likedEquips = array();
+              while ($row = mysqli_fetch_assoc($equip_like_result)) {
+                $likedEquips[] = $row['equipmentId'];
+              }
+
+
               if ($equipmentResult && $equipmentResult->num_rows > 0) {
                 while ($equipmentData = mysqli_fetch_assoc($equipmentResult)) {
 
                   // 檢查當前設備是否已收藏
                   $isEquipCollected = in_array($equipmentData["equipmentId"], $collectedEquips);
+
+                  // 檢查當前設備是否已按讚
+                  $isEquipLiked = in_array($equipmentData["equipmentId"], $likedEquips);
 
 
 
@@ -567,7 +672,12 @@ if (isset($_POST["collectEquipDel"])) {
                   }
                   echo "</div>
                 <span style='display: flex; align-items: center;'>
-                  <i class='fa-regular fa-heart'></i>
+                <form action='index.php' method='post'>
+                  <input type='hidden' name='" . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
+                  <button type='submit' class='btn-icon'>";
+                  echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+                  echo "</button>
+                </form>
                   <p style='margin-top:0px'>" . $equipmentlikeCount . "</p>
                 </span>
               </div>
@@ -884,7 +994,7 @@ if (isset($_POST["collectEquipDel"])) {
               </span>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn-more" data-dismiss="modal" >查看更多</button>
+              <button type="button" class="btn-more" data-dismiss="modal">查看更多</button>
             </div>
           </div>
         </div>
