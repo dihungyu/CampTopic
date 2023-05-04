@@ -1,9 +1,6 @@
 <?php
 session_start();
-// $accountId = $_SESSION["accountId"];
-// $accountName = $_SESSION["accoutName"];
-// $accountEmail = $_SESSION["accoutEmail"];
-$accountId = "c995dbc4be4811eda1d4e22a0f5e8454";
+$accountId = $_COOKIE["accountId"];
 
 require_once("../../php/conn.php");
 
@@ -17,6 +14,34 @@ function format_like_count($count)
     return round($count / 1000, 1) . 'k';
   } else {
     return round($count / 1000000, 1) . 'm';
+  }
+}
+
+//移除收藏營地
+if (isset($_POST["collectCampDel"])) {
+
+  $campsiteId = $_POST["collectCampDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `campsiteId` = '$campsiteId'";
+  $result = mysqli_query($conn, $sql);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: member-like.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+//移除收藏設備
+if (isset($_POST["collectEquipDel"])) {
+
+  $equipmentId = $_POST["collectEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: member-like.php");
+    exit; // 確保重新導向後停止執行後續代碼
   }
 }
 
@@ -82,6 +107,15 @@ function format_like_count($count)
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
@@ -92,7 +126,7 @@ function format_like_count($count)
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.html" class="nav-link">鹿的裝備</a></li>
@@ -235,42 +269,56 @@ function format_like_count($count)
                     $files_result = mysqli_query($conn, $files_query);
                     $image_src = 'images/Rectangle 137.png'; // Default image
 
+                    //格式化按讚數
+                    $campsitelikeCount = format_like_count($campsiteData["campsiteLikeCount"]);
+
                     if ($file_result = mysqli_fetch_assoc($files_result)) {
                       $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                       $image_src = $file_path;
                     }
                     // Card content
                     echo "<div class='card'>
-                  <img src='" . $image_src . "' class='card-img-top' alt='...'>
-                  <div class='card-body'>
-                    <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
-                    <div class='card-detail'>
-                      <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
-                    </div>
-                    <p>" . $campsiteData["campsiteAddress"] . "</p>
-                    <footer>";
-                    echo "<span>";
+                    <img src='" . $image_src . "' class='card-img-top' alt='...'>
+                    <div class='card-body'>
+                      <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
+                      <div class='row'>
+                        <div class='col-8'>
+                          <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
+                        </div>
+                        <div class='col-4 text-end'>
+                          <form action='member-like.php' method='post' class='d-inline'>
+                            <input type='hidden' name='collectCampDel' value='" . $campsiteData["campsiteId"] . "'>
+                            <button type='submit' class='btn-icon'><i class='fas fa-bookmark'></i></button>
+                          </form>
+                        </div>
+                      </div>
+                      <p>" . $campsiteData["campsiteAddress"] . "</p>";
+                    echo "<div style='display: flex; justify-content: space-between; align-items: center;'>";
+                    echo "<div>";
                     $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
-                     FROM campsites_labels
-                     JOIN labels ON campsites_labels.labelId = labels.labelId
-                     WHERE campsites_labels.campsiteId = '$campsiteData[campsiteId]'";
+                    FROM campsites_labels
+                    JOIN labels ON campsites_labels.labelId = labels.labelId
+                    WHERE campsites_labels.campsiteId = '$campsiteData[campsiteId]'";
                     $result_labels = mysqli_query($conn, $sql_query_labels);
 
                     $printed_tags = 0;
                     while ($tags_row = mysqli_fetch_assoc($result_labels)) {
-                      if ($printed_tags >= 4) {
+                      if ($printed_tags >= 3) {
                         break;
                       }
 
-                      echo "<button class='tag-fav' disabled>" . $tags_row['labelName'] . "
-          </button>";
-
+                      echo "<button class='tag-fav' disabled>" . $tags_row['labelName'] . "</button>";
                       $printed_tags++;
                     }
-                    echo "</span>";
-                    echo "</footer>
-                  </div>
-                </div>";
+                    echo "</div>";
+
+                    echo "<div style='display: flex; align-items: center;'>
+                    <i class='fa-regular fa-heart'></i>
+                    <p style='margin-left: 5px;'>" . $campsitelikeCount . "</p>
+                    </div>";
+                    echo "</div>";
+
+
 
                     $cardCounter++;
 
@@ -285,6 +333,8 @@ function format_like_count($count)
                     echo "</div>
               </article>";
                   }
+                } else {
+                  echo "目前還沒有收藏的營地喔！";
                 }
               }
               ?>
@@ -299,7 +349,7 @@ function format_like_count($count)
                   </div>
                 </div>
               </div>
-ㄨ
+
             </div>
           </div>
         </div>
@@ -418,7 +468,7 @@ function format_like_count($count)
 
 
                   // Card content
-                  
+
                   echo "
                   <article class='col-md-8 article-list'>
                   <div class='inner'>
@@ -462,6 +512,8 @@ function format_like_count($count)
           </div>";
                   }
                 }
+              } else {
+                echo "目前還沒有收藏文章喔！";
               }
             }
             ?>
@@ -561,6 +613,9 @@ function format_like_count($count)
                   $files_result = mysqli_query($conn, $files_query);
                   $image_src = 'images/M85318677_big.jpeg'; // Default image
 
+                  //格式化按讚數
+                  $equipmentlikeCount = format_like_count($row["equipmentLikeCount"]);
+
                   if ($file_result = mysqli_fetch_assoc($files_result)) {
                     $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                     $image_src = $file_path;
@@ -594,16 +649,29 @@ function format_like_count($count)
                   }
 
                   echo '<h5><a href="#">' . $row['equipmentName'] . '</a></h5>';
-                  echo '<h4>$' . $row['equipmentPrice'] . '</h4>';
+                  echo '<h4>$' . number_format($row["equipmentPrice"]) . '</h4>';
                   echo '</div>';
+                  echo '<div class="row">';
+                  echo '<div class="col-md-9">';
                   echo '<p class="card-text">' . $row['equipmentDescription'] . '</p>';
-                  echo "<footer style='padding-top: 10px;'>";
+                  echo '</div>'; // col-md-9
+                  echo '<div class="col-md-3 text-end">';
+                  echo '<div class="favorite-btn">';
+                  echo '<form action="member-like.php" method="post" class="d-inline">';
+                  echo '<input type="hidden" name="collectEquipDel" value="' . $row["equipmentId"] . '">';
+                  echo '<button type="submit" class="btn-icon"><i class="fas fa-bookmark"></i></button>';
+                  echo '</form>';
+                  echo '</div>';
+                  echo '</div>'; // col-md-3
+                  echo '</div>'; // row
+
+
+                  echo "<footer style='padding-top: 10px; display: flex; justify-content: space-between; align-items: center;'>";
                   echo "<span>";
 
                   // 以下程式碼用於查詢設備相關的標籤
                   // 請根據您的資料庫結構和命名進行調整
                   $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$row[equipmentId]'";
-
 
                   $equipment_label_result = mysqli_query($conn, $equipment_label_query);
 
@@ -612,21 +680,29 @@ function format_like_count($count)
                     echo "Error: " . mysqli_error($conn);
                   }
 
-
                   $printed_equipment_tags = 0;
                   while ($equipment_tags_row = mysqli_fetch_assoc($equipment_label_result)) {
-                    if ($printed_equipment_tags >= 4) {
+                    if ($printed_equipment_tags >= 3) {
                       break;
                     }
 
                     echo "<button class='tag-fav' disabled> " . $equipment_tags_row['labelName'] . " 
-                        </button>";
+      </button>";
 
                     $printed_equipment_tags++;
                   }
 
                   echo "</span>";
+
+                  // 插入愛心和按讚數代碼
+                  echo "<div style='display: flex; align-items: center;'>
+      <i class='fa-regular fa-heart'></i>
+      <p style='margin-left: 5px;'>" . $equipmentlikeCount . "</p>
+      </div>";
+
                   echo "</footer>";
+
+
                   echo '</div>';
                   echo '</div>';
 
@@ -665,10 +741,8 @@ function format_like_count($count)
                 echo '</div>'; // row
                 echo '</div>'; // container
               } else {
-                echo '找不到符合的設備資料。';
+                echo '目前還沒有收藏的設備喔！';
               }
-            } else {
-              echo '找不到收藏的設備。';
             }
             ?>
 
@@ -693,47 +767,47 @@ function format_like_count($count)
 
     <div class="site-footer">
       <div class="container">
-      <div class="row">
-        
-         <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>聯絡資訊</h3>
-            <address>StartCamping 營在起跑點！</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">0911222345</a></li>
-              <li><a href="tel://11234567890">@startcamping</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-              </li>
-            </ul>
+        <div class="row">
+
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>聯絡資訊</h3>
+              <address>StartCamping 營在起跑點！</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">0911222345</a></li>
+                <li><a href="tel://11234567890">@startcamping</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-         <div class="col-lg-5">
-          <div class="widget">
-            <h3>頁面總覽</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">首頁</a></li>
-              <li><a href="#">找小鹿</a></li>
-              <li><a href="#">鹿的分享</a></li>
-              <li><a href="#">鹿的裝備</a></li>
-              <li><a href="#">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">帳號</a></li>
-              <li><a href="#">會員帳號</a></li>
-              <li><a href="#">我的收藏</a></li>
-            </ul>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>頁面總覽</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">首頁</a></li>
+                <li><a href="#">找小鹿</a></li>
+                <li><a href="#">鹿的分享</a></li>
+                <li><a href="#">鹿的裝備</a></li>
+                <li><a href="#">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">帳號</a></li>
+                <li><a href="#">會員帳號</a></li>
+                <li><a href="#">我的收藏</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-2">
+            <!-- /.widget -->
+          </div>
         </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-2">
-          <!-- /.widget -->
-        </div>
-      </div>
         <!-- /.row -->
 
         <div class="row mt-5">
@@ -802,8 +876,9 @@ function format_like_count($count)
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
     <script src="js/e-magz.js"></script>
-    <script src="https://kit.fontawesome.com/d02d7e1ecb.js">
-    <!-- 引入 Bootstrap 的 JavaScript 檔案，放在 </body> 前面 -->
+    <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
+    <!-- 引入 Bootstrap 的 JavaScript 檔案，放在 </body> 前面 
+      -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-KsH8Gw+WJ4ZfTw3YqzWmn9pPpxdG+R14gTVjTdwryW8f/WQHm4mZ4z3qf0Wm9vBISlRlSjFVCyTlkWbBBwF0iA==" crossorigin="anonymous" defer></script>
 
     <script>
@@ -853,6 +928,16 @@ function format_like_count($count)
         // 切換搜尋容器的顯示狀態
         searchContainer.style.display = searchContainer.style.display === 'none' ? 'flex' : 'none';
       });
+    </script>
+    <script>
+      function hideMessage() {
+        document.getElementById("message").style.opacity = "0";
+        setTimeout(function() {
+          document.getElementById("message").style.display = "none";
+        }, 500);
+      }
+
+      setTimeout(hideMessage, 3000);
     </script>
 
 
