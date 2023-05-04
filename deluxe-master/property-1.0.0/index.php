@@ -129,7 +129,6 @@ if (isset($_POST["collectEquipDel"])) {
 
   <link rel="stylesheet" href="css/tiny-slider.css" />
   <link rel="stylesheet" href="css/aos.css" />
-  <link rel="stylesheet" href="css/style.css" />
 
   <title>
     Start Camping &mdash; 一起展開露營冒險！
@@ -150,6 +149,7 @@ if (isset($_POST["collectEquipDel"])) {
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
+  <link rel="stylesheet" href="css/style.css" />
 
 
 
@@ -179,10 +179,10 @@ if (isset($_POST["collectEquipDel"])) {
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="../all-article.html" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.html" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
@@ -272,7 +272,7 @@ if (isset($_POST["collectEquipDel"])) {
               有閒置或多餘的裝備不用好浪費？<br>
               「鹿的裝備」讓你的裝備能被妥善運用！
             </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
+            <p><a href="../equipment.html" class="learn-more">Learn More</a></p>
           </div>
         </div>
         <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
@@ -282,7 +282,7 @@ if (isset($_POST["collectEquipDel"])) {
             <p>
               透過文章分享，輕鬆地將露營心得、照片和建議分享給其他露營愛好者，也能從中發掘更多露營靈感！
             </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
+            <p><a href="../all-article.html" class="learn-more">Learn More</a></p>
           </div>
         </div>
       </div>
@@ -363,7 +363,7 @@ if (isset($_POST["collectEquipDel"])) {
                     </form>
                   </span>
                   <div>
-                    <a href='#' class='img'>
+                    <a href='../camp-single.php' class='img'>
                       <span class='city d-block mb-3 mt-3'>" . $campsiteData["campsiteName"] . "</span></a>
                     <span class='d-block mb-4 text-black-50'>" . $campsiteData["campsiteAddress"] . "</span>";
 
@@ -389,7 +389,7 @@ if (isset($_POST["collectEquipDel"])) {
                   echo "</div>
                         <span style='display: flex; align-items: center;'>
                           <i class='fa-regular fa-heart'></i>
-                          <p>" . $campsitelikeCount . "</p>
+                          <p style='margin-top:0px'>" . $campsitelikeCount . "</p>
                         </span>
                       </div>
                   </div>
@@ -425,7 +425,7 @@ if (isset($_POST["collectEquipDel"])) {
                       </div>
                       <span style="display: flex; align-items: center;">
                         <i class="fa-regular fa-heart"></i>
-                        <p>1,098</p>
+                        <p style='margin-top:0px'>1,098</p>
                       </span>
                     </div>
                   </div>
@@ -459,7 +459,7 @@ if (isset($_POST["collectEquipDel"])) {
         </div>
         <div class="col-lg-6 text-lg-end">
           <p>
-            <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
+            <a href="../equipment.html" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
           </p>
         </div>
       </div>
@@ -568,7 +568,7 @@ if (isset($_POST["collectEquipDel"])) {
                   echo "</div>
                 <span style='display: flex; align-items: center;'>
                   <i class='fa-regular fa-heart'></i>
-                  <p>" . $equipmentlikeCount . "</p>
+                  <p style='margin-top:0px'>" . $equipmentlikeCount . "</p>
                 </span>
               </div>
             </footer>
@@ -612,7 +612,7 @@ if (isset($_POST["collectEquipDel"])) {
                         </div>
                         <span style="display: flex; align-items: center;">
                           <i class="fa-regular fa-heart"></i>
-                          <p>1,098</p>
+                          <p style='margin-top:0px'>1,098</p>
                         </span>
                       </div>
                     </footer>
@@ -696,7 +696,7 @@ if (isset($_POST["collectEquipDel"])) {
               <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
               <div class='text'>";
               echo "<div>";
-              echo "<h3 class='heading'><a href='#'>";
+              echo "<h3 class='heading'><a href='../article.html'>";
               if (strlen($articleData["articleTitle"]) > 25) {
                 echo wordwrap($articleData["articleTitle"], 25, "<br>");
               } else {
@@ -704,9 +704,9 @@ if (isset($_POST["collectEquipDel"])) {
               }
               echo "</a></h3>";
               echo "<div class='meta'>
-                  <div><a href='#'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
-                  <div><a href='#'><span class='icon-person'></span> " . $author_name . "</a></div>
-                  <div><a href='#'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                  <div><a href='../article.html'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                  <div><a href='./article.html'><span class='icon-person'></span> " . $author_name . "</a></div>
+                  <div><a href='./article.html'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                 </div>";
               echo "</div>";
               echo "</div>
@@ -802,7 +802,7 @@ if (isset($_POST["collectEquipDel"])) {
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle" style="color: black;">天景露營區</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i class="fa-solid fa-heart"></i>
+                <i class="fa-solid fa-heart" style="color:#a0a0a0"></i>
               </button>
             </div>
             <div class="modal-body">
@@ -828,7 +828,7 @@ if (isset($_POST["collectEquipDel"])) {
                     <a href="">櫻花</a>
                   </div>
                   <div class="modal-more">
-                    <button class="btn-more">查看更多</button>
+                    <a href="../camp-single.php"><button class="btn-more">查看更多</button></a>
                   </div>
                 </div>
               </div>
@@ -884,7 +884,7 @@ if (isset($_POST["collectEquipDel"])) {
               </span>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn-more" data-dismiss="modal">查看更多</button>
+              <button type="button" class="btn-more" data-dismiss="modal" >查看更多</button>
             </div>
           </div>
         </div>
@@ -914,16 +914,16 @@ if (isset($_POST["collectEquipDel"])) {
               <div class="widget">
                 <h3>頁面總覽</h3>
                 <ul class="list-unstyled float-start links">
-                  <li><a href="#">首頁</a></li>
-                  <li><a href="#">找小鹿</a></li>
-                  <li><a href="#">鹿的分享</a></li>
-                  <li><a href="#">鹿的裝備</a></li>
+                  <li><a href="index.php">首頁</a></li>
+                  <li><a href="camp-information.html">找小鹿</a></li>
+                  <li><a href="../all-article.html">鹿的分享</a></li>
+                  <li><a href="../equipment.html">鹿的裝備</a></li>
                   <li><a href="#">廣告方案</a></li>
                 </ul>
                 <ul class="list-unstyled float-start links">
-                  <li><a href="#">帳號</a></li>
-                  <li><a href="#">會員帳號</a></li>
-                  <li><a href="#">我的收藏</a></li>
+                  <li><a href="member.php">帳號</a></li>
+                  <li><a href="member.php">會員帳號</a></li>
+                  <li><a href="member-like.php">我的收藏</a></li>
                 </ul>
               </div>
               <!-- /.widget -->
