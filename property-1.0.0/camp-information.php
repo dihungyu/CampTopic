@@ -1,6 +1,22 @@
 <?php
 require_once '../php/conn.php';
 
+session_start();
+
+$accountId = '54ec96dae8b611edad24e22a0f5e8453';
+
+$sql_activities = "SELECT * FROM activities LEFT JOIN accounts ON activities.accountId = accounts.accountId LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId WHERE activities.accountId != '$accountId'";
+$result_activities = mysqli_query($conn, $sql_activities);
+
+$activities = array();
+if (mysqli_num_rows($result_activities) > 0) {
+  while ($row_activities = mysqli_fetch_assoc($result_activities)) {
+    $activities[] = $row_activities;
+  }
+}
+
+$sql_allCampsites = "SELECT * FROM campsites";
+$result_allCampsites = mysqli_query($conn, $sql_allCampsites);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +66,163 @@ require_once '../php/conn.php';
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .error-message {
+      color: red;
+      display: none;
+      font-size: 12px;
+      margin-top: -20px;
+    }
+  </style>
+  <script>
+
+    function setDateInputBehavior(dateInputId) {
+      const dateInput = $(dateInputId);
+
+      dateInput.on('focus', function () {
+        dateInput.attr('type', 'date');
+      });
+
+      dateInput.on('blur', function () {
+        if (!dateInput.val()) {
+          dateInput.attr('type', 'text');
+        }
+      });
+
+      dateInput.on('change', function () {
+        if (dateInput.val()) {
+          dateInput.attr('type', 'date');
+        } else {
+          dateInput.attr('type', 'text');
+        }
+      });
+
+      if (!dateInput.val()) {
+        dateInput.attr('type', 'text');
+      }
+    }
+
+
+    $(document).ready(function () {
+      setDateInputBehavior('#start-date-input');
+      setDateInputBehavior('#end-date-input');
+    });
+
+
+    function validateForm() {
+      const phoneNumber = document.forms["attendForm"]["attendeePhoneNumber"].value;
+      const email = document.forms["attendForm"]["attendeeEmail"].value;
+      const phoneNumberContainer = document.getElementById("phoneNumberContainer");
+      const emailContainer = document.getElementById("emailContainer");
+      const phoneNumberError = document.getElementById("phoneNumberError");
+      const emailError = document.getElementById("emailError");
+      let isValid = true;
+
+      if (phoneNumber === "") {
+        phoneNumberError.style.display = "block";
+        phoneNumberContainer.style.marginBottom = "10px";
+        isValid = false;
+      } else {
+        phoneNumberError.style.display = "none";
+        phoneNumberContainer.style.marginBottom = "20px";
+      }
+      if (email === "") {
+        emailError.style.display = "block";
+        emailContainer.style.marginBottom = "10px";
+        isValid = false;
+      } else {
+        emailError.style.display = "none";
+        emailContainer.style.marginBottom = "20px";
+      }
+
+      return isValid;
+    }
+
+    function validateNewActivityForm() {
+      const fields = [
+        { name: "activityTitle", errorId: "activityTitleError", containerId: "activityTitleContainer" },
+        { name: "activityStartDate", errorId: "activityStartDateError", containerId: "activityStartDateContainer" },
+        { name: "activityEndDate", errorId: "activityEndDateError", containerId: "activityEndDateContainer" },
+        { name: "minAttendee", errorId: "minAttendeeError", containerId: "minAttendeeContainer" },
+        { name: "maxAttendee", errorId: "maxAttendeeError", containerId: "maxAttendeeContainer" },
+        { name: "leastAttendeeFee", errorId: "leastAttendeeFeeError", containerId: "leastAttendeeFeeContainer" },
+        { name: "maxAttendeeFee", errorId: "maxAttendeeFeeError", containerId: "maxAttendeeFeeContainer" },
+        { name: "activityDescription", errorId: "activityDescriptionError", containerId: "activityDescriptionContainer" },
+      ];
+
+      let isValid = true;
+
+      fields.forEach(field => {
+        const fieldValue = document.forms["newActivityForm"][field.name].value;
+        const fieldContainer = document.getElementById(field.containerId);
+        const fieldError = document.getElementById(field.errorId);
+
+        if (fieldValue === "") {
+          fieldError.style.display = "block";
+          isValid = false;
+        } else {
+          fieldError.style.display = "none";
+          fieldContainer.style.marginBottom = "20px";
+        }
+      });
+
+      return isValid;
+    }
+
+
+    // Run this when the document is ready
+    $(document).ready(function () {
+      // Add event listener to the submit button
+      $('button.btn-secondary').on('click', function (event) {
+        event.preventDefault();
+        if (validateNewActivityForm()) {
+          // Submit the form
+          $('#newActivityForm').submit();
+        }
+      });
+    });
+
+    // Run this when the document is ready
+    $(document).ready(function () {
+      // Add event listener to the submit button
+      $('button.btn-secondary').on('click', function (event) {
+        event.preventDefault();
+        if (validateNewActivityForm()) {
+          // Submit the form
+          $('#newActivityForm').submit();
+        }
+      });
+    });
+
+
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+
+  </script>
+
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
@@ -145,14 +315,46 @@ require_once '../php/conn.php';
             </button>
           </span>
         </div>
+        <?php
+        $sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
+        $result_account = mysqli_query($conn, $sql_account);
+        $row_account = mysqli_fetch_assoc($result_account);
+        $accountName = $row_account['accountName'];
+        $attendeeActivityCount = $row_account['attendeeActivityCount'];
+        $iconClass = '';
+        $color = '';
+        $text = '';
+        if ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) {
+          $iconClass = 'fa-solid fa-fire';
+          $color = '#B02626';
+          $text = '新手營火';
+        } elseif ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) {
+          $iconClass = 'fa-solid fa-compass"';
+          $color = '#002049';
+          $text = '方向盤';
+        } elseif ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) {
+          $iconClass = 'fa-solid fa-binoculars';
+          $color = '#7d7d7d';
+          $text = '望遠鏡';
+        } elseif ($attendeeActivityCount > 15) {
+          $iconClass = 'fa-solid fa-campground';
+          $color = '#525F58';
+          $text = '帳篷';
+        }
+        ?>
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <button type="button" class="gray-lg" data-toggle="modal" data-target="#exampleModalCenter">
             <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 15%;">
-            <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">yizz</label>
+            <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">
+              <?php echo $accountName ?>
+            </label>
             <div class="verticle-line"></div>
             <span style="display: flex; align-items: center; justify-content: flex-start">
-              <i class="fa-solid fa-fire" style="color: #B02626; font-size:18px; margin-right: 8px;"></i>
-              <h6 style="margin: 0rem;">新手營火</h6>
+              <i class="<?php echo $iconClass ?>"
+                style="color: <?php echo $color ?>; font-size:18px; margin-right: 8px;"></i>
+              <h6 style="margin: 0rem;">
+                <?php echo $text ?>
+              </h6>
             </span>
           </button>
           <button type="button" class="gray-lg" data-toggle="modal" data-target="#create">
@@ -173,226 +375,59 @@ require_once '../php/conn.php';
       <div class="container" style="max-width: 1260px">
         <div class="row">
           <div class="col-xs-12 col-sm-6">
-            <div class="card" style="width: 600px;margin-left: 0px; margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
+            <?php
+            foreach ($activities as $activity) {
+              $activityId = $activity['activityId'];
+              $campsiteName = $activity['campsiteName'];
+              $accountName = $activity['accountName'];
+              $activityTitle = $activity['activityTitle'];
+              $activityStartDate = $activity['activityStartDate'];
+              $activityStartMonthDay = date('m/d', strtotime($activityStartDate));
+              $activityEndDate = $activity['activityEndDate'];
+              $activityEndMonthDay = date('m/d', strtotime($activityEndDate));
+              $minAttendee = $activity['minAttendee'];
+              $maxAttendee = $activity['maxAttendee'];
+              $activityAttendence = $activity['activityAttendence'];
+              $leastAttendeeFee = $activity['leastAttendeeFee'];
+              $maxAttendeeFee = $activity['maxAttendeeFee'];
 
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
+              echo '<div class="card" style="width: 600px;margin-left: 0px; margin-bottom: 40px;">';
+              echo '  <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">';
+              echo '  <span class="card-head">';
+              echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
+              echo '    <p>' . $accountName . '</p>';
+              echo '  </span>';
 
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
+              echo '  <div class="card-body" style="margin-top: 0px;">';
+              echo '    <h5 class="card-title">' . $activityStartMonthDay . '-' . $activityEndMonthDay . ' ' . $activityTitle . '</h5>';
+              echo '    <div style="display: flex;flex-direction: column">';
+              echo '      <div class="findcamper">';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-calendar-days"></i>' . $activityStartMonthDay . '-' . $activityEndMonthDay . '</span>';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-person"></i>' . $minAttendee . '-' . $maxAttendee . ' 人';
+              echo '        </span>';
+              echo '      </div>';
 
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
+              echo '      <div class="findcamper">';
+              echo '        <span class="findcamper-icon" style="display: flex; align-items: center;">';
+              echo '          <i class="icon-map"></i>' . $campsiteName . '</span>';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-sack-dollar"></i>' . $leastAttendeeFee . '-' . $maxAttendeeFee . '元</span>';
+              echo '      </div>';
 
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
-
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
-
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
-
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
-
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- .item -->
-
-          <div class="col-xs-12 col-sm-6">
-
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
-
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
-
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
-
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
-
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="width: 600px;margin-left: 0px;margin-bottom: 40px;">
-              <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">
-              <span class="card-head">
-                <img src="images/person_4-min.jpg" alt="Admin" />
-                <p>yizzz</p>
-              </span>
-
-              <div class="card-body" style="margin-top: 0px;">
-                <h5 class="card-title">2/3-2/5 元宵'星空露營</h5>
-                <div style="display: flex;flex-direction: column">
-                  <div class="findcamper">
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-calendar-days"></i>2晚,2/3-2/5</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-person"></i>4-6 人
-                    </span>
-                  </div>
-
-                  <div class="findcamper">
-                    <span class="findcamper-icon" style="display: flex; align-items: center;">
-                      <i class="icon-map"></i>合歡山北峰步道</span>
-                    <span class="findcamper-icon">
-                      <i class="fa-solid fa-sack-dollar"></i>2000-2500元</span>
-                  </div>
-
-                </div>
-                <hr>
-                <div class="findcamper-bottom">
-                  <p>已有4人參加 </p>
-                  <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-                    data-toggle="modal" data-target="#exampleModal">
-                    參加！</button>
-                </div>
-              </div>
-            </div>
+              echo '    </div>';
+              echo '    <hr>';
+              echo '    <div class="findcamper-bottom">';
+              echo '      <p>已有' . $activityAttendence . '人參加 </p>';
+              echo '      <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"';
+              echo '        data-toggle="modal" data-target="#Modal' . $activityId . '">';
+              echo '        參加！</button>';
+              echo '    </div>';
+              echo '  </div>';
+              echo '</div>';
+            }
+            ?>
 
           </div>
         </div>
@@ -502,210 +537,138 @@ require_once '../php/conn.php';
         <!-- /.col-lg-4 -->
       </div>
       <!-- /.row -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="false">
-        <div class="modal-dialog" role="document">
-          <div class="modalContent">
-            <div class="box-mod">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-              </button>
-              <h4 id="exampleModalLabel">參加</h4>
+      <?php
+      foreach ($activities as $activity) {
+        $activityId = $activity['activityId'];
+        echo '<form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">';
+        echo '<div class="modal fade" id="Modal' . $activityId . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">';
+        echo '<div class="modal-dialog" role="document">';
+        echo '<div class="modalContent">';
+        echo '<div class="box-mod">';
+        echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
+        echo '</button>';
+        echo '<h4 id="exampleModalLabel">參加</h4>';
+        echo '</div>';
+        echo '<p style="color: #a0a0a0">參加活動蒐集勳章！</p>';
+        echo '<div class="modal-list">';
+        echo '<div id="phoneNumberContainer" class="input-container">';
+        echo '<input name="attendeePhoneNumber" type="text" placeholder="電話">';
+        echo '</div>';
+        echo '<div id="phoneNumberError" class="error-message">＊該欄位不得為空值！</div>';
+        echo '<div id="emailContainer" class="input-container">';
+        echo '<input name="attendeeEmail" type="email" placeholder="信箱">';
+        echo '</div>';
+        echo '<div id="emailError" class="error-message">＊該欄位不得為空值！</div>';
+        echo '<textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 /建議"></textarea>';
+        echo '</div>';
+        echo '<div style="display: flex; justify-content: flex-end;">';
+        echo '<input type="hidden" name="activityId" value="' . $activityId . '">';
+        echo '<input type="hidden" name="accountId" value="' . $accountId . '">';
+        echo '<button class="btn-secondary" type="submit">提交</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</form>';
+      }
+      ?>
 
-            </div>
-            <p style="color: #a0a0a0 ">參加活動蒐集勳章！
-            <p>
 
-            <div class="modal-list">
-              <input type="text" placeholder="電話">
-              <input type="email" placeholder="信箱">
-              <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
+      <form action="../php/Activity/createActivity.php" method="post" id="newActivityForm"
+        onsubmit="return validateNewActivityForm();">
+        <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="false">
+          <div class="modal-dialog" role="document">
+            <div class="modalContent">
+              <div class="box-mod">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+                </button>
+                <h4 id="exampleModalLabel">創建露營活動</h4>
 
-              <h6 style="color: black;">可提供裝備</h6>
-              <div class="supply">
-                <div class="row">
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>睡袋</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>手電筒</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>瓦斯爐</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="w-100"></div>
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input type="checkbox">
-                    <p>帳篷</p>
-                    <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-                </div>
               </div>
-              <textarea rows="2" placeholder="其他" type="text"></textarea>
-            </div>
-            <div style=" display: flex;
-            justify-content: flex-end;">
-              <button class="btn-secondary">提交</button>
+              <p style="color: #a0a0a0 ">尋找其他小鹿一起冒險！
+              <p>
+
+              <div class="modal-list">
+                <div style="margin-bottom: 10px">
+                  <div id="activityTitleContainer">
+                    <input type="text" name="activityTitle" placeholder="活動名稱">
+                  </div>
+                  <div id="activityTitleError" class="error-message">＊不得為空值！</div>
+                </div>
+                <div id="campsiteIdContainer">
+                  <select name="campsiteId">
+                    <?php
+                    if ($result_allCampsites->num_rows > 0) {
+                      // 輸出每行資料
+                      while ($row = $result_allCampsites->fetch_assoc()) {
+                        echo "<option value='" . $row["campsiteId"] . "'>" . $row["campsiteName"] . "</option>";
+                      }
+                    } else {
+                      echo "<option value=''>沒有可用的營地名稱</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="supply">
+                  <div class="row">
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="activityStartDateContainer">
+                        <input id="start-date-input" type="text" name="activityStartDate" style="width: 200px;"
+                          placeholder="開始日期">
+                      </div>
+                      <div id="activityStartDateError" class="error-message">＊不得為空值！</div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="activityEndDateContainer">
+                        <input id="end-date-input" type="text" name="activityEndDate" style="width: 200px;"
+                          placeholder="結束日期">
+                      </div>
+                      <div id="activityEndDateError" class="error-message">＊不得為空值！</div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="minAttendeeContainer">
+                        <input name="minAttendee" type="text" style="width: 200px;" placeholder="最少人數">
+                      </div>
+                      <div id="minAttendeeError" class="error-message">＊不得為空值！</div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="maxAttendeeContainer">
+                        <input name="maxAttendee" type="text" style="width: 200px;" placeholder="最多人數">
+                      </div>
+                      <div id="maxAttendeeError" class="error-message">＊不得為空值！</div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="leastAttendeeFeeContainer">
+                        <input name="leastAttendeeFee" type="price" style="width: 200px;" placeholder="最低費用">
+                      </div>
+                      <div id="leastAttendeeFeeError" class="error-message">＊不得為空值！</div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px">
+                      <div id="maxAttendeeFeeContainer">
+                        <input name="maxAttendeeFee" type="price" style="width: 200px;" placeholder="最高費用">
+                      </div>
+                      <div id="maxAttendeeFeeError" class="error-message">＊不得為空值！</div>
+                    </div>
+                  </div>
+                </div>
+                <div id="activityDescriptionContainer" style="margin-top: -20px;">
+                  <textarea name="activityDescription" rows="3" placeholder="備註" type="text"></textarea>
+                </div>
+                <div id="activityDescriptionError" class="error-message" style="display:none;">＊不得為空值！</div>
+              </div>
+              <div style=" display: flex; justify-content: flex-end;">
+                <input type="hidden" name="action" value="insert">
+                <input type="hidden" name="accountId" value="<?= $accountId ?>">
+                <button class="btn-secondary">提交</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
 
-
-      <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="false">
-        <div class="modal-dialog" role="document">
-          <div class="modalContent">
-            <div class="box-mod">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-              </button>
-              <h4 id="exampleModalLabel">創建露營活動</h4>
-
-            </div>
-            <p style="color: #a0a0a0 ">尋找其他小鹿一起冒險！
-            <p>
-
-            <div class="modal-list">
-              <input type="text" placeholder="活動名稱">
-              <input type="text" placeholder="活動地點">
-              <div class="supply">
-                <div class="row">
-                  <div class="col-md-6">
-                    <input type="date" style="width: 200px;" placeholder="開始日期">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="date" style="width: 200px;" placeholder="結束日期">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="text" style="width: 200px;" placeholder="最少人數">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="text" style="width: 200px;" placeholder="最多人數">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="price" style="width: 200px;" placeholder="最低費用">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="price" style="width: 200px;" placeholder="最高費用">
-                  </div>
-                </div>
-              </div>
-              <textarea rows="3" placeholder="備註" type="text"></textarea>
-            </div>
-            <div style=" display: flex;
-          justify-content: flex-end;">
-              <button class="btn-secondary">提交</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -714,30 +677,57 @@ require_once '../php/conn.php';
               <span style="display: flex;">
                 <h6>徽章進度</h6>
                 <span-i style="margin-left: 20px;">
-                  <i class="fa-solid fa-fire" style="color:#B02626"></i>
-                  <i class="fa-solid fa-compass" style="color:rgba(0, 0, 0, 0.16)"></i>
-                  <i class="fa-solid fa-binoculars" style="color:rgba(0, 0, 0, 0.16)"></i>
-                  <i class="fa-solid fa-campground" style="color:rgba(0, 0, 0, 0.16)"></i>
+                  <i class="fa-solid fa-fire"
+                    style="color: <?= ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) ? '#B02626' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-compass"
+                    style="color: <?= ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) ? '#002049' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-binoculars"
+                    style="color: <?= ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) ? '#7d7d7d' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-campground"
+                    style="color: <?= ($attendeeActivityCount > 15) ? '#525F58' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
                 </span-i>
+
               </span>
               <div style="display: flex; justify-content: space-between;">
                 <span style="display: flex;">
                   <p>已參加活動</p>
-                  <p>2</p>
+                  <p>
+                    <?php echo $attendeeActivityCount ?>
+                  </p>
                   <p>次</p>
                 </span>
+                <?php
+                $remainingActivities = 0;
+                $progressPercentage = 0;
+
+                if ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) {
+                  $remainingActivities = 4 - $attendeeActivityCount;
+                  $progressPercentage = ($attendeeActivityCount / 4) * 100;
+                } elseif ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) {
+                  $remainingActivities = 11 - $attendeeActivityCount;
+                  $progressPercentage = (($attendeeActivityCount - 4) / (11 - 4)) * 100;
+                } elseif ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) {
+                  $remainingActivities = 16 - $attendeeActivityCount;
+                  $progressPercentage = (($attendeeActivityCount - 11) / (16 - 11)) * 100;
+                } elseif ($attendeeActivityCount > 15) {
+                  $remainingActivities = 0;
+                  $progressPercentage = 100;
+                }
+                ?>
                 <span style="display: flex;">
-                  <p>差</p>
-                  <p>1</p>
+                  <p>還差</p>
+                  <p>
+                    <?= $remainingActivities ?>
+                  </p>
                   <p>次升級</p>
                 </span>
               </div>
-
-
               </span>
               <div class="progress" style="height:0.7rem; border-radius:35px;">
-                <div class="progress-bar" role="progressbar" style="width: 66%;
-                      background-color:#8D703B;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar"
+                  style="width: <?= $progressPercentage ?>%; background-color:#8D703B;"
+                  aria-valuenow="<?= $progressPercentage ?>" aria-valuemin="0" aria-valuemax="100">
+                </div>
               </div>
             </div>
           </div>

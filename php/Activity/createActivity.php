@@ -1,75 +1,75 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8" />
-    <title>新增活動資料</title>
-</head>
-
-<body>
-    <form action="" method="post" name="formAdd" id="formAdd">
-        請輸入活動名稱：<input type="text" name="activityTitle" id="activityTitle"><br />
-        請輸入活動介紹：<input type="text" name="activityDescription" id="activityDescription"><br />
-        請輸入活動開始日期：<input type="date" name="activityStartDate" id="activityStartDate"><br />
-        請輸入活動結束日期：<input type="date" name="activityEndDate" id="activityEndDate"><br />
-        請輸入最低參加人數：<input type="text" name="minAttendee" id="minAttendee"><br />
-        請輸入最高參加人數：<input type="text" name="maxAttendee" id="maxAttendee"><br />
-        請輸入預估參加費用：<input type="text" name="leastAttendeeFee" id="leastAttendeeFee"><br />
-        請輸入最高預估參加費用：<input type="text" name="maxAttendeeFee" id="maxAttendeeFee"><br />
-        <input type="hidden" name="action" value="insert">
-        <input type="submit" name="button" value="新增資料">
-        <input type="reset" name="button2" value="重新填寫">
-    </form>
-</body>
-
-</html>
-
 <?php
+// 開啟錯誤報告
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_start();
+
+require_once '../conn.php';
+require_once '../uuid_generator.php';
+
 if (isset($_POST["action"]) && ($_POST["action"] == "insert")) {
 
-    if (empty($_POST['activityTitle']) || empty($_POST['activityDescription']) || empty($_POST['activityStartDate']) || empty($_POST['activityEndDate']) || empty($_POST['minAttendee']) || empty($_POST['maxAttendee']) || empty($_POST['leastAttendeeFee']) || empty($_POST['maxAttendeeFee'])) {
-        echo "<script>alert('欄位不得為空值！')</script>";
+    $activityId = uuid_generator();
+    $campsiteId = $_POST["campsiteId"];
+    $accountId = $_POST["accountId"];
+    $activityTitle = $_POST["activityTitle"];
+    $activityDescription = $_POST['activityDescription'];
+    $activityStartDate = $_POST['activityStartDate'];
+    $activityEndDate = $_POST['activityEndDate'];
+    $minAttendee = intval($_POST['minAttendee']);
+    $maxAttendee = intval($_POST['maxAttendee']);
+    $leastAttendeeFee = intval($_POST['leastAttendeeFee']);
+    $maxAttendeeFee = intval($_POST['maxAttendeeFee']);
+
+    // 計算活動持續的天數
+    $duration = (strtotime($activityEndDate) - strtotime($activityStartDate)) / (60 * 60 * 24);
+
+    // 檢查是否已經存在相同日期範圍內的活動
+    $check_duplicate_query = "SELECT * FROM activities WHERE accountId = '$accountId' AND (
+        ('$activityStartDate' BETWEEN activityStartDate AND activityEndDate) OR
+        ('$activityEndDate' BETWEEN activityStartDate AND activityEndDate) OR
+        (activityStartDate BETWEEN '$activityStartDate' AND '$activityEndDate') OR
+        (activityEndDate BETWEEN '$activityStartDate' AND '$activityEndDate')
+    )";
+    $result = mysqli_query($conn, $check_duplicate_query);
+
+    if ($activityStartDate > $activityEndDate) {
+        $_SESSION["system_message"] = "活動開始日期要小於活動結束日期！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } elseif ($minAttendee > $maxAttendee) {
+        $_SESSION["system_message"] = "最低參加人數要小於最高參加人數！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } elseif ($leastAttendeeFee > $maxAttendeeFee) {
+        $_SESSION["system_message"] = "最低參加費用要小於最高參加費用！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } elseif (mysqli_num_rows($result) > 0) {
+        $_SESSION["system_message"] = "您已經在該日期間創建過活動！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } elseif ($duration > 5) {
+        $_SESSION["system_message"] = "活動不得超過五天！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     } else {
-        require_once '../conn.php';
-        require_once '../uuid_generator.php';
+        // 將活動結束日期往前移動三天，設定成報名截止日期
+        $activityDeadLineDate = date('Y-m-d', strtotime($activityStartDate . "-3 days"));
 
-        $activityId = uuid_generator();
-        $activityTitle = $_POST["activityTitle"];
-        $activityDescription = $_POST['activityDescription'];
-        $activityStartDate = $_POST['activityStartDate'];
-        $activityEndDate = $_POST['activityEndDate'];
-        $minAttendee = intval($_POST['minAttendee']);
-        $maxAttendee = intval($_POST['maxAttendee']);
-        $leastAttendeeFee = intval($_POST['leastAttendeeFee']);
-        $maxAttendeeFee = intval($_POST['maxAttendeeFee']);
+        // 獲取當前系統時間
+        $currentTime = date('Y-m-d H:i:s');
 
-        if ($activityStartDate > $activityEndDate) {
-            echo "<script>alert('活動開始日期要在結束日期之前！')</script>";
-        } elseif ($minAttendee > $maxAttendee) {
-            echo "<script>alert('最低參加人數要小於最高參加人數！')</script>";
-        } elseif ($leastAttendeeFee > $maxAttendeeFee) {
-            echo "<script>alert('最低預估費用要小於最高預估費用！')</script>";
+        // 判斷當前時間是否在活動開始和結束時間之間
+        if ($currentTime >= $activityStartDate && $currentTime <= $activityEndDate) {
+            $activityIsOpen = 1;
         } else {
-            // 將活動結束日期往前移動三天，設定成報名截止日期
-            $activityDeadLineDate = date('Y-m-d', strtotime($activityStartDate . "-3 days"));
-
-            // 獲取當前系統時間
-            $currentTime = date('Y-m-d H:i:s');
-
-            // 判斷當前時間是否在活動開始和結束時間之間
-            if ($currentTime >= $activityStartDate && $currentTime <= $activityEndDate) {
-                $activityIsOpen = 1;
-            } else {
-                $activityIsOpen = 0;
-            }
-
-            $sql_query = "INSERT INTO activities (activityId, activityTitle, activityDescription, activityStartDate, activityEndDate, activityDeadLineDate, activityIsOpen, minAttendee, maxAttendee, activityAttendence, leastAttendeeFee, maxAttendeeFee)
-            VALUES ('$activityId', '$activityTitle', '$activityDescription', '$activityStartDate', '$activityEndDate', '$activityDeadLineDate', '$activityIsOpen', $minAttendee, $maxAttendee, 0, $leastAttendeeFee, $maxAttendeeFee)";
-
-            mysqli_query($conn, $sql_query);
-
-            header("Location: readActivity.php");
+            $activityIsOpen = 0;
         }
+
+        $sql_query = "INSERT INTO activities (activityId, campsiteId, accountId, activityTitle, activityDescription, activityStartDate, activityEndDate, activityDeadLineDate, activityIsOpen, minAttendee, maxAttendee, activityAttendence, leastAttendeeFee, maxAttendeeFee)
+            VALUES ('$activityId', '$campsiteId', '$accountId', '$activityTitle', '$activityDescription', '$activityStartDate', '$activityEndDate', '$activityDeadLineDate', '$activityIsOpen', $minAttendee, $maxAttendee, 0, $leastAttendeeFee, $maxAttendeeFee)";
+
+        mysqli_query($conn, $sql_query);
+
+        $_SESSION["system_message"] = "活動新增成功！";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     }
 }
 ?>
