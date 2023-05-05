@@ -16525,3 +16525,32 @@ button.close {
   border: 0;
   -webkit-appearance: none;
 }
+.error-message{
+  color: #B02626;
+  display: none;
+  font-size: smaller;
+  margin-bottom: 2px;
+  margin-left: 8px;
+}
+
+.modalContent-filter {
+  border: none;
+  box-shadow: 0 2px 6px #ccc;
+  border-radius: 4px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  width: 500px;
+  height: auto;
+  background-color: white;
+  margin: 10% auto;
+}
+
+.modalContent-filter .btn-secondary {
+  width: 100px;
+  height: 35px;
+  background-color: #005555;
+  color: white;
+  border: none;
+  border-radius: 30px;
+}

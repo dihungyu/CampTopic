@@ -70,15 +70,6 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
     integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <style>
-    .error-message {
-      color: red;
-      display: none;
-      font-size: 12px;
-      margin-top: -20px;
-    }
-  </style>
   <script>
 
     function setDateInputBehavior(dateInputId) {
@@ -287,7 +278,7 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
 
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <span style="display:flex;align-items: center;justify-content: center">
-            <button type="button" class="button-filter">
+            <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
               <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
             </button>
             <a class="tag-filter" href="#">櫻花
@@ -391,8 +382,8 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
               $leastAttendeeFee = $activity['leastAttendeeFee'];
               $maxAttendeeFee = $activity['maxAttendeeFee'];
 
-              echo '<div class="card" style="width: 600px;margin-left: 0px; margin-bottom: 40px;">';
-              echo '  <img class="card-img-top" src="images/Rectangle 137.png" alt="Card image cap">';
+              echo '<div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">';
+              echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
               echo '    <p>' . $accountName . '</p>';
@@ -555,11 +546,11 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
         echo '<div id="phoneNumberContainer" class="input-container">';
         echo '<input name="attendeePhoneNumber" type="text" placeholder="電話">';
         echo '</div>';
-        echo '<div id="phoneNumberError" class="error-message">＊該欄位不得為空值！</div>';
+        echo '<div id="phoneNumberError" class="error-message">*必填</div>';
         echo '<div id="emailContainer" class="input-container">';
         echo '<input name="attendeeEmail" type="email" placeholder="信箱">';
         echo '</div>';
-        echo '<div id="emailError" class="error-message">＊該欄位不得為空值！</div>';
+        echo '<div id="emailError" class="error-message">*必填</div>';
         echo '<textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 /建議"></textarea>';
         echo '</div>';
         echo '<div style="display: flex; justify-content: flex-end;">';
@@ -594,9 +585,10 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
               <div class="modal-list">
                 <div style="margin-bottom: 10px">
                   <div id="activityTitleContainer">
+                    <div id="activityTitleError" class="error-message">*必填</div>
                     <input type="text" name="activityTitle" placeholder="活動名稱">
                   </div>
-                  <div id="activityTitleError" class="error-message">＊不得為空值！</div>
+                  
                 </div>
                 <div id="campsiteIdContainer">
                   <select name="campsiteId">
@@ -615,49 +607,56 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
                 <div class="supply">
                   <div class="row">
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="activityStartDateContainer">
+                      <div id="activityStartDateContainer"> 
+                        <div id="activityStartDateError" class="error-message">*必填</div>
                         <input id="start-date-input" type="text" name="activityStartDate" style="width: 200px;"
                           placeholder="開始日期">
                       </div>
-                      <div id="activityStartDateError" class="error-message">＊不得為空值！</div>
+                     
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="activityEndDateContainer">
+                      <div id="activityEndDateContainer"> 
+                        <div id="activityEndDateError" class="error-message">*必填</div>
                         <input id="end-date-input" type="text" name="activityEndDate" style="width: 200px;"
                           placeholder="結束日期">
                       </div>
-                      <div id="activityEndDateError" class="error-message">＊不得為空值！</div>
+                     
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="minAttendeeContainer">
+                        <div id="minAttendeeError" class="error-message">*必填</div>
                         <input name="minAttendee" type="text" style="width: 200px;" placeholder="最少人數">
                       </div>
-                      <div id="minAttendeeError" class="error-message">＊不得為空值！</div>
+                      
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="maxAttendeeContainer">
+                        <div id="maxAttendeeError" class="error-message">*必填</div>
                         <input name="maxAttendee" type="text" style="width: 200px;" placeholder="最多人數">
                       </div>
-                      <div id="maxAttendeeError" class="error-message">＊不得為空值！</div>
+                      
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="leastAttendeeFeeContainer">
+                      <div id="leastAttendeeFeeContainer"> 
+                        <div id="leastAttendeeFeeError" class="error-message">*必填</div>
                         <input name="leastAttendeeFee" type="price" style="width: 200px;" placeholder="最低費用">
                       </div>
-                      <div id="leastAttendeeFeeError" class="error-message">＊不得為空值！</div>
+                     
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="maxAttendeeFeeContainer">
+                      <div id="maxAttendeeFeeContainer"> 
+                        <div id="maxAttendeeFeeError" class="error-message">*必填</div>
                         <input name="maxAttendeeFee" type="price" style="width: 200px;" placeholder="最高費用">
                       </div>
-                      <div id="maxAttendeeFeeError" class="error-message">＊不得為空值！</div>
+                     
                     </div>
                   </div>
                 </div>
                 <div id="activityDescriptionContainer" style="margin-top: -20px;">
+                <div id="activityDescriptionError" class="error-message" style="display:none;">*必填</div>
                   <textarea name="activityDescription" rows="3" placeholder="備註" type="text"></textarea>
                 </div>
-                <div id="activityDescriptionError" class="error-message" style="display:none;">＊不得為空值！</div>
+                
               </div>
               <div style=" display: flex; justify-content: flex-end;">
                 <input type="hidden" name="action" value="insert">
@@ -733,7 +732,86 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
           </div>
         </div>
       </div>
-
+<!--篩選 -->
+<div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modalContent-filter">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          標籤1
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+          標籤2
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+          標籤3
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+          標籤4
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤5
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤6
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤7
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤8
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤9
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+        標籤10
+        </label>
+      </div>
+      </div>
+      <div class="modal-footer">
+      <div style=" display: flex; justify-content: flex-end;">
+        <button class="btn-secondary">確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <div class="row mt-5">
         <div class="col-12 text-center">
