@@ -101,8 +101,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
@@ -113,7 +113,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../../login.php">登出</a>
+              <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
           </li>
 
@@ -129,7 +129,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 會員資料
               </li>

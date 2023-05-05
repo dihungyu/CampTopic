@@ -16,24 +16,6 @@ function format_like_count($count)
 
 $accountId = $_COOKIE['accountId'];
 
-//若點擊登出按鈕
-if (isset($_GET["action"]) && $_GET["action"] == "logout") {
-  // 清除 Cookie
-  setcookie("accountId", "", time() - 3600, "/");
-  setcookie("accountName", "", time() - 3600, "/");
-  setcookie("accountEmail", "", time() - 3600, "/");
-  setcookie("accountPhoneNumber", "", time() - 3600, "/");
-  setcookie("accountLevel", "", time() - 3600, "/");
-
-  // 清除 Session
-  session_unset();
-  session_destroy();
-
-  // 轉址至登入頁面
-  $_SESSION["system_message"] = "登出成功！";
-  header("Location: ../../login.php");
-  exit;
-}
 
 //收藏營地
 if (isset($_POST["collectCampAdd"])) {
@@ -251,8 +233,8 @@ if (isset($_POST["likeEquipDel"])) {
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="../../property-1.0.0/camp-information.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="../all-article.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="../equipment.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
@@ -266,7 +248,7 @@ if (isset($_POST["likeEquipDel"])) {
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
               if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                echo '<a class="dropdown-item" href="index.php?action=logout">登出</a>';
+                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
               }
               // 如果沒有設置 Cookie 則顯示登入選項
               else {
