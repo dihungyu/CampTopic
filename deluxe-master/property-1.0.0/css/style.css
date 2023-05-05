@@ -3453,7 +3453,7 @@ textarea.form-control-lg {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem; 
-    width: 80px;
+    width: 100px;
     text-align: center;}
     .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
       border-color: #e9ecef #e9ecef #dee2e6;
@@ -11815,7 +11815,7 @@ width: 50px;
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease; }
-    
+
 select.warning{
   background-color: #F0F0F0; 
   border-style: none; 

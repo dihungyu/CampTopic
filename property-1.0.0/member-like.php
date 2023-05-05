@@ -144,7 +144,7 @@ function format_like_count($count)
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
               <li class="breadcrumb-item"><a href="member.php">會員帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 我的收藏
