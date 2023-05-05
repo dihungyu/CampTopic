@@ -10667,5 +10667,21 @@ nav[aria-label="breadcrumb"] li:before {
     font-weight: 700;
     font-size: 20px;
     text-transform: uppercase; }
+
+  .btn1{
+    margin-right:1200px;
+    margin-top: 50px;
+    width:150px;
+    height:40px;
+    border: 2px solid #d9d9d9;
+    color:#d9d9d9;
+    background-color:#fff;
+    border-radius:20px;
+    font-size: 13px;
+    margin-top: 10px;
+    padding-right:22px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+  }
   
   
