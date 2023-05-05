@@ -3,7 +3,6 @@ require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
 session_start();
 
-$accountId = $_COOKIE["accountId"];
 
 function format_like_count($count)
 {
@@ -16,8 +15,19 @@ function format_like_count($count)
   }
 }
 
+//判斷是否登入，若有則對變數初始化
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
+
 // 文章按讚
 if (isset($_POST["likeArticleAdd"])) {
+
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
 
   $articleId = $_POST["likeArticleAdd"];
   $accountId = $_COOKIE["accountId"];
@@ -49,8 +59,51 @@ if (isset($_POST["likeArticleDel"])) {
   }
 }
 
+//收藏設備
+if (isset($_POST["collectEquipAdd"])) {
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+  $equipmentId = $_POST["collectEquipAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $collectionId = uuid_generator();
+  $sql = "INSERT INTO `collections` (`collectionId`,`accountId`, `equipmentId`) VALUES ('$collectionId','$accountId', '$equipmentId')";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` + 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已加入收藏!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+//移除收藏設備
+if (isset($_POST["collectEquipDel"])) {
+
+  $equipmentId = $_POST["collectEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
 // 按讚設備
 if (isset($_POST["likeEquipAdd"])) {
+
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
 
   $equipmentId = $_POST["likeEquipAdd"];
   $accountId = $_COOKIE["accountId"];
@@ -178,7 +231,16 @@ if (isset($_POST["likeEquipDel"])) {
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../login.php">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+              }
+              ?>
             </div>
           </li>
 
@@ -196,7 +258,7 @@ if (isset($_POST["likeEquipDel"])) {
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="property-1.0.0/index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">鹿的分享
               </li>
             </ol>
@@ -629,7 +691,7 @@ if (isset($_POST["likeEquipDel"])) {
                     <span class='span-adj'>
                       <h4 style='margin-left: 24px;'>$" . number_format($equipmentData["equipmentPrice"]) .
                     "</h4>
-                      <form action='index.php' method='post'>
+                      <form action='all-article.php' method='post'>
                         <input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
                         <button type='submit' class='btn-icon'>";
                   echo "<i class='" . ($isEquipCollected ? "fas" : "fa-regular") . " fa-bookmark' " . "></i>";

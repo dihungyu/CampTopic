@@ -1,11 +1,17 @@
 <?php
 session_start();
-$accountId = $_COOKIE["accountId"];
+
+//判斷是否登入
+if (!isset($_COOKIE["accountId"])) {
+  $_SESSION["system_message"] = "請先登入或註冊成為會員!";
+  header("Location: ../../login.php");
+  exit;
+}
 
 require_once("../../php/conn.php");
 require_once("../../php/uuid_generator.php");
 
-
+$accountId = $_COOKIE["accountId"];
 
 function format_like_count($count)
 {
