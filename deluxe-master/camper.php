@@ -94,13 +94,10 @@ if ($result_account->num_rows > 0) {
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="fonts/icomoon/style.css" />
   <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
 
-  <link rel="stylesheet" href="css/tiny-slider.css" />
   <link rel="stylesheet" href="css/aos.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://kit.fontawesome.com/d02d7e1ecb.css" crossorigin="anonymous">
 
   <title>
     Starting Camping &mdash; 開啟你的露營冒險！
@@ -296,7 +293,7 @@ if ($result_account->num_rows > 0) {
                   echo '      <p>' . $locations . '</p>';
                   echo '    </div>';
                   echo '  </span>';
-                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
                   $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
                   while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
                     $tripIntroductionTitle = $tripIntroduction_result['tripIntroductionTitle'];
@@ -308,7 +305,7 @@ if ($result_account->num_rows > 0) {
                     echo '  </div>';
                   }
                   echo '</div>';
-                  $sql_route_file = "SELECT * FROM files WHERE routeId = $routeId";
+                  $sql_route_file = "SELECT * FROM files WHERE routeId = '$routeId'";
                   $result_route_file = mysqli_query($conn, $sql_route_file);
                   echo '<div class="col-md-12 room-single ftco-animate mb-5 mt-5">';
                   echo '  <div class="row">';
