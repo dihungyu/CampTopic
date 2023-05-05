@@ -2,6 +2,7 @@
 session_start();
 require_once '../../php/conn.php';
 require_once '../../php/uuid_generator.php';
+
 //讚數格式化函式
 function format_like_count($count)
 {
@@ -14,12 +15,20 @@ function format_like_count($count)
   }
 }
 
-$accountId = $_COOKIE['accountId'];
+//判斷是否登入，若有則對變數初始化
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
+
 
 
 //收藏營地
 if (isset($_POST["collectCampAdd"])) {
-
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
   $campsiteId = $_POST["collectCampAdd"];
   $accountId = $_COOKIE["accountId"];
   $collectionId = uuid_generator();
@@ -52,7 +61,11 @@ if (isset($_POST["collectCampDel"])) {
 
 //收藏設備
 if (isset($_POST["collectEquipAdd"])) {
-
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
   $equipmentId = $_POST["collectEquipAdd"];
   $accountId = $_COOKIE["accountId"];
   $collectionId = uuid_generator();
@@ -86,6 +99,11 @@ if (isset($_POST["collectEquipDel"])) {
 // 按讚營區
 if (isset($_POST["likeCampAdd"])) {
 
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
   $campsiteId = $_POST["likeCampAdd"];
   $accountId = $_COOKIE["accountId"];
   $likeId = uuid_generator();
@@ -118,6 +136,12 @@ if (isset($_POST["likeCampDel"])) {
 
 // 按讚設備
 if (isset($_POST["likeEquipAdd"])) {
+
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
+    header("Location: index.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
 
   $equipmentId = $_POST["likeEquipAdd"];
   $accountId = $_COOKIE["accountId"];
