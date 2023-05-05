@@ -632,7 +632,6 @@ if (isset($_POST["likeEquipDel"])) {
       <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
         <div class="container">
           <div class="row">
-
             <div class="container">
               <div class="row">
                 <div class="col-md-12">
@@ -649,8 +648,6 @@ if (isset($_POST["likeEquipDel"])) {
                 </div>
               </div>
             </div>
-
-
 
 
             <?php
