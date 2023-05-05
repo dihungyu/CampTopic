@@ -55,41 +55,40 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	     <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+   
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> 選單
-	      </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> 選單
+      </button>
 
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
-	          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-	          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-	          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	           
-            <li class="nav-item dropdown active">
-              <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                帳號
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="member.html">會員帳號</a>
-                <a class="dropdown-item" href="member-like.html">我的收藏</a>
-                <a class="dropdown-item" href="">文章管理</a>
-                <a class="dropdown-item" href="manage-equip.html">設備管理</a>
-                <a class="dropdown-item" href="manage-land.html">營地管理</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">登出</a>
-              </div>
-            </li>
-            
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              帳號
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">我的收藏</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
 
     <div
       class="hero page-inner overlay"
@@ -106,13 +105,11 @@
               data-aos-delay="200"
             >
               <ol class="breadcrumb text-center justify-content-center">
-                <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-                <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
+                <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
+                <li class="breadcrumb-item"><a href="member.php">帳號</a></li>
                 <li
                   class="breadcrumb-item active text-white-50"
-                  aria-current="page"
-                >
-                  營地管理
+                  aria-current="page"> 營地管理
                 </li>
               </ol>
             </nav>
@@ -125,23 +122,20 @@
       <div class="container" style="max-width: 1260px">
         <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
             
-          <span style="margin-left: 775px;">
-          <div class="input-group " style="width: 30%; margin-left:72px; justify-content: flex-end">
-            <div id="navbar-search-autocomplete" class="form-outline">
-              <input type="search" id="form1" class="form-control" style="height: 40px; border-radius: 35px;"/>
-              
+            <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+              <div id="navbar-search-autocomplete" class="form-outline">
+                <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
+              </div>&nbsp;
+              <button type="submit" class="button-search">
+                <i class="fas fa-search"></i>
+              </button>
             </div>
-            &nbsp;
-            <button type="button" class="button-search">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-          </div></span>
-          <span style="margin-left: 1150px;">
-            <button class="btn-new">
-              <a href="add-land.html" style="color: #fff;">新增</a></button>
+            <span class="span-adj" style="justify-content: flex-end;">
+              <a href="add-land.html">
+            <button class="btn-new" style=" margin-right: 20px; margin-bottom: 0px;">
+              新增
+            </button></a>
           </span>
-          
       </div>
     </div>
         
@@ -149,274 +143,264 @@
     <div class="section section-properties">
       <div class="container" >
         <div class="row">
-           
           <article class="col-md-12 article-list" style="display: flex;">
-            <div class="inner" style="display: flex; ">
               <div class="card">
                 <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-                
                 <div class="card-body">
-                 <h4>$1,200</h4>
-                  <div class="detail">
-                    <h1><a href="single.html">自然圈農場</a></h1>
-                    <span>
-                      <i class="icon-star" style="color:#FEBB56;"></i> 
-                      <p class="detail-icon">4.0</p>
-                    </span>
-                     </div>
-                    <p>369苗栗縣卓蘭鎮西坪36-20號</p>
-                    <footer>
-                     <span>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                        <button class="tag-fav">
-                          <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                          <button class="tag-fav">
-                            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                      
-                     </span>
-                    </footer>
+                  <span class="span-adj" style="justify-content: space-between;"> 
+                    <h4><span>$1,291起</span></h4>
+                    <button type="button" class="btn-icon">
+                      <i class="fa-regular fa-bookmark"></i>
+                    </button>
+                  </span>
+                  <div>
+                      <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                      <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                      <div class="card-icon-footer">
+                      <div class="tagcloud">
+                        <a href="property-single.html">雲海</a>
+                        <a href="property-single.html">櫻花</a>
+                        <a href="property-single.html">森林</a>
+                      </div>
+                      <span style="display: flex; align-items: center;">
+                        <i class="fa-regular fa-heart"></i>
+                        <p style="margin-top:0px">1,098</p>
+                      </span>
+                    </div>
                 </div>
+              </div>
               </div>
               <div class="card">
-                <img src="images/Rectangle 136.png" class="card-img-top" alt="...">
-                
+                <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h4>$1,200</h4>
-                  <div class="detail">
-                    <h1><a href="single.html">蟬說：霧繞 Chanshuo Woorao</a></h1>
-                    <span>
-                      <i class="icon-star" style="color:#FEBB56;"></i> 
-                      <p class="detail-icon">4.0</p>
-                    </span>
-                     </div>
-                    <p>311新竹縣五峰鄉桃白村白蘭298之3號</p>
-                    <footer>
-                     <span>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                        <button class="tag-fav">
-                          <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                          <button class="tag-fav">
-                            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                      
-                     </span>
-                    </footer>
-                </div>
-              </div>
-      <div class="card">
-        <img src="images/Rectangle 138.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">燈火嵐杉野奢露營區inHere</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>545南投縣埔里鎮種瓜路33～5號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-      </div></article>
-      <article class="col-md-12 article-list" style="display: flex;">
-        <div class="inner" style="display: flex; ">
-          <div class="card">
-            <img src="images/Rectangle 135.png" class="card-img-top" alt="...">
-            
-            <div class="card-body">
-              <h4>$1,200</h4>
-              <div class="detail">
-                <h1><a href="single.html">趣兒Chill:藍鵲菲菲</a></h1>
-                <span>
-                  <i class="icon-star" style="color:#FEBB56;"></i> 
-                  <p class="detail-icon">4.0</p>
-                </span>
-                 </div>
-                <p>
-                  111台北市士林區菁山路101巷71弄16號</p>
-                <footer>
-                 <span>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                    <button class="tag-fav">
-                      <a href="property-single.html" style="color: #000;">新竹縣</a></button>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                  
-                 </span>
-                </footer>
-            </div>
-          </div>
-          <div class="card">
-            <img src="images/Rectangle 134.png" class="card-img-top" alt="...">
-            
-            <div class="card-body">
-              <h4>$1,200</h4>
-              <div class="detail">
-                <h1><a href="single.html">向海那漾 Nayang Beach</a></h1>
-                <span>
-                  <i class="icon-star" style="color:#FEBB56;"></i> 
-                  <p class="detail-icon">4.0</p>
-                </span>
-                 </div>
-                <p>439台中市大安區北汕路86巷 1號
-                </p>
-                <footer>
-                 <span>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                    <button class="tag-fav">
-                      <a href="property-single.html" style="color: #000;">台中市</a></button>
-                      <button class="tag-fav">
-                        <a href="property-single.html" style="color: #000;">看海</a></button>
-                  
-                 </span>
-                </footer>
-            </div>
-          </div>
-  <div class="card">
-    <img src="images/Rectangle 139.png" class="card-img-top" alt="...">
-    
-    <div class="card-body">
-      <h4>$1,200</h4>
-      <div class="detail">
-        <h1><a href="single.html">露營樂2號店</a></h1>
-        <span>
-          <i class="icon-star" style="color:#FEBB56;"></i> 
-          <p class="detail-icon">4.0</p>
-        </span>
-         </div>
-        <p> 80545高雄市旗津區旗津三路51號</p>
-        <footer>
-         <span>
-          <button class="tag-fav">
-            <a href="property-single.html" style="color: #000;">300公尺</a></button>
-            <button class="tag-fav">
-              <a href="property-single.html" style="color: #000;">高雄市</a></button>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">海鮮</a></button>
-          
-         </span>
-        </footer>
-    </div>
-  </div>
-  </div></article>
-  <article class="col-md-12 article-list" style="display: flex;">
-    <div class="inner" style="display: flex; ">
-      <div class="card">
-        <img src="images/Rectangle 140.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">森渼原ALIVE Glamping Base</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>438台中市外埔區二崁路700號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">台中市</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">近市區</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-      <div class="card">
-        <img src="images/Rectangle 141.png" class="card-img-top" alt="...">
-        
-        <div class="card-body">
-          <h4>$1,200</h4>
-          <div class="detail">
-            <h1><a href="single.html">橘舍三食</a></h1>
-            <span>
-              <i class="icon-star" style="color:#FEBB56;"></i> 
-              <p class="detail-icon">4.0</p>
-            </span>
-             </div>
-            <p>369苗栗縣卓蘭鎮西坪43-15號</p>
-            <footer>
-             <span>
-              <button class="tag-fav">
-                <a href="property-single.html" style="color: #000;">300公尺</a></button>
-                <button class="tag-fav">
-                  <a href="property-single.html" style="color: #000;">苗栗縣</a></button>
-                  <button class="tag-fav">
-                    <a href="property-single.html" style="color: #000;">大草原</a></button>
-              
-             </span>
-            </footer>
-        </div>
-      </div>
-<div class="card">
-<img src="images/Rectangle 142.png" class="card-img-top" alt="...">
-
-<div class="card-body">
-  <h4>$1,200</h4>
-  <div class="detail">
-    <h1><a href="single.html">勤美學</a></h1>
-    <span>
-      <i class="icon-star" style="color:#FEBB56;"></i> 
-      <p class="detail-icon">4.0</p>
-    </span>
-     </div>
-    <p>361苗栗縣造橋鄉豐湖村1鄰乳姑山15-3號</p>
-    <footer>
-     <span>
-      <button class="tag-fav">
-        <a href="property-single.html" style="color: #000;">300公尺</a></button>
-        <button class="tag-fav">
-          <a href="property-single.html" style="color: #000;">苗栗縣</a></button>
-          <button class="tag-fav">
-            <a href="property-single.html" style="color: #000;">有溪流</a></button>
-      
-     </span>
-    </footer>
-</div>
-</div>
-</div></article>
-          
-        
-        
-         
-           </div>
-                </div>
-              </div>
-                
-                <br><br>
-                <div class="row align-items-center py-5">
-                  <div class="col-lg-3"></div>
-                  <div class="col-lg-6 text-center">
-                    <div class="custom-pagination">
-                      <a href="#">1</a>
-                      <a href="#" class="active">2</a>
-                      <a href="#">3</a>
-                      <a href="#">4</a>
-                      <a href="#">5</a>
+                  <span class="span-adj" style="justify-content: space-between;"> 
+                    <h4><span>$1,291起</span></h4>
+                    <button type="button" class="btn-icon">
+                      <i class="fa-regular fa-bookmark"></i>
+                    </button>
+                  </span>
+                  <div>
+                      <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                      <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                      <div class="card-icon-footer">
+                      <div class="tagcloud">
+                        <a href="property-single.html">雲海</a>
+                        <a href="property-single.html">櫻花</a>
+                        <a href="property-single.html">森林</a>
+                      </div>
+                      <span style="display: flex; align-items: center;">
+                        <i class="fa-regular fa-heart"></i>
+                        <p style="margin-top:0px">1,098</p>
+                      </span>
                     </div>
+                </div>
+              </div>
+              </div>
+              <div class="card">
+                <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <span class="span-adj" style="justify-content: space-between;"> 
+                    <h4><span>$1,291起</span></h4>
+                    <button type="button" class="btn-icon">
+                      <i class="fa-regular fa-bookmark"></i>
+                    </button>
+                  </span>
+                  <div>
+                      <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                      <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                      <div class="card-icon-footer">
+                      <div class="tagcloud">
+                        <a href="property-single.html">雲海</a>
+                        <a href="property-single.html">櫻花</a>
+                        <a href="property-single.html">森林</a>
+                      </div>
+                      <span style="display: flex; align-items: center;">
+                        <i class="fa-regular fa-heart"></i>
+                        <p style="margin-top:0px">1,098</p>
+                      </span>
+                    </div>
+                </div>
+              </div>
+              </div>
+          </article>
+
+          <article class="col-md-12 article-list" style="display: flex;">
+            <div class="card">
+              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <span class="span-adj" style="justify-content: space-between;"> 
+                  <h4><span>$1,291起</span></h4>
+                  <button type="button" class="btn-icon">
+                    <i class="fa-regular fa-bookmark"></i>
+                  </button>
+                </span>
+                <div>
+                    <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                    <div class="card-icon-footer">
+                    <div class="tagcloud">
+                      <a href="property-single.html">雲海</a>
+                      <a href="property-single.html">櫻花</a>
+                      <a href="property-single.html">森林</a>
+                    </div>
+                    <span style="display: flex; align-items: center;">
+                      <i class="fa-regular fa-heart"></i>
+                      <p style="margin-top:0px">1,098</p>
+                    </span>
                   </div>
+              </div>
+            </div>
+            </div>
+            <div class="card">
+              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <span class="span-adj" style="justify-content: space-between;"> 
+                  <h4><span>$1,291起</span></h4>
+                  <button type="button" class="btn-icon">
+                    <i class="fa-regular fa-bookmark"></i>
+                  </button>
+                </span>
+                <div>
+                    <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                    <div class="card-icon-footer">
+                    <div class="tagcloud">
+                      <a href="property-single.html">雲海</a>
+                      <a href="property-single.html">櫻花</a>
+                      <a href="property-single.html">森林</a>
+                    </div>
+                    <span style="display: flex; align-items: center;">
+                      <i class="fa-regular fa-heart"></i>
+                      <p style="margin-top:0px">1,098</p>
+                    </span>
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div class="card">
+              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <span class="span-adj" style="justify-content: space-between;"> 
+                  <h4><span>$1,291起</span></h4>
+                  <button type="button" class="btn-icon">
+                    <i class="fa-regular fa-bookmark"></i>
+                  </button>
+                </span>
+                <div>
+                    <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                    <div class="card-icon-footer">
+                    <div class="tagcloud">
+                      <a href="property-single.html">雲海</a>
+                      <a href="property-single.html">櫻花</a>
+                      <a href="property-single.html">森林</a>
+                    </div>
+                    <span style="display: flex; align-items: center;">
+                      <i class="fa-regular fa-heart"></i>
+                      <p style="margin-top:0px">1,098</p>
+                    </span>
+                  </div>
+              </div>
+            </div>
+            </div>
+        </article>
+
+        <article class="col-md-12 article-list" style="display: flex;">
+          <div class="card">
+            <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <span class="span-adj" style="justify-content: space-between;"> 
+                <h4><span>$1,291起</span></h4>
+                <button type="button" class="btn-icon">
+                  <i class="fa-regular fa-bookmark"></i>
+                </button>
+              </span>
+              <div>
+                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                  <div class="card-icon-footer">
+                  <div class="tagcloud">
+                    <a href="property-single.html">雲海</a>
+                    <a href="property-single.html">櫻花</a>
+                    <a href="property-single.html">森林</a>
+                  </div>
+                  <span style="display: flex; align-items: center;">
+                    <i class="fa-regular fa-heart"></i>
+                    <p style="margin-top:0px">1,098</p>
+                  </span>
                 </div>
             </div>
+          </div>
+          </div>
+          <div class="card">
+            <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <span class="span-adj" style="justify-content: space-between;"> 
+                <h4><span>$1,291起</span></h4>
+                <button type="button" class="btn-icon">
+                  <i class="fa-regular fa-bookmark"></i>
+                </button>
+              </span>
+              <div>
+                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                  <div class="card-icon-footer">
+                  <div class="tagcloud">
+                    <a href="property-single.html">雲海</a>
+                    <a href="property-single.html">櫻花</a>
+                    <a href="property-single.html">森林</a>
+                  </div>
+                  <span style="display: flex; align-items: center;">
+                    <i class="fa-regular fa-heart"></i>
+                    <p style="margin-top:0px">1,098</p>
+                  </span>
+                </div>
+            </div>
+          </div>
+          </div>
+          <div class="card">
+            <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <span class="span-adj" style="justify-content: space-between;"> 
+                <h4><span>$1,291起</span></h4>
+                <button type="button" class="btn-icon">
+                  <i class="fa-regular fa-bookmark"></i>
+                </button>
+              </span>
+              <div>
+                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
+                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
+                  <div class="card-icon-footer">
+                  <div class="tagcloud">
+                    <a href="property-single.html">雲海</a>
+                    <a href="property-single.html">櫻花</a>
+                    <a href="property-single.html">森林</a>
+                  </div>
+                  <span style="display: flex; align-items: center;">
+                    <i class="fa-regular fa-heart"></i>
+                    <p style="margin-top:0px">1,098</p>
+                  </span>
+                </div>
+            </div>
+          </div>
+          </div>
+      </article>
+         </div>
+        </div>
+      </div>
+      <div class="row align-items-center py-5">
+       <div class="col-lg-3"></div>
+        <div class="col-lg-6 text-center">
+          <div class="custom-pagination">
+          <a href="#">1</a>
+          <a href="#" class="active">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+        </div>
+        </div>
+        </div>
+      </div>
 
     <div class="site-footer">
       <div class="container">
