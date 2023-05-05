@@ -588,7 +588,7 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
                     <div id="activityTitleError" class="error-message">*必填</div>
                     <input type="text" name="activityTitle" placeholder="活動名稱">
                   </div>
-                  
+
                 </div>
                 <div id="campsiteIdContainer">
                   <select name="campsiteId">
@@ -607,56 +607,56 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
                 <div class="supply">
                   <div class="row">
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="activityStartDateContainer"> 
+                      <div id="activityStartDateContainer">
                         <div id="activityStartDateError" class="error-message">*必填</div>
                         <input id="start-date-input" type="text" name="activityStartDate" style="width: 200px;"
                           placeholder="開始日期">
                       </div>
-                     
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="activityEndDateContainer"> 
+                      <div id="activityEndDateContainer">
                         <div id="activityEndDateError" class="error-message">*必填</div>
                         <input id="end-date-input" type="text" name="activityEndDate" style="width: 200px;"
                           placeholder="結束日期">
                       </div>
-                     
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="minAttendeeContainer">
                         <div id="minAttendeeError" class="error-message">*必填</div>
                         <input name="minAttendee" type="text" style="width: 200px;" placeholder="最少人數">
                       </div>
-                      
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="maxAttendeeContainer">
                         <div id="maxAttendeeError" class="error-message">*必填</div>
                         <input name="maxAttendee" type="text" style="width: 200px;" placeholder="最多人數">
                       </div>
-                      
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="leastAttendeeFeeContainer"> 
+                      <div id="leastAttendeeFeeContainer">
                         <div id="leastAttendeeFeeError" class="error-message">*必填</div>
                         <input name="leastAttendeeFee" type="price" style="width: 200px;" placeholder="最低費用">
                       </div>
-                     
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
-                      <div id="maxAttendeeFeeContainer"> 
+                      <div id="maxAttendeeFeeContainer">
                         <div id="maxAttendeeFeeError" class="error-message">*必填</div>
                         <input name="maxAttendeeFee" type="price" style="width: 200px;" placeholder="最高費用">
                       </div>
-                     
+
                     </div>
                   </div>
                 </div>
                 <div id="activityDescriptionContainer" style="margin-top: -20px;">
-                <div id="activityDescriptionError" class="error-message" style="display:none;">*必填</div>
+                  <div id="activityDescriptionError" class="error-message" style="display:none;">*必填</div>
                   <textarea name="activityDescription" rows="3" placeholder="備註" type="text"></textarea>
                 </div>
-                
+
               </div>
               <div style=" display: flex; justify-content: flex-end;">
                 <input type="hidden" name="action" value="insert">
@@ -732,86 +732,43 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
           </div>
         </div>
       </div>
-<!--篩選 -->
-<div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modalContent-filter">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          標籤1
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-          標籤2
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-          標籤3
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-          標籤4
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤5
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤6
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤7
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤8
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤9
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-        標籤10
-        </label>
-      </div>
-      </div>
-      <div class="modal-footer">
-      <div style=" display: flex; justify-content: flex-end;">
-        <button class="btn-secondary">確認</button>
+      <!--篩選 -->
+      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modalContent-filter">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <?php
+              $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
+              $result_labels = mysqli_query($conn, $sql_labels);
+              $labels = [];
+              while ($row_labels = mysqli_fetch_assoc($result_labels)) {
+                $labels[] = $row_labels;
+              }
+              foreach ($labels as $label) {
+                $labelName = $label['labelName'];
+                echo '<div class="form-check">';
+                echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">';
+                echo '<label class="form-check-label" for="flexCheckDefault">' . $labelName . '</label>';
+                echo '</div>';
+              }
+              ?>
+
+            </div>
+            <div class="modal-footer">
+              <div style=" display: flex; justify-content: flex-end;">
+                <button class="btn-secondary">確認</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
       <div class="row mt-5">
         <div class="col-12 text-center">
