@@ -427,7 +427,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <p>" . $comment_count .
                       " 留言</p>
                         <span class='article-footer'>
-                          <form action='all-article.php' method='post'>
+                          <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                     <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
                     <button type='submit' class='btn-icon'>";
                     echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
