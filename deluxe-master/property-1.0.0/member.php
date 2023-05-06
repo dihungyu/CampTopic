@@ -40,8 +40,11 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   $stmt = $conn->prepare("UPDATE accounts SET accountName = ?, accountGender = ?, accountBirthday = ?, accountEmail = ?, accountPhoneNumber = ? WHERE accountId = ?");
   $stmt->bind_param("ssssss", $accountName, $accountGender, $accountBirthday, $accountEmail, $accountPhoneNumber, $accountId);
   $stmt->execute();
+
   //跳出提示窗，內容為修改成功
-  echo "<script>alert('更新成功'); location.href = 'member.php';</script>";
+  $_SESSION["system_message"] = "更新成功";
+  header("Location: member.php");
+  exit;
 }
 ?>
 
@@ -96,9 +99,45 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="https://kit.fontawesome.com/d02d7e1ecb.css" crossorigin="anonymous">
 
+  <!-- 上傳頭貼用 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .btn-custom-size {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+
+    .avatar-wrapper {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+
+
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
@@ -157,12 +196,43 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <div class="card" style="border:none; padding-left:100px; padding-top:70px;">
             <div class="card-member">
               <div class="card-body">
+
                 <div class="d-flex flex-column align-items-center text-center">
-                  <img src="../property-1.0.0/images/Rectangle 141.png" alt="Admin" class="rounded-circle" width="110">
-                  <div class='mt-3'>
+                  <div class="mb-3">
+                    <?php
+                    // 取得頭像
+                    $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
+                    $pic_result = mysqli_query($conn, $pic_sql);
+                    ?>
+                    <div class="avatar-wrapper">
+                      <img src="<?php if ($pic_row = mysqli_fetch_assoc($pic_result)) {
+                                  echo $pic_row["filePath"];
+                                } else {
+                                  echo "../../upload/profileDefault.jpeg";
+                                } ?>" alt="Admin" class="avatar">
+                    </div>
+                  </div>
+                  <form action="uploadProfilePic.php" method="post" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-end">
+                      <input type="file" class="form-control d-none" id="avatar" name="avatar" accept="image/*" required>
+                      <button class="btn btn-primary btn-sm ms-3 btn-custom-size" id="uploadBtn" type="button" style="margin-top: -8px;">更換頭像</button>
+                      <button class="btn btn-success btn-sm d-none" id="submitBtn" type="submit" name="submit">上傳</button>
+                    </div>
+                  </form>
+                  <div class="mb-3">
                     <h5><?php echo $accountName; ?></h5>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
                 <hr>
                 <span>
                   <h6>徽章進度</h6>
@@ -408,6 +478,48 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
       });
     });
   </script>
+
+  <!-- 上傳頭貼與預覽頭貼 -->
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('.avatar').attr('src', e.target.result);
+          $('#submitBtn').removeClass('d-none');
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $(document).ready(function() {
+      $('#uploadBtn').on('click', function(event) {
+        event.preventDefault();
+        $('#avatar').click();
+      });
+
+      $('#avatar').on('change', function() {
+        readURL(this);
+      });
+    });
+  </script>
+
+
+  <!-- 控制系統訊息 -->
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+
+    setTimeout(hideMessage, 3000);
+  </script>
+
+
 
 
 </body>

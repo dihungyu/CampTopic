@@ -7,7 +7,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "logout") {
     setcookie("accountName", "", time() - 3600, "/");
     setcookie("accountEmail", "", time() - 3600, "/");
     setcookie("accountPhoneNumber", "", time() - 3600, "/");
-    setcookie("accountLevel", "", time() - 3600, "/");
+    setcookie("accountType", "", time() - 3600, "/");
 
     // 清除 Session
     session_unset();

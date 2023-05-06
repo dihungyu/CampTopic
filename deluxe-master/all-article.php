@@ -478,6 +478,7 @@ if (isset($_POST["likeEquipDel"])) {
                 </article> -->
 
               </div>
+
               <div class="row align-items-center py-5">
                 <div class="col-12 d-flex justify-content-center">
                   <div class="custom-pagination">
@@ -487,6 +488,7 @@ if (isset($_POST["likeEquipDel"])) {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -565,6 +567,7 @@ if (isset($_POST["likeEquipDel"])) {
             </div> -->
 
           </span>
+
           <div class="mt-5">
             <div class="input-group " style=" justify-content: flex-end;">
               <div id="navbar-search-autocomplete" class="form-outline">
@@ -576,6 +579,7 @@ if (isset($_POST["likeEquipDel"])) {
               </button>
               </form>
             </div>
+
             <a href="/CampTopic/deluxe-master/property-1.0.0/add-article.php">
               <button type="button" class="gray-lg" data-toggle="modal" data-target="#create" style="margin-left: 120px;">
                 <h6 style="font-weight: bold;margin-right: -20px;">分享你的露營心得</h6>

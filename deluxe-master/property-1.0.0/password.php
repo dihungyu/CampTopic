@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once("../../php/conn.php");
+require_once("../../php/uuid_generator.php");
 
 $accountId = $_COOKIE["accountId"];
 
@@ -8,7 +10,7 @@ if (isset($_POST["submit"])) {
   $newPassword = $_POST["newPassword"];
 
 
-  require_once("../../php/conn.php");
+
   $stmt = $conn->prepare("SELECT accountPassword FROM accounts WHERE accountId = ?");
   $stmt->bind_param("s", $accountId);
   $stmt->execute();
@@ -25,12 +27,21 @@ if (isset($_POST["submit"])) {
       $stmt->bind_param("ss", $hashedPassword, $accountId);
       $stmt->execute();
       if ($stmt->affected_rows > 0) {
-        echo "<script>alert('密碼更新成功'); location.href = 'member.php';</script>";
+
+        $_SESSION["system_message"] = "密碼更新成功。";
+        header("Location: member.php");
+        exit;
       } else {
-        echo "<script>alert('密碼更新失敗，請再試一次'); location.href = 'password.php';</script>";
+
+        $_SESSION["system_message"] = "密碼更新失敗，請再試一次。";
+        header("Location: password.php");
+        exit;
       }
     } else {
-      echo "<script>alert('舊密碼錯誤'); location.href = 'password.php';</script>";
+
+      $_SESSION["system_message"] = "舊密碼錯誤。";
+      header("Location: password.php");
+      exit;
     }
   }
 }
@@ -88,9 +99,34 @@ if (isset($_POST["submit"])) {
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="https://kit.fontawesome.com/d02d7e1ecb.css" crossorigin="anonymous">
 
+  <style>
+    .avatar-wrapper {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
@@ -101,10 +137,10 @@ if (isset($_POST["submit"])) {
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
@@ -115,7 +151,7 @@ if (isset($_POST["submit"])) {
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../login.php">登出</a>
+              <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
           </li>
 
@@ -131,7 +167,7 @@ if (isset($_POST["submit"])) {
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
               <li class="breadcrumb-item"><a href="member.php">帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 會員資料
@@ -150,9 +186,21 @@ if (isset($_POST["submit"])) {
           <div class="card" style="width: 350px;margin: 50px; border:none;">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img src="../property-1.0.0/images/Rectangle 141.png" alt="Admin" class="rounded-circle" width="110">
+
+                <?php
+                // 取得頭像
+                $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
+                $pic_result = mysqli_query($conn, $pic_sql);
+                ?>
+                <div class="avatar-wrapper">
+                  <img src="<?php if ($pic_row = mysqli_fetch_assoc($pic_result)) {
+                              echo $pic_row["filePath"];
+                            } else {
+                              echo "../../upload/profileDefault.jpeg";
+                            } ?>" alt="Admin" class="avatar">
+                </div>
                 <div class='mt-3'>
-                  <h5><?php echo $accountName; ?></h5>
+                  <h5><?php echo $_COOKIE["accountName"]; ?></h5>
                 </div>
                 <div class="btn btn-primary-tag">露營新手</div>
               </div>
@@ -396,6 +444,18 @@ if (isset($_POST["submit"])) {
         event.preventDefault();
       }
     });
+  </script>
+
+  <!-- 控制系統訊息 -->
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+
+    setTimeout(hideMessage, 3000);
   </script>
 </body>
 
