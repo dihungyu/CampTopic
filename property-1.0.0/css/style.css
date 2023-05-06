@@ -14436,6 +14436,11 @@ textarea {
   padding-top: 2rem;
 }
 
+.section1 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
 .section .heading {
   font-weight: 500;
 }
@@ -15935,7 +15940,7 @@ love.active {
   }
   .article-list .inner {
     display: inline-block;
-    width: 100%;
+   
   }
   .article-list figure {
     width: 300px;
