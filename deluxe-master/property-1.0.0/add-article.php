@@ -72,11 +72,11 @@ if (!isset($_COOKIE["accountId"])) {
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="../../property-1.0.0/camp-information.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -141,28 +141,27 @@ if (!isset($_COOKIE["accountId"])) {
     <div class="section section-properties">
       <div class="container">
         <div class="row">
-          <span style="margin-left: 105px;margin-bottom: 20px;margin-bottom: 25px; margin-top: -65px;">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%;">
+          <span style="margin-left: 80px;margin-bottom: 20px;"class="mt-2 mb-4">
+            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
           </span>
-          <br>
-          <span style="display:flex;align-items: center;justify-content:flex-start;margin-left: 100px;margin-top: -15px;">
-            <button class="btn-new2">
+          <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
+            <button class="btn-new2" style="margin-right:5px">
               <a class="tag-filter" href="#">櫻花
                 <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
               </a>
             </button>
-            <button class="btn-new2">
+            <button class="btn-new2" style="margin-right:5px">
               <a class="tag-filter" href="#">櫻花
                 <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
               </a>
             </button>
-            <button class="btn-new2">
+            <button class="btn-new2" style="margin-right:5px">
               <a class="tag-filter" href="#">櫻花
                 <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
               </a>
             </button>
-            <button class="btn-new2">
+            <button class="btn-new2" style="margin-right:5px">
               <a class="tag-filter" href="#">櫻花
                 <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
               </a>
@@ -174,35 +173,34 @@ if (!isset($_COOKIE["accountId"])) {
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width:450px;height:200px;">
                   <div class="modal-body">
-                    <span style="display: flex;">
-                      <h4 style="font-weight: bold;margin-top: 5px;margin-left: 10px;">新增標籤</h4>
+                    <span style="display: flex;justify-content: space-between;">
+                      <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;margin-left: 275px;margin-top: -5px;"></i>
+                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
                       </button>
                     </span>
-                  </div>
-
-                  <input type="text" value="標籤名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 50px;margin-bottom: 75px;">
+                  
+                  <input type="text" value="標籤名稱" class="articletag">
           </span>
-          <button class="btn-new" style=" margin-left: 340px;margin-top: -55px;margin-right: 25px;">
-            <a href="add-equip.html" style="color: #fff;">確認</a></button>
-
+        
+          <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
+          <button class="btn-more">
+           確認
+          </button></a> 
+        </div>
         </div>
       </div>
     </div>
   </div>
   </span>
-  <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data" style="margin-left: 100px;">
-    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-
-      <input type="text" name="articleTitle" placeholder="文章標題" style="background-color: #F0F0F0; border-style: none;  width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+  <span style="display:flex; justify-content:center;">
+  <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
+    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
+      <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
     </span>
 
-    <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;"></textarea>
-    <br>
-
-
-    <br>
+    <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"></textarea>
+            </span>
     <span>
 
       <!-- <div>
@@ -216,10 +214,10 @@ if (!isset($_COOKIE["accountId"])) {
     </span>
 
 
-    <span style="margin-left: 990px;margin-top: 20px;">
+    <span style="display:flex;justify-content: flex-end;margin-right: 10px;}">
       <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
       <input type="hidden" name="action" value="insert">
-      <a href="../all-article.php"><button class="btn-new1">取消</button></a>
+      <a href="../all-article.php"><button class="btn-new1" style="margin-right:10px">取消</button></a>
       <button class="btn-new" type="submit">分享</button>
 
     </span>
@@ -239,81 +237,48 @@ if (!isset($_COOKIE["accountId"])) {
 
   <div class="site-footer">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Contact</h3>
-            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
+    <div class="row">
+        
         <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Sources</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Vision</a></li>
-              <li><a href="#">Mission</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Business</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Creative</a></li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Links</h3>
-            <ul class="list-unstyled links">
-              <li><a href="#">Our Vision</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Contact us</a></li>
-            </ul>
-
-            <ul class="list-unstyled social">
-              <li>
-                <a href="#"><span class="icon-instagram"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-twitter"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-facebook"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-linkedin"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-pinterest"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-dribbble"></span></a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-      </div>
-      <!-- /.row -->
-
+       <div class="col-lg-5">
+         <div class="widget">
+           <h3>聯絡資訊</h3>
+           <address>StartCamping 營在起跑點！</address>
+           <ul class="list-unstyled links">
+             <li><a href="tel://11234567890">0911222345</a></li>
+             <li><a href="tel://11234567890">@startcamping</a></li>
+             <li>
+               <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+             </li>
+           </ul>
+         </div>
+         <!-- /.widget -->
+       </div>
+       <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+         <div class="widget">
+           <h3>頁面總覽</h3>
+           <ul class="list-unstyled float-start links">
+             <li><a href="#">首頁</a></li>
+             <li><a href="#">找小鹿</a></li>
+             <li><a href="#">鹿的分享</a></li>
+             <li><a href="#">鹿的裝備</a></li>
+             <li><a href="#">廣告方案</a></li>
+           </ul>
+           <ul class="list-unstyled float-start links">
+             <li><a href="#">帳號</a></li>
+             <li><a href="#">會員帳號</a></li>
+             <li><a href="#">我的收藏</a></li>
+           </ul>
+         </div>
+         <!-- /.widget -->
+       </div>
+       <!-- /.col-lg-4 -->
+       <div class="col-lg-2">
+         <!-- /.widget -->
+       </div>
+     </div>
+       <!-- /.row -->
       <div class="row mt-5">
         <div class="col-12 text-center">
           <!-- 
