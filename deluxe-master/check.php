@@ -1,6 +1,8 @@
 <?php
 require_once '../php/conn.php';
 
+session_start();
+
 // $activityId = $_GET['activityId'];
 $activityId = '3525062ec997889fc584f54177abda3a';
 
@@ -215,12 +217,28 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       });
     });
 
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
 
   </script>
 
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -432,18 +450,6 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                 }
                 echo '</div>';
                 ?>
-                <span style="display:flex;justify-content: space-between;margin-right: 30px;">
-                  <h4 style="margin-bottom: 0px;">攜帶物品</h4>
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#supply">
-                    <i class="fa-regular fa-pen-to-square"></i></button>
-                </span>
-                <br>
-                <div class="list">
-                  <li>睡袋</li>
-                  <li>洗漱用品</li>
-                  <li>保暖衣物</li>
-                  <li>點心</li>
-                </div>
               </div>
             </div>
           </div> <!-- .col-md-8 -->
@@ -491,40 +497,27 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                 </span>
 
                 <div class="box-side">
-                  <h6>目前所需用品</h6>
-                </div>
-                <div class="list" style="font-size: 14px;"">
-              <li>睡袋</li>
-              <li>洗漱用品</li>
-              <li>保暖衣物</li>
-              <li>點心</li>
-             </div>
-             <span class=" more">
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
-                    <a href="#more3">查看更多</a></button>
-                  </span>
-                  <div class="box-side">
-                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
-                      data-whatever="@mdo">審核人員</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="notice">
-                <span class="box-side" style="justify-content: flex-start; margin-bottom: 16px; ">
-                  <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
-                  <h6>注意事項</h6>
-                </span>
-                <div class="list">
-                  <li>確認參加後，表接受可能隨時取消活動，及金錢無法退款等問題。</li>
-                  <li>有安全疑慮者，建議結伴朋友報名參與，並隨身攜帶防身用品。</li>
-                  <li>本平台不參與金錢之交易，請小心詐騙。</li>
+                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
+                    data-whatever="@mdo">審核人員</button>
                 </div>
               </div>
             </div>
 
+            <div class="notice">
+              <span class="box-side" style="justify-content: flex-start; margin-bottom: 16px; ">
+                <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
+                <h6>注意事項</h6>
+              </span>
+              <div class="list">
+                <li>確認參加後，表接受可能隨時取消活動，及金錢無法退款等問題。</li>
+                <li>有安全疑慮者，建議結伴朋友報名參與，並隨身攜帶防身用品。</li>
+                <li>本平台不參與金錢之交易，請小心詐騙。</li>
+              </div>
+            </div>
           </div>
+
         </div>
+      </div>
   </section>
 
   <div class="site-footer" style="clear: both;">
@@ -784,27 +777,6 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   }
   ?>
 
-  <!-- 編輯物品 -->
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true" id="supply">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">編輯基本資訊</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <div class="modal-list" style="margin: 32px;">
-          <textarea class="lg" rows="8 type=" text" value="supply" placeholder="物品內容"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" data-dismiss="modal">確認</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- 編輯首要內容 -->
   <form action="../php/Activity/updateActivity.php?activityId=<?php echo $activityId ?>" method="post" name="formEdit"
     id="formEdit">
@@ -942,32 +914,6 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       </div>
     </div>
   </div>
-
-  <div class="modal fade" id="more3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modalContent">
-        <div class="box-mod">
-          <h5 id="exampleModalLabel">所有所需用品</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <div class="modal-list">
-          <div class="list">
-            <li>睡袋</li>
-            <li>洗漱用品</li>
-            <li>保暖衣物</li>
-            <li>瓦斯爐</li>
-            <li>瓦斯罐</li>
-            <li>露營燈</li>
-            <li>點心</li>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">

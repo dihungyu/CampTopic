@@ -13648,6 +13648,14 @@ nav[aria-label="breadcrumb"] li:before {
   cursor: pointer;
 }
 
+.error-message {
+  color: #B02626;
+  display: none;
+  font-size: smaller;
+  margin-bottom: 2px;
+  margin-left: 8px;
+}
+
 .remove-image-button {
   position: absolute;
   top: 0;

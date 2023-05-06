@@ -4334,14 +4334,14 @@ fieldset:disabled .btn {
 .tag-filter {
   text-decoration: none !important;
   border-radius: 35px !important;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 10px;
+  padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 10px;
   border-width: 2px;
   border-color: transparent;
   border: none !important;
-  font-size: 12px;
+  font-size: 14px;
   background-color: #EFE9DA;
   color: #000;
 
@@ -16525,7 +16525,8 @@ button.close {
   border: 0;
   -webkit-appearance: none;
 }
-.error-message{
+
+.error-message {
   color: #B02626;
   display: none;
   font-size: smaller;

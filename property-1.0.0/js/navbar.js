@@ -1,12 +1,12 @@
-(function(){
+(function () {
 
 	'use strict'
 
 
-	var siteMenuClone = function() {
+	var siteMenuClone = function () {
 		var jsCloneNavs = document.querySelectorAll('.js-clone-nav');
 		var siteMobileMenuBody = document.querySelector('.site-mobile-menu-body');
-		
+
 
 
 		jsCloneNavs.forEach(nav => {
@@ -15,13 +15,13 @@
 			siteMobileMenuBody.appendChild(navCloned);
 		});
 
-		setTimeout(function(){
+		setTimeout(function () {
 
 			var hasChildrens = document.querySelector('.site-mobile-menu').querySelectorAll(' .has-children');
 
 			var counter = 0;
-			hasChildrens.forEach( hasChild => {
-				
+			hasChildrens.forEach(hasChild => {
+
 				var refEl = hasChild.querySelector('a');
 
 				var newElSpan = document.createElement('span');
@@ -51,7 +51,7 @@
 		menuToggle.forEach(mtoggle => {
 			mTog = mtoggle;
 			mtoggle.addEventListener("click", (e) => {
-				if ( document.body.classList.contains('offcanvas-menu') ) {
+				if (document.body.classList.contains('offcanvas-menu')) {
 					document.body.classList.remove('offcanvas-menu');
 					mtoggle.classList.remove('active');
 					mTog.classList.remove('active');
@@ -67,7 +67,7 @@
 
 		var specifiedElement = document.querySelector(".site-mobile-menu");
 		var mt, mtoggleTemp;
-		document.addEventListener('click', function(event) {
+		document.addEventListener('click', function (event) {
 			var isClickInside = specifiedElement.contains(event.target);
 			menuToggle.forEach(mtoggle => {
 				mtoggleTemp = mtoggle
@@ -75,7 +75,7 @@
 			})
 
 			if (!isClickInside && !mt) {
-				if ( document.body.classList.contains('offcanvas-menu') ) {
+				if (document.body.classList.contains('offcanvas-menu')) {
 					document.body.classList.remove('offcanvas-menu');
 					mtoggleTemp.classList.remove('active');
 				}
@@ -83,7 +83,7 @@
 
 		});
 
-	}; 
+	};
 	siteMenuClone();
 
 

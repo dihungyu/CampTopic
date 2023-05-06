@@ -24,28 +24,12 @@ if (isset($_POST['approvalStatus'])) {
             $success = false;
         }
     }
-    $alert_message = $success ? '審核成功' : '資料更新失敗';
+    if ($success == true) {
+        $_SESSION['system_message'] = '審核結果已更新！';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    } else {
+        $_SESSION['system_message'] = '審核結果更新失敗！';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        // 顯示提示訊息
-        alert('<?php echo $alert_message; ?>');
-
-        // 跳轉到 check.php 頁面
-        window.location.href = '../../deluxe-master/check.php';
-    </script>
-</head>
-
-<body>
-</body>
-
-</html>

@@ -1,8 +1,10 @@
 <?php
 require_once '../php/conn.php';
 
-// $activityId = $_GET['activityId'];
-$activityId = '3525062ec997889fc584f54177abda3a';
+session_start();
+
+$activityId = $_GET['activityId'];
+$attendeeId = 'c995dbc4be4811eda1d4e22a0f5e8454';
 
 $sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
 $result = mysqli_query($conn, $sql_getDataQuery);
@@ -121,9 +123,62 @@ if ($result_account->num_rows > 0) {
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    function validateForm() {
+      const phoneNumber = document.forms["attendForm"]["attendeePhoneNumber"].value;
+      const email = document.forms["attendForm"]["attendeeEmail"].value;
+      const phoneNumberContainer = document.getElementById("phoneNumberContainer");
+      const emailContainer = document.getElementById("emailContainer");
+      const phoneNumberError = document.getElementById("phoneNumberError");
+      const emailError = document.getElementById("emailError");
+      let isValid = true;
+
+      if (phoneNumber === "") {
+        phoneNumberError.style.display = "block";
+        phoneNumberContainer.style.marginBottom = "10px";
+        isValid = false;
+      } else {
+        phoneNumberError.style.display = "none";
+        phoneNumberContainer.style.marginBottom = "20px";
+      }
+      if (email === "") {
+        emailError.style.display = "block";
+        emailContainer.style.marginBottom = "10px";
+        isValid = false;
+      } else {
+        emailError.style.display = "none";
+        emailContainer.style.marginBottom = "20px";
+      }
+
+      return isValid;
+    }
+
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+  </script>
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -271,11 +326,6 @@ if ($result_account->num_rows > 0) {
               <p>
                 <?php echo $activityDescription ?>
               </p>
-              <span style="display: flex; justify-content: flex-end; margin-right: 15px;">
-                <button type="button" class="btn-icon" data-toggle="modal" data-target="#more1">
-                  <a href="#more1">查看更多</a>
-                </button>
-              </span>
               <div>
 
               </div>
@@ -296,7 +346,7 @@ if ($result_account->num_rows > 0) {
                   echo '      <p>' . $locations . '</p>';
                   echo '    </div>';
                   echo '  </span>';
-                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = $routeId";
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
                   $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
                   while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
                     $tripIntroductionTitle = $tripIntroduction_result['tripIntroductionTitle'];
@@ -308,7 +358,7 @@ if ($result_account->num_rows > 0) {
                     echo '  </div>';
                   }
                   echo '</div>';
-                  $sql_route_file = "SELECT * FROM files WHERE routeId = $routeId";
+                  $sql_route_file = "SELECT * FROM files WHERE routeId = '$routeId'";
                   $result_route_file = mysqli_query($conn, $sql_route_file);
                   echo '<div class="col-md-12 room-single ftco-animate mb-5 mt-5">';
                   echo '  <div class="row">';
@@ -327,14 +377,6 @@ if ($result_account->num_rows > 0) {
                 }
                 echo '</div>';
                 ?>
-                <h4>攜帶物品</h4>
-                <br>
-                <div class="list">
-                  <li>睡袋</li>
-                  <li>洗漱用品</li>
-                  <li>保暖衣物</li>
-                  <li>點心</li>
-                </div>
               </div>
             </div>
           </div> <!-- .col-md-8 -->
@@ -376,20 +418,6 @@ if ($result_account->num_rows > 0) {
                 <span class="more">
                   <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
                     <a href="#more2">查看更多</a></button>
-                </span>
-
-                <div class="box-side">
-                  <h6>目前所需用品</h6>
-                </div>
-                <div class="list" style="font-size: 14px;">
-                  <li>睡袋</li>
-                  <li>洗漱用品</li>
-                  <li>保暖衣物</li>
-                  <li>點心</li>
-                </div>
-                <span class=" more">
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more3">
-                    <a href="#more3">查看更多</a></button>
                 </span>
                 <div class="box-side">
                   <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
@@ -486,11 +514,8 @@ if ($result_account->num_rows > 0) {
               </li>
             </ul>
           </div>
-          <!-- /.widget -->
         </div>
-        <!-- /.col-lg-4 -->
       </div>
-      <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">
@@ -521,183 +546,39 @@ if ($result_account->num_rows > 0) {
 
   </div>
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modalContent">
-        <div class="box-mod">
-          <h4 id="exampleModalLabel">參加</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <p style="color: #a0a0a0 ">參加活動蒐集勳章！
-        <p>
-
-        <div class="modal-list">
-          <input type="text" placeholder="電話">
-          <input type="email" placeholder="信箱">
-          <textarea rows="4" type="text" value="suggest" placeholder="備註 / 建議"></textarea>
-
-          <h6 style="font-weight:bold;">可提供裝備</h6>
-          <div class="supply">
-            <div class="row">
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>睡袋</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>手電筒</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>瓦斯爐</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="w-100"></div>
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-
-              <div class="col-md-4">
-                <input type="checkbox">
-                <p>帳篷</p>
-                <select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-            </div>
+  <form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="false">
+      <div class="modal-dialog" role="document">
+        <div class="modalContent">
+          <div class="box-mod">
+            <h4 id="exampleModalLabel">參加</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+            </button>
           </div>
-          <textarea rows="2" placeholder="其他" type="text"></textarea>
-        </div>
-        <div style=" display: flex;
-        justify-content: flex-end;">
-          <button class="btn-secondary">提交</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 詳細內容查看更多 -->
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true" id="more1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">更多詳細內容</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <div class="modal-list" style="margin: 32px;">
-          <p>
-            大家好！想要人多一起露營卻找不到志同道合的人一起嗎？<br>
-            我們在找的就是喜愛露營的你，如果害羞也可以找認識的朋友一起來玩！我們也規畫許多景點一起探索~<br>
-            我們將在美麗的自然環境中建立露營地，並舉辦一系列的活動，包括徒步旅行、野餐、烤火晚會、星空觀測等，這將是一個絕佳的機會，讓你們放鬆身心，與自然環境建立更深厚的聯繫。<br>
-            無論你是一個喜歡戶外活動的新手還是一個經驗豐富的露營達人，我們都歡迎你的加入，這將是一個充滿友誼和探險的旅程，讓我們一起度過一個難忘的夏日！
-            馬上報名參加我們的露營活動吧，我們期待著與你們共度美好時光！
+          <p style="color: #a0a0a0">參加活動蒐集勳章！</p>
+          <div class="modal-list">
+            <div id="phoneNumberContainer" class="input-container">
+              <div id="phoneNumberError" class="error-message">*必填</div>
+              <input name="attendeePhoneNumber" type="text" placeholder="電話">
+            </div>
 
-          </p>
+            <div id="emailContainer" class="input-container">
+              <div id="emailError" class="error-message">*必填</div>
+              <input name="attendeeEmail" type="email" placeholder="信箱">
+            </div>
+            <textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 / 建議"></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <input type="hidden" name="activityId" value="<?php echo $activityId ?>">
+            <input type="hidden" name="accountId" value="<?php echo $attendeeId ?>">
+            <button class="btn-secondary" type="submit">提交</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <div class="modal fade" id="more2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -760,31 +641,6 @@ if ($result_account->num_rows > 0) {
       </div>
     </div>
   </div>
-
-  <div class="modal fade" id="more3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modalContent">
-        <div class="box-mod">
-          <h5 id="exampleModalLabel">所有所需用品</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <div class="modal-list">
-          <div class="list">
-            <li>睡袋</li>
-            <li>洗漱用品</li>
-            <li>保暖衣物</li>
-            <li>瓦斯爐</li>
-            <li>瓦斯罐</li>
-            <li>露營燈</li>
-            <li>點心</li>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <!-- .section -->
   <!-- loader -->

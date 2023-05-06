@@ -1,8 +1,4 @@
 <?php
-// 開啟錯誤報告
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once '../conn.php';
 require_once '../uuid_generator.php';
 
@@ -94,11 +90,6 @@ for ($i = 0; $i < count($files['name']); $i++) {
     }
 }
 
-
-// 關閉資料庫連接
-mysqli_close($conn);
-
 // 回到原始頁面
 header('Location: ../../deluxe-master/check.php');
-exit;
 ?>

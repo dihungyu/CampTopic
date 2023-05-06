@@ -1,11 +1,39 @@
 <?php
+// 開啟錯誤報告
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once '../php/conn.php';
 
 session_start();
 
 $accountId = '54ec96dae8b611edad24e22a0f5e8453';
 
-$sql_activities = "SELECT * FROM activities LEFT JOIN accounts ON activities.accountId = accounts.accountId LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId WHERE activities.accountId != '$accountId'";
+$sql_allCampsites = "SELECT * FROM campsites";
+$result_allCampsites = mysqli_query($conn, $sql_allCampsites);
+
+// 搜尋關鍵字
+$activity_search_keyword = isset($_GET['activity_search_keyword']) ? trim($_GET['activity_search_keyword']) : '';
+
+// 使用關鍵字搜尋活動
+$activity_keyword_condition = $activity_search_keyword ? "AND (activities.activityTitle LIKE '%$activity_search_keyword%' OR activities.activityDescription LIKE '%$activity_search_keyword%')" : "";
+
+// 查詢所有活動總數
+$activity_count_sql = "SELECT COUNT(*) as total FROM activities WHERE activities.accountId != '$accountId' $activity_keyword_condition";
+$activity_count_result = $conn->query($activity_count_sql);
+$row = $activity_count_result->fetch_assoc();
+$activity_total_rows = $row['total'];
+$activity_total_pages = ceil($activity_total_rows / 4); // 每四個活動換下一頁
+
+$activity_perPage = 4;
+$activity_current_page = isset($_GET['activity_page']) ? (int) $_GET['activity_page'] : 1;
+$activity_offset = ($activity_current_page - 1) * $activity_perPage;
+
+// 查詢所有活動資料
+$sql_activities = "SELECT * FROM activities
+  LEFT JOIN accounts ON activities.accountId = accounts.accountId
+  LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId
+  WHERE activities.accountId != '$accountId' $activity_keyword_condition";
 $result_activities = mysqli_query($conn, $sql_activities);
 
 $activities = array();
@@ -15,8 +43,6 @@ if (mysqli_num_rows($result_activities) > 0) {
   }
 }
 
-$sql_allCampsites = "SELECT * FROM campsites";
-$result_allCampsites = mysqli_query($conn, $sql_allCampsites);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,9 +92,7 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
-    crossorigin="anonymous"></script>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
 
@@ -98,41 +122,32 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
       }
     }
 
-
-    $(document).ready(function () {
-      setDateInputBehavior('#start-date-input');
-      setDateInputBehavior('#end-date-input');
-    });
-
-
     function validateForm() {
-      const phoneNumber = document.forms["attendForm"]["attendeePhoneNumber"].value;
-      const email = document.forms["attendForm"]["attendeeEmail"].value;
-      const phoneNumberContainer = document.getElementById("phoneNumberContainer");
-      const emailContainer = document.getElementById("emailContainer");
-      const phoneNumberError = document.getElementById("phoneNumberError");
-      const emailError = document.getElementById("emailError");
+      const fields = [
+        { name: "attendeePhoneNumber", errorId: "attendeePhoneNumberError", containerId: "attendeePhoneNumberContainer" },
+        { name: "attendeeEmail", errorId: "attendeeEmailError", containerId: "attendeeEmailContainer" },
+      ];
+
       let isValid = true;
 
-      if (phoneNumber === "") {
-        phoneNumberError.style.display = "block";
-        phoneNumberContainer.style.marginBottom = "10px";
-        isValid = false;
-      } else {
-        phoneNumberError.style.display = "none";
-        phoneNumberContainer.style.marginBottom = "20px";
-      }
-      if (email === "") {
-        emailError.style.display = "block";
-        emailContainer.style.marginBottom = "10px";
-        isValid = false;
-      } else {
-        emailError.style.display = "none";
-        emailContainer.style.marginBottom = "20px";
-      }
+      fields.forEach(field => {
+        const fieldValue = document.forms["attendForm"][field.name].value;
+        const fieldContainer = document.getElementById(field.containerId);
+        const fieldError = document.getElementById(field.errorId);
+
+        if (fieldValue === "") {
+          fieldError.style.display = "block";
+          fieldContainer.style.marginBottom = "10px";
+          isValid = false;
+        } else {
+          fieldError.style.display = "none";
+          fieldContainer.style.marginBottom = "20px";
+        }
+      });
 
       return isValid;
     }
+
 
     function validateNewActivityForm() {
       const fields = [
@@ -168,27 +183,145 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
 
     // Run this when the document is ready
     $(document).ready(function () {
-      // Add event listener to the submit button
-      $('button.btn-secondary').on('click', function (event) {
+      setDateInputBehavior('#start-date-input');
+      setDateInputBehavior('#end-date-input');
+
+      // Add event listener to the attendForm submit button
+      $('#attendForm button.btn-secondary').on('click', function (event) {
+        event.preventDefault();
+        if (validateForm()) {
+          // Submit the form
+          $('#attendForm').submit();
+        }
+      });
+
+      // Add event listener to the newActivityForm submit button
+      $('#newActivityForm button.btn-secondary').on('click', function (event) {
         event.preventDefault();
         if (validateNewActivityForm()) {
           // Submit the form
           $('#newActivityForm').submit();
         }
+      });
+
+    });
+
+    let selectedLabels = [];
+
+    function filterActivities() {
+      selectedLabels = getSelectedLabels();
+      let labelIds = selectedLabels.map(label => label.labelId);
+      let accountId = <?php echo json_encode($accountId); ?>;
+
+      let bodyContent;
+
+      if (labelIds.length > 0) {
+        bodyContent = "labelIds=" + JSON.stringify(labelIds) + "&accountId=" + accountId;
+      } else {
+        bodyContent = "accountId=" + accountId;
+      }
+
+      fetch("../php/Filter/filter_activities.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: bodyContent
+      })
+        .then(response => response.json())
+        .then((filteredActivities) => {
+          displayFilteredActivities(filteredActivities);
+          displaySelectedLabels();
+        });
+    }
+
+    document.querySelectorAll(".form-check-input").forEach(checkbox => {
+      checkbox.addEventListener("change", () => {
+        filterActivities();
       });
     });
 
-    // Run this when the document is ready
-    $(document).ready(function () {
-      // Add event listener to the submit button
-      $('button.btn-secondary').on('click', function (event) {
-        event.preventDefault();
-        if (validateNewActivityForm()) {
-          // Submit the form
-          $('#newActivityForm').submit();
-        }
+    function displaySelectedLabels() {
+      let container = document.getElementById("selected-tags-container");
+      container.innerHTML = "";
+
+      selectedLabels.forEach(label => {
+        let tag = document.createElement("a");
+        tag.classList.add("tag-filter");
+        tag.setAttribute("data-label-id", label.labelId);
+        tag.innerHTML = `${label.labelName}`;
+        container.appendChild(tag);
       });
-    });
+    }
+
+
+    function getSelectedLabels() {
+      let checkboxes = document.querySelectorAll(".form-check-input");
+      let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({ labelName: checkbox.nextElementSibling.textContent, labelId: checkbox.dataset.labelId }));
+      return selectedLabels;
+    }
+
+    function displayFilteredActivities(activities) {
+      let activitiesContainer = document.querySelector(".col-xs-12.col-sm-6");
+      activitiesContainer.innerHTML = '';
+
+      activities.forEach(activity => {
+        let activityHTML = generateActivityCard(activity);
+        activitiesContainer.innerHTML += activityHTML;
+      });
+    }
+
+    function generateActivityCard(activity) {
+      let activityId = activity.activityId;
+      let campsiteName = activity.campsiteName;
+      let accountName = activity.accountName;
+      let activityTitle = activity.activityTitle;
+      let activityStartDate = activity.activityStartDate;
+      let activityStartMonthDay = new Date(activityStartDate).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+      let activityEndDate = activity.activityEndDate;
+      let activityEndMonthDay = new Date(activityEndDate).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+      let minAttendee = activity.minAttendee;
+      let maxAttendee = activity.maxAttendee;
+      let activityAttendence = activity.activityAttendence;
+      let leastAttendeeFee = activity.leastAttendeeFee;
+      let maxAttendeeFee = activity.maxAttendeeFee;
+
+      return `
+    <div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">
+      <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">
+      <a href="../deluxe-master/camper.php?activityId=' . $activityId . '">
+      <span class="card-head">
+        <img src="images/person_4-min.jpg" alt="Admin" />
+        <p>${accountName}</p>
+      </span>
+      <div class="card-body" style="margin-top: 0px;">
+        <h5 class="card-title">${activityStartMonthDay}-${activityEndMonthDay} ${activityTitle}</h5>
+        <div style="display: flex;flex-direction: column">
+          <div class="findcamper">
+            <span class="findcamper-icon">
+              <i class="fa-solid fa-calendar-days"></i>${activityStartMonthDay}-${activityEndMonthDay}</span>
+            <span class="findcamper-icon">
+              <i class="fa-solid fa-person"></i>${minAttendee}-${maxAttendee} 人
+            </span>
+          </div>
+          <div class="findcamper">
+            <span class="findcamper-icon" style="display: flex; align-items: center;">
+              <i class="icon-map"></i>${campsiteName}</span>
+            <span class="findcamper-icon">
+              <i class="fa-solid fa-sack-dollar"></i>${leastAttendeeFee}-${maxAttendeeFee}元</span>
+          </div>
+        </div>
+        <hr>
+        <div class="findcamper-bottom">
+          <p>已有${activityAttendence}人參加 </p>
+          <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+            data-toggle="modal" data-target="#Modal${activityId}">
+            參加！</button>
+        </div>
+      </div>
+      </a>
+    </div>`;
+    }
 
 
     function hideMessage() {
@@ -275,35 +408,23 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <span style="display:flex;align-items: center;justify-content: center">
             <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
               <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
             </button>
-            <a class="tag-filter" href="#">櫻花
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
+            <div id="selected-tags-container"></div>
           </span>
           <span style="display:flex ;">
             <div id="navbar-search-autocomplete" class="form-outline">
-              <input type="search" id="form1" class="form-control" style="border-radius: 35px;" />
+              <form>
+                <input type="search" id="form1" name="activity_search_keyword" class="form-control"
+                  style="border-radius: 35px;" />
             </div>
-            <button type="button" class="button-search" style="margin-left: 10px; ">
+            <button type="submit" class="button-search" style="margin-left: 10px; ">
               <i class="fas fa-search"></i>
             </button>
+            </form>
           </span>
         </div>
         <?php
@@ -382,14 +503,16 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
               $leastAttendeeFee = $activity['leastAttendeeFee'];
               $maxAttendeeFee = $activity['maxAttendeeFee'];
 
-              echo '<div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">';
+              echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
               echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
+              echo '<a href="../deluxe-master/camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
               echo '    <p>' . $accountName . '</p>';
               echo '  </span>';
 
               echo '  <div class="card-body" style="margin-top: 0px;">';
+
               echo '    <h5 class="card-title">' . $activityStartMonthDay . '-' . $activityEndMonthDay . ' ' . $activityTitle . '</h5>';
               echo '    <div style="display: flex;flex-direction: column">';
               echo '      <div class="findcamper">';
@@ -416,13 +539,13 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
               echo '        參加！</button>';
               echo '    </div>';
               echo '  </div>';
+              echo '</a>';
               echo '</div>';
             }
             ?>
 
           </div>
         </div>
-        <!-- .item -->
       </div>
     </div>
   </div>
@@ -432,11 +555,9 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
     <div class="col-lg-3"></div>
     <div class="col-lg-6 text-center">
       <div class="custom-pagination">
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
+        <?php for ($i = 1; $i <= $activity_total_pages; $i++): ?>
+          <a href="?activity_page=<?= $i ?>" <?= ($i == $activity_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+        <?php endfor; ?>
       </div>
     </div>
   </div>
@@ -543,14 +664,14 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
         echo '</div>';
         echo '<p style="color: #a0a0a0">參加活動蒐集勳章！</p>';
         echo '<div class="modal-list">';
-        echo '<div id="phoneNumberContainer" class="input-container">';
+        echo '<div id="attendeePhoneNumberContainer" class="input-container">';
+        echo '<div id="attendeePhoneNumberError" class="error-message">*必填</div>';
         echo '<input name="attendeePhoneNumber" type="text" placeholder="電話">';
         echo '</div>';
-        echo '<div id="phoneNumberError" class="error-message">*必填</div>';
-        echo '<div id="emailContainer" class="input-container">';
+        echo '<div id="attendeeEmailContainer" class="input-container">';
+        echo '<div id="attendeeEmailError" class="error-message">*必填</div>';
         echo '<input name="attendeeEmail" type="email" placeholder="信箱">';
         echo '</div>';
-        echo '<div id="emailError" class="error-message">*必填</div>';
         echo '<textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 /建議"></textarea>';
         echo '</div>';
         echo '<div style="display: flex; justify-content: flex-end;">';
@@ -732,6 +853,7 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
           </div>
         </div>
       </div>
+
       <!--篩選 -->
       <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -752,18 +874,19 @@ $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
                 $labels[] = $row_labels;
               }
               foreach ($labels as $label) {
+                $labelId = $label['labelId'];
                 $labelName = $label['labelName'];
                 echo '<div class="form-check">';
-                echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">';
+                echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" data-label-id="' . $labelId . '">';
                 echo '<label class="form-check-label" for="flexCheckDefault">' . $labelName . '</label>';
                 echo '</div>';
               }
               ?>
-
             </div>
             <div class="modal-footer">
               <div style=" display: flex; justify-content: flex-end;">
-                <button class="btn-secondary">確認</button>
+                <button type="button" class="btn-secondary" data-dismiss="modal"
+                  onclick="filterActivities()">確認</button>
               </div>
             </div>
           </div>
