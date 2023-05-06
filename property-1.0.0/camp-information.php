@@ -545,10 +545,67 @@ if (mysqli_num_rows($result_activities) > 0) {
             ?>
 
           </div>
+          <div class="col-xs-12 col-sm-6">
+            <?php
+            foreach ($activities as $activity) {
+              $activityId = $activity['activityId'];
+              $campsiteName = $activity['campsiteName'];
+              $accountName = $activity['accountName'];
+              $activityTitle = $activity['activityTitle'];
+              $activityStartDate = $activity['activityStartDate'];
+              $activityStartMonthDay = date('m/d', strtotime($activityStartDate));
+              $activityEndDate = $activity['activityEndDate'];
+              $activityEndMonthDay = date('m/d', strtotime($activityEndDate));
+              $minAttendee = $activity['minAttendee'];
+              $maxAttendee = $activity['maxAttendee'];
+              $activityAttendence = $activity['activityAttendence'];
+              $leastAttendeeFee = $activity['leastAttendeeFee'];
+              $maxAttendeeFee = $activity['maxAttendeeFee'];
+
+              echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
+              echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
+              echo '<a href="../deluxe-master/camper.php?activityId=' . $activityId . '">';
+              echo '  <span class="card-head">';
+              echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
+              echo '    <p>' . $accountName . '</p>';
+              echo '  </span>';
+
+              echo '  <div class="card-body" style="margin-top: 0px;">';
+
+              echo '    <h5 class="card-title">' . $activityStartMonthDay . '-' . $activityEndMonthDay . ' ' . $activityTitle . '</h5>';
+              echo '    <div style="display: flex;flex-direction: column">';
+              echo '      <div class="findcamper">';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-calendar-days"></i>' . $activityStartMonthDay . '-' . $activityEndMonthDay . '</span>';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-person"></i>' . $minAttendee . '-' . $maxAttendee . ' 人';
+              echo '        </span>';
+              echo '      </div>';
+
+              echo '      <div class="findcamper">';
+              echo '        <span class="findcamper-icon" style="display: flex; align-items: center;">';
+              echo '          <i class="icon-map"></i>' . $campsiteName . '</span>';
+              echo '        <span class="findcamper-icon">';
+              echo '          <i class="fa-solid fa-sack-dollar"></i>' . $leastAttendeeFee . '-' . $maxAttendeeFee . '元</span>';
+              echo '      </div>';
+
+              echo '    </div>';
+              echo '    <hr>';
+              echo '    <div class="findcamper-bottom">';
+              echo '      <p>已有' . $activityAttendence . '人參加 </p>';
+              echo '      <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"';
+              echo '        data-toggle="modal" data-target="#Modal' . $activityId . '">';
+              echo '        參加！</button>';
+              echo '    </div>';
+              echo '  </div>';
+              echo '</a>';
+              echo '</div>';
+            }
+            ?>
+            </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <div class="row align-items-center py-5">
