@@ -1,3 +1,11 @@
+<?php
+session_start();
+require_once '../php/conn.php';
+require_once '../php/uuid_generator.php';
+
+$articleId = $_GET['articleId'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,6 +50,13 @@
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
+
+  <style>
+    #article-content .article-img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -102,43 +117,46 @@
   </div>
 
 
+
+  <?php
+  //取得文章資料
+  $main_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
+  $main_article_result = mysqli_query($conn, $main_article_sql);
+  $main_article_row = mysqli_fetch_assoc($main_article_result);
+  ?>
   <section class="ftco-section ftco-degree-bg">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 ftco-animate order-md-last">
           <span class="img-name">
             <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
-            <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
+            <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
 
-          <h2 class="mb-4">原民部落露營是一種生活方式</h2>
-          <p>遠離城市的喧囂，貼近大自然的清幽祕境，感受原住民的熱情及寓教於樂的體驗。<br>出發前你需要有這些準備，這樣才能完盡興喔！
-          <p>
-            <img src="images/Rectangle 338.png" alt="" class="img-fluid">
-          </p>
-          <p>遠離城市的喧囂，貼近大自然的清幽祕境，感受原住民的熱情及寓教於樂的體驗。走進部落，你會看見另一種不同於繁華生活的型態，學習與大地共同生活。露營同時也是接近原始生活的一種方式，而原民帶領我們認識他們的家鄉，
-            看見你吃的食物從何而來，參與每個最單純與自然的呼應。自製竹筒飯、搗麻糬、學習捕獵陷阱DIY、細細品嘗原味食材。</p>
-          <h2 class="mb-4 mt-5">原住民部落露營二要二不要</h2>
+          <h2 class="mb-4"><?php echo $main_article_row["articleTitle"]; ?></h2>
+          <div id="article-content">
+            <?php echo $main_article_row["articleContent"]; ?>
+          </div>
 
-          <p>
-            <img src="images/Rectangle 339.png" alt="" class="img-fluid">
-          </p>
-          <p>二要：<br>
-            1. 先行查資料，了解部落文化<br>
-            2. 部落導覽及體驗活動參與，尊重原民文化及生活方式<br><br>
-
-            二不要：<br>
-            1. 孩子避免獨自前往偏遠處<br>
-            2. 勿隨性捕捉野生動物</p>
-          <br>
-          <p>
-            文章出處：露營樂<br>
-            原文作者：露營樂</p>
+          <!-- 此文章相關標籤 -->
           <div class="tag-widget post-tag-container mb-5 mt-5">
             <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">原住民</a>
-              <a href="#" class="tag-cloud-link">自然</a>
-              <a href="#" class="tag-cloud-link">注意事項</a>
+              <?php
+              // 查詢文章相關的標籤
+              $article_label_query = "SELECT articles_labels.labelId, labels.labelName FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId WHERE articles_labels.articleId = '$articleId'";
+
+              $article_label_result = mysqli_query($conn, $article_label_query);
+
+              // 檢查錯誤
+              if (!$article_label_result) {
+                echo "Error: " . mysqli_error($conn);
+              }
+
+              $printed_article_tags = 0;
+              while ($article_tags_row = mysqli_fetch_assoc($article_label_result)) {
+                echo "<a href='#' class='tag-cloud-link'>" . $article_tags_row["labelName"] . "</a>";
+              }
+              ?>
             </div>
           </div>
 
@@ -205,66 +223,80 @@
 
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
-          <div class="input-group " style="margin-left:20px;">
-            <div id="navbar-search-autocomplete" class="form-outline" style="display: flex;">
-              <button type="button" class="button-search" style="margin-right: 10px;">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-              <input type="search" id="form1" class="form-control" style="border-radius: 35px;" />
-            </div>
-          </div>
+
           <div class="sidebar-box ftco-animate mt-5">
             <h3>熱門標籤</h3>
             <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">親子</a>
-              <a href="#" class="tag-cloud-link">雲海</a>
-              <a href="#" class="tag-cloud-link">阿里山</a>
-              <a href="#" class="tag-cloud-link">櫻花</a>
-              <a href="#" class="tag-cloud-link">夜景</a>
-              <a href="#" class="tag-cloud-link">露營美食</a>
-              <a href="#" class="tag-cloud-link">露營裝備</a>
-              <a href="#" class="tag-cloud-link">大自然</a>
+              <?php
+              //根據資料庫裡文章類別的標籤出現次數來選擇出現次數最多的前五個標籤
+              $label_query = "SELECT labels.labelName, COUNT(articles_labels.labelId) AS labelCount FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId GROUP BY articles_labels.labelId ORDER BY labelCount DESC LIMIT 5";
+              $label_result = mysqli_query($conn, $label_query);
+
+              // 檢查錯誤
+              if (!$label_result) {
+                echo "Error: " . mysqli_error($conn);
+              }
+
+              while ($label_row = mysqli_fetch_assoc($label_result)) {
+                echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
+              }
+              ?>
             </div>
           </div>
 
           <div class="sidebar-box ftco-animate">
             <h3>推薦文章</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+
+            <?php
+            // Top 3 熱門文章
+            $top3_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 3";
+            $top3_article_result = mysqli_query($conn, $top3_article_sql);
+
+            if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
+              while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
+                $articleId = $top3_article_row["articleId"];
+
+                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
+                $files_result = mysqli_query($conn, $files_query);
+                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+
+                if ($file_result = mysqli_fetch_assoc($files_result)) {
+                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                  $image_src = $file_path;
+                }
+
+                // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+
+                // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+                $formatted_date = date('F j, Y', $timestamp);
+
+                // 在顯示卡片之前查詢留言數
+                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                $comment_count = $row['comment_count'];
+
+                echo "<div class='block-21 mb-4 d-flex'>
+              <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
+              <div class='text'>
+                <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top3_article_row["articleTitle"] . "</a></h3>
+                <div class='meta'>
+                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top3_article_row["accountName"] . "</a></div>
+                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                 </div>
               </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
+            </div>";
+              }
+            }
+            ?>
+
+
+
+
           </div>
         </div>
-
       </div>
     </div>
   </section> <!-- .section -->
@@ -370,6 +402,13 @@
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#article-content img').addClass('article-img');
+      });
+    </script>
 
 </body>
 

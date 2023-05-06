@@ -385,12 +385,14 @@ if (isset($_POST["likeEquipDel"])) {
                     $formatted_date = date('F j, Y', $timestamp);
 
                     //若文章內容超過30字做限制
-                    $content_length = mb_strlen($article_row["articleContent"], 'UTF-8');
+                    $content_length = mb_strlen(strip_tags($article_row["articleContent"]), 'UTF-8');
                     if ($content_length > 30) {
-                      $truncated_content = mb_substr($article_row["articleContent"], 0, 80, 'UTF-8') . '...';
+                      $truncated_content = mb_substr(strip_tags($article_row["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
                     } else {
-                      $truncated_content = $article_row["articleContent"];
+                      $truncated_content = strip_tags($article_row["articleContent"]);
                     }
+
+
 
                     // 在顯示卡片之前查詢留言數
                     $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
@@ -574,7 +576,7 @@ if (isset($_POST["likeEquipDel"])) {
               </button>
               </form>
             </div>
-            <a href="property-1.0.0/add-article.php">
+            <a href="/CampTopic/deluxe-master/property-1.0.0/add-article.php">
               <button type="button" class="gray-lg" data-toggle="modal" data-target="#create" style="margin-left: 120px;">
                 <h6 style="font-weight: bold;margin-right: -20px;">分享你的露營心得</h6>
                 <div class="verticle-line"></div>
