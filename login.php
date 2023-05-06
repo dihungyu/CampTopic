@@ -29,7 +29,7 @@ if ($_POST["FormType"] == "Login") {
 				setcookie("accountName", $row["accountName"], time() + 3600 * 24 * 30, "/");
 				setcookie("accountEmail", $row["accountEmail"], time() + 3600 * 24 * 30, "/");
 				setcookie("accountPhoneNumber", $row["accountPhoneNumber"], time() + 3600 * 24 * 30, "/");
-				setcookie("accountLevel", $row["accountLevel"], time() + 3600 * 24 * 30, "/");
+				setcookie("accountType", $row["accountType"], time() + 3600 * 24 * 30, "/");
 
 				// 將敏感的使用者資訊存入 Session
 				$_SESSION["accountPassword"] = $row["accountPassword"];

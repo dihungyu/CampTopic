@@ -317,7 +317,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $top1ArticleContent = mb_substr($top1ArticleContent, 0, 200, 'utf-8') . '...';
               }
               ?>
-              <p><?php echo $top1ArticleContent . "<a href=''>  閱讀全文  </a>"; ?></p>
+              <p><?php echo $top1ArticleContent . "<a href='article.php?articleId=" . $articleId . "'>  閱讀全文  </a>"; ?></p>
             </div>
 
             <div class="container mb-5">
@@ -404,7 +404,7 @@ if (isset($_POST["likeEquipDel"])) {
                     echo "<article class='col-md-11 article-list mb-4'>
                   <div class='inner'>
                     <figure>
-                      <a href='#'>
+                      <a href='article.php?articleId=" . $articleId . "'>
                         <img src='" . $image_src . "'>
                       </a>
                     </figure>
@@ -412,12 +412,12 @@ if (isset($_POST["likeEquipDel"])) {
                       <div class='detail' style='justify-content: space-between;'>
                         <span style='display: flex;'>
                           <div class='category'>
-                            <a href='#'>" . $article_row["accountName"] . "</a>
+                            <a href='article.php?articleId=" . $articleId . "'>" . $article_row["accountName"] . "</a>
                           </div>
                           <div class='time'>" . $formatted_date . "</div>
                         </span>
                       </div>
-                      <h5><a href='#'>" . $article_row["articleTitle"] . "</a></h5>
+                      <h5><a href='article.php?articleId=" . $articleId . "'>" . $article_row["articleTitle"] . "</a></h5>
                       <p style='padding-top: 10px;'>
                         " . $truncated_content . "
                       </p>
@@ -525,16 +525,16 @@ if (isset($_POST["likeEquipDel"])) {
 
                 echo "<div class='col-md-6 d-flex ftco-animate'>
               <div class='blog-entry align-self-stretch'>
-                <a href='blog-single.html' class='block-20' style='background-image: url(" . $image_src . ");'>
+                <a href='article.php?articleId=" . $articleId . "' class='block-20' style='background-image: url(" . $image_src . ");'>
                 </a>
                 <div class='text mt-3 d-block'>
                   <h6 class='heading2 mt-3'>
-                    <a href='#'>" . $top234_article_row["articleTitle"] . "</a>
+                    <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a>
                   </h6>
                   <div class='meta2 mb-3'>
-                    <div><a href='#'>" . $formatted_date . "</a></div>
-                    <div><a href='#'>" . $top234_article_row["accountName"] . "</a></div>
-                    <div><a href='#' class='meta-chat'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "'>" . $formatted_date . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["accountName"] . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "' class='meta-chat'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                   </div>
                 </div>
               </div>
@@ -574,14 +574,16 @@ if (isset($_POST["likeEquipDel"])) {
               </button>
               </form>
             </div>
-            <button type="button" class="gray-lg" data-toggle="modal" data-target="#create" style="margin-left: 120px;">
-              <h6 style="font-weight: bold;margin-right: -20px;">分享你的露營心得</h6>
-              <div class="verticle-line"></div>
-              <span style="display: flex; align-items: center; justify-content: flex-start">
-                <i class="fa-solid fa-circle-plus" style="font-size: 18px;margin-right: 8px;margin-left: -25px;"></i>
-                <h6 style="font-weight:bold">貼文</h6>
-              </span>
-            </button>
+            <a href="property-1.0.0/add-article.php">
+              <button type="button" class="gray-lg" data-toggle="modal" data-target="#create" style="margin-left: 120px;">
+                <h6 style="font-weight: bold;margin-right: -20px;">分享你的露營心得</h6>
+                <div class="verticle-line"></div>
+                <span style="display: flex; align-items: center; justify-content: flex-start">
+                  <i class="fa-solid fa-circle-plus" style="font-size: 18px;margin-right: 8px;margin-left: -25px;"></i>
+                  <h6 style="font-weight:bold">貼文</h6>
+                </span>
+              </button>
+            </a>
 
             <div class="sidebar-box ftco-animate mt-5">
               <h3>文章標籤</h3>

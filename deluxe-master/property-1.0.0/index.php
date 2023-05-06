@@ -812,7 +812,7 @@ if (isset($_POST["likeEquipDel"])) {
               <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
               <div class='text'>";
               echo "<div>";
-              echo "<h3 class='heading'><a href='../article.html'>";
+              echo "<h3 class='heading'><a href='../article.php?articleId=" . $articleId . "'>";
               if (strlen($articleData["articleTitle"]) > 25) {
                 echo wordwrap($articleData["articleTitle"], 25, "<br>");
               } else {
@@ -820,9 +820,9 @@ if (isset($_POST["likeEquipDel"])) {
               }
               echo "</a></h3>";
               echo "<div class='meta'>
-                  <div><a href='../article.html'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
-                  <div><a href='./article.html'><span class='icon-person'></span> " . $author_name . "</a></div>
-                  <div><a href='./article.html'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                  <div><a href='../article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                  <div><a href='../article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $author_name . "</a></div>
+                  <div><a href='../article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                 </div>";
               echo "</div>";
               echo "</div>
