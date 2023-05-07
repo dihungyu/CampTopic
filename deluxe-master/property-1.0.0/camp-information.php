@@ -1,13 +1,9 @@
 <?php
-// 開啟錯誤報告
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once '../../php/conn.php';
 
 session_start();
 
-$accountId = '54ec96dae8b611edad24e22a0f5e8453';
+$accountId = $_COOKIE["accountId"];
 
 $sql_allCampsites = "SELECT * FROM campsites";
 $result_allCampsites = mysqli_query($conn, $sql_allCampsites);
@@ -96,7 +92,6 @@ if (mysqli_num_rows($result_activities) > 0) {
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-
     function setDateInputBehavior(dateInputId) {
       const dateInput = $(dateInputId);
 
@@ -124,9 +119,16 @@ if (mysqli_num_rows($result_activities) > 0) {
     }
 
     function validateForm() {
-      const fields = [
-        { name: "attendeePhoneNumber", errorId: "attendeePhoneNumberError", containerId: "attendeePhoneNumberContainer" },
-        { name: "attendeeEmail", errorId: "attendeeEmailError", containerId: "attendeeEmailContainer" },
+      const fields = [{
+        name: "attendeePhoneNumber",
+        errorId: "attendeePhoneNumberError",
+        containerId: "attendeePhoneNumberContainer"
+      },
+      {
+        name: "attendeeEmail",
+        errorId: "attendeeEmailError",
+        containerId: "attendeeEmailContainer"
+      },
       ];
 
       let isValid = true;
@@ -151,15 +153,46 @@ if (mysqli_num_rows($result_activities) > 0) {
 
 
     function validateNewActivityForm() {
-      const fields = [
-        { name: "activityTitle", errorId: "activityTitleError", containerId: "activityTitleContainer" },
-        { name: "activityStartDate", errorId: "activityStartDateError", containerId: "activityStartDateContainer" },
-        { name: "activityEndDate", errorId: "activityEndDateError", containerId: "activityEndDateContainer" },
-        { name: "minAttendee", errorId: "minAttendeeError", containerId: "minAttendeeContainer" },
-        { name: "maxAttendee", errorId: "maxAttendeeError", containerId: "maxAttendeeContainer" },
-        { name: "leastAttendeeFee", errorId: "leastAttendeeFeeError", containerId: "leastAttendeeFeeContainer" },
-        { name: "maxAttendeeFee", errorId: "maxAttendeeFeeError", containerId: "maxAttendeeFeeContainer" },
-        { name: "activityDescription", errorId: "activityDescriptionError", containerId: "activityDescriptionContainer" },
+      const fields = [{
+        name: "activityTitle",
+        errorId: "activityTitleError",
+        containerId: "activityTitleContainer"
+      },
+      {
+        name: "activityStartDate",
+        errorId: "activityStartDateError",
+        containerId: "activityStartDateContainer"
+      },
+      {
+        name: "activityEndDate",
+        errorId: "activityEndDateError",
+        containerId: "activityEndDateContainer"
+      },
+      {
+        name: "minAttendee",
+        errorId: "minAttendeeError",
+        containerId: "minAttendeeContainer"
+      },
+      {
+        name: "maxAttendee",
+        errorId: "maxAttendeeError",
+        containerId: "maxAttendeeContainer"
+      },
+      {
+        name: "leastAttendeeFee",
+        errorId: "leastAttendeeFeeError",
+        containerId: "leastAttendeeFeeContainer"
+      },
+      {
+        name: "maxAttendeeFee",
+        errorId: "maxAttendeeFeeError",
+        containerId: "maxAttendeeFeeContainer"
+      },
+      {
+        name: "activityDescription",
+        errorId: "activityDescriptionError",
+        containerId: "activityDescriptionContainer"
+      },
       ];
 
       let isValid = true;
@@ -258,7 +291,10 @@ if (mysqli_num_rows($result_activities) > 0) {
 
     function getSelectedLabels() {
       let checkboxes = document.querySelectorAll(".form-check-input");
-      let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({ labelName: checkbox.nextElementSibling.textContent, labelId: checkbox.dataset.labelId }));
+      let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
+        labelName: checkbox.nextElementSibling.textContent,
+        labelId: checkbox.dataset.labelId
+      }));
       return selectedLabels;
     }
 
@@ -278,9 +314,15 @@ if (mysqli_num_rows($result_activities) > 0) {
       let accountName = activity.accountName;
       let activityTitle = activity.activityTitle;
       let activityStartDate = activity.activityStartDate;
-      let activityStartMonthDay = new Date(activityStartDate).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+      let activityStartMonthDay = new Date(activityStartDate).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit"
+      });
       let activityEndDate = activity.activityEndDate;
-      let activityEndMonthDay = new Date(activityEndDate).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+      let activityEndMonthDay = new Date(activityEndDate).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit"
+      });
       let minAttendee = activity.minAttendee;
       let maxAttendee = activity.maxAttendee;
       let activityAttendence = activity.activityAttendence;
@@ -332,7 +374,6 @@ if (mysqli_num_rows($result_activities) > 0) {
       }, 500);
     }
     setTimeout(hideMessage, 3000);
-
   </script>
 
 </head>
@@ -359,15 +400,16 @@ if (mysqli_num_rows($result_activities) > 0) {
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="../../property-1.0.0/camp-information.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -615,7 +657,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               echo '</div>';
             }
             ?>
-            </div>
+          </div>
         </div>
       </div>
     </div>
