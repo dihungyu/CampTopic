@@ -598,7 +598,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               $maxAttendeeFee = $activity['maxAttendeeFee'];
 
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
-              echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
+              echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
               echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
@@ -657,7 +657,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               $maxAttendeeFee = $activity['maxAttendeeFee'];
 
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
-              echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
+              echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
               echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';

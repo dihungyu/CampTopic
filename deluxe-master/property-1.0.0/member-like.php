@@ -762,19 +762,14 @@ if (isset($_POST["likeEquipDel"])) {
 
                   echo '<h5><a href="#">' . $equipmentData['equipmentName'] . '</a></h5>';
                   echo '<h4>$' . number_format($equipmentData["equipmentPrice"]) . '</h4>';
-                  echo '</div>';
-                  echo '<div class="row">';
-                  echo '<div class="col-md-9">';
-                  echo '<p class="card-text">' . $equipmentData['equipmentDescription'] . '</p>';
-                  echo '</div>'; // col-md-9
-                  echo '<div class="col-md-3 text-end">';
-                  echo '<div class="favorite-btn">';
                   echo '<form action="member-like.php" method="post" class="d-inline">';
                   echo '<input type="hidden" name="collectEquipDel" value="' . $equipmentData["equipmentId"] . '">';
                   echo '<button type="submit" class="btn-icon"><i class="fas fa-bookmark"></i></button>';
                   echo '</form>';
+
                   echo '</div>';
-                  echo '</div>'; // col-md-3
+                  echo '<div class="row">';
+                  echo '<p class="card-text mb-2">' . $equipmentData['equipmentDescription'] . '</p>';
                   echo '</div>'; // row
 
 
