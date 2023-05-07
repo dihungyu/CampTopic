@@ -117,30 +117,19 @@ $articleId = $_GET['articleId'];
       color: inherit;
     }
 
-    .comment-edit {
+    .delete-comment {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 16px;
-      color: #f39c12;
-    }
-
-    .comment-edit:hover {
-      color: #d35400;
+      top: 0;
+      right: 0;
+      margin-top: 0.5rem;
+      margin-right: 0.5rem;
+      font-size: 1rem;
+      color: #6c757d;
       cursor: pointer;
     }
 
-    .comment-editor {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #495057;
-      background-color: #fff;
-      background-clip: padding-box;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    .delete-comment:hover {
+      color: #dc3545;
     }
   </style>
 </head>
@@ -353,11 +342,10 @@ $articleId = $_GET['articleId'];
     <div class="meta"> ' . $date_string . '</div>
     <p id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
 
-              // 如果留言者是當前用戶，顯示編輯按鈕
-              if ($comment_result_row["accountId"] == $_COOKIE["accountId"]) {
-                echo '<a href="javascript:void(0);" onclick="editComment(' . $comment_result_row["commentId"] . ', this);" class="comment-edit" title="編輯留言"><i class="fas fa-pencil-alt"></i></a>';
+              // 如果是自己的留言，顯示刪除按鈕
+              if ($_COOKIE["accountId"] == $comment_result_row["accountId"]) {
+                echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $comment_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
               }
-
 
 
 
@@ -386,6 +374,11 @@ $articleId = $_GET['articleId'];
             <h6>' . $reply_result_row["accountName"] . '</h6>
             <div class="meta">' . $date_string . '</div>
             <p id="comment-content-' . $reply_result_row["commentId"] . '">' . $reply_result_row["commentContent"] . '</p>';
+
+                  // 如果是自己的留言，顯示刪除按鈕
+                  if ($_COOKIE["accountId"] == $reply_result_row["accountId"]) {
+                    echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $reply_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
+                  }
 
 
 
@@ -631,72 +624,12 @@ $articleId = $_GET['articleId'];
       setTimeout(hideMessage, 3000);
     </script>
 
-    <!-- 编辑留言 -->
+
     <script>
-      function editComment(commentId, editButton) {
-        const commentContentElement = document.getElementById(
-          "comment-content-" + commentId
-        );
-
-        const originalContent = commentContentElement.textContent.trim();
-
-        editButton.style.pointerEvents = "none";
-
-        // 创建表单
-        const form = document.createElement("form");
-        form.setAttribute("action", "update_comment.php");
-        form.setAttribute("method", "POST");
-        form.style.marginBottom = "10px";
-
-        // 创建输入框
-        const textarea = document.createElement("textarea");
-        textarea.name = "updatedContent";
-        textarea.className = "comment-editor";
-        textarea.value = originalContent;
-        textarea.style.marginBottom = "10px";
-
-        // 创建隐藏的 commentId input
-        const hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.name = "commentId";
-        hiddenInput.value = commentId;
-
-        // 创建更新按钮
-        const updateButton = document.createElement("button");
-        updateButton.type = "submit";
-        updateButton.className = "btn btn-success btn-sm";
-        updateButton.textContent = "更新";
-        updateButton.style.marginRight = "10px";
-
-        // 创建取消按钮
-        const cancelButton = document.createElement("button");
-        cancelButton.type = "button";
-        cancelButton.className = "btn btn-secondary btn-sm";
-        cancelButton.textContent = "取消";
-        cancelButton.addEventListener("click", function(event) {
-          event.preventDefault();
-          cancelCommentEdit(commentId, originalContent, editButton);
-        });
-
-        // 将原始内容替换为输入框和按钮
-        form.appendChild(textarea);
-        form.appendChild(hiddenInput);
-        form.appendChild(updateButton);
-        form.appendChild(cancelButton);
-        commentContentElement.innerHTML = "";
-        commentContentElement.appendChild(form);
-      }
-
-      function cancelCommentEdit(commentId, originalContent, editButton) {
-        const commentContentElement = document.getElementById(
-          "comment-content-" + commentId
-        );
-
-        // 恢复原始留言内容
-        commentContentElement.innerHTML = originalContent;
-
-        // 重新启用编辑按钮
-        editButton.style.pointerEvents = "auto";
+      function confirmDelete(articleId, commentId) {
+        if (confirm('確定要刪除這條留言嗎？')) {
+          window.location.href = 'delete_comment.php?articleId=' + articleId + '&commentId=' + commentId;
+        }
       }
     </script>
 
