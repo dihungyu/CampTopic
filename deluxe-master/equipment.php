@@ -1,8 +1,4 @@
 <?php
-// 開啟錯誤報告
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once '../php/conn.php';
 require_once '../php/uuid_generator.php';
 
@@ -303,8 +299,9 @@ if (isset($_POST["likeEquipDel"])) {
             $equipmentDescription = $equipment["equipmentDescription"];
             $equipmentPrice = $equipment["equipmentPrice"];
             $equipmentLikeCount = $equipment["equipmentLikeCount"];
-            echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px;">';
+            echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
             echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
+            echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
             echo '<div class="card-body">';
             echo '<div class="detail" style="margin-bottom: 0px;">';
             echo '<span style="display: flex; align-items: center;">';
@@ -358,8 +355,12 @@ if (isset($_POST["likeEquipDel"])) {
             echo '</div>';
             echo '</footer>';
             echo '</div>';
+            echo '</a>';
             echo '</div>';
             if ($count % 2 != 0 || $count == count($equipments) - 1) {
+              if ($count % 2 == 0) {
+                echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1; visibility: hidden;"></div>';
+              }
               echo '</div>';
             }
             $count++;
