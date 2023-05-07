@@ -188,62 +188,61 @@ $accountName = $row_account['accountName'];
   </div>
   </span>
 
-  <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-    <input type="text" value="設備名稱"
-      style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-    <input type="text" value="租/徵/賣"
-      style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-    <input type="text" value="價錢"
-      style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-  </span>
+  <form action="../../php/Equipment/createEquipment.php" method="post" enctype="multipart/form-data">
+    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
 
-  <textarea rows="6"
-    style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;">詳細介紹</textarea>
-  <br>
+      <input name="equipmentName" type="text" placeholder="設備名稱"
+        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+      <select name="equipmentType"
+        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+        <option value="租">租</option>
+        <option value="徵">徵</option>
+        <option value="賣">賣</option>
+      </select>
+      <input type="text" name="equipmentPrice" placeholder="價錢"
+        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+      <input type="text" name="equipmentLocation" placeholder="設備所在地"
+        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+    </span>
+    <textarea rows="6" name="equipmentDescription" placeholder="設備描述"
+      style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;"></textarea>
+    <br>
 
-
-  <br>
-  <span>
-    <form method="post" enctype="multipart/form-data" style="margin-left: 100px;">
-      <div>
-        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png"
-          style="position:absolute;height:200px;width:330px;opacity: 0;">
-      </div>
-      <div class="preview"
-        style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
-        <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-        <p style="line-height: 100px;color:#797979;">上傳圖片</p>
-      </div>
-    </form>
-    <form method="post" enctype="multipart/form-data" style="margin-left: 100px;">
-      <div>
-        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png"
-          style="position:absolute;height:200px;width:330px;opacity: 0;">
-      </div>
-      <div class="preview"
-        style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
-        <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-        <p style="line-height: 100px;color:#797979;">上傳圖片</p>
-      </div>
-    </form>
-    <form method="post" enctype="multipart/form-data" style="margin-left: 100px;">
-      <div>
-        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png"
-          style="position:absolute;height:200px;width:330px;opacity: 0;">
-      </div>
-      <div class="preview"
-        style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
-        <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-        <p style="line-height: 100px;color: #797979;;">上傳圖片</p>
-      </div>
-    </form>
-  </span>
+    <br>
+    <div>
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
+        style="position:absolute;height:200px;width:330px;opacity: 0;">
+    </div>
+    <div class="preview"
+      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
+      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+      <p style="line-height: 100px; color:#797979;">上傳圖片</p>
+    </div>
+    <div>
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
+        style="position:absolute;height:200px;width:330px;opacity: 0;">
+    </div>
+    <div class="preview"
+      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
+      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+      <p style="line-height: 100px;color:#797979;">上傳圖片</p>
+    </div>
+    <div>
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
+        style="position:absolute;height:200px;width:330px;opacity: 0;">
+    </div>
+    <div class="preview"
+      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
+      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+      <p style="line-height: 100px;color: #797979;;">上傳圖片</p>
+    </div>
 
 
-  <span style="margin-left: 990px;margin-top: 20px;">
-    <button class="btn-new1">取消</button>
-    <button class="btn-new"><a href="manage-land.html" style="color: #fff;">新增</a></button>
-  </span>
+    <span style="margin-left: 990px;margin-top: 20px;">
+      <button class="btn-new1" type="button" onclick="window.location.href = '../equipment.php'">取消</button>
+      <button class="btn-new" type="submit">新增</button>
+    </span>
+  </form>
 
 
 

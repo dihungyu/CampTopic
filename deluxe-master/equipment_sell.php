@@ -403,6 +403,11 @@ if (isset($_POST["likeEquipDel"])) {
                         <div class="categories">
                             <h3>類別</h3>
                             <?php
+                            $sql_all = "SELECT COUNT(*) FROM equipments";
+                            $result_all = mysqli_query($conn, $sql_all);
+                            $row_all = mysqli_fetch_assoc($result_all);
+                            $count_all = $row_all['COUNT(*)'];
+
                             $sql_rent = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '租'";
                             $result_rent = mysqli_query($conn, $sql_rent);
                             $row_rent = mysqli_fetch_assoc($result_rent);
@@ -418,6 +423,9 @@ if (isset($_POST["likeEquipDel"])) {
                             $row_sell = mysqli_fetch_assoc($result_sell);
                             $count_sell = $row_sell['COUNT(*)'];
                             ?>
+                            <li><a href="equipment.php">全部 <span>(
+                                        <?php echo $count_all ?>)
+                                    </span></a></li>
                             <li><a href="equipment_rent.php">租 <span>(
                                         <?php echo $count_rent ?>)
                                     </span></a></li>
