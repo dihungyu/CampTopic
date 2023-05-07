@@ -295,12 +295,17 @@ $articleId = $_GET['articleId'];
           $img_src = get_img_src($accountId, $conn);
 
           echo "<div class='pt-5 mt-5'>
-            <h3 class='mb-5'>" . $comment_count . "留言</h3>
+            <h4 class='mb-5'>目前 " . $comment_count . "留言</h4>
             <h6 class='mb-5'>由舊到新排序</h6>
             <ul class='comment-list'>";
 
           // 輸出留言
-          echo '<li class="comment">
+          // 如果未登入，則不顯示留言區塊
+          if (!isset($_COOKIE["accountId"])) {
+            echo "<h6 class='mb-5'>請先登入才能留言</h6>";
+          } else {
+            // 如果已登入，則顯示留言區塊
+            echo '<li class="comment">
                 <div class="vcard bio">
                   <img src="' . $img_src . '"  class="comment-avatar">
                 </div>
@@ -312,7 +317,7 @@ $articleId = $_GET['articleId'];
                     <input type="text"   name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
                     <button type="submit" class="btn btn-success btn-sm" >發布</button>
                   </form>';
-
+          }
 
 
 
