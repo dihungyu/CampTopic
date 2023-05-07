@@ -10,7 +10,10 @@ if (!isset($_COOKIE["accountId"])) {
 require_once "../../php/conn.php";
 require_once "../../php/uuid_generator.php";
 
-$accountId = $_COOKIE["accountId"];
+//判斷是否登入，若有則對變數初始化
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
 
 // 取得會員資料
 
