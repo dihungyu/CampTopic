@@ -8795,18 +8795,6 @@ textarea.form-control {
     .block-21 .text .meta > div a {
       color: gray; }
 
-.tagcloud a {
-  text-transform: uppercase;
-  display: inline-block;
-  padding: 4px 10px;
-  margin-bottom: 7px;
-  margin-right: 4px;
-  border-radius: 4px;
-  color: #000000;
-  border: 1px solid #ccc;
-  font-size: 11px; }
-  .tagcloud a:hover {
-    border: 1px solid #000; }
 
 .comment-form-wrap {
   clear: both; }
@@ -10263,21 +10251,6 @@ margin-bottom: 24px;
 
 .block-21 .text .meta>div a {
   color: gray;
-}
-.tagcloud a {
-  text-transform: uppercase;
-  display: inline-block;
-  padding: 4px 10px;
-  margin-bottom: 7px;
-  margin-right: 4px;
-  border-radius: 4px;
-  color: #000000;
-  border: 1px solid #ccc;
-  font-size: 11px;
-}
-
-.tagcloud a:hover {
-  border: 1px solid #000;
 }
 
 .comment-form-wrap {

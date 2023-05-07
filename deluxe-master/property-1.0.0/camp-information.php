@@ -290,7 +290,7 @@ if (mysqli_num_rows($result_activities) > 0) {
       return `
     <div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">
       <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">
-      <a href="../deluxe-master/camper.php?activityId=' . $activityId . '">
+      <a href="../camper.php?activityId=' . $activityId . '">
       <span class="card-head">
         <img src="images/person_4-min.jpg" alt="Admin" />
         <p>${accountName}</p>
@@ -518,7 +518,7 @@ if (mysqli_num_rows($result_activities) > 0) {
 
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
               echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
-              echo '<a href="../deluxe-master/camper.php?activityId=' . $activityId . '">';
+              echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
               echo '    <p>' . $accountName . '</p>';
@@ -577,7 +577,7 @@ if (mysqli_num_rows($result_activities) > 0) {
 
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
               echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
-              echo '<a href="../deluxe-master/camper.php?activityId=' . $activityId . '">';
+              echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
               echo '    <p>' . $accountName . '</p>';
