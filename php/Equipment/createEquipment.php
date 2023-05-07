@@ -3,6 +3,8 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
+
+
     require_once '../conn.php';
     require_once '../uuid_generator.php';
 
@@ -14,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
     $tags = $_POST['tags']; // 取得選擇的標籤值，以陣列的形式傳回
 
     $equipmentId = uuid_generator();
-    $accountId = "c995dbc4be4811eda1d4e22a0f5e8454";
 
     $sql_query1 = "INSERT INTO equipments (equipmentId, accountId, equipmentType, equipmentLocation, equipmentName, equipmentDescription, equipmentCreateDate, equipmentUpdateDate, equipmentPrice)
                 VALUES ('$equipmentId', '$accountId', '$equipmentType', '$equipmentLocation', '$equipmentName', '$equipmentDescription', now(), now(), '$equipmentPrice')";
@@ -92,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
