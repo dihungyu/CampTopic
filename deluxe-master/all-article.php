@@ -234,7 +234,7 @@ if (isset($_POST["likeEquipDel"])) {
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
               if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
               }
               // 如果沒有設置 Cookie 則顯示登入選項
               else {

@@ -56,10 +56,104 @@ $articleId = $_GET['articleId'];
       max-width: 100%;
       height: auto;
     }
+
+    .reply-list {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    .reply-list li {
+      list-style: none;
+    }
+
+    .comment-avatar {
+      border-radius: 50%;
+      object-fit: cover;
+      width: 50px;
+      height: 50px;
+    }
+
+    .reply-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .reply-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .reply {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      background-color: transparent !important;
+    }
+
+    .reply-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 16px;
+    }
+
+    .reply-form {
+      flex-grow: 1;
+    }
+
+    .comment-list li .comment-body .reply {
+      background: transparent;
+    }
+
+    .comment:hover,
+    .reply:hover {
+      background-color: transparent;
+    }
+
+    .comment:hover h3,
+    .reply:hover h3 {
+      color: inherit;
+    }
+
+    .comment-edit {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 16px;
+      color: #f39c12;
+    }
+
+    .comment-edit:hover {
+      color: #d35400;
+      cursor: pointer;
+    }
+
+    .comment-editor {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      background-clip: padding-box;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -74,19 +168,30 @@ $articleId = $_GET['articleId'];
           <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的設備</a></li>
+          <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../login.php">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+              }
+              ?>
             </div>
           </li>
+
         </ul>
       </div>
     </div>
@@ -104,8 +209,8 @@ $articleId = $_GET['articleId'];
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-              <li class="breadcrumb-item"><a href="index.html">鹿的分享</a></li>
+              <li class="breadcrumb-item"><a href="/deluxe-master/property-1.0.0/index.php">首頁</a></li>
+              <li class="breadcrumb-item"><a href="all-article.php">鹿的分享</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 文章分享
               </li>
@@ -160,66 +265,167 @@ $articleId = $_GET['articleId'];
             </div>
           </div>
 
-          <div class="pt-5 mt-5">
-            <h3 class="mb-5">6 留言</h3>
-            <ul class="comment-list">
-              <li class="comment">
+
+
+          <!-- 留言區 -->
+          <?php
+          //可用函式
+          function get_img_src($accountId, $conn)
+          {
+            $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
+            $pic_result = mysqli_query($conn, $pic_sql);
+
+            if ($pic_row = mysqli_fetch_assoc($pic_result)) {
+              $img_src = $pic_row["filePath"];
+              $img_src = str_replace("../", "", $img_src);
+              $img_src = "../" . $img_src;
+            } else {
+              $img_src = "../upload/profileDefault.jpeg";
+            }
+
+            return $img_src;
+          }
+
+          function format_timestamp($timestamp)
+          {
+            date_default_timezone_set("Asia/Taipei");
+            $unix_timestamp = strtotime($timestamp);
+            return date("F j, Y \a\\t g:ia", $unix_timestamp);
+          }
+
+          //留言區開始
+          // 查詢留言數量
+          $comment_count_sql = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+          $comment_count_result = mysqli_query($conn, $comment_count_sql);
+          $comment_count_row = mysqli_fetch_assoc($comment_count_result);
+          $comment_count = $comment_count_row["comment_count"];
+
+
+          // 查詢我的頭像
+          $accountId = $_COOKIE["accountId"];
+          $img_src = get_img_src($accountId, $conn);
+
+          echo "<div class='pt-5 mt-5'>
+            <h3 class='mb-5'>" . $comment_count . "留言</h3>
+            <h6 class='mb-5'>由舊到新排序</h6>
+            <ul class='comment-list'>";
+
+          // 輸出留言
+          echo '<li class="comment">
                 <div class="vcard bio">
-                  <img src="images/person_1.jpg" alt="Image placeholder">
+                  <img src="' . $img_src . '"  class="comment-avatar">
                 </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">Decmener 7, 2018 at 2:21pm</div>
-                  <p>露營的地方是怎麼挑選的？有什麼推薦的地方嗎？</p>
-                  <span class="img-name">
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
-                    <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
-                    <input value="回覆" type="search" id="form1" class="article-comment" />
-                  </span>
-                </div>
-              </li>
-
-              <li class="comment">
-                <div class="vcard bio">
-                  <img src="images/person_1.jpg" alt="Image placeholder">
-                </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">Decmener 7, 2018 at 2:21pm</div>
-                  <p>起來你的露營裝備都很齊全，可以分享一下你帶了哪些東西嗎？</p>
-
-                  <span class="img-name">
-                    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
-                    <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
-                    <input value="回覆" type="search" id="form1" class="article-comment" />
-                  </span>
-                </div>
-
-                <ul class="children">
-                  <li class="comment">
-                    <div class="vcard bio">
-                      <img src="images/person_1.jpg" alt="Image placeholder">
-                    </div>
-                    <div class="comment-body">
-                      <h3>John Doe</h3>
-                      <div class="meta">Decmener 7, 2018 at 2:21pm</div>
-                      <p>我也是個露營愛好者，我最喜歡的是在晚上看到滿天星星的畫面！</p>
-                      <span class="img-name">
-                        <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
-                        <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
-                        <input value="回覆" type="search" id="form1" class="article-comment" />
-                      </span>
-                    </div>
-
-                  </li>
-                </ul>
-              </li>
+                <div class="comment-body" style="position: relative;">
+                  <h3>' . $_COOKIE["accountName"] . '</h3>
+                  <form action="submit_comment.php" method="post">
+                    <input type="hidden" name="action" value="comment">
+                    <input type="hidden" name="articleId" value="' . $articleId . '">
+                    <input type="text"   name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
+                    <button type="submit" class="btn btn-success btn-sm" >發布</button>
+                  </form>';
 
 
-            </ul>
-            <!-- END comment-list -->
 
+
+
+          // 查詢留言和留言者名稱
+          $comment_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId IS NULL";
+          $comment_result = mysqli_query($conn, $comment_query);
+
+          // 顯示留言
+          if ($comment_result && $comment_result->num_rows > 0) {
+            while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
+
+              // 查詢該留言者頭像
+              $commenterId = $comment_result_row["accountId"];
+              $img_src = get_img_src($commenterId, $conn);
+
+              // 將 Unix 時間戳格式化為指定格式的日期時間字串
+              $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
+
+              // 輸出留言
+              echo '<li class="comment">
+  <div class="vcard bio">
+    <img src="' . $img_src . '"  class="comment-avatar">
+  </div>
+  <div class="comment-body" style="position: relative;">
+    <h3>' . $comment_result_row["accountName"] . '</h3>
+    <div class="meta"> ' . $date_string . '</div>
+    <p id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
+
+              // 如果留言者是當前用戶，顯示編輯按鈕
+              if ($comment_result_row["accountId"] == $_COOKIE["accountId"]) {
+                echo '<a href="javascript:void(0);" onclick="editComment(' . $comment_result_row["commentId"] . ', this);" class="comment-edit" title="編輯留言"><i class="fas fa-pencil-alt"></i></a>';
+              }
+
+
+
+
+
+              // 查詢留言回覆者名稱和內容
+              $replyId = $comment_result_row["commentId"];
+              $reply_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId= '$replyId' ORDER BY commentCreateDate ASC";
+              $reply_result = mysqli_query($conn, $reply_query);
+
+              if ($reply_result && $reply_result->num_rows > 0) {
+                echo '<ul class="reply-list">';
+                while ($reply_result_row = mysqli_fetch_assoc($reply_result)) {
+
+                  // 查詢該留言者頭像
+                  $replyerId = $reply_result_row["accountId"];
+                  $img_src = get_img_src($replyerId, $conn);
+
+                  // 將 Unix 時間戳格式化為指定格式的日期時間字串
+                  $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
+
+                  echo '<li>
+          <div class="vcard bio">
+            <img src="' . $img_src . '"  class="comment-avatar">
           </div>
+          <div class="comment-body" style="position: relative;">
+            <h6>' . $reply_result_row["accountName"] . '</h6>
+            <div class="meta">' . $date_string . '</div>
+            <p id="comment-content-' . $reply_result_row["commentId"] . '">' . $reply_result_row["commentContent"] . '</p>';
+
+
+
+                  echo '</div>
+        </li>';
+                }
+                echo '</ul>';
+              }
+
+
+              // 查詢我的頭像
+              $accountId = $_COOKIE["accountId"];
+              $img_src = get_img_src($accountId, $conn);
+
+              if ($_COOKIE["accountName"]) {
+                echo '<!-- 使用者回覆區 -->
+                    <div class="reply">
+                      <img src="' . $img_src . '" alt="Image description" class="reply-avatar">
+                      <div class="reply-form">
+                        <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>
+                        <form action="submit_comment.php" method="post">
+                          <input type="hidden" name="action" value="reply">
+                          <input type="hidden" name="articleId" value="' . $articleId . '">
+                          <input type="hidden" name="replyId" value="' . $comment_result_row["commentId"] . '">
+                          <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
+                          <button type="submit" class="btn btn-success btn-sm" >發布</button>
+                        </form>
+                      </div>
+                    </div>';
+              }
+            }
+          }
+
+
+
+          ?>
+
+          </ul>
+          <!-- END comment-list -->
+
 
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
@@ -409,6 +615,93 @@ $articleId = $_GET['articleId'];
         $('#article-content img').addClass('article-img');
       });
     </script>
+
+
+
+
+    <!-- 控制系統訊息 -->
+    <script>
+      function hideMessage() {
+        document.getElementById("message").style.opacity = "0";
+        setTimeout(function() {
+          document.getElementById("message").style.display = "none";
+        }, 500);
+      }
+
+      setTimeout(hideMessage, 3000);
+    </script>
+
+    <!-- 编辑留言 -->
+    <script>
+      function editComment(commentId, editButton) {
+        const commentContentElement = document.getElementById(
+          "comment-content-" + commentId
+        );
+
+        const originalContent = commentContentElement.textContent.trim();
+
+        editButton.style.pointerEvents = "none";
+
+        // 创建表单
+        const form = document.createElement("form");
+        form.setAttribute("action", "update_comment.php");
+        form.setAttribute("method", "POST");
+        form.style.marginBottom = "10px";
+
+        // 创建输入框
+        const textarea = document.createElement("textarea");
+        textarea.name = "updatedContent";
+        textarea.className = "comment-editor";
+        textarea.value = originalContent;
+        textarea.style.marginBottom = "10px";
+
+        // 创建隐藏的 commentId input
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "commentId";
+        hiddenInput.value = commentId;
+
+        // 创建更新按钮
+        const updateButton = document.createElement("button");
+        updateButton.type = "submit";
+        updateButton.className = "btn btn-success btn-sm";
+        updateButton.textContent = "更新";
+        updateButton.style.marginRight = "10px";
+
+        // 创建取消按钮
+        const cancelButton = document.createElement("button");
+        cancelButton.type = "button";
+        cancelButton.className = "btn btn-secondary btn-sm";
+        cancelButton.textContent = "取消";
+        cancelButton.addEventListener("click", function(event) {
+          event.preventDefault();
+          cancelCommentEdit(commentId, originalContent, editButton);
+        });
+
+        // 将原始内容替换为输入框和按钮
+        form.appendChild(textarea);
+        form.appendChild(hiddenInput);
+        form.appendChild(updateButton);
+        form.appendChild(cancelButton);
+        commentContentElement.innerHTML = "";
+        commentContentElement.appendChild(form);
+      }
+
+      function cancelCommentEdit(commentId, originalContent, editButton) {
+        const commentContentElement = document.getElementById(
+          "comment-content-" + commentId
+        );
+
+        // 恢复原始留言内容
+        commentContentElement.innerHTML = originalContent;
+
+        // 重新启用编辑按钮
+        editButton.style.pointerEvents = "auto";
+      }
+    </script>
+
+
+
 
 </body>
 
