@@ -97,20 +97,6 @@ if (mysqli_num_rows($result_activities) > 0) {
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css" />
 
-  <style>
-    .avatar-img {
-      width: 60px;
-      /* 設定大頭貼的寬度 */
-      height: 60px;
-      /* 設定大頭貼的高度 */
-      border-radius: 50%;
-      /* 設定大頭貼為正圓形 */
-      object-fit: cover;
-      /* 讓圖片保持原始比例並填充容器 */
-    }
-  </style>
-
-
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -357,7 +343,7 @@ if (mysqli_num_rows($result_activities) > 0) {
       <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">
       <a href="../camper.php?activityId=' . $activityId . '">
       <span class="card-head">
-        <img class="avatar-img" src="${img_src}" alt="Admin" />
+        <img src="${img_src}" alt="Admin" />
         <p>${accountName}</p>
       </span>
       <div class="card-body" style="margin-top: 0px;">
@@ -619,7 +605,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
               echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
-              echo '    <img class="avatar-img" src="' . $img_src . '"  />';
+              echo '    <img src="' . $img_src . '"  />';
               echo '    <p>' . $accountName . '</p>';
               echo '  </span>';
 
@@ -657,12 +643,32 @@ if (mysqli_num_rows($result_activities) > 0) {
             ?>
 
           </div>
+          
+          <div class="col-xs-12 col-sm-6">
+            <?php
+            foreach ($activities as $activity) {
+              $accountId = $activity['accountId'];
+              $activityId = $activity['activityId'];
+              $campsiteName = $activity['campsiteName'];
+              $accountName = $activity['accountName'];
+              $activityTitle = $activity['activityTitle'];
+              $activityStartDate = $activity['activityStartDate'];
+              $activityStartMonthDay = date('m/d', strtotime($activityStartDate));
+              $activityEndDate = $activity['activityEndDate'];
+              $activityEndMonthDay = date('m/d', strtotime($activityEndDate));
+              $minAttendee = $activity['minAttendee'];
+              $maxAttendee = $activity['maxAttendee'];
+              $activityAttendence = $activity['activityAttendence'];
+              $leastAttendeeFee = $activity['leastAttendeeFee'];
+              $maxAttendeeFee = $activity['maxAttendeeFee'];
+              // 取得頭像
+              $img_src = get_img_src($accountId, $conn);
 
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
-              echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
+              echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
               echo '<a href="../camper.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
-              echo '    <img src="images/person_4-min.jpg" alt="Admin" />';
+              echo '    <img src="' . $img_src . '"  />';
               echo '    <p>' . $accountName . '</p>';
               echo '  </span>';
 
@@ -698,12 +704,11 @@ if (mysqli_num_rows($result_activities) > 0) {
               echo '</div>';
             }
             ?>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
+          </div>
+
+        </div>
+     
   <div class="row align-items-center py-5">
     <div class="col-lg-3"></div>
     <div class="col-lg-6 text-center">

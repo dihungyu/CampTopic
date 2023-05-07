@@ -10383,6 +10383,10 @@ font-size: 18px;
   margin-top: 0px; 
   border: solid 3px #Ffffff;
   border-radius: 50%;
+  height: 60px;
+  /* 設定大頭貼的高度 */
+  object-fit: cover;
+  /* 讓圖片保持原始比例並填充容器 */
 }
 .card-head p{
   margin-top: 32px; 
