@@ -36,15 +36,6 @@
     right: 0;
     z-index: $stretched-link-z-index + 1;
     padding: $alert-padding-y * 1.25 $alert-padding-x;
-  padding-right: ($close-font-size + $alert-padding-x * 2);}
-
-  // Adjust close link position
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: $alert-padding-y $alert-padding-x;
-    color: inherit;
   }
 }
 
@@ -64,12 +55,3 @@
   }
 }
 // scss-docs-end alert-modifiers
-// Alternate styles
-//
-// Generate contextual modifier classes for colorizing the alert.
-
-@each $color, $value in $theme-colors {
-  .alert-#{$color} {
-    @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
-  }
-}

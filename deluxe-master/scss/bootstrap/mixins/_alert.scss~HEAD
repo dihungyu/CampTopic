@@ -1,0 +1,14 @@
+// scss-docs-start alert-variant-mixin
+@mixin alert-variant($background, $border, $color) {
+  color: $color;
+  @include gradient-bg($background);
+  border-color: $border;
+
+  .alert-link {
+    color: shade-color($color, 20%);
+}
+
+  hr {
+    border-top-color: darken($border, 5%);
+  }
+}
