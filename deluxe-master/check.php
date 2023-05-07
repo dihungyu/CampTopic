@@ -251,23 +251,32 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
+              <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+              }
+              ?>
             </div>
           </li>
         </ul>
@@ -521,81 +530,48 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   </section>
 
   <div class="site-footer" style="clear: both;">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Contact</h3>
-            <address>43 Raymouth Rd. Baltemoer, London 3910</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
+    <div class="container"><div class="row">
+        
         <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Sources</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Vision</a></li>
-              <li><a href="#">Mission</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Business</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Creative</a></li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <div class="widget">
-            <h3>Links</h3>
-            <ul class="list-unstyled links">
-              <li><a href="#">Our Vision</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Contact us</a></li>
-            </ul>
-
-            <ul class="list-unstyled social">
-              <li>
-                <a href="#"><span class="icon-instagram"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-twitter"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-facebook"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-linkedin"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-pinterest"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="icon-dribbble"></span></a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-      </div>
-      <!-- /.row -->
+       <div class="col-lg-5">
+         <div class="widget">
+           <h3>聯絡資訊</h3>
+           <address>StartCamping 營在起跑點！</address>
+           <ul class="list-unstyled links">
+             <li><a href="tel://11234567890">0911222345</a></li>
+             <li><a href="tel://11234567890">@startcamping</a></li>
+             <li>
+               <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+             </li>
+           </ul>
+         </div>
+         <!-- /.widget -->
+       </div>
+       <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+         <div class="widget">
+           <h3>頁面總覽</h3>
+           <ul class="list-unstyled float-start links">
+             <li><a href="#">首頁</a></li>
+             <li><a href="#">找小鹿</a></li>
+             <li><a href="#">鹿的分享</a></li>
+             <li><a href="#">鹿的裝備</a></li>
+             <li><a href="#">廣告方案</a></li>
+           </ul>
+           <ul class="list-unstyled float-start links">
+             <li><a href="#">帳號</a></li>
+             <li><a href="#">會員帳號</a></li>
+             <li><a href="#">我的收藏</a></li>
+           </ul>
+         </div>
+         <!-- /.widget -->
+       </div>
+       <!-- /.col-lg-4 -->
+       <div class="col-lg-2">
+         <!-- /.widget -->
+       </div>
+     </div>
+       <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">
