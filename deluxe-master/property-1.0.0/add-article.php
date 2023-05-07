@@ -141,7 +141,7 @@ if (!isset($_COOKIE["accountId"])) {
     <div class="section section-properties">
       <div class="container">
         <div class="row">
-          <span style="margin-left: 80px;margin-bottom: 20px;"class="mt-2 mb-4">
+          <span style="margin-left: 80px; margin-bottom: 20px;"class="mt-2 mb-4">
             <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
           </span>
@@ -174,14 +174,15 @@ if (!isset($_COOKIE["accountId"])) {
                   
                   <input type="text" value="標籤名稱" class="articletag">
                     <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
-                    <button class="btn-more">確認</button></a> 
-              </div>
-           </div>
+                    <button class="btn-more"> 確認
+          </button></a> 
+        </div>
+        </div>
       </div>
     </div>
   </div>
   </span>
-  <span style="display:flex; justify-content:center;">
+  <span style="display:flex; justify-content:center;margin-left:20px">
   <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
     <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
       <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
@@ -200,7 +201,6 @@ if (!isset($_COOKIE["accountId"])) {
       </div> -->
 
     </span>
-
 
     <span style="display:flex;justify-content: flex-end;margin-right: 10px;}">
       <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
