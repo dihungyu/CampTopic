@@ -1,7 +1,7 @@
- AOS.init({
- 	duration: 800,
- 	easing: 'slide'
- });
+AOS.init({
+	duration: 800,
+	easing: 'slide'
+});
 
 (function($) {
 
@@ -155,9 +155,6 @@
 	});
 
 
-	$('#dropdown04').on('show.bs.dropdown', function () {
-	  console.log('show');
-	});
 
 	// scroll
 	var scrollWindow = function() {
@@ -349,8 +346,6 @@
 	  'format': 'm/d/yyyy',
 	  'autoclose': true
 	});
-
-
 
 
 
