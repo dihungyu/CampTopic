@@ -3,13 +3,20 @@ require_once '../php/conn.php';
 
 session_start();
 
+// 獲取活動 ID
 $activityId = $_GET['activityId'];
-$attendeeId = 'c995dbc4be4811eda1d4e22a0f5e8454';
 
+// 獲取參加者 ID，使用者登入後的 accountId
+$attendeeId = $_COOKIE["accountId"];
+
+// 查詢活動詳細資料
 $sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
 $result = mysqli_query($conn, $sql_getDataQuery);
+
+// 從結果中獲取第一筆資料
 $row_result = mysqli_fetch_assoc($result);
 
+// 活動詳細資料
 $activityId = $row_result['activityId'];
 $campsiteId = $row_result['campsiteId'];
 $accountId = $row_result['accountId'];
@@ -22,34 +29,43 @@ $maxAttendee = $row_result['maxAttendee'];
 $leastAttendeeFee = $row_result['leastAttendeeFee'];
 $maxAttendeeFee = $row_result['maxAttendeeFee'];
 
+// 查詢營地詳細資料
 $sql_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 $result_campsite = mysqli_query($conn, $sql_campsite);
+
+// 從結果中獲取第一筆資料
 $row_result_campsite = mysqli_fetch_assoc($result_campsite);
 
+// 營地詳細資料
 $campsiteName = $row_result_campsite['campsiteName'];
 
+// 查詢活動發起人詳細資料
 $sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
 $result_account = mysqli_query($conn, $sql_account);
+
+// 從結果中獲取第一筆資料
 $row_result_account = mysqli_fetch_assoc($result_account);
 
+// 活動發起人詳細資料
 $accountName = $row_result_account['accountName'];
 
+// 查詢檔案資料
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
 $result_file = mysqli_query($conn, $sql_file);
 
+// 查詢活動路線資料
 $sql_route1 = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY dayNumber ASC";
 $result_route = mysqli_query($conn, $sql_route1);
 
-$sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts
-  ON activities_accounts.accountId = accounts.accountId
-  WHERE activities_accounts.activityId = '$activityId'";
+// 查詢活動參加者資料
+$sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts ON activities_accounts.accountId = accounts.accountId WHERE activities_accounts.activityId = '$activityId'";
 $result_account = mysqli_query($conn, $sql_account);
 
+// 計算男性和女性的數量並將查詢結果儲存在陣列中
 $maleCount = 0;
 $femaleCount = 0;
 $accounts = [];
 
-// 計算男性和女性的數量並將查詢結果儲存在陣列中
 if ($result_account->num_rows > 0) {
   while ($account_result = $result_account->fetch_assoc()) {
     $accounts[] = $account_result;
@@ -64,7 +80,27 @@ if ($result_account->num_rows > 0) {
   echo "找不到符合的資料";
 }
 
+
+
+// 可用函式區
+function get_img_src($accountId, $conn)
+{
+  $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
+  $pic_result = mysqli_query($conn, $pic_sql);
+
+  if ($pic_row = mysqli_fetch_assoc($pic_result)) {
+    $img_src = $pic_row["filePath"];
+    $img_src = str_replace("../", "", $img_src);
+    $img_src = "../" . $img_src;
+  } else {
+    $img_src = "../upload/profileDefault.jpeg";
+  }
+
+  return $img_src;
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -124,9 +160,7 @@ if ($result_account->num_rows > 0) {
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
@@ -161,7 +195,7 @@ if ($result_account->num_rows > 0) {
 
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -172,9 +206,8 @@ if ($result_account->num_rows > 0) {
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -182,32 +215,38 @@ if ($result_account->num_rows > 0) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item active"><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
+              <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+              }
+              ?>
             </div>
           </li>
         </ul>
@@ -227,8 +266,8 @@ if ($result_account->num_rows > 0) {
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-              <li class="breadcrumb-item"><a href="index.html">找小鹿</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 活動資訊
               </li>
@@ -248,8 +287,14 @@ if ($result_account->num_rows > 0) {
               <h5 class="mb-4" style="font-weight:bold;">
                 <?php echo $activityTitle ?>
               </h5>
+              <?php
+              // 取得活動發起人的大頭貼
+              //取得頭貼
+              $img_src = get_img_src($accountId, $conn);
+
+              ?>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+                <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%;
                   width: 4%;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
@@ -408,9 +453,14 @@ if ($result_account->num_rows > 0) {
                   if ($displayCount >= 3) {
                     break;
                   }
+                  $accountId = $account['accountId'];
                   $accountName = $account['accountName'];
+
+                  //取得頭貼
+                  $img_src = get_img_src($accountId, $conn);
+
                   echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                  echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                  echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
                   echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
                   $displayCount++;
                 }
@@ -420,8 +470,7 @@ if ($result_account->num_rows > 0) {
                     <a href="#more2">查看更多</a></button>
                 </span>
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@mdo">我要參加！</button>
+                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>
                 </div>
               </div>
             </div>
@@ -547,8 +596,7 @@ if ($result_account->num_rows > 0) {
   </div>
 
   <form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="false">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
       <div class="modal-dialog" role="document">
         <div class="modalContent">
           <div class="box-mod">
@@ -595,10 +643,15 @@ if ($result_account->num_rows > 0) {
             <div class="row">
               <?php
               foreach ($accounts as $account) {
+                $accountId = $account['accountId'];
                 $accountName = $account['accountName'];
+
+                //取得頭貼
+                $img_src = get_img_src($accountId, $conn);
+
                 echo '<div class="col-md-4">';
                 echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
-                echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
                 echo '<label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label></span>';
                 echo '</div>';
                 echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
@@ -646,8 +699,7 @@ if ($result_account->num_rows > 0) {
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg></div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
@@ -666,8 +718,7 @@ if ($result_account->num_rows > 0) {
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
