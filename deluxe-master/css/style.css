@@ -10066,7 +10066,7 @@ margin-top: 32px;
   margin-bottom: 20px;
   font-weight: 300;
   font-size: 12px;
-  padding-top:10px
+  padding-top:10px;
   padding-bottom: 10px;
   padding-right: 15px;
 }
@@ -10130,8 +10130,6 @@ margin-bottom: 24px;
   max-width: 500px;
   
 }
-
-
 .file-upload .file-upload-preview {
   margin-top: 20px;
   text-align: center;
@@ -10488,4 +10486,41 @@ margin-bottom: 0px;
   font-size: 18px;
   padding-top: 2px;
   color: white;
+}
+.findcamper {
+  display: flex;
+  flex-wrap: wrap;
+  letter-spacing: 1px;
+  line-height: 30px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.findcamper i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.findcamper-icon {
+  margin-right: 40px;
+  box-sizing: content-box;
+  width: 160px;
+}
+
+.findcamper-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-filter {
+  border-radius: 35px !important;
+  width: 100px;
+  height: 40px;
+  border: solid;
+  border-color: #d9d9d9;
+  padding: 8px;
+  background-color: #ffffff;
+  color: #a0a0a0;
+  margin-right: 10px;
 }

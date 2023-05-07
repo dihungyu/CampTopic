@@ -146,29 +146,21 @@ if (!isset($_COOKIE["accountId"])) {
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
           </span>
           <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
-            <button class="btn-new2" style="margin-right:5px">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
+           <a class="tag-filter" href="#">櫻花
+              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
+              <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
+              <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
+              <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+              </a> 
+              <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
               </a>
-            </button>
-            <button class="btn-new2" style="margin-right:5px">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button class="btn-new2" style="margin-right:5px">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button class="btn-new2" style="margin-right:5px">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button type="button" class="btn-new2" data-toggle="modal" data-target="#exampleModalCenter">
-              <a class="tag-filter" href="#">新增標籤</a>
-            </button>
+              <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
+              </span>
+
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width:450px;height:200px;">
@@ -181,14 +173,10 @@ if (!isset($_COOKIE["accountId"])) {
                     </span>
                   
                   <input type="text" value="標籤名稱" class="articletag">
-          </span>
-        
-          <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
-          <button class="btn-more">
-           確認
-          </button></a> 
-        </div>
-        </div>
+                    <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
+                    <button class="btn-more">確認</button></a> 
+              </div>
+           </div>
       </div>
     </div>
   </div>
