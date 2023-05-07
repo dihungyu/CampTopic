@@ -606,10 +606,11 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     <div class="modal-dialog" role="document">
       <div class="modalContent">
         <div class="box-mod">
-          <h5 id="exampleModalLabel">審核</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
           </button>
+          <h5 id="exampleModalLabel">審核</h5>
+          
         </div>
         <p style="color: #a0a0a0 ">審核參加人員
         <p>
