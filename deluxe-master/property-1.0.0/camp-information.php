@@ -562,8 +562,8 @@ if (mysqli_num_rows($result_activities) > 0) {
             </span>
           </button>";
           } else {
-            echo "<button type='button' class='gray-lg' data-toggle='modal' data-target='#create' disable >
-            <h6>馬上揪團開始露營趣！</h6>
+            echo "<button type='button' class='gray-lg' data-toggle='modal' data-target='#create' disabled>
+            <h6>登入後揪團露營趣！</h6>
             <div class='verticle-line'></div>
             <span style='display: flex; align-items: center; justify-content: flex-start'>
               <i class='fa-solid fa-hand-fist' style='font-size: 18px;margin-right: 8px;'></i>
