@@ -16,6 +16,8 @@ if (isset($_POST['approvalStatus']) && isset($_POST['activityId'])) {
             // 將isApproved更新為1（已接受）
             $sql_update_approval = "UPDATE activities_accounts SET isApproved = 1 WHERE accountId = '$accountId'";
             $exeResult = 1;
+            $sql_update_totalAttendee = "UPDATE activities SET activityAttendence = activityAttendence + 1 WHERE activityId = '$activityId'";
+            mysqli_query($conn, $sql_update_totalAttendee);
         } elseif ($status == 'rejected') {
             // 將isApproved更新為2（已拒絕）
             $sql_update_approval = "UPDATE activities_accounts SET isApproved = 2 WHERE accountId = '$accountId'";

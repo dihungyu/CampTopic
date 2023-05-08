@@ -2,7 +2,7 @@
 session_start();
 
 // 連接資料庫
-require_once '../../php/conn.php';
+require_once '../conn.php';
 
 if (isset($_GET["equipmentId"])) {
     $equipmentId = $_GET['equipmentId'];
