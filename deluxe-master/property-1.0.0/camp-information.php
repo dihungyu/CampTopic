@@ -643,7 +643,7 @@ if (mysqli_num_rows($result_activities) > 0) {
             ?>
 
           </div>
-          
+
           <div class="col-xs-12 col-sm-6">
             <?php
             foreach ($activities as $activity) {
@@ -810,7 +810,7 @@ if (mysqli_num_rows($result_activities) > 0) {
       <?php
       foreach ($activities as $activity) {
         $activityId = $activity['activityId'];
-        echo '<form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">';
+        echo '<form name="attendForm" action="../../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">';
         echo '<div class="modal fade" id="Modal' . $activityId . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">';
         echo '<div class="modal-dialog" role="document">';
         echo '<div class="modalContent">';
