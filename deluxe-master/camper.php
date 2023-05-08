@@ -1,13 +1,15 @@
 <?php
 require_once '../php/conn.php';
+require_once '../php/uuid_generator.php';
 
 session_start();
 
 // 獲取活動 ID
 $activityId = $_GET['activityId'];
 
-// 獲取參加者 ID，使用者登入後的 accountId
-$attendeeId = $_COOKIE["accountId"];
+if ($_COOKIE[$accountId]) {
+  $accountId = $_COOKIE[$accountId];
+}
 
 // 查詢活動詳細資料
 $sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
@@ -17,9 +19,8 @@ $result = mysqli_query($conn, $sql_getDataQuery);
 $row_result = mysqli_fetch_assoc($result);
 
 // 活動詳細資料
-$activityId = $row_result['activityId'];
 $campsiteId = $row_result['campsiteId'];
-$accountId = $row_result['accountId'];
+$creatorId = $row_result['accountId'];
 $activityTitle = $row_result['activityTitle'];
 $activityDescription = $row_result['activityDescription'];
 $activityStartDate = $row_result['activityStartDate'];
@@ -40,14 +41,14 @@ $row_result_campsite = mysqli_fetch_assoc($result_campsite);
 $campsiteName = $row_result_campsite['campsiteName'];
 
 // 查詢活動發起人詳細資料
-$sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
+$sql_account = "SELECT * FROM accounts WHERE accountId = '$creatorId'";
 $result_account = mysqli_query($conn, $sql_account);
 
 // 從結果中獲取第一筆資料
 $row_result_account = mysqli_fetch_assoc($result_account);
 
 // 活動發起人詳細資料
-$accountName = $row_result_account['accountName'];
+$creatorName = $row_result_account['accountName'];
 
 // 查詢檔案資料
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
@@ -56,6 +57,13 @@ $result_file = mysqli_query($conn, $sql_file);
 // 查詢活動路線資料
 $sql_route1 = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY dayNumber ASC";
 $result_route = mysqli_query($conn, $sql_route1);
+$routes = [];
+
+if ($result_route->num_rows > 0) {
+  while ($route_result = $result_route->fetch_assoc()) {
+    $routes[] = $route_result;
+  }
+}
 
 // 查詢活動參加者資料
 $sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts ON activities_accounts.accountId = accounts.accountId WHERE activities_accounts.activityId = '$activityId' AND activities_accounts.isApproved = 1";
@@ -76,8 +84,6 @@ if ($result_account->num_rows > 0) {
       $femaleCount++;
     }
   }
-} else {
-  echo "找不到符合的資料";
 }
 
 
@@ -160,7 +166,9 @@ function get_img_src($accountId, $conn)
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5v5K7z00ZfyUHjU/t9F5EF5OY5udK0p9G/0yp6"
+    crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
@@ -195,7 +203,7 @@ function get_img_src($accountId, $conn)
 
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -206,8 +214,9 @@ function get_img_src($accountId, $conn)
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -215,9 +224,11 @@ function get_img_src($accountId, $conn)
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -230,7 +241,8 @@ function get_img_src($accountId, $conn)
           <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -291,7 +303,7 @@ function get_img_src($accountId, $conn)
               <?php
               // 取得活動發起人的大頭貼
               //取得頭貼
-              $img_src = get_img_src($accountId, $conn);
+              $img_src = get_img_src($creatorId, $conn);
 
               ?>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
@@ -299,7 +311,7 @@ function get_img_src($accountId, $conn)
                   width: 4%;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
-                  <?php echo $accountName ?>
+                  <?php echo $creatorName ?>
                 </label></span>
               <h6 class="mb-4" style="font-weight:bold;">基本資訊</h6>
               <div class="single-slider owl-carousel">
@@ -320,7 +332,7 @@ function get_img_src($accountId, $conn)
                 <i class="fa-regular fa-user fa-xl"></i>
                 <label>負責人</label>
                 <p>
-                  <?php echo $accountName ?>
+                  <?php echo $creatorName ?>
                 </p>
               </span>
 
@@ -378,10 +390,56 @@ function get_img_src($accountId, $conn)
               <div class="col-md-12 room-single ftco-animate mb-5 mt-5" style="margin-left: -15px ;">
                 <h4 class="mb-4" style="font-weight:bold;">行程介紹</h4>
                 <?php
-                while ($route_result = mysqli_fetch_assoc($result_route)) {
-                  $routeId = $route_result['routeId'];
-                  $dayNumber = $route_result['dayNumber'];
-                  $locations = $route_result['locations'];
+                $routesCount = count($routes);
+
+                if ($routesCount < 5) {
+                  $inserted = false;
+
+                  // Check each day number and insert empty data if necessary
+                  for ($i = 1; $i <= 5; $i++) {
+                    $found = false;
+
+                    foreach ($routes as $route) {
+                      if ($route['dayNumber'] == $i) {
+                        $found = true;
+                        break;
+                      }
+                    }
+
+                    if (!$found) {
+                      $routes[] = [
+                        'routeId' => uuid_generator(),
+                        'dayNumber' => $i,
+                        'locations' => '發起者尚未新增當天行程資訊。',
+                      ];
+
+                      $inserted = true;
+                    }
+                  }
+
+                  // If data was inserted, sort by dayNumber
+                  if ($inserted) {
+                    usort($routes, function ($a, $b) {
+                      return $a['dayNumber'] - $b['dayNumber'];
+                    });
+                  }
+                }
+                foreach ($routes as $route) {
+                  $routeId = $route['routeId'];
+                  $dayNumber = $route['dayNumber'];
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
+                  $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
+                  $tripIntroductions = [];
+                  if (mysqli_num_rows($result_tripIntroduction) > 0) {
+                    while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
+                      $tripIntroductions[] = [
+                        'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
+                        'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
+                        'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
+                      ];
+                    }
+                  }
+                  $locations = $route['locations'];
                   $dayText = 'Day ' . $dayNumber;
                   echo '<div class="block-16">';
                   echo '  <span style="display: flex;">';
@@ -392,11 +450,9 @@ function get_img_src($accountId, $conn)
                   echo '      <p>' . $locations . '</p>';
                   echo '    </div>';
                   echo '  </span>';
-                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
-                  $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
-                  while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-                    $tripIntroductionTitle = $tripIntroduction_result['tripIntroductionTitle'];
-                    $tripIntroductionContent = $tripIntroduction_result['tripIntroductionContent'];
+                  foreach ($tripIntroductions as $tripIntroduction) {
+                    $tripIntroductionTitle = $tripIntroduction['tripIntroductionTitle'];
+                    $tripIntroductionContent = $tripIntroduction['tripIntroductionContent'];
                     echo '  <div style="clear: both;">';
                     echo '    <br>';
                     echo '    <h6>' . $tripIntroductionTitle . '</h6>';
@@ -448,30 +504,46 @@ function get_img_src($accountId, $conn)
                 </div>
 
                 <?php
-                // 輸出 accountName
-                $displayCount = 0;
-                foreach ($accounts as $account) {
-                  if ($displayCount >= 3) {
-                    break;
+                if ($result_account->num_rows > 0) {
+                  // 輸出 accountName
+                  $displayCount = 0;
+                  foreach ($accounts as $account) {
+                    if ($displayCount >= 3) {
+                      break;
+                    }
+
+                    // 取得頭貼
+                    $attendeeId = $account['accountId'];
+                    $img_src = get_img_src($attendeeId, $conn);
+                    $img_src = str_replace('../', '', $img_src);
+                    $img_src = "../" . $img_src;
+
+                    $isApproved = $account['isApproved'];
+                    if ($isApproved == 1) {
+                      $accountName = $account['accountName'];
+                      echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
+                      echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                      echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
+                      $displayCount++;
+                    }
                   }
-                  $accountId = $account['accountId'];
-                  $accountName = $account['accountName'];
-
-                  //取得頭貼
-                  $img_src = get_img_src($accountId, $conn);
-
-                  echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                  echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
-                  echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
-                  $displayCount++;
+                  echo '<span class="more">';
+                  echo '<button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">';
+                  echo '<a href="#more2">查看更多</a></button>';
+                  echo '</span>';
+                } else {
+                  echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">目前無參加人員！</span>';
                 }
                 ?>
-                <span class="more">
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
-                    <a href="#more2">查看更多</a></button>
-                </span>
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>
+                  <?php
+                  if ($_COOKIE[$accountId]) {
+                    echo '<button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo">我要參加！</button>';
+                  } else {
+                    echo '<button type="button" class="btn-side" style="background-color: #ccc; color: #666; cursor: not-allowed;">請先登入再進行報名！</button>';
+                  }
+                  ?>
                 </div>
               </div>
             </div>
@@ -597,7 +669,8 @@ function get_img_src($accountId, $conn)
   </div>
 
   <form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="false">
       <div class="modal-dialog" role="document">
         <div class="modalContent">
           <div class="box-mod">
@@ -621,7 +694,7 @@ function get_img_src($accountId, $conn)
           </div>
           <div style="display: flex; justify-content: flex-end;">
             <input type="hidden" name="activityId" value="<?php echo $activityId ?>">
-            <input type="hidden" name="accountId" value="<?php echo $attendeeId ?>">
+            <input type="hidden" name="accountId" value="<?php echo $accountId ?>">
             <button class="btn-secondary" type="submit">提交</button>
           </div>
         </div>
@@ -644,11 +717,11 @@ function get_img_src($accountId, $conn)
             <div class="row">
               <?php
               foreach ($accounts as $account) {
-                $accountId = $account['accountId'];
+                $attendeeId = $account['accountId'];
                 $accountName = $account['accountName'];
 
                 //取得頭貼
-                $img_src = get_img_src($accountId, $conn);
+                $img_src = get_img_src($attendeeId, $conn);
 
                 echo '<div class="col-md-4">';
                 echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
@@ -700,7 +773,8 @@ function get_img_src($accountId, $conn)
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
     </svg></div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
@@ -719,7 +793,8 @@ function get_img_src($accountId, $conn)
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
