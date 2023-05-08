@@ -155,7 +155,7 @@ $accountId = $_COOKIE["accountId"];
       <div class="container">
         <div class="row">
           <span style="margin-left: 80px; margin-bottom: 20px;" class="mt-2 mb-4">
-            <img src="<?php echo $image_src; ?>" alt="Image description" style="border-radius: 50%; width: 3%;">
+            <img src="<?php echo $image_src; ?>" alt="Image description" style="border-radius: 50%; width: 40px; height:40px;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">
               <?php echo $_COOKIE["accountName"]; ?>
             </label>

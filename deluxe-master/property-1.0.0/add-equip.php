@@ -167,7 +167,7 @@ $accountName = $row_account['accountName'];
       <div class="container">
         <div class="row">
           <span style="margin-left: 105px;margin-bottom: 20px;margin-bottom: 25px; margin-top: -65px;">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%;">
+            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 40px; height:40px">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">
               <?php echo $accountName ?>
             </label>

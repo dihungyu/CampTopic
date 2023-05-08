@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
     }
 
     // Insert tags into articles_labels table
-    foreach ($tags as $tag) {
+    /*foreach ($tags as $tag) {
         $labelId = uuid_generator();
         $insert_label_sql = "INSERT INTO articles_labels (articleLabelId, articleId, labelId) VALUES ('$labelId','$articleId', '$tag')";
 
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
             exit();
         }
     }
-
+*/
     $_SESSION["system_message"] = "文章已新增";
     header("Location: ../all-article.php");
     exit();
