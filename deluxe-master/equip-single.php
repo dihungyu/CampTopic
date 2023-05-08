@@ -385,19 +385,24 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
 
                 $recommand_equipmentId = $recommand_equipment['equipmentId'];
                 $recommand_equipmentName = $recommand_equipment['equipmentName'];
+                $recommand_equipmentType = $recommand_equipment['equipmentType'];
                 $recommand_equipmentPrice = $recommand_equipment['equipmentPrice'];
                 $recommand_equipmentDescription = $recommand_equipment['equipmentDescription'];
                 $recommand_equipmentLikeCount = $recommand_equipment['equipmentLikeCount'];
                 echo '<div class="card-eq" style=" margin-right: 25px;">';
                 echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
                 echo '<div class="card-body-eq">';
+
                 echo '<div class="detail" style="flex-wrap: wrap">';
+
                 echo '<span class="fa-stack fa-1x" style="margin-right: 5px;">';
+
                 echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
-                echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
+
+                echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $recommand_equipmentType . '</i>';
                 echo '</span>';
-                echo '<a href="single.html">';
-                echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
+                echo '<a href="equip-single.php?equipmentId=' . $recommand_equipmentId . '">';
+                echo '<h5 style="width: 135px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
                 echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
@@ -442,7 +447,9 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 echo '<p>' . format_count($recommand_equipmentLikeCount) . '</p>';
                 echo '</span>';
                 echo '</div>';
+
                 echo '</span>';
+
                 echo '</footer>';
                 echo '</div>';
                 echo '</div>';

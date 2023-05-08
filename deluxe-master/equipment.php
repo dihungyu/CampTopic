@@ -301,7 +301,6 @@ if (isset($_POST["likeEquipDel"])) {
             $equipmentLikeCount = $equipment["equipmentLikeCount"];
             echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
             echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
-            echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
             echo '<div class="card-body">';
             echo '<div class="detail" style="margin-bottom: 0px;">';
             echo '<span style="display: flex; align-items: center;">';
@@ -309,7 +308,9 @@ if (isset($_POST["likeEquipDel"])) {
             echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
             echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $equipmentType . '</i>';
             echo '</span>';
+            echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
             echo '<h5>' . $equipmentName . '</h5>';
+            echo '</a>';
             echo '</span>';
             echo '<span class="span-adj">';
             echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
@@ -355,7 +356,6 @@ if (isset($_POST["likeEquipDel"])) {
             echo '</div>';
             echo '</footer>';
             echo '</div>';
-            echo '</a>';
             echo '</div>';
             if ($count % 2 != 0 || $count == count($equipments) - 1) {
               if ($count % 2 == 0) {
