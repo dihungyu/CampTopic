@@ -151,21 +151,22 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
             </button>
 
             <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-                    <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
-                    <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
-                    <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-                    <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
+            <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            帳號
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="member.php">會員帳號</a>
-                            <a class="dropdown-item" href="member-like.php">我的收藏</a>
-                            <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              帳號
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">我的收藏</a>
+              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
                             <div class="dropdown-divider"></div>
                             <?php
                             // 檢查是否設置了 accountName 或 accountEmail Cookie
