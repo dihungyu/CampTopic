@@ -1,5 +1,6 @@
 <?php
 require_once '../php/conn.php';
+require_once '../php/uuid_generator.php';
 session_start();
 
 
@@ -64,10 +65,7 @@ if ($result_account->num_rows > 0) {
       $femaleCount++;
     }
   }
-} else {
-  echo "找不到符合的資料";
 }
-
 $sql_allCampsite = "SELECT * FROM campsites ";
 $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
@@ -148,17 +146,17 @@ function get_img_src($accountId, $conn)
     function setDateInputBehavior(dateInputId) {
       const dateInput = $(dateInputId);
 
-      dateInput.on('focus', function() {
+      dateInput.on('focus', function () {
         dateInput.attr('type', 'date');
       });
 
-      dateInput.on('blur', function() {
+      dateInput.on('blur', function () {
         if (!dateInput.val()) {
           dateInput.attr('type', 'text');
         }
       });
 
-      dateInput.on('change', function() {
+      dateInput.on('change', function () {
         if (dateInput.val()) {
           dateInput.attr('type', 'date');
         } else {
@@ -171,26 +169,26 @@ function get_img_src($accountId, $conn)
       }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       setDateInputBehavior('#start-date-input');
       setDateInputBehavior('#end-date-input');
 
       let approvalStatus = {};
 
-      $('.accept').on('click', function() {
+      $('.accept').on('click', function () {
         let accountId = $(this).data('account-id');
         $(this).css('opacity', '1');
         $(this).siblings('.reject').css('opacity', '0.5');
         approvalStatus[accountId] = 'accepted';
       });
-      $('.reject').on('click', function() {
+      $('.reject').on('click', function () {
         let accountId = $(this).data('account-id');
         $(this).css('opacity', '1');
         $(this).siblings('.accept').css('opacity', '0.5');
         approvalStatus[accountId] = 'rejected';
       });
 
-      $('#approval-form').on('submit', function(e) {
+      $('#approval-form').on('submit', function (e) {
         $('<input>').attr({
           type: 'hidden',
           name: 'approvalStatus',
@@ -198,7 +196,7 @@ function get_img_src($accountId, $conn)
         }).appendTo('#approval-form');
       });
 
-      $(".file-upload").change(function() {
+      $(".file-upload").change(function () {
         var id = $(this).data("id");
         readURL(this, id);
       });
@@ -206,7 +204,7 @@ function get_img_src($accountId, $conn)
       function readURL(input, id) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             $("#preview-image-db-" + id).attr("src", e.target.result).css("display", "block");
             $("#remove-image-db-" + id).css("display", "block");
           };
@@ -214,7 +212,7 @@ function get_img_src($accountId, $conn)
         }
       }
 
-      $(document).on("click", "button.remove-image-button", function(event) {
+      $(document).on("click", "button.remove-image-button", function (event) {
         event.preventDefault();
         const id = $(this).attr("id").split("-").slice(-2).join("-");
         $("#preview-image-db-" + id).attr("src", "#").css("display", "none");
@@ -222,8 +220,8 @@ function get_img_src($accountId, $conn)
         $(".file-upload[data-id='" + id + "']").val("");
       });
 
-      document.querySelectorAll('.remove-image-button').forEach(function(button) {
-        button.addEventListener('click', function() {
+      document.querySelectorAll('.remove-image-button').forEach(function (button) {
+        button.addEventListener('click', function () {
           const fileId = this.getAttribute('data-file-id');
           // 將 fileId 添加到對應的隱藏輸入框中
           this.parentElement.querySelector('.delete-image-input').value = fileId;
@@ -236,7 +234,7 @@ function get_img_src($accountId, $conn)
 
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -248,8 +246,9 @@ function get_img_src($accountId, $conn)
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -257,9 +256,11 @@ function get_img_src($accountId, $conn)
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -273,7 +274,8 @@ function get_img_src($accountId, $conn)
 
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -425,8 +427,56 @@ function get_img_src($accountId, $conn)
               <div class="col-md-12 room-single ftco-animate mb-5 mt-5" style="margin-left: -15px ;">
                 <h4 class="mb-4" style="font-weight:bold;">行程介紹</h4>
                 <?php
+                $routesCount = count($routes);
+
+                if ($routesCount < 5) {
+                  $inserted = false;
+
+                  // Check each day number and insert empty data if necessary
+                  for ($i = 1; $i <= 5; $i++) {
+                    $found = false;
+
+                    foreach ($routes as $route) {
+                      if ($route['dayNumber'] == $i) {
+                        $found = true;
+                        break;
+                      }
+                    }
+
+                    if (!$found) {
+                      $routes[] = [
+                        'routeId' => uuid_generator(),
+                        'dayNumber' => $i,
+                        'locations' => ''
+                      ];
+
+                      $inserted = true;
+                    }
+                  }
+
+                  // If data was inserted, sort by dayNumber
+                  if ($inserted) {
+                    usort($routes, function ($a, $b) {
+                      return $a['dayNumber'] - $b['dayNumber'];
+                    });
+                  }
+                }
+
                 foreach ($routes as $route) {
                   $routeId = $route['routeId'];
+                  $dayNumber = $route['dayNumber'];
+                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
+                  $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
+                  $tripIntroductions = [];
+                  if (mysqli_num_rows($result_tripIntroduction) > 0) {
+                    while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
+                      $tripIntroductions[] = [
+                        'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
+                        'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
+                        'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
+                      ];
+                    }
+                  }
                   $dayNumber = $route['dayNumber'];
                   $locations = $route['locations'];
                   $dayText = 'Day ' . $dayNumber;
@@ -441,16 +491,6 @@ function get_img_src($accountId, $conn)
                   echo '<i class="fa-regular fa-pen-to-square"></i></button>';
                   echo '    </div>';
                   echo '  </span>';
-                  $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
-                  $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
-                  $tripIntroductions = [];
-                  while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-                    $tripIntroductions[] = [
-                      'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
-                      'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
-                      'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
-                    ];
-                  }
                   foreach ($tripIntroductions as $tripIntroduction) {
                     $tripIntroductionTitle = $tripIntroduction['tripIntroductionTitle'];
                     $tripIntroductionContent = $tripIntroduction['tripIntroductionContent'];
@@ -505,36 +545,41 @@ function get_img_src($accountId, $conn)
                 </div>
 
                 <?php
-                // 輸出 accountName
-                $displayCount = 0;
-                foreach ($accounts as $account) {
-                  if ($displayCount >= 3) {
-                    break;
+                if ($result_account->num_rows > 0) {
+                  // 輸出 accountName
+                  $displayCount = 0;
+                  foreach ($accounts as $account) {
+                    if ($displayCount >= 3) {
+                      break;
+                    }
+
+                    // 取得頭貼
+                    $accountId = $account['accountId'];
+                    $img_src = get_img_src($accountId, $conn);
+                    $img_src = str_replace('../', '', $img_src);
+                    $img_src = "../" . $img_src;
+
+                    $isApproved = $account['isApproved'];
+                    if ($isApproved == 1) {
+                      $accountName = $account['accountName'];
+                      echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
+                      echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                      echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
+                      $displayCount++;
+                    }
                   }
 
-                  // 取得頭貼
-                  $accountId = $account['accountId'];
-                  $img_src = get_img_src($accountId, $conn);
-                  $img_src = str_replace('../', '', $img_src);
-                  $img_src = "../" . $img_src;
-
-                  $isApproved = $account['isApproved'];
-                  if ($isApproved == 1) {
-                    $accountName = $account['accountName'];
-                    echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
-                    echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
-                    $displayCount++;
-                  }
+                  echo '<span class="more">';
+                  echo '<button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">';
+                  echo '<a href="#more2">查看更多</a></button>';
+                  echo '</span>';
+                } else {
+                  echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">目前無參加人員！</span>';
                 }
                 ?>
-                <span class="more">
-                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">
-                    <a href="#more2">查看更多</a></button>
-                </span>
-
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">審核人員</button>
+                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
+                    data-whatever="@mdo">審核人員</button>
                 </div>
               </div>
             </div>
@@ -629,7 +674,8 @@ function get_img_src($accountId, $conn)
     <!-- /.container -->
   </div>
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modalContent">
         <div class="box-mod">
@@ -708,15 +754,20 @@ function get_img_src($accountId, $conn)
   <?php
   foreach ($routes as $route) {
     $routeId = $route['routeId'];
+    $dayNumber = $route['dayNumber'];
     $sql_tripIntroduction = "SELECT * FROM tripIntroductions WHERE routeId = '$routeId'";
     $result_tripIntroduction = mysqli_query($conn, $sql_tripIntroduction);
-    $tripIntroductions = [];
-    while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
-      $tripIntroductions[] = [
-        'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
-        'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
-        'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
-      ];
+    if (mysqli_num_rows($result_tripIntroduction) == 0) {
+      $tripIntroductions = [];
+    } else {
+      $tripIntroductions = [];
+      while ($tripIntroduction_result = mysqli_fetch_assoc($result_tripIntroduction)) {
+        $tripIntroductions[] = [
+          'tripIntroductionId' => $tripIntroduction_result['tripIntroductionId'],
+          'tripIntroductionTitle' => $tripIntroduction_result['tripIntroductionTitle'],
+          'tripIntroductionContent' => $tripIntroduction_result['tripIntroductionContent']
+        ];
+      }
     }
     $dayNumber = $route['dayNumber'];
     $locations = $route['locations'];
@@ -780,6 +831,8 @@ function get_img_src($accountId, $conn)
     echo '</div>';
     echo '<div class="modal-footer">';
     echo '<input type="hidden" name="routeId" value="' . $routeId . '">';
+    echo '<input type="hidden" name="activityId" value="' . $activityId . '">';
+    echo '<input type="hidden" name="dayNumber" value="' . $dayNumber . '">';
     echo '<button type="submit" class="btn-secondary">確認</button>';
     echo '</div>';
     echo '</div>';
@@ -790,8 +843,10 @@ function get_img_src($accountId, $conn)
   ?>
 
   <!-- 編輯首要內容 -->
-  <form action="../php/Activity/updateActivity.php?activityId=<?php echo $activityId ?>" method="post" name="formEdit" id="formEdit">
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="main">
+  <form action="../php/Activity/updateActivity.php?activityId=<?php echo $activityId ?>" method="post" name="formEdit"
+    id="formEdit">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true" id="main">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -802,7 +857,8 @@ function get_img_src($accountId, $conn)
           </div>
           <div class="modal-list" style="margin: 32px;">
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="activityTitle" value="<?php echo $activityTitle ?>" placeholder="活動標題" style="width: 98%; float: left;">
+              <input type="text" name="activityTitle" value="<?php echo $activityTitle ?>" placeholder="活動標題"
+                style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
               <select name="campsiteId" style="width: 98%; float: right;">
@@ -821,24 +877,31 @@ function get_img_src($accountId, $conn)
 
 
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityStartDate" id="start-date-input" placeholder="目前開始日期：<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
+              <input type="date" name="activityStartDate" id="start-date-input"
+                placeholder="目前開始日期：<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityEndDate" id="end-date-input" placeholder="目前結束日期：<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
+              <input type="date" name="activityEndDate" id="end-date-input"
+                placeholder="目前結束日期：<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="minAttendee" value="<?php echo $minAttendee ?>" placeholder="最低參加人數（人）" style="width: 98%; float: left;">
+              <input type="text" name="minAttendee" value="<?php echo $minAttendee ?>" placeholder="最低參加人數（人）"
+                style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="maxAttendee" value="<?php echo $maxAttendee ?>" placeholder="最高參加人數（人）" style="width: 98%; float: right;">
+              <input type="text" name="maxAttendee" value="<?php echo $maxAttendee ?>" placeholder="最高參加人數（人）"
+                style="width: 98%; float: right;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="leastAttendeeFee" value="<?php echo $leastAttendeeFee ?>" placeholder="最低預估費用（元/人）" style="width: 98%; float: left;">
+              <input type="text" name="leastAttendeeFee" value="<?php echo $leastAttendeeFee ?>"
+                placeholder="最低預估費用（元/人）" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="maxAttendeeFee" value="<?php echo $maxAttendeeFee ?>" placeholder="最高預估費用（元/人）" style="width: 98%; float: right;">
+              <input type="text" name="maxAttendeeFee" value="<?php echo $maxAttendeeFee ?>" placeholder="最高預估費用（元/人）"
+                style="width: 98%; float: right;">
             </div>
-            <textarea name="activityDescription" class="lg" rows="8" type="text" placeholder="請輸入活動介紹"><?php echo $activityDescription ?></textarea>
+            <textarea name="activityDescription" class="lg" rows="8" type="text"
+              placeholder="請輸入活動介紹"><?php echo $activityDescription ?></textarea>
           </div>
           <div class="modal-footer">
             <input type="hidden" name="action" value="update">
@@ -928,7 +991,8 @@ function get_img_src($accountId, $conn)
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
     </svg></div>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -944,7 +1008,8 @@ function get_img_src($accountId, $conn)
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -956,7 +1021,7 @@ function get_img_src($accountId, $conn)
       infoModal.style.display = "block";
     });
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
       if (event.target == infoModal) {
         infoModal.style.display = "none";
       }

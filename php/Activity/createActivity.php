@@ -65,7 +65,7 @@ if (isset($_POST["action"]) && ($_POST["action"] == "insert")) {
         mysqli_query($conn, $sql_query);
 
         $_SESSION["system_message"] = "活動新增成功！";
-        header("Location: " . $_SERVER['HTTP_REFERER']);
+        header("Location: ../../deluxe-master/check.php?activityId=$activityId");
     }
 }
 ?>
