@@ -10,7 +10,6 @@ $sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
 $result = mysqli_query($conn, $sql_getDataQuery);
 $row_result = mysqli_fetch_assoc($result);
 
-$activityId = $row_result['activityId'];
 $campsiteId = $row_result['campsiteId'];
 $accountId = $row_result['accountId'];
 $activityTitle = $row_result['activityTitle'];
