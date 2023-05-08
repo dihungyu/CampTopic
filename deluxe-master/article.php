@@ -189,7 +189,7 @@ $articleId = $_GET['articleId'];
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
@@ -233,7 +233,7 @@ $articleId = $_GET['articleId'];
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="/deluxe-master/property-1.0.0/index.php">首頁</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
               <li class="breadcrumb-item"><a href="all-article.php">鹿的分享</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 文章分享
