@@ -1,5 +1,8 @@
 <?php
 require_once '../../php/conn.php';
+
+session_start();
+
 //判斷是否登入，若有則對變數初始化
 if (isset($_COOKIE["accountId"])) {
   $accountId = $_COOKIE["accountId"];
@@ -60,9 +63,29 @@ $accountName = $row_account['accountName'];
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+  </script>
+
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
@@ -78,7 +101,7 @@ $accountName = $row_account['accountName'];
           <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 
           <li class="nav-item dropdown active">

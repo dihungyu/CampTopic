@@ -1,10 +1,10 @@
 <?php
 require_once '../php/conn.php';
-
 session_start();
 
+
 // $activityId = $_GET['activityId'];
-$activityId = '3525062ec997889fc584f54177abda3a';
+$activityId = 'c5f26141d4f6b4ce0088fa431fb86e61';
 
 $sql_getDataQuery = "SELECT * FROM activities WHERE activityId = '$activityId'";
 $result = mysqli_query($conn, $sql_getDataQuery);
@@ -72,6 +72,24 @@ if ($result_account->num_rows > 0) {
 $sql_allCampsite = "SELECT * FROM campsites ";
 $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
+
+// 可用函式區
+function get_img_src($accountId, $conn)
+{
+  $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
+  $pic_result = mysqli_query($conn, $pic_sql);
+
+  if ($pic_row = mysqli_fetch_assoc($pic_result)) {
+    $img_src = $pic_row["filePath"];
+    $img_src = str_replace("../", "", $img_src);
+    $img_src = "../" . $img_src;
+  } else {
+    $img_src = "../upload/profileDefault.jpeg";
+  }
+
+  return $img_src;
+}
+
 ?>
 
 
@@ -131,17 +149,17 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     function setDateInputBehavior(dateInputId) {
       const dateInput = $(dateInputId);
 
-      dateInput.on('focus', function () {
+      dateInput.on('focus', function() {
         dateInput.attr('type', 'date');
       });
 
-      dateInput.on('blur', function () {
+      dateInput.on('blur', function() {
         if (!dateInput.val()) {
           dateInput.attr('type', 'text');
         }
       });
 
-      dateInput.on('change', function () {
+      dateInput.on('change', function() {
         if (dateInput.val()) {
           dateInput.attr('type', 'date');
         } else {
@@ -154,26 +172,26 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
       setDateInputBehavior('#start-date-input');
       setDateInputBehavior('#end-date-input');
 
       let approvalStatus = {};
 
-      $('.accept').on('click', function () {
+      $('.accept').on('click', function() {
         let accountId = $(this).data('account-id');
         $(this).css('opacity', '1');
         $(this).siblings('.reject').css('opacity', '0.5');
         approvalStatus[accountId] = 'accepted';
       });
-      $('.reject').on('click', function () {
+      $('.reject').on('click', function() {
         let accountId = $(this).data('account-id');
         $(this).css('opacity', '1');
         $(this).siblings('.accept').css('opacity', '0.5');
         approvalStatus[accountId] = 'rejected';
       });
 
-      $('#approval-form').on('submit', function (e) {
+      $('#approval-form').on('submit', function(e) {
         $('<input>').attr({
           type: 'hidden',
           name: 'approvalStatus',
@@ -181,7 +199,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
         }).appendTo('#approval-form');
       });
 
-      $(".file-upload").change(function () {
+      $(".file-upload").change(function() {
         var id = $(this).data("id");
         readURL(this, id);
       });
@@ -189,7 +207,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       function readURL(input, id) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             $("#preview-image-db-" + id).attr("src", e.target.result).css("display", "block");
             $("#remove-image-db-" + id).css("display", "block");
           };
@@ -197,7 +215,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
         }
       }
 
-      $(document).on("click", "button.remove-image-button", function (event) {
+      $(document).on("click", "button.remove-image-button", function(event) {
         event.preventDefault();
         const id = $(this).attr("id").split("-").slice(-2).join("-");
         $("#preview-image-db-" + id).attr("src", "#").css("display", "none");
@@ -205,8 +223,8 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
         $(".file-upload[data-id='" + id + "']").val("");
       });
 
-      document.querySelectorAll('.remove-image-button').forEach(function (button) {
-        button.addEventListener('click', function () {
+      document.querySelectorAll('.remove-image-button').forEach(function(button) {
+        button.addEventListener('click', function() {
           const fileId = this.getAttribute('data-file-id');
           // 將 fileId 添加到對應的隱藏輸入框中
           this.parentElement.querySelector('.delete-image-input').value = fileId;
@@ -219,12 +237,11 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
     setTimeout(hideMessage, 3000);
-
   </script>
 
 </head>
@@ -232,9 +249,8 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -242,18 +258,16 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
@@ -296,8 +310,8 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-              <li class="breadcrumb-item"><a href="index.html">找小鹿</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 活動資訊
               </li>
@@ -307,6 +321,13 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       </div>
     </div>
   </div>
+  <?php
+  // 取得發起者頭貼
+  $img_src = get_img_src($accountId, $conn);
+  $img_src = str_replace("../", "", $img_src);
+  $img_src = "../" . $img_src;
+
+  ?>
 
   <section class="ftco-section">
     <div class="container">
@@ -322,7 +343,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                   <i class="fa-regular fa-pen-to-square"></i></button>
               </span>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
-                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
+                <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%;
                   width: 4%;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
@@ -490,11 +511,18 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                   if ($displayCount >= 3) {
                     break;
                   }
+
+                  // 取得頭貼
+                  $accountId = $account['accountId'];
+                  $img_src = get_img_src($accountId, $conn);
+                  $img_src = str_replace('../', '', $img_src);
+                  $img_src = "../" . $img_src;
+
                   $isApproved = $account['isApproved'];
                   if ($isApproved == 1) {
                     $accountName = $account['accountName'];
                     echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                    echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
                     echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
                     $displayCount++;
                   }
@@ -506,8 +534,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                 </span>
 
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@mdo">審核人員</button>
+                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">審核人員</button>
                 </div>
               </div>
             </div>
@@ -530,48 +557,49 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   </section>
 
   <div class="site-footer" style="clear: both;">
-    <div class="container"><div class="row">
-        
+    <div class="container">
+      <div class="row">
+
         <!-- /.col-lg-4 -->
-       <div class="col-lg-5">
-         <div class="widget">
-           <h3>聯絡資訊</h3>
-           <address>StartCamping 營在起跑點！</address>
-           <ul class="list-unstyled links">
-             <li><a href="tel://11234567890">0911222345</a></li>
-             <li><a href="tel://11234567890">@startcamping</a></li>
-             <li>
-               <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-             </li>
-           </ul>
-         </div>
-         <!-- /.widget -->
-       </div>
-       <!-- /.col-lg-4 -->
         <div class="col-lg-5">
-         <div class="widget">
-           <h3>頁面總覽</h3>
-           <ul class="list-unstyled float-start links">
-             <li><a href="#">首頁</a></li>
-             <li><a href="#">找小鹿</a></li>
-             <li><a href="#">鹿的分享</a></li>
-             <li><a href="#">鹿的裝備</a></li>
-             <li><a href="#">廣告方案</a></li>
-           </ul>
-           <ul class="list-unstyled float-start links">
-             <li><a href="#">帳號</a></li>
-             <li><a href="#">會員帳號</a></li>
-             <li><a href="#">我的收藏</a></li>
-           </ul>
-         </div>
-         <!-- /.widget -->
-       </div>
-       <!-- /.col-lg-4 -->
-       <div class="col-lg-2">
-         <!-- /.widget -->
-       </div>
-     </div>
-       <!-- /.row -->
+          <div class="widget">
+            <h3>聯絡資訊</h3>
+            <address>StartCamping 營在起跑點！</address>
+            <ul class="list-unstyled links">
+              <li><a href="tel://11234567890">0911222345</a></li>
+              <li><a href="tel://11234567890">@startcamping</a></li>
+              <li>
+                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>頁面總覽</h3>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">首頁</a></li>
+              <li><a href="#">找小鹿</a></li>
+              <li><a href="#">鹿的分享</a></li>
+              <li><a href="#">鹿的裝備</a></li>
+              <li><a href="#">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">帳號</a></li>
+              <li><a href="#">會員帳號</a></li>
+              <li><a href="#">我的收藏</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <!-- /.widget -->
+        </div>
+      </div>
+      <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">
@@ -601,21 +629,21 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
     <!-- /.container -->
   </div>
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modalContent">
         <div class="box-mod">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
           </button>
           <h5 id="exampleModalLabel">審核</h5>
-          
+
         </div>
         <p style="color: #a0a0a0 ">審核參加人員
         <p>
 
         <form id="approval-form" action="../php/Route/updateApproval.php" method="post">
+          <input type="hidden" name="activityId" value="<?php echo $activityId; ?>">
           <div class="modal-list">
             <div class="supply">
               <div class="row">
@@ -628,9 +656,16 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
                     $accountId = $account['accountId'];
                     $accountName = $account['accountName'];
                     $accountGender = $account['accountGender'];
+
+                    // 取得頭貼
+                    $accountId = $account['accountId'];
+                    $img_src = get_img_src($accountId, $conn);
+                    $img_src = str_replace('../', '', $img_src);
+                    $img_src = "../" . $img_src;
+
                     echo '<div class="col-md-4">';
                     echo '  <span style="display: flex; align-items: center; justify-content: flex-start">';
-                    echo '    <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                    echo '    <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
                     echo '    <label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label>';
                     echo '  </span>';
                     echo '</div>';
@@ -755,10 +790,8 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   ?>
 
   <!-- 編輯首要內容 -->
-  <form action="../php/Activity/updateActivity.php?activityId=<?php echo $activityId ?>" method="post" name="formEdit"
-    id="formEdit">
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-      aria-hidden="true" id="main">
+  <form action="../php/Activity/updateActivity.php?activityId=<?php echo $activityId ?>" method="post" name="formEdit" id="formEdit">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="main">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -769,8 +802,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
           </div>
           <div class="modal-list" style="margin: 32px;">
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="activityTitle" value="<?php echo $activityTitle ?>" placeholder="活動標題"
-                style="width: 98%; float: left;">
+              <input type="text" name="activityTitle" value="<?php echo $activityTitle ?>" placeholder="活動標題" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
               <select name="campsiteId" style="width: 98%; float: right;">
@@ -789,31 +821,24 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
 
 
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityStartDate" id="start-date-input"
-                placeholder="目前開始日期：<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
+              <input type="date" name="activityStartDate" id="start-date-input" placeholder="目前開始日期：<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityEndDate" id="end-date-input"
-                placeholder="目前結束日期：<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
+              <input type="date" name="activityEndDate" id="end-date-input" placeholder="目前結束日期：<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="minAttendee" value="<?php echo $minAttendee ?>" placeholder="最低參加人數（人）"
-                style="width: 98%; float: left;">
+              <input type="text" name="minAttendee" value="<?php echo $minAttendee ?>" placeholder="最低參加人數（人）" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="maxAttendee" value="<?php echo $maxAttendee ?>" placeholder="最高參加人數（人）"
-                style="width: 98%; float: right;">
+              <input type="text" name="maxAttendee" value="<?php echo $maxAttendee ?>" placeholder="最高參加人數（人）" style="width: 98%; float: right;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="leastAttendeeFee" value="<?php echo $leastAttendeeFee ?>"
-                placeholder="最低預估費用（元/人）" style="width: 98%; float: left;">
+              <input type="text" name="leastAttendeeFee" value="<?php echo $leastAttendeeFee ?>" placeholder="最低預估費用（元/人）" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="text" name="maxAttendeeFee" value="<?php echo $maxAttendeeFee ?>" placeholder="最高預估費用（元/人）"
-                style="width: 98%; float: right;">
+              <input type="text" name="maxAttendeeFee" value="<?php echo $maxAttendeeFee ?>" placeholder="最高預估費用（元/人）" style="width: 98%; float: right;">
             </div>
-            <textarea name="activityDescription" class="lg" rows="8" type="text"
-              placeholder="請輸入活動介紹"><?php echo $activityDescription ?></textarea>
+            <textarea name="activityDescription" class="lg" rows="8" type="text" placeholder="請輸入活動介紹"><?php echo $activityDescription ?></textarea>
           </div>
           <div class="modal-footer">
             <input type="hidden" name="action" value="update">
@@ -844,10 +869,18 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
               foreach ($accounts as $account) {
                 $isApproved = $account['isApproved'];
                 if ($isApproved == 1) {
+                  $accountId = $account['accountId'];
                   $accountName = $account['accountName'];
+
+                  // 取得頭貼
+                  $accountId = $account['accountId'];
+                  $img_src = get_img_src($accountId, $conn);
+                  $img_src = str_replace('../', '', $img_src);
+                  $img_src = "../" . $img_src;
+
                   echo '<div class="col-md-4">';
                   echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
-                  echo '<img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                  echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
                   echo '<label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label></span>';
                   echo '</div>';
                   echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
@@ -895,8 +928,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg></div>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -912,8 +944,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -925,7 +956,7 @@ $result_allCampsite = mysqli_query($conn, $sql_allCampsite);
       infoModal.style.display = "block";
     });
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (event.target == infoModal) {
         infoModal.style.display = "none";
       }

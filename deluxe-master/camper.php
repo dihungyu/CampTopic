@@ -58,7 +58,7 @@ $sql_route1 = "SELECT * FROM routes WHERE activityId = '$activityId' ORDER BY da
 $result_route = mysqli_query($conn, $sql_route1);
 
 // 查詢活動參加者資料
-$sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts ON activities_accounts.accountId = accounts.accountId WHERE activities_accounts.activityId = '$activityId'";
+$sql_account = "SELECT accounts.* FROM activities_accounts JOIN accounts ON activities_accounts.accountId = accounts.accountId WHERE activities_accounts.activityId = '$activityId' AND activities_accounts.isApproved = 1";
 $result_account = mysqli_query($conn, $sql_account);
 
 // 計算男性和女性的數量並將查詢結果儲存在陣列中

@@ -1,9 +1,11 @@
 <?php
+session_start();
+require_once '../conn.php';
+require_once '../uuid_generator.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!empty($_COOKIE['accountId']) && !empty($_POST["equipmentType"]) && !empty($_POST["equipmentLocation"]) && !empty($_POST["equipmentName"]) && !empty($_POST["equipmentDescription"]) && !empty($_POST["equipmentPrice"])) {
-        session_start();
-        require_once '../conn.php';
-        require_once '../uuid_generator.php';
+
 
         $accountId = $_COOKIE['accountId'];
         $equipmentType = $_POST["equipmentType"];
@@ -73,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $_SESSION['system_message'] = '新增設備成功！';
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ../../deluxe-master/equip-single.php?equipmentId=' . $equipmentId . '');
         exit();
     } else {
         $_SESSION['system_message'] = '新增設備失敗，注意所有欄位都不得為空！';
