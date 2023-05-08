@@ -131,6 +131,25 @@ $articleId = $_GET['articleId'];
     .delete-comment:hover {
       color: #dc3545;
     }
+
+    .edit-icon .delete-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      margin: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-icon .delete-icon i {
+      font-size: 20px;
+      color: #777;
+      line-height: 30px;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -215,7 +234,7 @@ $articleId = $_GET['articleId'];
 
   <?php
   //取得文章資料
-  $main_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
+  $main_article_sql = "SELECT articles.*, accounts.accountId, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
   $main_article_result = mysqli_query($conn, $main_article_sql);
   $main_article_row = mysqli_fetch_assoc($main_article_result);
   ?>
@@ -230,6 +249,22 @@ $articleId = $_GET['articleId'];
 
           <h2 class="mb-4"><?php echo $main_article_row["articleTitle"]; ?></h2>
           <div id="article-content">
+            <?php
+            if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
+              // echo '<div class="delete-icon">
+              // <a href="/delete-article.php?articleId=' . $articleId . '">
+              //   <i class="fas fa-trash-alt"></i>
+              // </a>
+
+
+              echo '<div class="edit-icon">
+              <a href="property-1.0.0/update-article.php?articleId=' . $articleId . '">
+                <i class="fas fa-edit"></i>
+              </a>
+            </div>';
+            }
+            ?>
+            <a href="/deluxe-master/property-1.0.0/update-article.php"></a>
             <?php echo $main_article_row["articleContent"]; ?>
           </div>
 
