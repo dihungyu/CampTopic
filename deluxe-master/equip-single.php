@@ -136,7 +136,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-equipment.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -200,16 +200,16 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
             </div>
             <div class="col-md-11 room-single mt-4 mb-5 ftco-animate">
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
-              <span class="span-adj">
-                <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                  <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
-                  <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
-                    <?php echo $equipmentType ?>
-                  </i>
-                </span>
-                <h1><a href="single.html">
-                    <?php echo $equipmentName ?>
-                  </a></h1>
+                <span class="span-adj">
+                  <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
+                    <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
+                      <?php echo $equipmentType ?>
+                    </i>
+                  </span>
+                  <h1><a href="single.html">
+                      <?php echo $equipmentName ?>
+                    </a></h1>
                 </span>
                 <h4 class="equiph4">$
                   <?php echo $equipmentPrice ?>

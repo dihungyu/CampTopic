@@ -138,7 +138,7 @@ $articleId = $_GET['articleId'];
           <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -459,15 +459,15 @@ $articleId = $_GET['articleId'];
             if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
               while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
                 $articleId = $top3_article_row["articleId"];
+                $articleContent = $top3_article_row["articleContent"];
 
-                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-                $files_result = mysqli_query($conn, $files_query);
-                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
 
-                if ($file_result = mysqli_fetch_assoc($files_result)) {
-                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                  $image_src = $file_path;
+                // 查詢文章圖片
+                $image_src = get_first_image_src($articleContent);
+                if (!$image_src) {
+                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
                 }
+
 
                 // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
                 $timestamp = strtotime($top234_article_row["articleCreateDate"]);

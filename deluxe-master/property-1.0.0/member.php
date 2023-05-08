@@ -155,7 +155,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle " href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -306,12 +306,12 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
             <span class="member-input">
               <p>性別</p>
               <input type="radio" name="accountGender" value="Female" style="margin-left: 12px; margin-bottom:0px; width: 13px; height:13px;" <?php if ($accountGender == "Female") {
-                                                                                                                        echo "checked";
-                                                                                                                      } ?> required>
+                                                                                                                                                echo "checked";
+                                                                                                                                              } ?> required>
               <label for="Female" style="font-weight: bold;font-size:16px; margin-left:8px">女</label>
               <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-bottom:0px; width: 13px; height:13px" <?php if ($accountGender == "Male") {
-                                                                                                                      echo "checked";
-                                                                                                                    } ?> required>
+                                                                                                                                              echo "checked";
+                                                                                                                                            } ?> required>
               <label for=" Male" style="font-weight: bold;font-size:16px; margin-left:8px">男</label>
             </span>
 

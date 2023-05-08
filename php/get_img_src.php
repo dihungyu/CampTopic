@@ -14,9 +14,9 @@ function get_profileImg_src($accountId, $conn)
 }
 
 
-function get_img_src($fileType, $fileTypeId, $defaultImg, $conn)
+function get_img_src($typeId, $fileTypeId, $defaultImg, $conn)
 {
-    $files_query = "SELECT * FROM files WHERE '$fileType' = '$fileTypeId'";
+    $files_query = "SELECT * FROM files WHERE '$typeId' = '$fileTypeId'";
     $files_result = mysqli_query($conn, $files_query);
     $image_src = $defaultImg; // Default image
 
@@ -26,4 +26,23 @@ function get_img_src($fileType, $fileTypeId, $defaultImg, $conn)
     }
 
     return $image_src;
+}
+
+function get_first_image_src($html)
+{
+    $dom = new DOMDocument();
+    $dom->loadHTML($html);
+
+    $images = $dom->getElementsByTagName('img');
+    if ($images->length > 0) {
+        $first_image = $images->item(0);
+        if ($first_image instanceof DOMElement) {
+            $src = $first_image->getAttribute('src');
+            if (!empty($src)) {
+                return $src;
+            }
+        }
+    }
+
+    return "";
 }

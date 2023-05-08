@@ -63,6 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
     if (!mysqli_query($conn, $sql_query1)) {
         echo "Error: " . mysqli_error($conn);
+        $_SESSION["system_message"] = "文章新增失敗";
+        header("Location: ../all-article.php");
+        exit(); // Add this line
     }
 
     // Insert tags into articles_labels table
@@ -73,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         if (!mysqli_query($conn, $insert_label_sql)) {
             // echo "Error: " . mysqli_error($conn);
 
-            $_SESSION["system_message"] = "文章新增失敗";
+            $_SESSION["system_message"] = "標籤有誤，文章新增失敗";
             header("Location: ../all-article.php");
             exit();
         }

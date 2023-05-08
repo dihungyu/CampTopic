@@ -2,6 +2,7 @@
 session_start();
 require_once '../../php/conn.php';
 require_once '../../php/uuid_generator.php';
+require_once '../../php/get_img_src.php';
 
 //讚數格式化函式
 function format_like_count($count)
@@ -259,7 +260,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="ad.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -781,6 +782,7 @@ if (isset($_POST["likeEquipDel"])) {
 
               $articleId = $articleData["articleId"];
               $articleCreator = $articleData["accountId"];
+              $articleContent = $articleData["articleContent"];
 
               // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
               $timestamp = strtotime($articleData["articleCreateDate"]);
@@ -797,9 +799,11 @@ if (isset($_POST["likeEquipDel"])) {
               $author_result = mysqli_query($conn, $author_query);
               $author_name = mysqli_fetch_assoc($author_result)['accountName'];
 
-              if ($file_result = mysqli_fetch_assoc($files_result)) {
-                $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                $image_src = $file_path;
+              // 取得文章圖片
+              $image_src = get_first_image_src($articleContent);
+              $image_src = "../" . $image_src;
+              if (!$image_src) {
+                $image_src = 'images/image 1.png';
               }
 
               //取得文章留言數
@@ -1035,7 +1039,7 @@ if (isset($_POST["likeEquipDel"])) {
                   <li><a href="camp-information.html">找小鹿</a></li>
                   <li><a href="../all-article.html">鹿的分享</a></li>
                   <li><a href="../equipment.html">鹿的裝備</a></li>
-                  <li><a href="ad.html">廣告方案</a></li>
+                  <li><a href="ad.php">廣告方案</a></li>
                 </ul>
                 <ul class="list-unstyled float-start links">
                   <li><a href="member.php">帳號</a></li>

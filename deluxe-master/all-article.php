@@ -2,6 +2,7 @@
 
 require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
+require_once "../php/get_img_src.php";
 session_start();
 
 
@@ -35,10 +36,15 @@ if (isset($_POST["collectArticleAdd"])) {
   $sql2 = "UPDATE `articles` SET `articleCollectCount` = `articleCollectCount` + 1 WHERE `articleId` = '$articleId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
+
     $_SESSION["system_message"] = "已加入收藏!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
+  } else {
+    $_SESSION["system_message"] = "收藏失敗!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼}
   }
 }
 
@@ -51,7 +57,7 @@ if (isset($_POST["collectArticleDel"])) {
   $sql2 = "UPDATE `articles` SET `articleCollectCount` = `articleCollectCount` - 1 WHERE `articleId` = '$articleId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已取消收藏!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -74,7 +80,7 @@ if (isset($_POST["likeArticleAdd"])) {
   $sql2 = "UPDATE `articles` SET `articleLikeCount` = `articleLikeCount` + 1 WHERE `articleId` = '$articleId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已按讚!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -90,7 +96,7 @@ if (isset($_POST["likeArticleDel"])) {
   $sql2 = "UPDATE `articles` SET `articleLikeCount` = `articleLikeCount` - 1 WHERE `articleId` = '$articleId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已取消讚!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -111,7 +117,7 @@ if (isset($_POST["collectEquipAdd"])) {
   $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` + 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已加入收藏!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -127,7 +133,7 @@ if (isset($_POST["collectEquipDel"])) {
   $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已取消收藏!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -150,7 +156,7 @@ if (isset($_POST["likeEquipAdd"])) {
   $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` + 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已按讚!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -166,7 +172,7 @@ if (isset($_POST["likeEquipDel"])) {
   $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` - 1 WHERE `equipmentId` = '$equipmentId'";
   $result = mysqli_query($conn, $sql);
   $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
+  if ($result && $result2) {
     $_SESSION["system_message"] = "已取消讚!";
     header("Location: all-article.php");
     exit; // 確保重新導向後停止執行後續代碼
@@ -259,7 +265,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -317,15 +323,17 @@ if (isset($_POST["likeEquipDel"])) {
     $top1_article_row = mysqli_fetch_assoc($top1_article_result);
 
     $articleId = $top1_article_row["articleId"];
+    $articleContent = $top1_article_row["articleContent"];
 
-    $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-    $files_result = mysqli_query($conn, $files_query);
-    $image_src = 'images/6540.jpg'; // Default image
+    // html中的第一張圖片，作為封面
+    $image_src = get_first_image_src($articleContent);
 
-    if ($file_result = mysqli_fetch_assoc($files_result)) {
-      $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-      $image_src = $file_path;
+    if ($image_src == "") {
+      $image_src = "images/6540.jpg";
     }
+    // Default image
+    //  $image_src = 'images/6540.jpg';
+
   }
 
 
@@ -415,14 +423,14 @@ if (isset($_POST["likeEquipDel"])) {
                 if ($article_result && mysqli_num_rows($article_result) > 0) {
                   while ($article_row = mysqli_fetch_assoc($article_result)) {
                     $articleId = $article_row["articleId"];
+                    $articleContent = $article_row["articleContent"];
 
-                    $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-                    $files_result = mysqli_query($conn, $files_query);
-                    $image_src = 'images/img15.jpg'; // Default image
+                    // 取得文章第一張圖片
+                    $image_src = get_first_image_src($articleContent);
 
-                    if ($file_result = mysqli_fetch_assoc($files_result)) {
-                      $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                      $image_src = $file_path;
+                    // 如果文章沒有圖片，則使用預設圖片
+                    if (!$image_src) {
+                      $image_src = 'images/img15.jpg';
                     }
 
                     // 檢查當前文章是否已按讚
@@ -503,40 +511,6 @@ if (isset($_POST["likeEquipDel"])) {
                 }
                 ?>
 
-
-
-                <!-- <article class=" col-md-11 article-list mb-4">
-                  <div class="inner">
-                    <figure>
-                      <a href="single.html">
-                        <img src="images/img15.jpg">
-                      </a>
-                    </figure>
-                    <div class="details">
-                      <div class="detail" style="justify-content: space-between;">
-                        <span style="display: flex;">
-                          <div class="category">
-                            <a href="category.html">Film</a>
-                          </div>
-                          <div class="time">December 26, 2016</div>
-                        </span>
-                      </div>
-                      <h5><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h5>
-                      <p style="padding-top: 10px;">
-                        最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                        不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                      </p>
-                      <footer class="article-footer-div">
-                        <p>100 留言</p>
-                        <span class="article-footer">
-                          <i class='fa-regular fa-heart'></i>
-                          <p>1,098</p>
-                        </span>
-                      </footer>
-                    </div>
-                  </div>
-                </article> -->
-
               </div>
 
               <div class="row align-items-center py-5">
@@ -565,14 +539,13 @@ if (isset($_POST["likeEquipDel"])) {
             if ($top234_article_result && mysqli_num_rows($top234_article_result) > 0) {
               while ($top234_article_row = mysqli_fetch_assoc($top234_article_result)) {
                 $articleId = $top234_article_row["articleId"];
+                $articleContent = $top234_article_row["articleContent"];
 
-                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-                $files_result = mysqli_query($conn, $files_query);
-                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+                // 取得文章第一張圖片
+                $image_src = get_first_image_src($articleContent);
 
-                if ($file_result = mysqli_fetch_assoc($files_result)) {
-                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                  $image_src = $file_path;
+                if (!$image_src) {
+                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
                 }
 
                 // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳

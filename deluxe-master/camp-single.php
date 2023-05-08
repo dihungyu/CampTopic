@@ -109,7 +109,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">鹿的設備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
