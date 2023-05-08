@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
             if (in_array($detected_type, $allowed_types)) {
                 $fileId = uuid_generator();
-                $upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
+                $upload_dir = "../../upload/";
                 $fileName = $_FILES["files"]["name"][$key];
                 $filePath = $upload_dir . $fileName;
                 $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
@@ -115,7 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
                 UPLOAD_ERR_EXTENSION => "上傳檔案被中斷",
             ];
             $error_code = $_FILES["files"]["error"][$key];
-
             echo "檔案 $name 上傳失敗：" . $error_messages[$error_code] . "<br>";
         }
     }
@@ -191,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
@@ -201,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         }
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#tags-select').select2({
                 placeholder: '請選擇標籤'
             });

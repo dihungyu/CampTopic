@@ -829,7 +829,6 @@ if (mysqli_num_rows($result_activities) > 0) {
                     <div id="activityTitleError" class="error-message">*必填</div>
                     <input type="text" name="activityTitle" placeholder="活動名稱">
                   </div>
-
                 </div>
                 <div id="campsiteIdContainer">
                   <select name="campsiteId">
