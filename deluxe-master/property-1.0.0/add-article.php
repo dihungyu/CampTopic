@@ -6,6 +6,10 @@ if (!isset($_COOKIE["accountId"])) {
   header("Location: ../all-article.php");
   exit;
 }
+require_once '../../php/conn.php';
+require_once '../../php/get_img_src.php';
+
+$accountId = $_COOKIE["accountId"];
 ?>
 <!-- /*
 * Template Name: Property
@@ -136,11 +140,16 @@ if (!isset($_COOKIE["accountId"])) {
 
 
 
+    <?php
+    // 取得使用者頭像
+    $image_src = get_profileImg_src($accountId, $conn);
+
+    ?>
     <div class="section section-properties">
       <div class="container">
         <div class="row">
           <span style="margin-left: 80px; margin-bottom: 20px;" class="mt-2 mb-4">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
+            <img src="<?php echo $image_src; ?>" alt="Image description" style="border-radius: 50%; width: 3%;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
           </span>
           <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">

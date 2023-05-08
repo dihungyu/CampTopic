@@ -9,6 +9,7 @@ if (!isset($_COOKIE["accountId"])) {
 }
 require_once "../../php/conn.php";
 require_once "../../php/uuid_generator.php";
+require_once "../../php/get_img_src.php";
 
 //判斷是否登入，若有則對變數初始化
 if (isset($_COOKIE["accountId"])) {
@@ -205,15 +206,10 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                   <div class="mb-3">
                     <?php
                     // 取得頭像
-                    $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
-                    $pic_result = mysqli_query($conn, $pic_sql);
+                    $image_src = get_profileImg_src($accountId, $conn);
                     ?>
                     <div class="avatar-wrapper">
-                      <img src="<?php if ($pic_row = mysqli_fetch_assoc($pic_result)) {
-                                  echo $pic_row["filePath"];
-                                } else {
-                                  echo "../../upload/profileDefault.jpeg";
-                                } ?>" alt="Admin" class="avatar">
+                      <img src="<?php echo $image_src ?>" alt="Admin" class="avatar">
                     </div>
                   </div>
                   <form action="uploadProfilePic.php" method="post" enctype="multipart/form-data">
