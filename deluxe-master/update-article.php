@@ -4,8 +4,8 @@ if (!isset($articleId)) {
 }
 session_start();
 // 連接資料庫
-require_once '../../php/conn.php';
-require_once '../../php/get_img_src.php';
+require_once '../php/conn.php';
+require_once '../php/get_img_src.php';
 
 // 取得文章內容
 $articleTitle = '';
@@ -21,8 +21,6 @@ if (isset($articleId)) {
         $row = $result->fetch_assoc();
         $articleTitle = $row['articleTitle'];
         $articleContent = $row['articleContent'];
-        // 修改圖片路徑，使其適用於update-article.php所在的目錄層次
-        $articleContent = str_replace('../upload/', '../../upload/', $articleContent);
     }
 }
 
@@ -123,7 +121,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
@@ -131,29 +129,29 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-                    <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
-                    <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
-                    <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
+                    <li class="nav-item active"><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
+                    <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
+                    <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
+                    <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
                     <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="member.php">會員帳號</a>
-                            <a class="dropdown-item" href="member-like.php">我的收藏</a>
-                            <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+                            <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
+                            <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
+                            <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
                             <div class="dropdown-divider"></div>
                             <?php
                             // 檢查是否設置了 accountName 或 accountEmail Cookie
                             if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+                                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
                             }
                             // 如果沒有設置 Cookie 則顯示登入選項
                             else {
-                                echo '<a class="dropdown-item" href="../../login.php">登入</a>';
+                                echo '<a class="dropdown-item" href="../login.php">登入</a>';
                             }
                             ?>
                         </div>
@@ -172,8 +170,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
                     <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                         <ol class="breadcrumb text-center justify-content-center">
-                            <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-                            <li class="breadcrumb-item"><a href="../all-article.php">鹿的分享</a></li>
+                            <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="all-article.php">鹿的分享</a></li>
                             <li class="breadcrumb-item active text-white-50" aria-current="page">
                                 文章管理
                             </li>
@@ -437,7 +435,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                         formData.append('file', files[0]);
 
                         $.ajax({
-                            url: '../../php/upload_image.php',
+                            url: '../php/upload_image.php',
                             method: 'POST',
                             data: formData,
                             processData: false,
