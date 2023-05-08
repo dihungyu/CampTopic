@@ -12574,3 +12574,14 @@ font-size: 14px;
 .card-eq {
   width: 30%; /* 设置卡片的宽度 */
 }
+.article-comment{
+  height: 40px;
+  width: 300px;
+  border-radius: 35px; 
+  background-color: #F0F0F0; 
+  border: none; 
+  padding: 20px;
+  color:#ADADAD;
+  margin-left: 10px;
+
+}

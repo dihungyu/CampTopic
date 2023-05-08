@@ -56,70 +56,21 @@ $articleId = $_GET['articleId'];
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
-  <style>
-    #article-content .article-img {
+  <style>    
+  #article-content .article-img {
       max-width: 100%;
       height: auto;
     }
 
-    .reply-list {
-      margin-left: 0;
-      padding-left: 0;
-    }
-
-    .reply-list li {
-      list-style: none;
-    }
-
-    .comment-avatar {
-      border-radius: 50%;
-      object-fit: cover;
-      width: 50px;
-      height: 50px;
-    }
-
-    .reply-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .reply-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .reply {
-      display: flex;
-      align-items: center;
-      background: transparent;
-      background-color: transparent !important;
-    }
-
-    .reply-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 16px;
-    }
-
-    .reply-form {
-      flex-grow: 1;
-    }
-
-    .comment-list li .comment-body .reply {
-      background: transparent;
-    }
-
-    .comment:hover,
-    .reply:hover {
-      background-color: transparent;
-    }
-
-    .comment:hover h3,
-    .reply:hover h3 {
-      color: inherit;
+    .article-comment{
+      height: 40px;
+      width: 300px;
+      border-radius: 35px; 
+      background-color: #F0F0F0; 
+      border: none; 
+      padding: 20px;
+      color:#ADADAD;
+      margin-left: 10px;
     }
 
     .delete-comment {
@@ -131,11 +82,12 @@ $articleId = $_GET['articleId'];
       font-size: 1rem;
       color: #6c757d;
       cursor: pointer;
-    }
+}
 
     .delete-comment:hover {
       color: #dc3545;
-    }
+}
+
 
   </style>
 
@@ -246,7 +198,7 @@ $articleId = $_GET['articleId'];
       <div class="row">
         <div class="col-lg-8 ftco-animate order-md-last">
           <span class="img-name">
-            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
+            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 8%; margin-right: 8px;">
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
           <div style="display:flex; justify-content: space-between;">
@@ -334,16 +286,16 @@ $articleId = $_GET['articleId'];
           } else {
             // 如果已登入，則顯示留言區塊
             echo '<li class="comment">
-                <div class="vcard bio">
-                  <img src="' . $img_src . '"  class="img-name">
+                <div class="img-name">
+                  <img src="' . $img_src . '"  class="vcard bio">
                 </div>
                 <div class="comment-body" style="position: relative;">
-                  <h3>' . $_COOKIE["accountName"] . '</h3>
+                  <h6>' . $_COOKIE["accountName"] . '</h6>
                   <form action="submit_comment.php" method="post">
                     <input type="hidden" name="action" value="comment">
                     <input type="hidden" name="articleId" value="' . $articleId . '">
                     <input type="text"   name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
-                    <button type="submit" class="btn btn-success btn-sm" >發布</button>
+                    <button type="submit" class="btn" >發布</button>
                   </form>';
           }
 
@@ -369,13 +321,13 @@ $articleId = $_GET['articleId'];
 
               // 輸出留言
               echo '<li class="comment">
-  <div class="vcard bio">
-    <img src="' . $img_src . '"  class="comment-avatar">
-  </div>
-  <div class="comment-body" style="position: relative;">
-    <h3>' . $comment_result_row["accountName"] . '</h3>
-    <div class="meta"> ' . $date_string . '</div>
-    <p id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
+              <div class="img-name">
+                <img src="' . $img_src . '"  class="vcard bio">
+              </div>
+              <div class="comment-body" style="position: relative;">
+                <h6>' . $comment_result_row["accountName"] . '</h6>
+    <div class="meta" style="font-size:11px;"> ' . $date_string . '</div>
+    <p style="margin-top:10px;" id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
 
               // 如果是自己的留言，顯示刪除按鈕
               if ($_COOKIE["accountId"] == $comment_result_row["accountId"]) {
@@ -404,7 +356,7 @@ $articleId = $_GET['articleId'];
                   $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
 
                   echo '<li>
-          <div class="img-name">
+          <div class="img-name" >
             <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
           </div>
           <div class="comment-body" style="position: relative;">
@@ -435,7 +387,7 @@ $articleId = $_GET['articleId'];
               if ($_COOKIE["accountName"]) {
                 echo '<!-- 使用者回覆區 -->
                     <div class="img-name">
-                      <img src="' . $img_src . '" alt="Image description" class="reply-avatar">
+                      <img src="' . $img_src . '" alt="Image description" class="vcard bio">
                       <div class="reply-form">
                         <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>
                         <form action="submit_comment.php" method="post">
@@ -443,7 +395,7 @@ $articleId = $_GET['articleId'];
                           <input type="hidden" name="articleId" value="' . $articleId . '">
                           <input type="hidden" name="replyId" value="' . $comment_result_row["commentId"] . '">
                           <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
-                          <button type="submit" class="btn btn-success btn-sm" >發布</button>
+                          <button type="submit" class="btn" >發布</button>
                         </form>
                       </div>
                     </div>';
