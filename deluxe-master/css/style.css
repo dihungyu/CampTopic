@@ -9718,6 +9718,7 @@ dialog::backdrop {
   flex-wrap: wrap;
 }*/
 
+
 .details footer{
   display: flex;
   align-items: center;
@@ -9843,6 +9844,29 @@ article .detail {
 }
 .detail h1 a:hover {
   color: #005555;
+}
+
+.equiph4{
+  margin-top: 20px;
+  margin-bottom: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #005555;
+  font-size: 20px;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
+  box-sizing:content-box;
+  width: 100px
+}
+.equiph4 ::after{
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #005555;
 }
 
 .container-eq {

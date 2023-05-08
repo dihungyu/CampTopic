@@ -199,22 +199,24 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
               </div>
             </div>
             <div class="col-md-11 room-single mt-4 mb-5 ftco-animate">
-              <div class="detail" style="display: flex; align-items: center;">
+              <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="span-adj">
                 <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                  <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;"></i>
-                  <i class="fas fa-stack-1x" style="font-size: 13px;">
+                  <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
+                  <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
                     <?php echo $equipmentType ?>
                   </i>
                 </span>
                 <h1><a href="single.html">
                     <?php echo $equipmentName ?>
                   </a></h1>
-                <h5>$
+                </span>
+                <h4 class="equiph4">$
                   <?php echo $equipmentPrice ?>
-                </h5>
+                </h4>
               </div>
               <br>
-              <p>
+              <p style="padding:4px; margin-top:40px;">
                 <?php echo $equipmentDescription ?>
               </p>
               <div class="col-md-7 room-single mt-2 mb-2 ftco-animate" style="margin-bottom: -100px;">
@@ -316,7 +318,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 </span></a></li>
           </div>
 
-          <div class="sidebar-box ftco-animate">
+          <div class="sidebar-box ftco-animate mt-5" style="padding-left:0px;">
             <h3>熱門設備標籤</h3>
             <div class="tagcloud">
               <?php
