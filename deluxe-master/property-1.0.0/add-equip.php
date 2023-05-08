@@ -154,118 +154,90 @@ $accountName = $row_account['accountName'];
       </div>
     </div>
 
+
     <div class="section section-properties">
-      <div class="container">
+      <div class="container" >
         <div class="row">
-          <span style="margin-left: 105px;margin-bottom: 20px;margin-bottom: 25px; margin-top: -65px;">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%;">
-            <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">
-              <?php echo $accountName ?>
-            </label>
-          </span>
-          <br>
-          <span style="display:flex;align-items: center;justify-content:flex-start;margin-left: 100px;margin-top: -15px;">
-            <button class="btn-new2">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button class="btn-new2">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button class="btn-new2">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button class="btn-new2">
-              <a class="tag-filter" href="#">櫻花
-                <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
-              </a>
-            </button>
-            <button type="button" class="btn-new2" data-toggle="modal" data-target="#exampleModalCenter">
-              <a class="tag-filter" href="#">新增標籤</a>
-            </button>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <span style="margin-left: 80px;margin-bottom: 20px;"class="mt-1 mb-4">
+                <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
+                <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600;">
+                <?php echo $accountName ?></label>
+                </span> 
+                  <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
+                     
+                        <a class="tag-filter" href="#">櫻花
+                        <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+                        </a>
+                        <a class="tag-filter" href="#">標籤
+                        <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+                        </a>
+                        <a class="tag-filter" href="#">標籤
+                        <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+                        </a>
+                        <a class="tag-filter" href="#">標籤
+                        <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+                        </a> 
+                        <a class="tag-filter" href="#">標籤
+                        <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
+                        </a>
+                        <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
+                    </span>
+            </div>
+                  <span class="span-adj mt-5 mb-3">
+                    <input type="text" name="equipmentName" placeholder="設備名稱" class="equipname" >
+                      <select name="equipmentType" class="equipselect">
+                      <option>租</option>
+                      <option>徵</option>
+                      <option>賣</option>
+                      <input type="text" name="equipmentPrice" placeholder="價錢" class="equipprice">
+                      <input type="text" name="equipmentLocation" placeholder="設備所在地" class="equipprice">
+                    </span>
+                    <textarea rows="6" name="equipmentDescription" class="equiptextarea mt-3 mb-3" placeholder="詳細介紹"></textarea>
+                  
+                  <div class="row" style="display: flex; justify-content: flex-start; align-items: center; margin-left: 70px;">
+                  <div class="col-md-3">
+                      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" class="file-upload">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" class="file-upload">
+                </div>
+                <div class="col-md-3">
+                  <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" class="file-upload">
+              </div>
+            </div>
+            <span style="display:flex; justify-content: flex-end; margin-right: 10px;">
+              <input type="hidden" name="accountId">
+              <input type="hidden" name="action" value="insert">
+                <button class="btn-new1" style="margin-right:10px" onclick="window.location.href = '../equipment.php'">取消</button>
+              <button class="btn-new" type="submit">分享</button>
+            </span>
+           </div>
+          </div>
+              
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width:450px;height:200px;">
                   <div class="modal-body">
-                    <span style="display: flex;">
-                      <h4 style="font-weight: bold;margin-top: 5px;margin-left: 10px;">新增標籤</h4>
+                    <span style="display: flex;justify-content: space-between;">
+                      <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;margin-left: 275px;margin-top: -5px;"></i>
+                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
                       </button>
                     </span>
-                  </div>
-
-                  <input type="text" value="標籤名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 50px;margin-bottom: 75px;">
-          </span>
-          <button class="btn-new" style=" margin-left: 340px;margin-top: -55px;margin-right: 25px;">
-            <a href="add-equip.html" style="color: #fff;">確認</a></button>
-
-        </div>
+                  
+                  <input type="text" value="標籤名稱" class="articletag">
+                    <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
+                    <button class="btn-more">確認</button></a> 
+              </div>
+           </div>
       </div>
     </div>
   </div>
-  </span>
 
-  <form action="../../php/Equipment/createEquipment.php" method="post" enctype="multipart/form-data">
-    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-
-      <input name="equipmentName" type="text" placeholder="設備名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-      <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-        <option value="租">租</option>
-        <option value="徵">徵</option>
-        <option value="賣">賣</option>
-      </select>
-      <input type="text" name="equipmentPrice" placeholder="價錢" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-      <input type="text" name="equipmentLocation" placeholder="設備所在地" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-    </span>
-    <textarea rows="6" name="equipmentDescription" placeholder="設備描述" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;"></textarea>
-    <br>
-
-    <br>
-    <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
-    </div>
-    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
-      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-      <p style="line-height: 100px; color:#797979;">上傳圖片</p>
-    </div>
-    <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
-    </div>
-    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
-      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-      <p style="line-height: 100px;color:#797979;">上傳圖片</p>
-    </div>
-    <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
-    </div>
-    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
-      <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-      <p style="line-height: 100px;color: #797979;;">上傳圖片</p>
-    </div>
-
-
-    <span style="margin-left: 990px;margin-top: 20px;">
-      <button class="btn-new1" type="button" onclick="window.location.href = '../equipment.php'">取消</button>
-      <button class="btn-new" type="submit">新增</button>
-    </span>
-  </form>
-
-
-
-
-
-
+ 
   </div>
   </div>
   </div>
-
-  <br><br>
 
 
   <div class="site-footer">
