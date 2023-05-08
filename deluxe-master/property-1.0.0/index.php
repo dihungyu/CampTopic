@@ -502,7 +502,7 @@ if (isset($_POST["likeEquipDel"])) {
 
               <!-- .item -->
               <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" data-toggle="modal" data-target="#exampleModalCenter" />
+                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" style="style='width: 412px; height: 412px;'" />
 
 
                 <div class="property-content">
@@ -623,7 +623,7 @@ if (isset($_POST["likeEquipDel"])) {
 
                   echo "<div class='property-item'>
                   <a href='#' class='img'>
-                    <img src='" . $image_src . "' alt='Image' class='img-fluid' />
+                    <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 398px; height: 400px;' />
                   </a>
                   <div class='property-content'>
                     <div style='display: flex; justify-content: space-between;'>
@@ -699,7 +699,7 @@ if (isset($_POST["likeEquipDel"])) {
               ?>
               <div class="property-item">
                 <a href="property-single.html" class="img">
-                  <img src="images/image 3.png" alt="Image" class="img-fluid" />
+                  <img src="images/image 3.png" alt="Image" class="img-fluid" style='width: 398px; height: 400px;' />
                 </a>
                 <div class="property-content">
                   <div style="display: flex; justify-content: space-between;">
