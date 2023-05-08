@@ -464,48 +464,48 @@ if (isset($_POST["likeEquipDel"])) {
           </div>
           <div class="sidebar-box ftco-animate">
             <h3>推薦文章</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
+            <?php
+            $top234_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 1, 3";
+            $top234_article_result = mysqli_query($conn, $top234_article_sql);
+
+            if ($top234_article_result && mysqli_num_rows($top234_article_result) > 0) {
+              while ($top234_article_row = mysqli_fetch_assoc($top234_article_result)) {
+                $articleId = $top234_article_row["articleId"];
+
+                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
+                $files_result = mysqli_query($conn, $files_query);
+                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+            
+                if ($file_result = mysqli_fetch_assoc($files_result)) {
+                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                  $image_src = $file_path;
+                }
+
+                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+                $formatted_date = date('F j, Y', $timestamp);
+
+                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                $comment_count = $row['comment_count'];
+
+                echo "<div class='block-21 mb-4 d-flex'>
+                        <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
+                        <div class='text'>
+                            <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a></h3>
+                            <div class='meta'>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top234_article_row["accountName"] . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                            </div>
+                        </div>
+                      </div>";
+              }
+            }
+            ?>
           </div>
-
-
-
-
         </div>
-
       </div>
-    </div>
   </section> <!-- .section -->
 
   <div class="site-footer" style="clear: both;">
