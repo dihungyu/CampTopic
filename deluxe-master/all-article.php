@@ -356,7 +356,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $top1ArticleContent = mb_substr($top1ArticleContent, 0, 200, 'utf-8') . '...';
               }
               ?>
-              <p><?php echo $top1ArticleContent . "<a href='article.php?articleId=" . $articleId . "'>  閱讀全文  </a>"; ?></p>
+              <p><?php echo $top1ArticleContent . "<a href='article.php?articleId=" . $articleId . "' style='color:#00204a;'>  閱讀全文  </a>"; ?></p>
             </div>
 
             <div class="container mb-5">
@@ -467,15 +467,15 @@ if (isset($_POST["likeEquipDel"])) {
             <div class='detail' style='justify-content: space-between;'>
                 <span style='display: flex;'>
                     <div class='category'>
-                        <a href='article.php?articleId=" . $articleId . "'>" . $article_row["accountName"] . "</a>
+                        <a href='article.php?articleId=" . $articleId . "' style='color:#00204a;'>" . $article_row["accountName"] . "</a>
                     </div>
                     <div class='time'>" . $formatted_date . "</div>
                 </span>
             </div>
-            <h5 style='position: relative;'><a href='article.php?articleId=" . $articleId . "'>" . $article_row["articleTitle"] . "</a>";
+            <h5 style='position: relative;'><a href='article.php?articleId=" . $articleId . "'style='color:#00204a;'>" . $article_row["articleTitle"] . "</a>";
                     echo "<form action='all-article.php' method='post' style='position: absolute; right: 0; top: 50%; transform: translateY(-50%);'>
                 <input type='hidden' name='" . ($isArticleCollected ? "collectArticleDel" : "collectArticleAdd") . "' value='" . $articleId . "'>
-                <button type='submit' class='btn-icon'>";
+                <button type='submit' class='btn-icon' >";
                     echo "<i class='" . ($isArticleCollected ? "fas" : "fa-regular") . " fa-bookmark'></i>";
                     echo "</button>
             </form>
@@ -484,15 +484,16 @@ if (isset($_POST["likeEquipDel"])) {
                 " . $truncated_content . "
             </p>
             <footer class='article-footer-div'>
-                <p>" . $comment_count . " 留言</p>
+                <p style='margin-bottom: 0px;'>" . $comment_count . " 留言</p>
                 <span class='article-footer'>
                     <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                         <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
-                        <button type='submit' class='btn-icon'>";
-                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart'></i>";
+                        <button type='submit' class='btn-icon' style='display:flex; align-items: center;'>";
+                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' style='margin-right: 4px; margin-left: 350px;'></i>";
+                    echo "<p style='margin-bottom: 0px; margin-right:0px;'>" . $formatted_like_count . "</p>";
                     echo "</button>
                     </form>
-                    <p>" . $formatted_like_count . "</p>
+                    
                 </span>
             </footer>
         </div>
@@ -591,10 +592,10 @@ if (isset($_POST["likeEquipDel"])) {
                 <a href='article.php?articleId=" . $articleId . "' class='block-20' style='background-image: url(" . $image_src . ");'>
                 </a>
                 <div class='text mt-3 d-block'>
-                  <h6 class='heading2 mt-3'>
+                  <h6 class='heading mt-3' style='font-size:16px;'>
                     <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a>
                   </h6>
-                  <div class='meta2 mb-3'>
+                  <div class='meta mb-3' style='font-size:12px;'>
                     <div><a href='article.php?articleId=" . $articleId . "'>" . $formatted_date . "</a></div>
                     <div><a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["accountName"] . "</a></div>
                     <div><a href='article.php?articleId=" . $articleId . "' class='meta-chat'><span class='icon-chat'></span> " . $comment_count . "</a></div>
@@ -753,9 +754,9 @@ if (isset($_POST["likeEquipDel"])) {
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
-                  echo "<h5>" . $equipmentData["equipmentName"] . "</h5>
+                  echo "<h5 style='box-sizing: content-box; width: 160px;'>" . $equipmentData["equipmentName"] . "</h5>
                     </span>
-                    <span class='span-adj'>
+                    <span class='span-adj' style='justify-content: flex-end; box-sizing: content-box; width: 162px;'>
                       <h4 style='margin-left: 24px;'>$" . number_format($equipmentData["equipmentPrice"]) .
                     "</h4>
                       <form action='all-article.php' method='post'>
@@ -790,10 +791,10 @@ if (isset($_POST["likeEquipDel"])) {
                   echo
                   "</div>
                       <span style='display: flex; align-items: center;'>
-                        <form action='all-article.php' method='post'>
+                        <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                   <input type='hidden' name='" . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
                   <button type='submit' class='btn-icon'>";
-                  echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+                  echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . " style='margin-left: 120px;'></i>";
                   echo "</button>
                 </form>
                   <p style='margin-top:0px'>" . $equipmentlikeCount . "</p>
