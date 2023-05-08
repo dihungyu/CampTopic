@@ -208,7 +208,82 @@ $articleId = $_GET['articleId'];
   <section class="ftco-section ftco-degree-bg">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 ftco-animate order-md-last">
+
+      <div class="col-lg-4 sidebar ftco-animate">
+
+<div class="sidebar-box ftco-animate mt-5">
+  <h3>熱門標籤</h3>
+  <div class="tagcloud">
+    <?php
+    //根據資料庫裡文章類別的標籤出現次數來選擇出現次數最多的前五個標籤
+    $label_query = "SELECT labels.labelName, COUNT(articles_labels.labelId) AS labelCount FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId GROUP BY articles_labels.labelId ORDER BY labelCount DESC LIMIT 5";
+    $label_result = mysqli_query($conn, $label_query);
+
+    // 檢查錯誤
+    if (!$label_result) {
+      echo "Error: " . mysqli_error($conn);
+    }
+
+    while ($label_row = mysqli_fetch_assoc($label_result)) {
+      echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
+    }
+    ?>
+  </div>
+</div>
+
+<div class="sidebar-box ftco-animate">
+  <h3>推薦文章</h3>
+
+  <?php
+  // Top 3 熱門文章
+  $top3_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 3";
+  $top3_article_result = mysqli_query($conn, $top3_article_sql);
+
+  if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
+    while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
+      $articleId = $top3_article_row["articleId"];
+      $articleContent = $top3_article_row["articleContent"];
+
+
+      // 查詢文章圖片
+      $image_src = get_first_image_src($articleContent);
+      if (!$image_src) {
+        $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+      }
+
+
+      // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+      $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+
+      // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+      $formatted_date = date('F j, Y', $timestamp);
+
+      // 在顯示卡片之前查詢留言數
+      $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+      $result = mysqli_query($conn, $query);
+      $row = mysqli_fetch_assoc($result);
+      $comment_count = $row['comment_count'];
+
+      echo "<div class='block-21 mb-4 d-flex'>
+    <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
+    <div class='text'>
+      <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top3_article_row["articleTitle"] . "</a></h3>
+      <div class='meta'>
+        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top3_article_row["accountName"] . "</a></div>
+        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+      </div>
+    </div>
+  </div>";
+    }
+  }
+  ?>
+
+</div>
+</div>
+
+
+        <div class="col-lg-8 ">
           <span class="img-name">
             <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 45px;
     height: 45px; margin-right: 8px;">
@@ -238,7 +313,10 @@ $articleId = $_GET['articleId'];
             <?php echo $main_article_row["articleContent"]; ?>
           </div>
 
+          
+
           <!-- 此文章相關標籤 -->
+          <div class="col-lg-8 ftco-animate order-md-last">
           <div class="tag-widget post-tag-container mb-5 mt-5">
             <div class="tagcloud">
               <?php
@@ -325,7 +403,7 @@ $articleId = $_GET['articleId'];
             while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
 
               // 查詢該留言者頭像
-              $commenterId = $comment_result_row["accountId"];
+              $commenterId = $comment_result_row["accountId"]; 
               $img_src = get_profileImg_src($commenterId, $conn);
               $img_src = str_replace("../", "", $img_src);
               $img_src = "../" . $img_src;
@@ -424,83 +502,12 @@ $articleId = $_GET['articleId'];
 
           </ul>
           <!-- END comment-list -->
-
-
+        </div>
         </div>
         </div>
         <!-- .col-md-8 -->
-        <div class="col-lg-4 sidebar ftco-animate">
-
-          <div class="sidebar-box ftco-animate mt-5">
-            <h3>熱門標籤</h3>
-            <div class="tagcloud">
-              <?php
-              //根據資料庫裡文章類別的標籤出現次數來選擇出現次數最多的前五個標籤
-              $label_query = "SELECT labels.labelName, COUNT(articles_labels.labelId) AS labelCount FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId GROUP BY articles_labels.labelId ORDER BY labelCount DESC LIMIT 5";
-              $label_result = mysqli_query($conn, $label_query);
-
-              // 檢查錯誤
-              if (!$label_result) {
-                echo "Error: " . mysqli_error($conn);
-              }
-
-              while ($label_row = mysqli_fetch_assoc($label_result)) {
-                echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
-              }
-              ?>
-            </div>
-          </div>
-
-          <div class="sidebar-box ftco-animate">
-            <h3>推薦文章</h3>
-
-            <?php
-            // Top 3 熱門文章
-            $top3_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 3";
-            $top3_article_result = mysqli_query($conn, $top3_article_sql);
-
-            if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
-              while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
-                $articleId = $top3_article_row["articleId"];
-                $articleContent = $top3_article_row["articleContent"];
-
-
-                // 查詢文章圖片
-                $image_src = get_first_image_src($articleContent);
-                if (!$image_src) {
-                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
-                }
-
-
-                // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
-                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
-
-                // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
-                $formatted_date = date('F j, Y', $timestamp);
-
-                // 在顯示卡片之前查詢留言數
-                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
-                $result = mysqli_query($conn, $query);
-                $row = mysqli_fetch_assoc($result);
-                $comment_count = $row['comment_count'];
-
-                echo "<div class='block-21 mb-4 d-flex'>
-              <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
-              <div class='text'>
-                <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top3_article_row["articleTitle"] . "</a></h3>
-                <div class='meta'>
-                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
-                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top3_article_row["accountName"] . "</a></div>
-                  <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
-                </div>
-              </div>
-            </div>";
-              }
-            }
-            ?>
-
+       
       </div>
-    </div>
     </div>
   </section> <!-- .section -->
 

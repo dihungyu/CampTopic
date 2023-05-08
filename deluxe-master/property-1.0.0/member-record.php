@@ -255,8 +255,6 @@ function get_img_src($accountId, $conn)
           </li>
 
         </ul>
-
-
       </div>
     </div>
 
@@ -568,7 +566,6 @@ function get_img_src($accountId, $conn)
             </div>
 
 
-
           </div>
         </div>
       </div>
@@ -577,6 +574,7 @@ function get_img_src($accountId, $conn)
       <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
         <div class="container">
           <div class="row">
+
             <div class="container">
               <div class="row">
                 <div class="col-md-12">
@@ -789,11 +787,11 @@ function get_img_src($accountId, $conn)
             </div>
 
 
-          </div>
         </div>
       </div>
     </div>
-    <br><br>
+  </div>
+
 
     <div class="site-footer">
       <div class="container">

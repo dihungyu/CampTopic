@@ -970,7 +970,6 @@ if (isset($_POST["likeArticleDel"])) {
         </div>
       </div>
     </div>
-    <br><br>
 
     <div class="site-footer">
       <div class="container">
