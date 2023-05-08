@@ -292,7 +292,7 @@ if (isset($_POST["likeEquipDel"])) {
                         $isEquipLiked = in_array($equipment["equipmentId"], $likedEquips);
 
                         if ($count % 2 == 0) {
-                            echo '<div class="inner" style="display: flex; margin-left: 20px; justify-content: center">';
+                            echo '<div class="inner" style="display: flex; margin-left: 20px;">';
                         }
                         $equipmentId = $equipment["equipmentId"];
                         $equipmentType = $equipment["equipmentType"];
@@ -300,6 +300,7 @@ if (isset($_POST["likeEquipDel"])) {
                         $equipmentDescription = $equipment["equipmentDescription"];
                         $equipmentPrice = $equipment["equipmentPrice"];
                         $equipmentLikeCount = $equipment["equipmentLikeCount"];
+                        echo '<div class="col-6" style="padding:0px">';
                         echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px;">';
                         echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
                         echo '<div class="card-body">';
@@ -354,6 +355,7 @@ if (isset($_POST["likeEquipDel"])) {
                         echo '</span>';
                         echo '</div>';
                         echo '</footer>';
+                        echo '</div>';
                         echo '</div>';
                         echo '</div>';
                         if ($count % 2 != 0 || $count == count($equipments) - 1) {

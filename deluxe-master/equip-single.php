@@ -111,6 +111,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
     setTimeout(hideMessage, 3000);
 
   </script>
+
 </head>
 
 <body>
@@ -300,16 +301,16 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
             $row_sell = mysqli_fetch_assoc($result_sell);
             $count_sell = $row_sell['COUNT(*)'];
             ?>
-            <li><a href="equipment.php">全部 <span>(
+            <li><a href="equipment.php">全部<span>(
                   <?php echo $count_all ?>)
                 </span></a></li>
-            <li><a href="equipment_rent.php">租 <span>(
+            <li><a href="equipment_rent.php">租<span>(
                   <?php echo $count_rent ?>)
                 </span></a></li>
-            <li><a href="equipment_request.php">徵 <span>(
+            <li><a href="equipment_request.php">徵<span>(
                   <?php echo $count_request ?>)
                 </span></a></li>
-            <li><a href="equipment_sell.php">賣 <span>(
+            <li><a href="equipment_sell.php">賣<span>(
                   <?php echo $count_sell ?>)
                 </span></a></li>
           </div>
@@ -396,11 +397,11 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
                 echo '</span>';
                 echo '<a href="single.html">';
-                echo '<h5 style="width: 135px;">' . $recommand_equipmentName . '</h5>';
+                echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
                 echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
-                echo "<form action='equipment.php' method='post'>";
+                echo "<form action='equipment.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";
                 echo "<i class='" . ($isEquipCollected ? "fas" : "fa-regular") . " fa-bookmark' " . "></i>";
@@ -432,7 +433,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 }
                 echo '</div>';
                 echo '<span style="display: flex; align-items: center;">';
-                echo '<form action="equipment.php" method="post">';
+                echo '<form action="equipment.php" method="post" style="margin-bottom: 0px;">';
                 echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $recommand_equipmentId . '">';
                 echo '<button type="submit" class="btn-icon">';
                 echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . "></i>';

@@ -627,18 +627,18 @@ if (isset($_POST["likeEquipDel"])) {
                     <div style='display: flex; justify-content: space-between;'>
                     <span style='display: flex; align-items: center;'>";
                   if ($equipmentData["equipmentType"] === "租") {
-                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 10px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA;"></i>';
                     echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
                     echo '</span>';
                   } else if ($equipmentData["equipmentType"] === "徵") {
-                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 10px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b;"></i>';
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
                     echo '</span>';
                   } else if ($equipmentData["equipmentType"] === "賣") {
-                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 10px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; "></i>';
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }

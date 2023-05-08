@@ -4255,10 +4255,6 @@ margin-bottom: 0px;
   margin-right: 4px;
 }
 
-.card-text:last-child {
-  margin-bottom: 0;
-  }
-
 .card-link + .card-link {
   margin-left: 1rem; }
 
