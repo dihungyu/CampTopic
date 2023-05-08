@@ -225,7 +225,7 @@ $accountName = $row_account['accountName'];
                       </button>
                     </span>
                   
-                  <input type="text" value="標籤名稱" class="articletag">
+                  <input type="text" class="articletag" placeholder="標籤名稱">
                     <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
                     <button class="btn-more">確認</button></a> 
               </div>
