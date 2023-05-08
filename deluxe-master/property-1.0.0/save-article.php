@@ -1,4 +1,5 @@
 <?php
+session_start();
 function process_images($content, $conn, $articleId)
 {
     // 匹配文章內容中的圖片URL
@@ -65,10 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         $insert_label_sql = "INSERT INTO articles_labels (articleLabelId, articleId, labelId) VALUES ('$labelId','$articleId', '$tag')";
 
         if (!mysqli_query($conn, $insert_label_sql)) {
-            echo "Error: " . mysqli_error($conn);
+            // echo "Error: " . mysqli_error($conn);
+
+            $_SESSION["system_message"] = "文章新增失敗";
+            header("Location: ../all-article.php");
+            exit();
         }
     }
 
+    $_SESSION["system_message"] = "文章已新增";
     header("Location: ../all-article.php");
     exit();
 }

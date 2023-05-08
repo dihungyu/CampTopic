@@ -1,7 +1,12 @@
 <?php
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+
+
 session_start();
 require_once '../php/conn.php';
 require_once '../php/uuid_generator.php';
+require_once '../php/get_img_src.php';
 
 $articleId = $_GET['articleId'];
 
@@ -151,6 +156,15 @@ $articleId = $_GET['articleId'];
       text-align: center;
     }
   </style>
+
+  <script>
+    // JavaScript function to handle the delete confirmation dialog
+    function deleteArticle(articleId) {
+      if (confirm("確認刪除，此動作無法回復?")) {
+        window.location.href = "/CampTopic/deluxe-master/property-1.0.0/delete-article.php?articleId=" + articleId;
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -162,6 +176,7 @@ $articleId = $_GET['articleId'];
     </div>
     <?php unset($_SESSION["system_message"]); ?>
   <?php endif; ?>
+
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -237,13 +252,19 @@ $articleId = $_GET['articleId'];
   $main_article_sql = "SELECT articles.*, accounts.accountId, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
   $main_article_result = mysqli_query($conn, $main_article_sql);
   $main_article_row = mysqli_fetch_assoc($main_article_result);
+
+  // 取得發文者頭貼
+  $img_src = get_profileImg_src($main_article_row["accountId"], $conn);
+  $img_src = str_replace("../", "", $img_src);
+  $img_src = "../" . $img_src;
+
   ?>
   <section class="ftco-section ftco-degree-bg">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 ftco-animate order-md-last">
           <span class="img-name">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
+            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
 
@@ -251,20 +272,21 @@ $articleId = $_GET['articleId'];
           <div id="article-content">
             <?php
             if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
-              // echo '<div class="delete-icon">
-              // <a href="/delete-article.php?articleId=' . $articleId . '">
-              //   <i class="fas fa-trash-alt"></i>
-              // </a>
+              echo '<div class="delete-icon">
+          <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </div>';
 
 
               echo '<div class="edit-icon">
-              <a href="property-1.0.0/update-article.php?articleId=' . $articleId . '">
-                <i class="fas fa-edit"></i>
-              </a>
-            </div>';
+          <a href="/CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=' . $articleId . '">
+            <i class="fas fa-edit"></i>
+          </a>
+        </div>';
             }
             ?>
-            <a href="/deluxe-master/property-1.0.0/update-article.php"></a>
+
             <?php echo $main_article_row["articleContent"]; ?>
           </div>
 
@@ -294,23 +316,8 @@ $articleId = $_GET['articleId'];
 
           <!-- 留言區 -->
           <?php
+
           //可用函式
-          function get_img_src($accountId, $conn)
-          {
-            $pic_sql = "SELECT `filePath` FROM `files` WHERE `accountId` = '$accountId' ORDER BY `fileCreateDate` DESC LIMIT 1";
-            $pic_result = mysqli_query($conn, $pic_sql);
-
-            if ($pic_row = mysqli_fetch_assoc($pic_result)) {
-              $img_src = $pic_row["filePath"];
-              $img_src = str_replace("../", "", $img_src);
-              $img_src = "../" . $img_src;
-            } else {
-              $img_src = "../upload/profileDefault.jpeg";
-            }
-
-            return $img_src;
-          }
-
           function format_timestamp($timestamp)
           {
             date_default_timezone_set("Asia/Taipei");
@@ -328,7 +335,9 @@ $articleId = $_GET['articleId'];
 
           // 查詢我的頭像
           $accountId = $_COOKIE["accountId"];
-          $img_src = get_img_src($accountId, $conn);
+          $img_src = get_profileImg_src($accountId, $conn);
+          $img_src = str_replace("../", "", $img_src);
+          $img_src = "../" . $img_src;
 
           echo "<div class='pt-5 mt-5'>
             <h4 class='mb-5'>目前 " . $comment_count . "留言</h4>
@@ -368,7 +377,9 @@ $articleId = $_GET['articleId'];
 
               // 查詢該留言者頭像
               $commenterId = $comment_result_row["accountId"];
-              $img_src = get_img_src($commenterId, $conn);
+              $img_src = get_profileImg_src($commenterId, $conn);
+              $img_src = str_replace("../", "", $img_src);
+              $img_src = "../" . $img_src;
 
               // 將 Unix 時間戳格式化為指定格式的日期時間字串
               $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
@@ -402,7 +413,9 @@ $articleId = $_GET['articleId'];
 
                   // 查詢該留言者頭像
                   $replyerId = $reply_result_row["accountId"];
-                  $img_src = get_img_src($replyerId, $conn);
+                  $img_src = get_profileImg_src($replyerId, $conn);
+                  $img_src = str_replace("../", "", $img_src);
+                  $img_src = "../" . $img_src;
 
                   // 將 Unix 時間戳格式化為指定格式的日期時間字串
                   $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
@@ -432,7 +445,9 @@ $articleId = $_GET['articleId'];
 
               // 查詢我的頭像
               $accountId = $_COOKIE["accountId"];
-              $img_src = get_img_src($accountId, $conn);
+              $img_src = get_profileImg_src($accountId, $conn);
+              $img_src = str_replace("../", "", $img_src);
+              $img_src = "../" . $img_src;
 
               if ($_COOKIE["accountName"]) {
                 echo '<!-- 使用者回覆區 -->
@@ -673,6 +688,20 @@ $articleId = $_GET['articleId'];
         }
       }
     </script>
+
+    <script>
+      $(document).ready(function() {
+        $('.delete-link').click(function() {
+          var articleId = $(this).data('article-id');
+          var confirmation = confirm('您確定要刪除此文章嗎？此動作無法回復');
+
+          if (confirmation) {
+            window.location.href = '/CampTopic/deluxe-master/property-1.0.0/delete-article.php?articleId=' + articleId;
+          }
+        });
+      });
+    </script>
+
 
 
 

@@ -1,26 +1,19 @@
 <?php
-// 錯誤訊息
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$articleId = $_GET['articleId'];
-
+if (!isset($articleId)) {
+    $articleId = $_GET['articleId'];
+}
 session_start();
 // 連接資料庫
 require_once '../../php/conn.php';
+require_once '../../php/get_img_src.php';
 
-//判斷是否登入
-if (!isset($_COOKIE["accountId"])) {
-    $_SESSION["system_message"] = "請先登入或註冊成為會員!";
-    header("Location: ../all-article.php");
-    exit;
-}
 
-$articleId = isset($_POST['articleId']) ? $_POST['articleId'] : '';
-$articleTitle = isset($_POST['articleTitle']) ? $_POST['articleTitle'] : '';
-$articleContent = isset($_POST['articleContent']) ? $_POST['articleContent'] : '';
 
-if (isset($_POST['articleId']) && $articleTitle && $articleContent) {
+if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['articleId']) && isset($_POST['articleTitle']) && isset($_POST['articleContent'])) {
+
+    $articleId = $_POST['articleId'];
+    $articleTitle = $_POST['articleTitle'];
+    $articleContent = $_POST['articleContent'];
 
     // 更新文章
     $sql = "UPDATE articles SET articleTitle = ?, articleContent = ? WHERE articleId = ?";
@@ -30,20 +23,20 @@ if (isset($_POST['articleId']) && $articleTitle && $articleContent) {
     if ($stmt->execute()) {
         // 更新成功，導回文章列表頁面
         $_SESSION["system_message"] = "文章更新成功!";
-        header("Location: ../article.php?articleId=$articleId");
+        header("Location: /CampTopic/deluxe-master/article.php?articleId=$articleId");
+        exit();
     } else {
         // 更新失敗，導回原本的編輯頁面，並顯示錯誤訊息
         $_SESSION["system_message"] = "文章更新失敗!";
-        header("Location: ../update-article.php?articleId=$articleId");
+        header("Location: /CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=$articleId");
+        exit();
     }
-
-    $stmt->close();
-    $conn->close();
-} else {
+} elseif (isset($_POST["action"])) {
     // 更新失敗，導回原本的編輯頁面，並顯示錯誤訊息
     $_SESSION["system_message"] = "文章標題和內容不能為空。";
-    header("Location: ../update-article.php?articleId=$articleId");
+    header("Location: /CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=$articleId");
 }
+
 
 ?>
 <!-- /*
@@ -184,11 +177,14 @@ if (isset($_POST['articleId']) && $articleTitle && $articleContent) {
 
 
 
+        <?php
+        $img_src = get_profileImg_src($_COOKIE["accountId"], $conn);
+        ?>
         <div class="section section-properties">
             <div class="container">
                 <div class="row">
                     <span style="margin-left: 80px; margin-bottom: 20px;" class="mt-2 mb-4">
-                        <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
+                        <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%; width: 3%;">
                         <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
                     </span>
                     <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
@@ -251,8 +247,8 @@ if (isset($_POST['articleId']) && $articleTitle && $articleContent) {
                 <span style="display:flex;justify-content: flex-end;margin-right: 10px;">
                     <input type="hidden" name="articleId" value="<?php echo $_GET["articleId"] ?>">
                     <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
-                    <input type="hidden" name="action" value="insert">
-                    <a href="../all-article.php"><button class="btn-new1" style="margin-right:10px">取消</button></a>
+                    <input type="hidden" name="action" value="update">
+                    <a href="../article.php?articleId=<?php echo $articleId ?>" class="btn-new1" style="margin-right:10px">取消</a>
                     <button class="btn-new" type="submit">分享</button>
 
                 </span>
@@ -444,7 +440,9 @@ if (isset($_POST['articleId']) && $articleTitle && $articleContent) {
     <script>
         // 在編輯器初始化後，使用Ajax從資料庫中獲取原始文章內容並將其插入到編輯器中
         $(document).ready(function() {
+            // 獲取文章ID
             var articleId = <?php echo $articleId ?>;
+
 
             // 獲取文章內容的Ajax請求
             $.ajax({

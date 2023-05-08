@@ -19,8 +19,8 @@ if (isset($_GET['articleId'])) {
 
         // 將文章內容作為 JSON 物件回傳
         echo json_encode(array(
-            'articleTitle' => $row['title'],
-            'articleContent' => $row['content']
+            'articleTitle' => $row['articleTitle'],
+            'articleContent' => $row['articleContent']
         ));
     } else {
         echo json_encode(array('error' => '無法獲取文章內容。'));
