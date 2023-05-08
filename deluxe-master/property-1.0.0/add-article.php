@@ -64,7 +64,7 @@ if (!isset($_COOKIE["accountId"])) {
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
@@ -73,21 +73,19 @@ if (!isset($_COOKIE["accountId"])) {
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="../../property-1.0.0/camp-information.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <!-- <a class="dropdown-item" href="">文章管理</a>
-                <a class="dropdown-item" href="manage-equip.html">設備管理</a>
-                <a class="dropdown-item" href="manage-land.html">營地管理</a> -->
+              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -100,8 +98,8 @@ if (!isset($_COOKIE["accountId"])) {
               }
               ?>
             </div>
-          </li>
 
+          </li>
         </ul>
       </div>
     </div>
@@ -141,58 +139,58 @@ if (!isset($_COOKIE["accountId"])) {
     <div class="section section-properties">
       <div class="container">
         <div class="row">
-          <span style="margin-left: 80px; margin-bottom: 20px;"class="mt-2 mb-4">
+          <span style="margin-left: 80px; margin-bottom: 20px;" class="mt-2 mb-4">
             <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 3%;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
           </span>
           <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
-           <a class="tag-filter" href="#">櫻花
-              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
-              <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
-              <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i></a>
-              <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
-              </a> 
-              <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark"style="margin-left:10px;"></i>
-              </a>
-              <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
-              </span>
+            <a class="tag-filter" href="#">櫻花
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
+            <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
+            <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
+            <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
+            </a>
+            <a class="tag-filter" href="#">標籤
+              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
+            </a>
+            <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
+          </span>
 
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" style="width:450px;height:200px;">
-                  <div class="modal-body">
-                    <span style="display: flex;justify-content: space-between;">
-                      <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                      </button>
-                    </span>
-                  
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" style="width:450px;height:200px;">
+                <div class="modal-body">
+                  <span style="display: flex;justify-content: space-between;">
+                    <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+                    </button>
+                  </span>
+
                   <input type="text" value="標籤名稱" class="articletag">
-                    <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
+                  <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
                     <button class="btn-more"> 確認
-          </button></a> 
+                    </button></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </span>
-  <span style="display:flex; justify-content:center;margin-left:20px">
-  <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
-    <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
-      <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
-    </span>
-
-    <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"></textarea>
+        </span>
+        <span style="display:flex; justify-content:center;margin-left:20px">
+          <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
+              <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
             </span>
-    <span>
 
-      <!-- <div>
+            <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"></textarea>
+        </span>
+        <span>
+
+          <!-- <div>
         <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
       </div>
       <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
@@ -200,24 +198,24 @@ if (!isset($_COOKIE["accountId"])) {
         <p style="line-height: 100px;color:#797979;">上傳圖片</p>
       </div> -->
 
-    </span>
+        </span>
 
-    <span style="display:flex;justify-content: flex-end;margin-right: 10px;}">
-      <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
-      <input type="hidden" name="action" value="insert">
-      <a href="../all-article.php"><button class="btn-new1" style="margin-right:10px">取消</button></a>
-      <button class="btn-new" type="submit">分享</button>
+        <span style="display:flex;justify-content: flex-end;margin-right: 10px;">
+          <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
+          <input type="hidden" name="action" value="insert">
+          <a href="../all-article.php"><button class="btn-new1" style="margin-right:10px">取消</button></a>
+          <button class="btn-new" type="submit">分享</button>
 
-    </span>
-  </form>
-
-
+        </span>
+        </form>
 
 
 
 
-  </div>
-  </div>
+
+
+      </div>
+    </div>
   </div>
 
   <br><br>
@@ -225,48 +223,48 @@ if (!isset($_COOKIE["accountId"])) {
 
   <div class="site-footer">
     <div class="container">
-    <div class="row">
-        
+      <div class="row">
+
         <!-- /.col-lg-4 -->
-       <div class="col-lg-5">
-         <div class="widget">
-           <h3>聯絡資訊</h3>
-           <address>StartCamping 營在起跑點！</address>
-           <ul class="list-unstyled links">
-             <li><a href="tel://11234567890">0911222345</a></li>
-             <li><a href="tel://11234567890">@startcamping</a></li>
-             <li>
-               <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-             </li>
-           </ul>
-         </div>
-         <!-- /.widget -->
-       </div>
-       <!-- /.col-lg-4 -->
         <div class="col-lg-5">
-         <div class="widget">
-           <h3>頁面總覽</h3>
-           <ul class="list-unstyled float-start links">
-             <li><a href="#">首頁</a></li>
-             <li><a href="#">找小鹿</a></li>
-             <li><a href="#">鹿的分享</a></li>
-             <li><a href="#">鹿的裝備</a></li>
-             <li><a href="#">廣告方案</a></li>
-           </ul>
-           <ul class="list-unstyled float-start links">
-             <li><a href="#">帳號</a></li>
-             <li><a href="#">會員帳號</a></li>
-             <li><a href="#">我的收藏</a></li>
-           </ul>
-         </div>
-         <!-- /.widget -->
-       </div>
-       <!-- /.col-lg-4 -->
-       <div class="col-lg-2">
-         <!-- /.widget -->
-       </div>
-     </div>
-       <!-- /.row -->
+          <div class="widget">
+            <h3>聯絡資訊</h3>
+            <address>StartCamping 營在起跑點！</address>
+            <ul class="list-unstyled links">
+              <li><a href="tel://11234567890">0911222345</a></li>
+              <li><a href="tel://11234567890">@startcamping</a></li>
+              <li>
+                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>頁面總覽</h3>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">首頁</a></li>
+              <li><a href="#">找小鹿</a></li>
+              <li><a href="#">鹿的分享</a></li>
+              <li><a href="#">鹿的裝備</a></li>
+              <li><a href="#">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="#">帳號</a></li>
+              <li><a href="#">會員帳號</a></li>
+              <li><a href="#">我的收藏</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <!-- /.widget -->
+        </div>
+      </div>
+      <!-- /.row -->
       <div class="row mt-5">
         <div class="col-12 text-center">
           <!-- 

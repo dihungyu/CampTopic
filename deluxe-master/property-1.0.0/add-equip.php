@@ -66,7 +66,7 @@ $accountName = $row_account['accountName'];
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -78,9 +78,8 @@ $accountName = $row_account['accountName'];
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -88,36 +87,41 @@ $accountName = $row_account['accountName'];
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
-          <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">會員帳號</a>
-              <a class="dropdown-item" href="member-like.html">我的收藏</a>
-              <a class="dropdown-item" href="">文章管理</a>
-              <a class="dropdown-item" href="manage-equip.html">設備管理</a>
-              <a class="dropdown-item" href="manage-land.html">營地管理</a>
+              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item" href="member-like.php">我的收藏</a>
+              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../../login.php">登入</a>';
+              }
+              ?>
             </div>
+
           </li>
         </ul>
       </div>
@@ -160,8 +164,7 @@ $accountName = $row_account['accountName'];
             </label>
           </span>
           <br>
-          <span
-            style="display:flex;align-items: center;justify-content:flex-start;margin-left: 100px;margin-top: -15px;">
+          <span style="display:flex;align-items: center;justify-content:flex-start;margin-left: 100px;margin-top: -15px;">
             <button class="btn-new2">
               <a class="tag-filter" href="#">櫻花
                 <i class="fa-solid fa-circle-xmark" style="margin-left: 15px;margin-right: -10px;"></i>
@@ -185,22 +188,19 @@ $accountName = $row_account['accountName'];
             <button type="button" class="btn-new2" data-toggle="modal" data-target="#exampleModalCenter">
               <a class="tag-filter" href="#">新增標籤</a>
             </button>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width:450px;height:200px;">
                   <div class="modal-body">
                     <span style="display: flex;">
                       <h4 style="font-weight: bold;margin-top: 5px;margin-left: 10px;">新增標籤</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i id="close" class="fa-solid fa-circle-xmark"
-                          style="color:#a0a0a0;margin-left: 275px;margin-top: -5px;"></i>
+                        <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;margin-left: 275px;margin-top: -5px;"></i>
                       </button>
                     </span>
                   </div>
 
-                  <input type="text" value="標籤名稱"
-                    style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 50px;margin-bottom: 75px;">
+                  <input type="text" value="標籤名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 50px;margin-bottom: 75px;">
           </span>
           <button class="btn-new" style=" margin-left: 340px;margin-top: -55px;margin-right: 25px;">
             <a href="add-equip.html" style="color: #fff;">確認</a></button>
@@ -214,48 +214,37 @@ $accountName = $row_account['accountName'];
   <form action="../../php/Equipment/createEquipment.php" method="post" enctype="multipart/form-data">
     <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
 
-      <input name="equipmentName" type="text" placeholder="設備名稱"
-        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-      <select name="equipmentType"
-        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+      <input name="equipmentName" type="text" placeholder="設備名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+      <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
         <option value="租">租</option>
         <option value="徵">徵</option>
         <option value="賣">賣</option>
       </select>
-      <input type="text" name="equipmentPrice" placeholder="價錢"
-        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-      <input type="text" name="equipmentLocation" placeholder="設備所在地"
-        style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+      <input type="text" name="equipmentPrice" placeholder="價錢" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+      <input type="text" name="equipmentLocation" placeholder="設備所在地" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
     </span>
-    <textarea rows="6" name="equipmentDescription" placeholder="設備描述"
-      style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;"></textarea>
+    <textarea rows="6" name="equipmentDescription" placeholder="設備描述" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1030px; border-radius: 10px;padding: 20px;margin-left: 100px;margin-bottom: 20px;"></textarea>
     <br>
 
     <br>
     <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
-        style="position:absolute;height:200px;width:330px;opacity: 0;">
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
     </div>
-    <div class="preview"
-      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
+    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
       <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
       <p style="line-height: 100px; color:#797979;">上傳圖片</p>
     </div>
     <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
-        style="position:absolute;height:200px;width:330px;opacity: 0;">
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
     </div>
-    <div class="preview"
-      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
+    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
       <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
       <p style="line-height: 100px;color:#797979;">上傳圖片</p>
     </div>
     <div>
-      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png"
-        style="position:absolute;height:200px;width:330px;opacity: 0;">
+      <input type="file" id="image_uploads" name="image_uploads[]" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
     </div>
-    <div class="preview"
-      style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
+    <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;margin-left: 20px;">
       <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
       <p style="line-height: 100px;color: #797979;;">上傳圖片</p>
     </div>
@@ -399,15 +388,9 @@ $accountName = $row_account['accountName'];
   <script src="js/navbar.js"></script>
   <script src="js/counter.js"></script>
   <script src="js/custom.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -423,8 +406,7 @@ $accountName = $row_account['accountName'];
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

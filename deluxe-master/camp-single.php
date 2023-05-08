@@ -97,33 +97,30 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="property-1.0.0/index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">鹿的設備</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="member.html">會員帳號</a>
-                <a class="dropdown-item" href="member-like.html">我的收藏</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
-              </div>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="member.html">會員帳號</a>
+              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="file:///Applications/XAMPP/xamppfiles/htdocs/CampTopic/login.html">登出</a>
+            </div>
           </li>
 
         </ul>
@@ -209,9 +206,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
               <div class="block-16">
                 <figure>
 
-                  <iframe width="800" height="433" src="<?php echo $campsiteVideoLink ?>" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+                  <iframe width="800" height="433" src="<?php echo $campsiteVideoLink ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
                 </figure>
               </div>
@@ -222,49 +217,48 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
           <div class="input-group mb-3" style="padding-left:20px">
-            <input type="text" class="form-control" placeholder=" search" aria-label="search"
-              aria-describedby="basic-addon2">
+            <input type="text" class="form-control" placeholder=" search" aria-label="search" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="button-search" type="button"><i class="fas fa-search"></i></button>
             </div>
           </div>
 
-            <div class="sidebar-box ftco-animate">
-              <h3>推薦文章</h3>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
+          <div class="sidebar-box ftco-animate">
+            <h3>推薦文章</h3>
+            <div class="block-21 mb-4 d-flex">
+              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
+              <div class="text">
+                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
+                <div class="meta">
+                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
                 </div>
               </div>
             </div>
+            <div class="block-21 mb-4 d-flex">
+              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
+              <div class="text">
+                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
+                <div class="meta">
+                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="block-21 mb-4 d-flex">
+              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
+              <div class="text">
+                <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
+                <div class="meta">
+                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
+                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="sidebar-box ftco-animate">
             <h3>營地標籤</h3>
@@ -297,8 +291,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           </span>
           <div class="row">
             <div class="map-wrap" style="height: 445px;">
-              <iframe src="<?php echo $campsiteAddressLink ?>" width="1300" height="445" style="border:0;"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+              <iframe src="<?php echo $campsiteAddressLink ?>" width="1300" height="445" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
               </iframe>
             </div>
           </div>
@@ -312,104 +305,103 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
 
     <div class="site-footer">
       <div class="container">
-      <div class="row">
-        
-         <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>聯絡資訊</h3>
-            <address>StartCamping 營在起跑點！</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">0911222345</a></li>
-              <li><a href="tel://11234567890">@startcamping</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-         <div class="col-lg-5">
-          <div class="widget">
-            <h3>頁面總覽</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="property1.0.0/index.php">首頁</a></li>
-              <li><a href="#">找小鹿</a></li>
-              <li><a href="#">鹿的分享</a></li>
-              <li><a href="#">鹿的裝備</a></li>
-              <li><a href="#">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="property1.0.0/member.php">帳號</a></li>
-              <li><a href="property1.0.0/member.php">會員帳號</a></li>
-              <li><a href="property1.0.0/member-like.php">我的收藏</a></li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-2">
-          <!-- /.widget -->
-        </div>
-      </div>
+        <div class="row">
 
-      <!-- /.row -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>聯絡資訊</h3>
+              <address>StartCamping 營在起跑點！</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">0911222345</a></li>
+                <li><a href="tel://11234567890">@startcamping</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>頁面總覽</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="property1.0.0/index.php">首頁</a></li>
+                <li><a href="#">找小鹿</a></li>
+                <li><a href="#">鹿的分享</a></li>
+                <li><a href="#">鹿的裝備</a></li>
+                <li><a href="#">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="property1.0.0/member.php">帳號</a></li>
+                <li><a href="property1.0.0/member.php">會員帳號</a></li>
+                <li><a href="property1.0.0/member-like.php">我的收藏</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-2">
+            <!-- /.widget -->
+          </div>
+        </div>
 
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <!--
+        <!-- /.row -->
+
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!--
               **==========
               NOTE:
               Please don't remove this copyright link unless you buy the license here https://untree.co/license/
               **==========
             -->
 
-          <p>
-            Copyright &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            . All Rights Reserved. &mdash; Designed with love by
-            <a href="https://untree.co">Untree.co</a>
-            <!-- License information: https://untree.co/license/ -->
-          </p>
-          <div>
-            Distributed by
-            <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
 
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
-      </svg></div>
+      <!-- loader -->
+      <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+          <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg></div>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/jquery-migrate-3.0.1.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src="js/jquery.waypoints.min.js"></script>
+      <script src="js/jquery.stellar.min.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/jquery.magnific-popup.min.js"></script>
+      <script src="js/aos.js"></script>
+      <script src="js/jquery.animateNumber.min.js"></script>
+      <script src="js/bootstrap-datepicker.js"></script>
+      <script src="js/jquery.timepicker.min.js"></script>
+      <script src="js/scrollax.min.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script src="js/google-map.js"></script>
+      <script src="js/main.js"></script>
+      <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
 
 </body>
 

@@ -139,8 +139,7 @@ if (isset($_POST["likeEquipDel"])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
@@ -153,9 +152,7 @@ if (isset($_POST["likeEquipDel"])) {
     <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
     <!-- 引入 Bootstrap 的 CSS 檔案 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"
-        integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
 
 
     <title>
@@ -181,7 +178,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script>
         function hideMessage() {
             document.getElementById("message").style.opacity = "0";
-            setTimeout(function () {
+            setTimeout(function() {
                 document.getElementById("message").style.display = "none";
             }, 500);
         }
@@ -192,9 +189,8 @@ if (isset($_POST["likeEquipDel"])) {
 <body>
 
     <!-- 系統訊息 -->
-    <?php if (isset($_SESSION["system_message"])): ?>
-        <div id="message" class="alert alert-success"
-            style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+    <?php if (isset($_SESSION["system_message"])) : ?>
+        <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
             <?php echo $_SESSION["system_message"]; ?>
         </div>
         <?php unset($_SESSION["system_message"]); ?>
@@ -203,11 +199,9 @@ if (isset($_POST["likeEquipDel"])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-                    style="width: 90px; height: auto;"></img></a>
+            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
             </button>
 
@@ -220,15 +214,24 @@ if (isset($_POST["likeEquipDel"])) {
                     <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
                             <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
+                            <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../login.php">登出</a>
+                            <?php
+                            // 檢查是否設置了 accountName 或 accountEmail Cookie
+                            if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
+                            }
+                            // 如果沒有設置 Cookie 則顯示登入選項
+                            else {
+                                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+                            }
+                            ?>
                         </div>
                     </li>
 
@@ -238,8 +241,7 @@ if (isset($_POST["likeEquipDel"])) {
     </nav>
     <!-- END nav -->
 
-    <div class="hero page-inner overlay"
-        style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
+    <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-12 text-center mt-5">
@@ -248,7 +250,7 @@ if (isset($_POST["likeEquipDel"])) {
 
                     <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                         <ol class="breadcrumb text-center justify-content-center">
-                            <li class="breadcrumb-item"><a href="property-1.0.0/index.html">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
                             <li class="breadcrumb-item active text-white-50" aria-current="page">
                                 鹿的設備
                             </li>
@@ -369,7 +371,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <div class="col-lg-3"></div>
                         <div class="col-lg-6 text-center">
                             <div class="custom-pagination">
-                                <?php for ($i = 1; $i <= $equipment_total_pages; $i++): ?>
+                                <?php for ($i = 1; $i <= $equipment_total_pages; $i++) : ?>
                                     <a href="?equipment_page=<?= $i ?>" <?= ($i == $equipment_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                                 <?php endfor; ?>
                             </div>
@@ -458,8 +460,7 @@ if (isset($_POST["likeEquipDel"])) {
                     <div class="sidebar-box ftco-animate">
                         <h3>推薦文章</h3>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
+                            <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
                                 <div class="meta">
@@ -470,8 +471,7 @@ if (isset($_POST["likeEquipDel"])) {
                             </div>
                         </div>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
+                            <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
                                 <div class="meta">
@@ -482,8 +482,7 @@ if (isset($_POST["likeEquipDel"])) {
                             </div>
                         </div>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
+                            <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
                                 <div class="meta">
@@ -582,8 +581,7 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#F96D00" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
 
@@ -601,8 +599,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

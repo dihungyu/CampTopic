@@ -104,21 +104,19 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
     setTimeout(hideMessage, 3000);
-
   </script>
 
 </head>
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -126,34 +124,39 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="all-equipment.php" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.html">管理員帳號</a>
-              <a class="dropdown-item" href="member-like.html">營地管理</a>
-              <a class="dropdown-item" href="member-like.html">文章管理</a>
-              <a class="dropdown-item" href="member-like.html">設備管理</a>
+              <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
+              <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">登出</a>
+              <?php
+              // 檢查是否設置了 accountName 或 accountEmail Cookie
+              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
+                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
+              }
+              // 如果沒有設置 Cookie 則顯示登入選項
+              else {
+                echo '<a class="dropdown-item" href="../login.php">登入</a>';
+              }
+              ?>
             </div>
           </li>
 
@@ -170,7 +173,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
               <li class="breadcrumb-item"><a href="member.html">鹿的裝備</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 設備詳細資訊
@@ -255,8 +258,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
               <div class="row">
                 <div class="col-sm col-md-6 ftco-animate">
                   <div class="room">
-                    <a class="img img-2 d-flex justify-content-center align-items-center"
-                      style="background-image: url(images/Rectangle\ 223.png);">
+                    <a class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Rectangle\ 223.png);">
 
                     </a>
 
@@ -264,8 +266,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 </div>
                 <div class="col-sm col-md-6 ftco-animate">
                   <div class="room">
-                    <a class="img img-2 d-flex justify-content-center align-items-center"
-                      style="background-image: url(images/Rectangle\ 224.png);">
+                    <a class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Rectangle\ 224.png);">
 
                     </a>
                   </div>
@@ -570,8 +571,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
       </svg></div>
 
 
@@ -589,8 +589,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

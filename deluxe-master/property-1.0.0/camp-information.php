@@ -37,7 +37,7 @@ $activity_offset = ($activity_current_page - 1) * $activity_perPage;
 $sql_activities = "SELECT * FROM activities
   LEFT JOIN accounts ON activities.accountId = accounts.accountId
   LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId
-  WHERE activities.accountId != '$accountId' $activity_keyword_condition";
+  WHERE activities.accountId != '$accountId' $activity_keyword_condition LIMIT $activity_offset, $activity_perPage";
 $result_activities = mysqli_query($conn, $sql_activities);
 
 $activities = array();
@@ -401,7 +401,7 @@ if (mysqli_num_rows($result_activities) > 0) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
@@ -422,6 +422,7 @@ if (mysqli_num_rows($result_activities) > 0) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
+              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
               <!-- <a class="dropdown-item" href="">文章管理</a>
                 <a class="dropdown-item" href="manage-equip.html">設備管理</a>
                 <a class="dropdown-item" href="manage-land.html">營地管理</a> -->
@@ -708,20 +709,20 @@ if (mysqli_num_rows($result_activities) > 0) {
           </div>
 
         </div>
-     
-  <div class="row align-items-center py-5">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6 text-center">
-      <div class="custom-pagination">
-        <?php for ($i = 1; $i <= $activity_total_pages; $i++) : ?>
-          <a href="?activity_page=<?= $i ?>" <?= ($i == $activity_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
-        <?php endfor; ?>
-      </div>
-    </div>
-  </div>
-  </div>
 
-  </div>
+        <div class="row align-items-center py-5">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6 text-center">
+            <div class="custom-pagination">
+              <?php for ($i = 1; $i <= $activity_total_pages; $i++) : ?>
+                <a href="?activity_page=<?= $i ?>" <?= ($i == $activity_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+              <?php endfor; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
   </div>
   </article>
