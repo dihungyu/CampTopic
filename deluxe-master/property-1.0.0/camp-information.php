@@ -420,9 +420,8 @@ if (mysqli_num_rows($result_activities) > 0) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
-
+    <a href="property-1.0.0/index.php">
+      <img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
@@ -468,7 +467,7 @@ if (mysqli_num_rows($result_activities) > 0) {
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 151.png');
+  <div class="hero page-inner overlay" style="background-image: url('../images/Rectangle 341.png');
       height:70vh;
       min-height: 300px;">
     <div class="container">

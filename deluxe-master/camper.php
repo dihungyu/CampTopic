@@ -256,7 +256,7 @@ function get_img_src($accountId, $conn)
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Wireshark.png');
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle 341.png');
       height:70vh;
       min-height: 300px;">
     <div class="container">

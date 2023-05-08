@@ -129,7 +129,7 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 151.jpg');
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle 341.jpg');
       height:70vh;
       min-height: 300px;">
     <div class="container">
