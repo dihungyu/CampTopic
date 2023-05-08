@@ -317,7 +317,7 @@ $files_result = mysqli_query($conn, $files_query);
             <div class="map-wrap" style="height: 445px;">
               <?php
               if ($campsiteAddressLink == '無資料') {
-                echo '<span>尚無相關地圖</span>';
+                echo '<span style="margin-left: 16px;">尚無相關地圖</span>';
               } else {
                 echo '<iframe src="' . $campsiteAddressLink . '" width="1300" height="445" style="border:0;"
               allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
