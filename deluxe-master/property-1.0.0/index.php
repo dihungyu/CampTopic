@@ -439,7 +439,7 @@ if (isset($_POST["likeEquipDel"])) {
 
 
                   echo "<div class='property-item'>
-                <img src='" . $image_src . "' alt='Image' class='img-fluid' data-toggle='modal' data-target='#exampleModalCenter' />
+                <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 412px; height: 412px;' />
 
                 <div class='property-content'>
                   <span class='span-adj' style='justify-content: space-between;'>
