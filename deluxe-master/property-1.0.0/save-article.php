@@ -87,3 +87,49 @@ function process_images($content, $conn, $articleId)
 
     return $content;
 }
+
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
+    require_once '../../php/conn.php';
+    require_once '../../php/uuid_generator.php';
+
+    $articleTitle = $_POST["articleTitle"];
+    $articleContent = $_POST["articleContent"];
+    $tags = $_POST['tags'];
+
+    $accountId = $_POST["accountId"];
+    $articleId = uuid_generator();
+
+
+
+    $sql_query1 = "INSERT INTO articles (articleId, accountId, articleTitle, articleContent, articleCreateDate, articleUpdateDate, articleCollectCount, articleLikeCount) 
+            VALUES ('$articleId', '$accountId', '$articleTitle', '$articleContent', now(), now(), 0, 0)";
+
+    if (!mysqli_query($conn, $sql_query1)) {
+        echo "Error: " . mysqli_error($conn);
+        $_SESSION["system_message"] = "文章新增失敗";
+        header("Location: ../all-article.php");
+        exit(); // Add this line
+    }
+
+    // Process images in the article content
+    $articleContent = process_images($articleContent, $conn, $articleId);
+
+    // Insert tags into articles_labels table
+    foreach ($tags as $tag) {
+        $labelId = uuid_generator();
+        $insert_label_sql = "INSERT INTO articles_labels (articleLabelId, articleId, labelId) VALUES ('$labelId','$articleId', '$tag')";
+
+        if (!mysqli_query($conn, $insert_label_sql)) {
+            // echo "Error: " . mysqli_error($conn);
+
+            $_SESSION["system_message"] = "標籤有誤，文章新增失敗";
+            header("Location: ../all-article.php");
+            exit();
+        }
+    }
+
+    $_SESSION["system_message"] = "文章已新增";
+    header("Location: ../all-article.php");
+    exit();
+}
