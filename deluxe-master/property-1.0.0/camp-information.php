@@ -657,9 +657,11 @@ if (mysqli_num_rows($result_activities) > 0) {
             echo '    <hr>';
             echo '    <div class="findcamper-bottom">';
             echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-            echo '      <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"';
-            echo '        data-toggle="modal" data-target="#Modal' . $activityId . '">';
-            echo '        參加！</button>';
+            if (isset($_COOKIE["accountId"])) {
+              echo '      <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"';
+              echo '        data-toggle="modal" data-target="#Modal' . $activityId . '">';
+              echo '        參加！</button>';
+            }
             echo '    </div>';
             echo '  </div>';
             echo '</a>';
