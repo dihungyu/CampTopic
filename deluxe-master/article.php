@@ -210,7 +210,8 @@ $articleId = $_GET['articleId'];
       <div class="row">
         <div class="col-lg-8 ftco-animate order-md-last">
           <span class="img-name">
-            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 8px;">
+            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 45px;
+    height: 45px; margin-right: 8px;">
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
           <div style="display:flex; justify-content: space-between;">
@@ -299,7 +300,8 @@ $articleId = $_GET['articleId'];
             // 如果已登入，則顯示留言區塊
             echo '<li class="comment">
                 <span class="img-name">
-                  <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 8px;"\>
+                  <img src="' . $img_src . '" style="border-radius: 50%; width: 45px;
+                  height: 45px; margin-right: 8px;"\>
                 </span>
                 <div class="comment-body" style="position: relative;">
                   <h6>' . $_COOKIE["accountName"] . '</h6>
@@ -334,7 +336,7 @@ $articleId = $_GET['articleId'];
               // 輸出留言
               echo '<li class="comment">
               <span class="img-name">
-                <img src="' . $img_src . '"  style="border-radius: 50%; width: 5%; margin-right: 8px;">
+                <img src="' . $img_src . '"  style="border-radius: 50%; width: 45px; height: 45px; margin-right: 8px;">
               </span>
               <div class="comment-body" style="position: relative;">
                 <h6>' . $comment_result_row["accountName"] . '</h6>
@@ -399,7 +401,8 @@ $articleId = $_GET['articleId'];
               if ($_COOKIE["accountName"]) {
                 echo '<!-- 使用者回覆區 -->
                     <span class="img-name" style="display: flex; align-items: center;">
-                      <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 8px;">
+                      <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 45px;
+                      height: 45px; margin-right: 8px;">
                       
                       <div class="reply-form" style="display: flex;align-items: center;">
                         <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>

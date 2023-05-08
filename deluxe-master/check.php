@@ -340,17 +340,20 @@ function get_img_src($accountId, $conn)
                 <h5 class="mb-4" style="font-weight:bold;">
                   <?php echo $activityTitle ?>
                 </h5>
+            <span class="span-adj;">
                 <button class="btn-icon">
                   <a href="../php/Activity/deleteActivity.php?activityId=<?php echo $activityId ?>">
-                    <i class="fas fa-trash-alt" style="font-weight: 500;color: red; margin-left: 500px;"></i>
+                    <i class="fas fa-trash-alt" style="font-weight: 500;color: #B02626; margin-left: 500px;"></i>
                   </a>
                 </button>
                 <button type="button" class="btn-icon" data-toggle="modal" data-target="#main">
                   <i class="fa-regular fa-pen-to-square"></i></button>
               </span>
+            </span>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
                 <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%;
-                  width: 4%;
+                  width: 40px;
+                  height: 40px;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
                   <?php echo $activityCreator ?>

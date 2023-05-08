@@ -4416,16 +4416,23 @@ margin-bottom: 0px;
   margin-bottom: 0px;
 }
 .card-head img{
-  width:60px;
+  width:55px;
+  height:55px;
   margin-top: 0px; 
   border: solid 3px #Ffffff;
-  border-radius: 50%;
-}
+  border-radius: 50%;}
+
 .card-head p{
   margin-top: 32px; 
   margin-left: 8px;
 }
 
+.head-img{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+}
 .accordion-button {
   position: relative;
   display: -webkit-box;
@@ -12003,27 +12010,6 @@ select.warning{
   color: #000;
 
   margin-right: 8px;
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease;
-}
-.tag-fav {
-  text-decoration: none !important;
-  border-radius: 35px !important;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-width: 2px;
-  border-color: transparent;
-  border: none !important;
-  font-size: 12px;
-  background-color: #EFE9DA;
-  color: #000;
-
-  margin-top: 8px;
-  margin-bottom: 15px;
-  margin-right: 2px;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
