@@ -93,6 +93,13 @@ $articleId = $_GET['articleId'];
       width: 60px;
       height: 40px;
     }
+
+    .vcard bio{
+      border-radius: 50%; 
+      width: 5%; 
+      margin-right: 16px;
+}
+
   </style>
 
   <script>
@@ -202,7 +209,7 @@ $articleId = $_GET['articleId'];
       <div class="row">
         <div class="col-lg-8 ftco-animate order-md-last">
           <span class="img-name">
-            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 8%; margin-right: 8px;">
+            <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 8px;">
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
           <div style="display:flex; justify-content: space-between;">
@@ -290,9 +297,9 @@ $articleId = $_GET['articleId'];
           } else {
             // 如果已登入，則顯示留言區塊
             echo '<li class="comment">
-                <div class="img-name">
-                  <img src="' . $img_src . '"  class="vcard bio">
-                </div>
+                <span class="img-name">
+                  <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 8px;"\>
+                </span>
                 <div class="comment-body" style="position: relative;">
                   <h6>' . $_COOKIE["accountName"] . '</h6>
                   <form action="submit_comment.php" method="post">
@@ -325,9 +332,9 @@ $articleId = $_GET['articleId'];
 
               // 輸出留言
               echo '<li class="comment">
-              <div class="img-name">
-                <img src="' . $img_src . '"  class="vcard bio">
-              </div>
+              <span class="img-name">
+                <img src="' . $img_src . '"  style="border-radius: 50%; width: 5%; margin-right: 8px;">
+              </span>
               <div class="comment-body" style="position: relative;">
                 <h6>' . $comment_result_row["accountName"] . '</h6>
     <div class="meta" style="font-size:11px;"> ' . $date_string . '</div>
@@ -360,9 +367,9 @@ $articleId = $_GET['articleId'];
                   $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
 
                   echo '<li>
-          <div class="img-name" >
+          <span class="img-name" >
             <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
-          </div>
+          </span>
           <div class="comment-body" style="position: relative;">
             <h6>' . $reply_result_row["accountName"] . '</h6>
             <div class="meta">' . $date_string . '</div>
@@ -390,9 +397,10 @@ $articleId = $_GET['articleId'];
 
               if ($_COOKIE["accountName"]) {
                 echo '<!-- 使用者回覆區 -->
-                    <div class="img-name">
-                      <img src="' . $img_src . '" alt="Image description" class="vcard bio">
-                      <div class="reply-form">
+                    <span class="img-name" style="display: flex; align-items: center;">
+                      <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 8px;">
+                      
+                      <div class="reply-form" style="display: flex;align-items: center;">
                         <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>
                         <form action="submit_comment.php" method="post">
                           <input type="hidden" name="action" value="reply">
@@ -401,8 +409,7 @@ $articleId = $_GET['articleId'];
                           <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
                           <button type="submit" class="btn" >發布</button>
                         </form>
-                      </div>
-                    </div>';
+                      </div></span>';
               }
             }
           }

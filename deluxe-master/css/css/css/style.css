@@ -16880,7 +16880,7 @@ border-radius: 30px;
   display: flex; 
   align-items: center; 
   justify-content: flex-start;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 .article-comment{
   height: 40px;
@@ -16890,7 +16890,7 @@ border-radius: 30px;
   border: none; 
   padding: 20px;
   color:#ADADAD;
-  margin-left: 10px;
+  font-size: 13px;
 
 }
 
@@ -16926,7 +16926,7 @@ border-radius: 30px;
         font-size: 20px; }
       .comment-list li .comment-body .meta {
         text-transform: uppercase;
-        font-size: 13px;
+        font-size: 11px;
         letter-spacing: .1em;
         color: #ccc; }
       .comment-list li .comment-body .reply {
@@ -17002,7 +17002,8 @@ border-radius: 30px;
 }
 
 .reply-form {
-  flex-grow: 1;
+  display: flex;
+  align-items: center;
 }
 
 .comment-list li .comment-body .reply {
@@ -17038,4 +17039,10 @@ border-radius: 30px;
   font-size: 13px;
   width: 60px;
   height: 40px;
+}
+
+.vcard bio{
+  border-radius: 50%; 
+  width: 5%; 
+  margin-right: 16px;
 }
