@@ -218,7 +218,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
                   <form action="uploadProfilePic.php" method="post" enctype="multipart/form-data">
                     <div class="d-flex justify-content-end">
                       <input type="file" class="form-control d-none" id="avatar" name="avatar" accept="image/*" required>
-                      <button class="btn btn-primary btn-sm ms-3 btn-custom-size" id="uploadBtn" type="button" style="margin-top: -8px;">更換頭像</button>
+                      <button class="btn btn-primary btn-sm ms-3 btn-custom-size" id="uploadBtn" type="button" style="margin-bottom: 16px;">更換頭像</button>
                       <button class="btn btn-success btn-sm d-none" id="submitBtn" type="submit" name="submit">上傳</button>
                     </div>
                   </form>
@@ -281,37 +281,37 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
 
             <span class="member-input">
               <p>姓名</p>
-              <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
+              <input type="text" name="accountName" class="form-control" style="font-size: 14px; margin-bottom: 0px; height: 42px;" placeholder="請輸入名字" value="<?php echo $accountName; ?>" required />
 
             </span>
 
             <span class="member-input">
               <p>電話</p>
-              <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
+              <input type="tel" name="accountPhoneNumber" class="form-control" style="font-size: 14px; margin-bottom: 0px; height: 42px;" placeholder="請輸入電話" value="<?php echo $accountPhoneNumber; ?>" required />
 
             </span>
 
             <span class="member-input">
               <p>信箱</p>
-              <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
+              <input type="email" name="accountEmail" class="form-control" style="font-size: 14px; margin-bottom: 0px; height: 42px;" placeholder="請輸入電子郵件" value="<?php echo $accountEmail; ?>" required />
 
             </span>
 
             <span class="member-input">
               <p>生日</p>
-              <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-left: 32px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
+              <input type="date" name="accountBirthday" id="birthday" class="form-control" style="font-size: 14px; margin-bottom: 0px; height: 42px;" placeholder="請選擇日期" value="<?php echo $accountBirthday; ?>" required>
             </span>
 
             <span class="member-input">
               <p>性別</p>
-              <input type="radio" name="accountGender" value="Female" style=" margin-left: 32px; margin-right: 8px;" <?php if ($accountGender == "Female") {
+              <input type="radio" name="accountGender" value="Female" style="margin-left: 12px; margin-bottom:0px; width: 13px; height:13px;" <?php if ($accountGender == "Female") {
                                                                                                                         echo "checked";
                                                                                                                       } ?> required>
-              <label for="Female" style="font-weight: bold;font-size:16px;">女</label>
-              <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-right: 8px;" <?php if ($accountGender == "Male") {
+              <label for="Female" style="font-weight: bold;font-size:16px; margin-left:8px">女</label>
+              <input type="radio" name="accountGender" value="Male" style=" margin-left: 20px; margin-bottom:0px; width: 13px; height:13px" <?php if ($accountGender == "Male") {
                                                                                                                       echo "checked";
                                                                                                                     } ?> required>
-              <label for=" Male" style="font-weight: bold;font-size:16px;">男</label>
+              <label for=" Male" style="font-weight: bold;font-size:16px; margin-left:8px">男</label>
             </span>
 
             <hr width="100%" size="3" style="margin-top: 20px; margin-bottom: 52px;">
@@ -324,8 +324,8 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
             <div class="col-10 mb-3"">
 
                 <span class=" member-bottom">
-              <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;color: #000;background-color: #f1f1f1;">
-              <input type="submit" value="確認修改" class="btn btn-primary">
+              <input type="reset" value="取消" class="btn btn-secondary" style="margin-right: 12px;color: #000; background-color: #f1f1f1; padding: 10px; font-weight: 400;">
+              <input type="submit" value="確認修改" class="btn btn-primary" style="padding: 10px; font-weight: 400;">
             </div></span>
           </div>
           </form>
