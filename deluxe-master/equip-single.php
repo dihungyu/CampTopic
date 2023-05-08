@@ -179,7 +179,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -197,9 +197,8 @@ if (isset($_POST["likeEquipDel"])) {
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -207,11 +206,9 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -224,8 +221,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -260,7 +256,7 @@ if (isset($_POST["likeEquipDel"])) {
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
               <li class="breadcrumb-item"><a href="property-1.0.0/index.php">首頁</a></li>
-              <li class="breadcrumb-item"><a href="member.html">鹿的裝備</a></li>
+              <li class="breadcrumb-item"><a href="equipment.php">鹿的裝備</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
                 設備詳細資訊
               </li>
@@ -288,36 +284,36 @@ if (isset($_POST["likeEquipDel"])) {
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
                   <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                    
+
                     <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
                     <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
                       <?php echo $equipmentType ?>
                     </i>
                   </span>
-                  <h1><a href="single.html">
+                  <h1><a href="#">
                       <?php echo $equipmentName ?>
                     </a></h1>
                 </span>
                 <span style="display:flex; align-items: center;">
-                <h4 class="equiph4">$
-                  <?php echo $equipmentPrice ?>
-                </h4>
-                <?php
-                    if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
-                      echo '<button class="btn-icon">
+                  <h4 class="equiph4">$
+                    <?php echo $equipmentPrice ?>
+                  </h4>
+                  <?php
+                  if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
+                    echo '<button class="btn-icon">
                       <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
             <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
 
-                      echo '<button class="btn-icon">
+                    echo '<button class="btn-icon">
           <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
             <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
-                    }
-                    ?>
-            </span>
+                  }
+                  ?>
+                </span>
               </div>
               <br>
               <p style="padding:4px; margin-top:40px;">
@@ -659,8 +655,7 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
       </svg></div>
 
 
@@ -678,8 +673,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 if (!isset($articleId)) {
     $articleId = $_GET['articleId'];
@@ -7,6 +9,7 @@ if (!isset($articleId)) {
 session_start();
 // 連接資料庫
 require_once '../../php/conn.php';
+require_once '../../php/uuid_generator.php';
 require_once '../../php/get_img_src.php';
 
 // 取得文章內容
@@ -40,7 +43,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
     mysqli_query($conn, $sql_delete);
 
     // 插入新的標籤
-    foreach ($newtags as $tagId) {
+    foreach ($tags as $tagId) {
         $articleLabelId = uuid_generator();
         $sql_insert = "INSERT INTO articles_labels (articleLabelId, articleId, labelId) VALUES ('$articleLabelId', '$articleId', '$tagId')";
         if (!mysqli_query($conn, $sql_insert)) {
@@ -236,9 +239,6 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                     <form id="article-form" action="update-article.php" method="post" enctype="multipart/form-data">
                         <select id="tags-select" name="tags[]" multiple style="width: 100%;">
                             <?php
-                            ini_set('display_errors', 1);
-                            error_reporting(E_ALL);
-
                             // 取得所有文章標籤
                             $sql = "SELECT labelId, labelName FROM labels WHERE labelType = '文章'";
                             $result = mysqli_query($conn, $sql);
@@ -272,14 +272,6 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                         <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"><?php echo htmlspecialchars($articleContent); ?></textarea>
                 </span>
                 <span>
-
-                    <!-- <div>
-        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
-      </div>
-      <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
-        <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-        <p style="line-height: 100px;color:#797979;">上傳圖片</p>
-      </div> -->
 
                 </span>
 

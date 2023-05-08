@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $equipmentName = $_POST["equipmentName"];
         $equipmentDescription = $_POST["equipmentDescription"];
         $equipmentPrice = $_POST["equipmentPrice"];
-        // $tags = $_POST['tags']; // 取得選擇的標籤值，以陣列的形式傳回
+        $tags = $_POST['tags']; // 取得選擇的標籤值，以陣列的形式傳回
 
         $equipmentId = uuid_generator();
         $sql_query1 = "INSERT INTO equipments (equipmentId, accountId, equipmentType, equipmentLocation, equipmentName, equipmentDescription, equipmentCreateDate, equipmentUpdateDate, equipmentPrice)
@@ -22,14 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_query($conn, $sql_query1);
 
         // 將每個標籤值插入到 equipments_labels 資料表中
-        // foreach ($tags as $tag) {
-        //     $labelId = uuid_generator();
-        //     $insert_label_sql = "INSERT INTO equipments_labels (equipmentLabelId, equipmentId, labelId) VALUES ('$labelId','$equipmentId', '$tag')";
+        foreach ($tags as $tag) {
+            $labelId = uuid_generator();
+            $insert_label_sql = "INSERT INTO equipments_labels (equipmentLabelId, equipmentId, labelId) VALUES ('$labelId','$equipmentId', '$tag')";
 
-        //     if (!mysqli_query($conn, $insert_label_sql)) {
-        //         echo "Error: " . mysqli_error($conn);
-        //     }
-        // }
+            if (!mysqli_query($conn, $insert_label_sql)) {
+                echo "Error: " . mysqli_error($conn);
+            }
+        }
 
 
         // loop through all uploaded files
@@ -83,4 +83,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 }
-?>
