@@ -62,17 +62,21 @@ $accountId = $_COOKIE["accountId"];
   <!-- 引入Summernote CSS -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet" />
 
+  <!-- select2 -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+  <!-- choices.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+
 
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -85,8 +89,7 @@ $accountId = $_COOKIE["accountId"];
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -157,52 +160,32 @@ $accountId = $_COOKIE["accountId"];
               <?php echo $_COOKIE["accountName"]; ?>
             </label>
           </span>
-          <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
-            <a class="tag-filter" href="#">櫻花
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i></a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#">標籤
-              <i class="fa-solid fa-circle-xmark" style="margin-left:10px;"></i>
-            </a>
-            <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
-          </span>
 
-          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content" style="width:450px;height:200px;">
-                <div class="modal-body">
-                  <span style="display: flex;justify-content: space-between;">
-                    <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-                    </button>
-                  </span>
 
-                  <input type="text" value="標籤名稱" class="articletag">
-                  <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
-                    <button class="btn-more"> 確認
-                    </button></a>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
         </span>
         <span style="display:flex; justify-content:center;margin-left:20px">
           <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
+            <select id="tags-select" name="tags[]" multiple style="width: 100%;">
+              <!-- 你的選項將在這裡生成，就像在你原始的程式碼中一樣 -->
+              <?php
+              $sql = "SELECT labelId, labelName FROM labels WHERE labelType = '文章'";
+              $result = mysqli_query($conn, $sql);
+
+              if (mysqli_num_rows($result) > 0) { // 檢查是否有資料
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<option value="' . $row['labelId'] . '">' . $row['labelName'] . '</option>';
+                }
+              }
+              ?>
+
+            </select>
             <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
               <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
             </span>
 
-            <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20"
-              class="articletext"></textarea>
+            <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"></textarea>
         </span>
         <span>
         </span>
@@ -315,15 +298,9 @@ $accountId = $_COOKIE["accountId"];
   <script src="js/navbar.js"></script>
   <script src="js/counter.js"></script>
   <script src="js/custom.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -339,8 +316,7 @@ $accountId = $_COOKIE["accountId"];
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -356,9 +332,14 @@ $accountId = $_COOKIE["accountId"];
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-zh-TW.min.js"></script>
 
+  <!-- Select2 JavaScript -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
+  <!-- 引入Choices JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('#summernote-editor').summernote({
 
         // 設置編輯器的語言為繁體中文
@@ -375,10 +356,10 @@ $accountId = $_COOKIE["accountId"];
 
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('#summernote-editor').summernote({
         callbacks: {
-          onImageUpload: function (files) {
+          onImageUpload: function(files) {
             var maxSize = 2 * 1024 * 1024; // 限制檔案大小為 2 MB
             if (files[0].size > maxSize) {
               alert('檔案大小不能超過 2 MB');
@@ -393,10 +374,10 @@ $accountId = $_COOKIE["accountId"];
               data: formData,
               processData: false,
               contentType: false,
-              success: function (response) {
+              success: function(response) {
                 $('#summernote-editor').summernote('insertImage', response.imageUrl);
               },
-              error: function (error) {
+              error: function(error) {
                 console.error('圖片上傳失敗', error);
               }
             });
@@ -406,6 +387,26 @@ $accountId = $_COOKIE["accountId"];
     });
   </script>
 
+
+  <!-- <script>
+    $(document).ready(function() {
+      $('#tags-select').select2({
+        placeholder: '請選擇標籤'
+      });
+    });
+  </script> -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const choices = new Choices('#tags-select', {
+        removeItemButton: true,
+        searchEnabled: false,
+        placeholderValue: '請選擇標籤...',
+        searchPlaceholderValue: '搜尋標籤',
+        maxItemCount: 5
+      });
+    });
+  </script>
 
 
 

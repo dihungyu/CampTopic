@@ -30,8 +30,7 @@ if (isset($_POST['deleteFileId'])) {
 
 if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+
 
     $newCityId = $_POST['cityId'];
     $newCampsiteName = $_POST['campsiteName'];
