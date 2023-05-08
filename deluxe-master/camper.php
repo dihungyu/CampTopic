@@ -304,7 +304,7 @@ function get_img_src($accountId, $conn)
               <?php
               // 取得活動發起人的大頭貼
               //取得頭貼
-              $img_src = get_img_src($account, $conn);
+              $img_src = get_img_src($creatorId, $conn);
 
               ?>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
