@@ -79,7 +79,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
     <link rel="stylesheet" href="css/tiny-slider.css" />
@@ -112,8 +113,9 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 <body>
 
     <!-- 系統訊息 -->
-    <?php if (isset($_SESSION["system_message"])) : ?>
-        <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+    <?php if (isset($_SESSION["system_message"])): ?>
+        <div id="message" class="alert alert-success"
+            style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
             <?php echo $_SESSION["system_message"]; ?>
         </div>
         <?php unset($_SESSION["system_message"]); ?>
@@ -121,9 +123,11 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+                    style="width: 90px; height: auto;"></img></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
             </button>
 
@@ -136,7 +140,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                     <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -200,8 +205,11 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
             <div class="container">
                 <div class="row">
                     <span style="margin-left: 80px; margin-bottom: 20px;" class="mt-2 mb-4">
-                        <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%; width: 3%;">
-                        <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; "><?php echo $_COOKIE["accountName"]; ?></label>
+                        <img src="<?php echo $img_src; ?>" alt="Image description"
+                            style="border-radius: 50%; width: 3%;">
+                        <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">
+                            <?php echo $_COOKIE["accountName"]; ?>
+                        </label>
                     </span>
                     <span style="display:flex;align-items: center;justify-content:flex-start; margin-left:76px">
                         <a class="tag-filter" href="#">櫻花
@@ -219,7 +227,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                         <a class="tag-filter" href="#" data-toggle="modal" data-target="#exampleModalCenter">新增標籤</a>
                     </span>
 
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content" style="width:450px;height:200px;">
                                 <div class="modal-body">
@@ -231,7 +240,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                                     </span>
 
                                     <input type="text" value="標籤名稱" class="articletag">
-                                    <a href="add-equip.html" style="display:flex;justify-content: flex-end; margin-right:32px">
+                                    <a href="add-equip.html"
+                                        style="display:flex;justify-content: flex-end; margin-right:32px">
                                         <button class="btn-more"> 確認
                                         </button></a>
                                 </div>
@@ -242,11 +252,14 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                 </span>
                 <span style="display:flex; justify-content:center;margin-left:20px">
                     <form id="article-form" action="update-article.php" method="post" enctype="multipart/form-data">
-                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
-                            <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle" value="<?php echo htmlspecialchars($articleTitle); ?>">
+                        <span
+                            style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
+                            <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle"
+                                value="<?php echo $articleTitle; ?>">
                         </span>
 
-                        <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"><?php echo htmlspecialchars($articleContent); ?></textarea>
+                        <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20"
+                            class="articletext"><?php echo $articleContent; ?></textarea>
                 </span>
                 <span>
 
@@ -264,7 +277,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                     <input type="hidden" name="articleId" value="<?php echo $_GET["articleId"] ?>">
                     <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
                     <input type="hidden" name="action" value="update">
-                    <a href="../article.php?articleId=<?php echo $articleId ?>" class="btn-new1" style="margin-right:10px">取消</a>
+                    <a href="../article.php?articleId=<?php echo $articleId ?>" class="btn-new1"
+                        style="margin-right:10px">取消</a>
                     <button class="btn-new" type="submit">分享</button>
 
                 </span>
@@ -328,10 +342,10 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
             <!-- /.row -->
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <!-- 
+                    <!--
               **==========
-              NOTE: 
-              Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
+              NOTE:
+              Please don't remove this copyright link unless you buy the license here https://untree.co/license/
               **==========
             -->
 
@@ -369,9 +383,15 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -387,7 +407,8 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -405,7 +426,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#summernote-editor').summernote({
 
                 // 設置編輯器的語言為繁體中文
@@ -422,10 +443,10 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#summernote-editor').summernote({
                 callbacks: {
-                    onImageUpload: function(files) {
+                    onImageUpload: function (files) {
                         var maxSize = 2 * 1024 * 1024; // 限制檔案大小為 2 MB
                         if (files[0].size > maxSize) {
                             alert('檔案大小不能超過 2 MB');
@@ -440,10 +461,10 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                             data: formData,
                             processData: false,
                             contentType: false,
-                            success: function(response) {
+                            success: function (response) {
                                 $('#summernote-editor').summernote('insertImage', response.imageUrl);
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 console.error('圖片上傳失敗', error);
                             }
                         });
@@ -456,7 +477,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
     <script>
         function hideMessage() {
             document.getElementById("message").style.opacity = "0";
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById("message").style.display = "none";
             }, 500);
         }

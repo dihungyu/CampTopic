@@ -137,10 +137,12 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 </head>
 
 <body>
-    <form action="updateArticle.php?articleId=<?php echo $articleId ?>" method="post" enctype="multipart/form-data" name="formAdd" id="formAdd">
+    <form action="updateArticle.php?articleId=<?php echo $articleId ?>" method="post" enctype="multipart/form-data"
+        name="formAdd" id="formAdd">
 
         請輸入文章標題:<input type="text" name="articleTitle" id="articleTitle" value="<?php echo $articleTitle ?>"><br />
-        請輸入文章內容:<input type="text" name="articleContent" id="articleContent" value="<?php echo $articleContent ?>"><br />
+        請輸入文章內容:<input type="text" name="articleContent" id="articleContent"
+            value="<?php echo $articleContent ?>"><br />
         <?php
         require_once '../conn.php';
 
@@ -162,9 +164,10 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
         ?>
         請選擇標籤：<br />
         <select id="tags-select" name="tags[]" multiple style="width: 100%;">
-            <?php foreach ($allLabels as $row) : ?>
+            <?php foreach ($allLabels as $row): ?>
                 <?php $selected = (!empty($selectedLabels) && in_array($row['labelId'], $selectedLabels)) ? 'selected' : ''; ?>
-                <option value="<?php echo $row['labelId']; ?>" <?php echo $selected; ?>><?php echo $row['labelName']; ?></option>
+                <option value="<?php echo $row['labelId']; ?>" <?php echo $selected; ?>><?php echo $row['labelName']; ?>
+                </option>
             <?php endforeach; ?>
         </select>
 
@@ -199,17 +202,17 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
             if (confirm('確定要刪除此圖片？')) {
                 $.post('', {
                     deleteFileId: fileId
-                }, function(data) {
+                }, function (data) {
                     // Remove image from DOM instead of reloading the page
                     $('#image-' + fileId).remove();
                 });
             }
         }
 
-        $('#formAdd').submit(function() {
+        $('#formAdd').submit(function () {
             $(this).find(':submit').attr('disabled', 'disabled');
             return true;
-        }).submit(function() {
+        }).submit(function () {
             $(this).find(':submit').removeAttr('disabled');
         });
 
@@ -220,7 +223,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);

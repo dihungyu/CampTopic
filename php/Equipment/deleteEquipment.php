@@ -1,47 +1,45 @@
 <?php
-$equipmentId = $_GET['equipmentId'];
-
 session_start();
-require_once '../conn.php';
 
-// Get file names of files to be deleted
-$sql_query = "SELECT fileName FROM files WHERE equipmentId = '$equipmentId'";
-$result = mysqli_query($conn, $sql_query);
-$files_to_delete = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $files_to_delete[] = $row['fileName'];
-}
+// 連接資料庫
+require_once '../../php/conn.php';
 
-// Delete related data from collections table
-$sql_query4 = "DELETE FROM collections WHERE equipmentId = '$equipmentId'";
-if (!mysqli_query($conn, $sql_query4)) {
-    echo "Error: " . mysqli_error($conn);
-}
+if (isset($_GET["equipmentId"])) {
+    $equipmentId = $_GET['equipmentId'];
 
-// Delete data from files table
-$sql_query3 = "DELETE FROM files WHERE equipmentId = '$equipmentId'";
-if (!mysqli_query($conn, $sql_query3)) {
-    echo "Error: " . mysqli_error($conn);
-}
+    // Start transaction
+    mysqli_begin_transaction($conn);
 
-// Delete data from database
-$sql_query1 = "DELETE FROM equipments_labels WHERE equipmentId = '$equipmentId'";
-if (!mysqli_query($conn, $sql_query1)) {
-    echo "Error: " . mysqli_error($conn);
-}
-$sql_query2 = "DELETE FROM equipments WHERE equipmentId = '$equipmentId'";
-if (!mysqli_query($conn, $sql_query2)) {
-    echo "Error: " . mysqli_error($conn);
-}
+    // Delete related data from likes table
+    $sql_query5 = "DELETE FROM likes WHERE equipmentId = '$equipmentId'";
+    $result5 = mysqli_query($conn, $sql_query5);
 
-// Delete files from upload folder
-$upload_dir = "../../upload/";
-foreach ($files_to_delete as $file_name) {
-    $file_path = $upload_dir . $file_name;
-    if (file_exists($file_path)) {
-        unlink($file_path);
+    // Delete related data from collections table
+    $sql_query4 = "DELETE FROM collections WHERE equipmentId = '$equipmentId'";
+    $result4 = mysqli_query($conn, $sql_query4);
+
+    // Delete data from files table
+    $sql_query3 = "DELETE FROM files WHERE equipmentId = '$equipmentId'";
+    $result3 = mysqli_query($conn, $sql_query3);
+
+    // Delete data from database
+    $sql_query1 = "DELETE FROM equipments_labels WHERE equipmentId = '$equipmentId'";
+    $result1 = mysqli_query($conn, $sql_query1);
+
+    $sql_query2 = "DELETE FROM equipments WHERE equipmentId = '$equipmentId'";
+    $result2 = mysqli_query($conn, $sql_query2);
+
+    // Check if all queries were successful
+    if ($result1 && $result2 && $result3 && $result4 && $result5) {
+        // Commit the transaction
+        mysqli_commit($conn);
+        $_SESSION["system_message"] = "設備已刪除";
+    } else {
+        // Rollback the transaction
+        mysqli_rollback($conn);
+        $_SESSION["system_message"] = "刪除失敗，請重試";
     }
-}
 
-$_SESSION['system_message'] = '設備刪除成功！';
-header("Location: readEquipment.php");
+    header("Location: ../../deluxe-master/equipment.php");
+    exit();
+}

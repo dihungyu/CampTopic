@@ -26,7 +26,6 @@ $sql_equipment = "SELECT * FROM equipments WHERE equipmentId = '$equipmentId'";
 $result_equipment = mysqli_query($conn, $sql_equipment);
 $row_equipment = mysqli_fetch_assoc($result_equipment);
 
-$accountId = $row_equipment['accountId'];
 $equipmentName = $row_equipment['equipmentName'];
 $equipmentType = $row_equipment["equipmentType"];
 $equipmentName = $row_equipment["equipmentName"];
@@ -41,6 +40,82 @@ $row_account = mysqli_fetch_assoc($result_account);
 $accountName = $row_account['accountName'];
 $accountEmail = $row_account['accountEmail'];
 $accountPhoneNumber = $row_account['accountPhoneNumber'];
+
+//收藏設備
+if (isset($_POST["collectEquipAdd"])) {
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+  $equipmentId = $_POST["collectEquipAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $collectionId = uuid_generator();
+  $sql = "INSERT INTO `collections` (`collectionId`,`accountId`, `equipmentId`) VALUES ('$collectionId','$accountId', '$equipmentId')";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` + 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已加入收藏!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+//移除收藏設備
+if (isset($_POST["collectEquipDel"])) {
+
+  $equipmentId = $_POST["collectEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚設備
+if (isset($_POST["likeEquipAdd"])) {
+
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+
+  $equipmentId = $_POST["likeEquipAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `equipmentId`) VALUES ('$likeId', '$accountId', '$equipmentId')";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` + 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚設備
+if (isset($_POST["likeEquipDel"])) {
+
+  $equipmentId = $_POST["likeEquipDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` - 1 WHERE `equipmentId` = '$equipmentId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
+    header("Location: equip-single.php?equipmentId=" . $equipmentId);
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
 
 ?>
 
@@ -104,19 +179,27 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
     setTimeout(hideMessage, 3000);
+
+    // JavaScript function to handle the delete confirmation dialog
+    function deleteEquipment(equipmentId) {
+      if (confirm("確認刪除，此動作無法回復?")) {
+        window.location.href = "../php/Equipment/deleteEquipment.php?equipmentId=" + equipmentId;
+      }
+    }
   </script>
 
 </head>
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -124,9 +207,11 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -139,7 +224,8 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -202,6 +288,21 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
                   <span class="fa-stack fa-1x" style="margin-right: 5px; ">
+                    <?php
+                    if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
+                      echo '<button class="btn-icon">
+                      <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
+            <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
+          </a>
+        </button>';
+
+                      echo '<button class="btn-icon">
+          <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
+            <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
+          </a>
+        </button>';
+                    }
+                    ?>
                     <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
                     <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
                       <?php echo $equipmentType ?>
@@ -256,25 +357,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
               </div>
 
             </div>
-            <div class="col-md-11 room-single ftco-animate mb-5 mt-3">
-              <div class="row">
-                <div class="col-sm col-md-6 ftco-animate">
-                  <div class="room">
-                    <a class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Rectangle\ 223.png);">
 
-                    </a>
-
-                  </div>
-                </div>
-                <div class="col-sm col-md-6 ftco-animate">
-                  <div class="room">
-                    <a class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Rectangle\ 224.png);">
-
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
 
           </div>
 
@@ -409,7 +492,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 echo '</a>';
                 echo '<span class="span-adj">';
                 echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
-                echo "<form action='equipment.php' method='post' style='margin-bottom: 0px;'>";
+                echo "<form action='equip-single.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";
                 echo "<i class='" . ($isEquipCollected ? "fas" : "fa-regular") . " fa-bookmark' " . "></i>";
@@ -441,7 +524,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 }
                 echo '</div>';
                 echo '<span style="display: flex; align-items: center;">';
-                echo '<form action="equipment.php" method="post" style="margin-bottom: 0px;">';
+                echo '<form action="equip-single.php" method="post" style="margin-bottom: 0px;">';
                 echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $recommand_equipmentId . '">';
                 echo '<button type="submit" class="btn-icon">';
                 echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . "></i>';
@@ -573,7 +656,8 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+          stroke="#F96D00" />
       </svg></div>
 
 
@@ -591,7 +675,8 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

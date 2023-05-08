@@ -1,23 +1,33 @@
 <?php
-require_once '../../php/conn.php';
+$equipmentId = $_GET['equipmentId'];
 
 session_start();
+// 連接資料庫
+require_once '../../php/conn.php';
+require_once '../../php/get_img_src.php';
 
-//判斷是否登入，若有則對變數初始化
-if (isset($_COOKIE["accountId"])) {
-  $accountId = $_COOKIE["accountId"];
+$equipmentName = '';
+$equipmentDescription = '';
+$equipmentPrice = '';
+$equipmentLocation = '';
+$equipmentType = '';
+
+if (isset($equipmentId)) {
+  $sql = "SELECT * FROM equipments WHERE equipmentId = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $equipmentId);
+
+  if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $equipmentName = $row['equipmentName'];
+    $equipmentDescription = $row['equipmentDescription'];
+    $equipmentPrice = $row['equipmentPrice'];
+    $equipmentLocation = $row['equipmentLocation'];
+    $equipmentType = $row['equipmentType'];
+  }
 }
 
-if (!isset($_COOKIE["accountId"])) {
-  $_SESSION["system_message"] = "請先登入會員，才能上傳設備喔!";
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
-  exit; // 確保重新導向後停止執行後續代碼
-}
-
-$sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
-$result_account = mysqli_query($conn, $sql_account);
-$row_account = mysqli_fetch_assoc($result_account);
-$accountName = $row_account['accountName'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +53,9 @@ $accountName = $row_account['accountName'];
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+
+
+
   <title>
     Start Camping &mdash; 一起展開露營冒險！
   </title>
@@ -63,24 +76,15 @@ $accountName = $row_account['accountName'];
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
-
   <!-- 引入Summernote CSS -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet" />
 
-  <script>
-    function hideMessage() {
-      document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
-        document.getElementById("message").style.display = "none";
-      }, 500);
-    }
-    setTimeout(hideMessage, 3000);
-  </script>
+
+
 
 </head>
 
 <body>
-
   <!-- 系統訊息 -->
   <?php if (isset($_SESSION["system_message"])): ?>
     <div id="message" class="alert alert-success"
@@ -92,7 +96,7 @@ $accountName = $row_account['accountName'];
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png"
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
           style="width: 90px; height: auto;"></img></a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
@@ -102,35 +106,28 @@ $accountName = $row_account['accountName'];
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="ad.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item "><a href="index.html" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
+          <li class="nav-item"><a href="restaurant.html" class="nav-link">鹿的分享</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">鹿的裝備</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.php">會員帳號</a>
-              <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member.html">會員帳號</a>
+              <a class="dropdown-item" href="member-like.html">我的收藏</a>
+              <a class="dropdown-item" href="">文章管理</a>
+              <a class="dropdown-item" href="manage-equip.html">設備管理</a>
+              <a class="dropdown-item" href="manage-land.html">營地管理</a>
               <div class="dropdown-divider"></div>
-              <?php
-              // 檢查是否設置了 accountName 或 accountEmail Cookie
-              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
-              }
-              // 如果沒有設置 Cookie 則顯示登入選項
-              else {
-                echo '<a class="dropdown-item" href="../../login.php">登入</a>';
-              }
-              ?>
+              <a class="dropdown-item" href="#">登出</a>
             </div>
-
           </li>
+
         </ul>
       </div>
     </div>
@@ -144,10 +141,10 @@ $accountName = $row_account['accountName'];
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-              <li class="breadcrumb-item"><a href="../equipment.php">鹿的設備</a></li>
+              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
-                新增設備
+                設備管理
               </li>
             </ol>
           </nav>
@@ -159,8 +156,12 @@ $accountName = $row_account['accountName'];
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
+
+
+
       </div>
     </div>
+
 
 
     <div class="section section-properties">
@@ -168,9 +169,7 @@ $accountName = $row_account['accountName'];
         <div class="row">
           <span style="margin-left: 105px;margin-bottom: 20px;margin-bottom: 25px; margin-top: -65px;">
             <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%;">
-            <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">
-              <?php echo $accountName ?>
-            </label>
+            <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">yizz</label>
           </span>
           <br>
           <span
@@ -203,8 +202,8 @@ $accountName = $row_account['accountName'];
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width:450px;height:200px;">
                   <div class="modal-body">
-                    <span style="display: flex;justify-content: space-between;">
-                      <h5 style="margin-top: 5px;margin-left: 10px;">新增標籤</h5>
+                    <span style="display: flex;">
+                      <h4 style="font-weight: bold;margin-top: 5px;margin-left: 10px;">新增標籤</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i id="close" class="fa-solid fa-circle-xmark"
                           style="color:#a0a0a0;margin-left: 275px;margin-top: -5px;"></i>
@@ -224,10 +223,9 @@ $accountName = $row_account['accountName'];
   </div>
   </span>
 
-  <form action="../../php/Equipment/createEquipment.php" method="post" enctype="multipart/form-data">
+  <form action="../../php/Equipment/updateEquipment.php" method="post" enctype="multipart/form-data">
     <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-
-      <input name="equipmentName" type="text" placeholder="設備名稱"
+      <input name="equipmentName" type="text" placeholder="設備名稱" value=<?php echo $equipmentName ?>
         style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
       <select name="equipmentType"
         style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
@@ -235,16 +233,20 @@ $accountName = $row_account['accountName'];
         <option value="徵">徵</option>
         <option value="賣">賣</option>
       </select>
-      <input type="text" name="equipmentPrice" placeholder="價錢"
+      <input type="text" name="equipmentPrice" placeholder="價錢" value=<?php echo $equipmentPrice ?>
         style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-      <input type="text" name="equipmentLocation" placeholder="設備所在地"
+      <input type="text" name="equipmentLocation" placeholder="設備所在地" value=<?php echo $equipmentLocation ?>
         style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
     </span>
-    <textarea id="summernote-editor" name="equipmentDescription" rows="20" class="articletext"></textarea>
+    <textarea id="summernote-editor" name="equipmentDescription" rows="20"
+      class="articletext"><?php echo $equipmentDescription ?></textarea>
     <span style="margin-left: 990px;margin-top: 20px;">
-      <button class="btn-new1" type="button" onclick="window.location.href = '../equipment.php'">取消</button>
+      <button class="btn-new1" type="button"
+        onclick="window.location.href = '../equip-single.php?equipmentId=<?php echo $equipmentId ?>'">取消</button>
       <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
-      <button class="btn-new" type="submit">新增</button>
+      <input type="hidden" name="action" value="update">
+      <input type="hidden" name="equipmentId" value="<?php echo $equipmentId ?>">
+      <button class="btn-new" type="submit">更新</button>
     </span>
   </form>
 
@@ -253,10 +255,11 @@ $accountName = $row_account['accountName'];
 
 
 
+  </div>
+  </div>
+  </div>
 
-  </div>
-  </div>
-  </div>
+  <br><br>
 
 
   <div class="site-footer">
@@ -422,13 +425,14 @@ $accountName = $row_account['accountName'];
   <script>
     $(document).ready(function () {
       $('#summernote-editor').summernote({
-
         // 設置編輯器的語言為繁體中文
         lang: 'zh-TW',
         height: 500, // 設置編輯器的高度
         minHeight: null, // 設置編輯器的最小高度
         maxHeight: null, // 設置編輯器的最大高度
         focus: true, // 設置自動聚焦到編輯器
+        placeholder: '請輸入內容', // 設置placeholder
+
       });
     });
   </script>
@@ -464,6 +468,15 @@ $accountName = $row_account['accountName'];
         }
       });
     });
+
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+
+    setTimeout(hideMessage, 3000);
   </script>
 
 
