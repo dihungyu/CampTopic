@@ -14,7 +14,7 @@ function get_img_src($accountId, $conn)
         $img_src = str_replace("../", "", $img_src);
         $img_src = "../" . $img_src;
     } else {
-        $img_src = "../upload/profileDefault.jpeg";
+        $img_src = "../../upload/profileDefault.jpeg";
     }
 
     return $img_src;
