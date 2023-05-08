@@ -137,24 +137,6 @@ $articleId = $_GET['articleId'];
       color: #dc3545;
     }
 
-    .edit-icon .delete-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 30px;
-      height: 30px;
-      margin: 10px;
-      background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .edit-icon .delete-icon i {
-      font-size: 20px;
-      color: #777;
-      line-height: 30px;
-      text-align: center;
-    }
   </style>
 
   <script>
@@ -267,26 +249,27 @@ $articleId = $_GET['articleId'];
             <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 5%; margin-right: 16px;">
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
-
-          <h2 class="mb-4"><?php echo $main_article_row["articleTitle"]; ?></h2>
-          <div id="article-content">
-            <?php
+          <div style="display:flex; justify-content: space-between;">
+          <h5 class="mb-5 mt-4"><?php echo $main_article_row["articleTitle"]; ?></h5>
+          <span style="display:flex; align-items: center;">
+          <?php
             if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
-              echo '<div class="delete-icon">
-          <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
-            <i class="fas fa-trash-alt"></i>
+              echo '<button class="btn-icon"> 
+              <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
+            <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
           </a>
-        </div>';
+        </button>';
 
-
-              echo '<div class="edit-icon">
+              echo '<button class="btn-icon">
           <a href="/CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=' . $articleId . '">
-            <i class="fas fa-edit"></i>
+            <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
           </a>
-        </div>';
+        </button>';
             }
             ?>
-
+            </span>
+          </div>
+          <div id="article-content" class="mt-2">
             <?php echo $main_article_row["articleContent"]; ?>
           </div>
 
@@ -340,7 +323,7 @@ $articleId = $_GET['articleId'];
           $img_src = "../" . $img_src;
 
           echo "<div class='pt-5 mt-5'>
-            <h4 class='mb-5'>目前 " . $comment_count . "留言</h4>
+            <h5 class='mb-5'>目前" . $comment_count . "留言</h5>
             <h6 class='mb-5'>由舊到新排序</h6>
             <ul class='comment-list'>";
 
@@ -352,7 +335,7 @@ $articleId = $_GET['articleId'];
             // 如果已登入，則顯示留言區塊
             echo '<li class="comment">
                 <div class="vcard bio">
-                  <img src="' . $img_src . '"  class="comment-avatar">
+                  <img src="' . $img_src . '"  class="img-name">
                 </div>
                 <div class="comment-body" style="position: relative;">
                   <h3>' . $_COOKIE["accountName"] . '</h3>
@@ -421,8 +404,8 @@ $articleId = $_GET['articleId'];
                   $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
 
                   echo '<li>
-          <div class="vcard bio">
-            <img src="' . $img_src . '"  class="comment-avatar">
+          <div class="img-name">
+            <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
           </div>
           <div class="comment-body" style="position: relative;">
             <h6>' . $reply_result_row["accountName"] . '</h6>
@@ -451,7 +434,7 @@ $articleId = $_GET['articleId'];
 
               if ($_COOKIE["accountName"]) {
                 echo '<!-- 使用者回覆區 -->
-                    <div class="reply">
+                    <div class="img-name">
                       <img src="' . $img_src . '" alt="Image description" class="reply-avatar">
                       <div class="reply-form">
                         <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>
