@@ -417,7 +417,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 $sql_query_labels = "SELECT equipments_labels.labelId, labels.labelName
                       FROM equipments_labels
                       JOIN labels ON equipments_labels.labelId = labels.labelId
-                      WHERE equipments_labels.equipmentId = '$equipmentId'";
+                      WHERE equipments_labels.equipmentId = '$recommand_equipmentId'";
                 $result_labels = mysqli_query($conn, $sql_query_labels);
 
                 $printed_tags = 0;
