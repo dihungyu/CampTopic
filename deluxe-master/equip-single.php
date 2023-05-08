@@ -288,7 +288,21 @@ if (isset($_POST["likeEquipDel"])) {
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
                   <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                    <?php
+                    
+                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
+                    <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
+                      <?php echo $equipmentType ?>
+                    </i>
+                  </span>
+                  <h1><a href="single.html">
+                      <?php echo $equipmentName ?>
+                    </a></h1>
+                </span>
+                <span style="display:flex; align-items: center;">
+                <h4 class="equiph4">$
+                  <?php echo $equipmentPrice ?>
+                </h4>
+                <?php
                     if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
                       echo '<button class="btn-icon">
                       <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
@@ -303,18 +317,7 @@ if (isset($_POST["likeEquipDel"])) {
         </button>';
                     }
                     ?>
-                    <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
-                    <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
-                      <?php echo $equipmentType ?>
-                    </i>
-                  </span>
-                  <h1><a href="single.html">
-                      <?php echo $equipmentName ?>
-                    </a></h1>
-                </span>
-                <h4 class="equiph4">$
-                  <?php echo $equipmentPrice ?>
-                </h4>
+            </span>
               </div>
               <br>
               <p style="padding:4px; margin-top:40px;">
@@ -527,7 +530,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '<form action="equip-single.php" method="post" style="margin-bottom: 0px;">';
                 echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $recommand_equipmentId . '">';
                 echo '<button type="submit" class="btn-icon">';
-                echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . "></i>';
+                echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . " style="margin-left: 10px;"></i>';
                 echo '</button>';
                 echo '</form>';
                 echo '<p>' . format_count($recommand_equipmentLikeCount) . '</p>';
