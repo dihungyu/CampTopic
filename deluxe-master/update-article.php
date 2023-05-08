@@ -262,15 +262,6 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                             class="articletext"><?php echo $articleContent; ?></textarea>
                 </span>
                 <span>
-
-                    <!-- <div>
-        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" style="position:absolute;height:200px;width:330px;opacity: 0;">
-      </div>
-      <div class="preview" style="float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
-        <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
-        <p style="line-height: 100px;color:#797979;">上傳圖片</p>
-      </div> -->
-
                 </span>
 
                 <span style="display:flex;justify-content: flex-end;margin-right: 10px;">

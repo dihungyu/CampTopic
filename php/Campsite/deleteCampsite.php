@@ -38,7 +38,7 @@ if (!mysqli_query($conn, $sql_query2)) {
 
 
 // Delete files from upload folder
-$upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
+$upload_dir = "../../upload/";
 foreach ($files_to_delete as $file_name) {
     $file_path = $upload_dir . $file_name;
     if (file_exists($file_path)) {
