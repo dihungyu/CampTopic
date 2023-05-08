@@ -92,6 +92,7 @@ $articleId = $_GET['articleId'];
       font-size: 13px;
       width: 60px;
       height: 40px;
+      background-color:#d9d9d9;
     }
 
     .vcard bio{

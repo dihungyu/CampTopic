@@ -596,9 +596,9 @@ if (isset($_POST["likeEquipDel"])) {
                     <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a>
                   </h6>
                   <div class='meta mb-3' style='font-size:12px;'>
-                    <div><a href='article.php?articleId=" . $articleId . "'>" . $formatted_date . "</a></div>
-                    <div><a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["accountName"] . "</a></div>
-                    <div><a href='article.php?articleId=" . $articleId . "' class='meta-chat'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "' style='font-size:12px;'>" . $formatted_date . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "' style='font-size:12px;'>" . $top234_article_row["accountName"] . "</a></div>
+                    <div><a href='article.php?articleId=" . $articleId . "' class='meta-chat' style='font-size:12px;'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                   </div>
                 </div>
               </div>
