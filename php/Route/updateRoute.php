@@ -2,6 +2,9 @@
 require_once '../conn.php';
 require_once '../uuid_generator.php';
 
+session_start();
+
+$activityId = $_POST['activityId'];
 $routeId = $_POST['routeId'];
 $locations = $_POST['locations'];
 $tripIntroductionTitles = $_POST['tripIntroductionTitle'];
@@ -9,10 +12,28 @@ $tripIntroductionContents = $_POST['tripIntroductionContent'];
 $files = $_FILES['file'];
 $tripIntroductionIds = $_POST['tripIntroductionId'];
 $fileIds = $_POST['fileId'];
+$dayNumber = $_POST['dayNumber'];
 
-// 更新routes表
-$update_routes_query = "UPDATE routes SET locations = '$locations' WHERE routeId = '$routeId'";
-mysqli_query($conn, $update_routes_query);
+$error_occurred = false;
+
+// 檢查routeId是否存在於routes表
+$check_route_query = "SELECT * FROM routes WHERE routeId = '$routeId'";
+$result = mysqli_query($conn, $check_route_query);
+if (mysqli_num_rows($result) == 0) {
+    // 如果routeId不存在，插入一條新記錄
+    $insert_route_query = "INSERT INTO routes (routeId, activityId, dayNumber, locations) VALUES ('$routeId', '$activityId', $dayNumber, '$locations')";
+    $insert_route_result = mysqli_query($conn, $insert_route_query);
+    if (!$insert_route_result) {
+        $error_occurred = true;
+    }
+} else {
+    // 更新routes表
+    $update_routes_query = "UPDATE routes SET locations = '$locations' WHERE routeId = '$routeId'";
+    $update_routes_result = mysqli_query($conn, $update_routes_query);
+    if (!$update_routes_result) {
+        $error_occurred = true;
+    }
+}
 
 // 更新tripIntroductions表
 for ($i = 0; $i < count($tripIntroductionTitles); $i++) {
@@ -24,18 +45,27 @@ for ($i = 0; $i < count($tripIntroductionTitles); $i++) {
         if (!empty($tripIntroductionTitle) || !empty($tripIntroductionContent)) {
             // 更新現有的資料
             $update_trip_introductions_query = "UPDATE tripIntroductions SET tripIntroductionTitle = '$tripIntroductionTitle', tripIntroductionContent = '$tripIntroductionContent' WHERE routeId = '$routeId' AND tripIntroductionId = '$tripIntroductionId'";
-            mysqli_query($conn, $update_trip_introductions_query);
+            $update_trip_introductions_result = mysqli_query($conn, $update_trip_introductions_query);
+            if (!$update_trip_introductions_result) {
+                $error_occurred = true;
+            }
         } else {
             // 刪除空白的資料
             $delete_trip_introductions_query = "DELETE FROM tripIntroductions WHERE routeId = '$routeId' AND tripIntroductionId = '$tripIntroductionId'";
-            mysqli_query($conn, $delete_trip_introductions_query);
+            $delete_trip_introductions_result = mysqli_query($conn, $delete_trip_introductions_query);
+            if (!$delete_trip_introductions_result) {
+                $error_occurred = true;
+            }
         }
     } else {
         if (!empty($tripIntroductionTitle) || !empty($tripIntroductionContent)) {
             $tripIntroductionId = uuid_generator();
             // 插入新的資料
             $insert_trip_introductions_query = "INSERT INTO tripIntroductions (tripIntroductionId, routeId, tripIntroductionTitle, tripIntroductionContent) VALUES ('$tripIntroductionId', '$routeId', '$tripIntroductionTitle', '$tripIntroductionContent')";
-            mysqli_query($conn, $insert_trip_introductions_query);
+            $insert_trip_introductions_result = mysqli_query($conn, $insert_trip_introductions_query);
+            if (!$insert_trip_introductions_result) {
+                $error_occurred = true;
+            }
         }
     }
 }
@@ -61,12 +91,20 @@ for ($i = 0; $i < count($files['name']); $i++) {
                 $fileId = uuid_generator();
                 // 插入新的圖片資訊到資料庫
                 $insert_files_query = "INSERT INTO files (fileId, routeId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType) VALUES ('$fileId', '$routeId', '$file_name', '$file_extension', '$file_destination', $file_size, now(), 'route')";
-                mysqli_query($conn, $insert_files_query);
+                $insert_files_result = mysqli_query($conn, $insert_files_query);
+                if (!$insert_files_result) {
+                    $error_occurred = true;
+                }
             } else {
                 // 更新檔案資訊
                 $update_files_query = "UPDATE files SET fileName = '$file_name', fileExtensionName = '$file_extension', filePath = '$file_destination', fileSize = $file_size, fileUpdateDate = now() WHERE routeId = '$routeId' AND fileId = '$fileId'";
-                mysqli_query($conn, $update_files_query);
+                $update_files_result = mysqli_query($conn, $update_files_query);
+                if (!$update_files_result) {
+                    $error_occurred = true;
+                }
             }
+        } else {
+            $error_occurred = true;
         }
     }
 
@@ -86,10 +124,18 @@ for ($i = 0; $i < count($files['name']); $i++) {
         }
 
         $delete_files_query = "DELETE FROM files WHERE routeId = '$routeId' AND fileId = '$fileId'";
-        mysqli_query($conn, $delete_files_query);
+        $delete_files_result = mysqli_query($conn, $delete_files_query);
+        if (!$delete_files_result) {
+            $error_occurred = true;
+        }
     }
 }
 
 // 回到原始頁面
-header('Location: ../../deluxe-master/check.php');
+if ($error_occurred) {
+    $_SESSION['system_message'] = '行程更新失敗，請再試一次！';
+} else {
+    $_SESSION['system_message'] = '行程更新成功！';
+}
+header('Location: ../../deluxe-master/check.php?activityId=' . $activityId . '');
 ?>
