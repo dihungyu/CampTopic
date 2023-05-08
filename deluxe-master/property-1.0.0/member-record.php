@@ -336,7 +336,7 @@ function get_img_src($accountId, $conn)
                 // 取得頭像
                 $img_src = get_img_src($accountId, $conn);
 
-                echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
+                echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px; padding: 0px;">';
                 echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
                 echo '<a href="../check.php?activityId=' . $activityId . '">';
                 echo '  <span class="card-head">';
