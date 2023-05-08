@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if (in_array($detected_type, $allowed_types)) {
                     $fileId = uuid_generator();
-                    $upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
+                    $upload_dir = "../../upload/";
                     $fileName = $_FILES["files"]["name"][$key];
                     $filePath = $upload_dir . $fileName;
                     $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);

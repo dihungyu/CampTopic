@@ -89,7 +89,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 
                 if (in_array($detected_type, $allowed_types)) {
                     $fileId = uuid_generator();
-                    $upload_dir = "/Applications/XAMPP/xamppfiles/htdocs/upload/";
+                    $upload_dir = "../../upload/";
                     $fileName = $_FILES["files"]["name"][$key];
                     $filePath = $upload_dir . $fileName;
                     $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
@@ -139,7 +139,8 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
 </head>
 
 <body>
-    <form action="updateCampsite.php?campsiteId=<?php echo $campsiteId ?>" method="post" enctype="multipart/form-data" name="formAdd" id="formAdd">
+    <form action="updateCampsite.php?campsiteId=<?php echo $campsiteId ?>" method="post" enctype="multipart/form-data"
+        name="formAdd" id="formAdd">
         <?php
         require_once '../conn.php';
 
@@ -173,12 +174,18 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
         ?>
 
         請輸入營區名稱：<input type="text" name="campsiteName" id="campsiteName" value="<?php echo $campsiteName ?>"><br />
-        請輸入營區介紹：<input type="text" name="campsiteDescription" id="campsiteDescription" value="<?php echo $campsiteDescription ?>"><br />
-        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress" value="<?php echo $campsiteAddress ?>"><br />
-        請輸入營區地址連結：<input type="text" name="campsiteAddressLink" id="campsiteAddressLink" value="<?php echo $campsiteAddressLink ?>"><br />
-        請輸入營區影片連結：<input type="text" name="campsiteVideoLink" id="campsiteVideoLink" value="<?php echo $campsiteVideoLink ?>"><br />
-        請輸入營區價格下限：<input type="text" name="campsiteLowerLimit" id="campsiteLowerLimit" value="<?php echo $campsitelowerLimit ?>"><br />
-        請輸入營區價格上限：<input type="text" name="campsiteUpperLimit" id="campsiteUpperLimit" value="<?php echo $campsiteUpperLimit ?>"><br />
+        請輸入營區介紹：<input type="text" name="campsiteDescription" id="campsiteDescription"
+            value="<?php echo $campsiteDescription ?>"><br />
+        請輸入營區地址：<input type="text" name="campsiteAddress" id="campsiteAddress"
+            value="<?php echo $campsiteAddress ?>"><br />
+        請輸入營區地址連結：<input type="text" name="campsiteAddressLink" id="campsiteAddressLink"
+            value="<?php echo $campsiteAddressLink ?>"><br />
+        請輸入營區影片連結：<input type="text" name="campsiteVideoLink" id="campsiteVideoLink"
+            value="<?php echo $campsiteVideoLink ?>"><br />
+        請輸入營區價格下限：<input type="text" name="campsiteLowerLimit" id="campsiteLowerLimit"
+            value="<?php echo $campsitelowerLimit ?>"><br />
+        請輸入營區價格上限：<input type="text" name="campsiteUpperLimit" id="campsiteUpperLimit"
+            value="<?php echo $campsiteUpperLimit ?>"><br />
         <?php
         require_once '../conn.php';
 
@@ -200,9 +207,10 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
         ?>
         請選擇標籤：<br />
         <select id="tags-select" name="tags[]" multiple style="width: 100%;">
-            <?php foreach ($allLabels as $row) : ?>
+            <?php foreach ($allLabels as $row): ?>
                 <?php $selected = (!empty($selectedLabels) && in_array($row['labelId'], $selectedLabels)) ? 'selected' : ''; ?>
-                <option value="<?php echo $row['labelId']; ?>" <?php echo $selected; ?>><?php echo $row['labelName']; ?></option>
+                <option value="<?php echo $row['labelId']; ?>" <?php echo $selected; ?>><?php echo $row['labelName']; ?>
+                </option>
             <?php endforeach; ?>
         </select>
 
@@ -237,17 +245,17 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
             if (confirm('確定要刪除此圖片？')) {
                 $.post('', {
                     deleteFileId: fileId
-                }, function(data) {
+                }, function (data) {
                     // Remove image from DOM instead of reloading the page
                     $('#image-' + fileId).remove();
                 });
             }
         }
 
-        $('#formAdd').submit(function() {
+        $('#formAdd').submit(function () {
             $(this).find(':submit').attr('disabled', 'disabled');
             return true;
-        }).submit(function() {
+        }).submit(function () {
             $(this).find(':submit').removeAttr('disabled');
         });
 
@@ -258,7 +266,7 @@ if (isset($_POST["action"]) && $_POST["action"] == 'update') {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     var img = document.createElement('img');
                     img.src = event.target.result;
                     preview.appendChild(img);
