@@ -587,10 +587,7 @@ if (mysqli_num_rows($result_activities) > 0) {
   <div class="tab-content" id="myTabContent">
     <div class="section section-properties">
       <div class="container" style="max-width: 1260px">
-        <div class="row">
-
-
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-12" style="display: flex; flex-wrap: wrap;">
             <?php
             foreach ($activities as $activity) {
               $accountId = $activity['accountId'];
@@ -610,6 +607,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               // 取得頭像
               $img_src = get_img_src($accountId, $conn);
 
+              echo '<div class="col-sm-6">';
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
               echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
               echo '<a href="../camper.php?activityId=' . $activityId . '">';
@@ -648,6 +646,7 @@ if (mysqli_num_rows($result_activities) > 0) {
               echo '  </div>';
               echo '</a>';
               echo '</div>';
+              echo '</div>';
             }
             ?>
 
@@ -670,9 +669,7 @@ if (mysqli_num_rows($result_activities) > 0) {
     </div>
   </div>
   </div>
-  </article>
 
-  </div>
   </div>
   </div>
   </div>
