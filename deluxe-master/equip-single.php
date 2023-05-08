@@ -403,7 +403,7 @@ $accountPhoneNumber = $row_account['accountPhoneNumber'];
                 echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $recommand_equipmentType . '</i>';
                 echo '</span>';
                 echo '<a href="equip-single.php?equipmentId=' . $recommand_equipmentId . '">';
-                echo '<h5 style="width: 135px;">' . $recommand_equipmentName . '</h5>';
+                echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
                 echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';

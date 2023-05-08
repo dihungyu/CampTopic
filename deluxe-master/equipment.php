@@ -302,21 +302,21 @@ if (isset($_POST["likeEquipDel"])) {
             $equipmentDescription = $equipment["equipmentDescription"];
             $equipmentPrice = $equipment["equipmentPrice"];
             $equipmentLikeCount = $equipment["equipmentLikeCount"];
-            echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
+            echo '<div class="card-eq" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
             echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
-            echo '<div class="card-body">';
-            echo '<div class="detail" style="margin-bottom: 0px;">';
+            echo '<div class="card-body-eq"style=" margin-top:0px;">';
+            echo '<div class="detail" style="flex-wrap: wrap; display: flex;">';
             echo '<span style="display: flex; align-items: center;">';
             echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-            echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+            echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:28px;"></i>';
             echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $equipmentType . '</i>';
             echo '</span>';
             echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
-            echo '<h5>' . $equipmentName . '</h5>';
+            echo '<h5 style="width: 160px;">' . $equipmentName . '</h5>';
             echo '</a>';
             echo '</span>';
-            echo '<span class="span-adj">';
-            echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
+            echo '<span class="span-adj" style="justify-content: flex-end; box-sizing: content-box; width: 162px;">';
+            echo '<h4 style="margin-left: 24px; ">$' . format_count($equipmentPrice) . '</h4>';
             echo "<form action='equipment.php' method='post'>";
             echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $equipment["equipmentId"] . "'>";
             echo "<button type='submit' class='btn-icon'>";
@@ -325,7 +325,7 @@ if (isset($_POST["likeEquipDel"])) {
             echo "</form>";
             echo '</span>';
             echo '</div>';
-            echo '<p class="card-text">';
+            echo '<p class="card-text" style="padding: 10px;">';
             echo '' . $equipmentDescription . '</p>';
             echo '<footer style="margin-top:40px">';
             echo '<div class="card-icon-footer">';
@@ -351,7 +351,7 @@ if (isset($_POST["likeEquipDel"])) {
             echo '<form action="equipment.php" method="post">';
             echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $equipment["equipmentId"] . '">';
             echo '<button type="submit" class="btn-icon">';
-            echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . "></i>';
+            echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . " style="margin-left:0px"></i>';
             echo '</button>';
             echo '</form>';
             echo '<p>' . format_count($equipmentLikeCount) . '</p>';
@@ -386,11 +386,11 @@ if (isset($_POST["likeEquipDel"])) {
         <div class="col-lg-4 sidebar ftco-animate">
           <form>
 
-            <div class="input-group " style=" justify-content: flex-start;margin-left: 8px;">
+            <div class="input-group " style=" justify-content: flex-start; margin-left: 8px;">
               <button type="submit" class="button-search" style="margin-left: 0px;">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
-              <div id="navbar-search-autocomplete" class="form-outline">
+              <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 6px;">
                 <input type="search" id="form1" name="equipment_search_keyword" class="form-control" />
               </div>
             </div>
@@ -399,7 +399,7 @@ if (isset($_POST["likeEquipDel"])) {
           <button type="button" class="gray-lg" data-toggle="modal" data-target="#create">
             <h6>出租多餘設備！</h6>
             <div class="verticle-line"></div>
-            <a href="property-1.0.0/add-equip.php">
+            <a href="property-1.0.0/add-equip.php" style="color:#000">
               <span style="display: flex; align-items: center; justify-content: flex-start">
                 <i class="fa-solid fa-circle-plus" style="font-size: 18px;margin-right: 8px;"></i>
                 <h6>貼文</h6>
