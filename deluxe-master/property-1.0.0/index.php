@@ -1035,7 +1035,7 @@ if (isset($_POST["likeEquipDel"])) {
                   <li><a href="camp-information.html">找小鹿</a></li>
                   <li><a href="../all-article.html">鹿的分享</a></li>
                   <li><a href="../equipment.html">鹿的裝備</a></li>
-                  <li><a href="#">廣告方案</a></li>
+                  <li><a href="ad.html">廣告方案</a></li>
                 </ul>
                 <ul class="list-unstyled float-start links">
                   <li><a href="member.php">帳號</a></li>

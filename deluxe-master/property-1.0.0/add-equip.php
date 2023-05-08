@@ -99,7 +99,7 @@ $accountName = $row_account['accountName'];
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="ad.html" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,10 +136,10 @@ $accountName = $row_account['accountName'];
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-              <li class="breadcrumb-item"><a href="member.html">會員帳號</a></li>
+              <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
+              <li class="breadcrumb-item"><a href="../equipment.php">鹿的設備</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
-                設備管理
+                新增設備
               </li>
             </ol>
           </nav>
