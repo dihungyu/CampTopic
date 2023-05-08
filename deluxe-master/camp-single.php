@@ -1,8 +1,10 @@
 <?php
 require_once '../php/conn.php';
 
-// $campsiteId = $_GET['campsiteId'];
-$campsiteId = '10';
+session_start();
+
+$campsiteId = $_GET['campsiteId'];
+
 // 查詢 campsite 資料
 $sql_query_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 $result_campsite = mysqli_query($conn, $sql_query_campsite);
@@ -36,11 +38,6 @@ $services_count = count($services);
 $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
 $files_result = mysqli_query($conn, $files_query);
 
-$sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
-  FROM campsites_labels
-  JOIN labels ON campsites_labels.labelId = labels.labelId
-  WHERE campsites_labels.campsiteId = '$campsiteId'";
-$result_labels = mysqli_query($conn, $sql_query_labels);
 
 
 ?>
@@ -97,9 +94,11 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -112,7 +111,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="property-1.0.0/member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -197,6 +197,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
                   }
 
                   echo '</ul>';
+                } else {
+                  echo '<span>尚無相關設備</span>';
                 }
                 ?>
               </div>
@@ -205,9 +207,15 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
               <h4 class="mb-4">影片導覽</h4>
               <div class="block-16">
                 <figure>
-
-                  <iframe width="800" height="433" src="<?php echo $campsiteVideoLink ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+                  <?php
+                  if ($campsiteVideoLink == '無資料') {
+                    echo '<span>尚無相關影片</span>';
+                  } else {
+                    echo '<iframe width="800" height="433" src="' . $campsiteVideoLink . '" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>';
+                  }
+                  ?>
                 </figure>
               </div>
             </div>
@@ -217,7 +225,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
           <div class="input-group mb-3" style="padding-left:20px">
-            <input type="text" class="form-control" placeholder=" search" aria-label="search" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" placeholder=" search" aria-label="search"
+              aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="button-search" type="button"><i class="fas fa-search"></i></button>
             </div>
@@ -225,48 +234,63 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
 
           <div class="sidebar-box ftco-animate">
             <h3>推薦文章</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
+            <?php
+            $top234_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 1, 3";
+            $top234_article_result = mysqli_query($conn, $top234_article_sql);
+
+            if ($top234_article_result && mysqli_num_rows($top234_article_result) > 0) {
+              while ($top234_article_row = mysqli_fetch_assoc($top234_article_result)) {
+                $articleId = $top234_article_row["articleId"];
+
+                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
+                $files_result = mysqli_query($conn, $files_query);
+                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+            
+                if ($file_result = mysqli_fetch_assoc($files_result)) {
+                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                  $image_src = $file_path;
+                }
+
+                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+                $formatted_date = date('F j, Y', $timestamp);
+
+                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                $comment_count = $row['comment_count'];
+
+                echo "<div class='block-21 mb-4 d-flex'>
+                        <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
+                        <div class='text'>
+                        <div>
+                            <h3 class='heading'>
+                            <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a></h3>
+
+                            <div class='meta'>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top234_article_row["accountName"] . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+                            </div>
+                        </div>
+                        </div>
+                      </div>";
+              }
+            }
+            ?>
           </div>
 
           <div class="sidebar-box ftco-animate">
             <h3>營地標籤</h3>
             <div class="tagcloud">
               <?php
-              while ($result_label = mysqli_fetch_assoc($result_labels)) {
-                $labelName = $result_label['labelName'];
-                echo "<a class='tag-cloud-link'>$labelName</a>";
+              $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
+              $result_labels = mysqli_query($conn, $sql_labels);
+              $labels = [];
+              while ($row_labels = mysqli_fetch_assoc($result_labels)) {
+                $labels[] = $row_labels;
+              }
+              foreach ($labels as $label) {
+                echo "<a href='#' class=tag-cloud-link'>" . $label['labelName'] . "</a>";
               }
               ?>
             </div>
@@ -291,8 +315,14 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
           </span>
           <div class="row">
             <div class="map-wrap" style="height: 445px;">
-              <iframe src="<?php echo $campsiteAddressLink ?>" width="1300" height="445" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
+              <?php
+              if ($campsiteAddressLink == '無資料') {
+                echo '<span>尚無相關地圖</span>';
+              } else {
+                echo '<iframe src="' . $campsiteAddressLink . '" width="1300" height="445" style="border:0;"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+              }
+              ?>
             </div>
           </div>
 
@@ -380,7 +410,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
       <!-- loader -->
       <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
           <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+            stroke="#F96D00" />
         </svg></div>
 
 
@@ -398,7 +429,8 @@ $result_labels = mysqli_query($conn, $sql_query_labels);
       <script src="js/bootstrap-datepicker.js"></script>
       <script src="js/jquery.timepicker.min.js"></script>
       <script src="js/scrollax.min.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
       <script src="js/google-map.js"></script>
       <script src="js/main.js"></script>
       <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
