@@ -499,12 +499,16 @@ if (isset($_POST["likeEquipDel"])) {
                 echo "<div class='block-21 mb-4 d-flex'>
                         <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
                         <div class='text'>
-                            <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a></h3>
+                        <div>
+                            <h3 class='heading'>
+                            <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a></h3>
+                          
                             <div class='meta'>
                                 <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
                                 <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top234_article_row["accountName"] . "</a></div>
                                 <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                             </div>
+                        </div>
                         </div>
                       </div>";
               }
