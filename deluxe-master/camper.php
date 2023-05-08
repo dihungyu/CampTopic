@@ -7,8 +7,8 @@ session_start();
 // 獲取活動 ID
 $activityId = $_GET['activityId'];
 
-if ($_COOKIE[$accountId]) {
-  $accountId = $_COOKIE[$accountId];
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
 }
 
 // 查詢活動詳細資料
@@ -48,7 +48,7 @@ $result_account = mysqli_query($conn, $sql_account);
 $row_result_account = mysqli_fetch_assoc($result_account);
 
 // 活動發起人詳細資料
-$creatorName = $row_result_account['accountName'];
+$accountName = $row_result_account['accountName'];
 
 // 查詢檔案資料
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
@@ -104,6 +104,7 @@ function get_img_src($accountId, $conn)
 
   return $img_src;
 }
+
 
 ?>
 
@@ -303,7 +304,7 @@ function get_img_src($accountId, $conn)
               <?php
               // 取得活動發起人的大頭貼
               //取得頭貼
-              $img_src = get_img_src($creatorId, $conn);
+              $img_src = get_img_src($account, $conn);
 
               ?>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
@@ -311,7 +312,7 @@ function get_img_src($accountId, $conn)
                   width: 4%;
                   margin-right: 16px;">
                 <label style="font-size: 16px; margin-bottom: 0px;">
-                  <?php echo $creatorName ?>
+                  <?php echo $accountName ?>
                 </label></span>
               <h6 class="mb-4" style="font-weight:bold;">基本資訊</h6>
               <div class="single-slider owl-carousel">
@@ -332,7 +333,7 @@ function get_img_src($accountId, $conn)
                 <i class="fa-regular fa-user fa-xl"></i>
                 <label>負責人</label>
                 <p>
-                  <?php echo $creatorName ?>
+                  <?php echo $accountName ?>
                 </p>
               </span>
 
@@ -511,22 +512,16 @@ function get_img_src($accountId, $conn)
                     if ($displayCount >= 3) {
                       break;
                     }
-
                     // 取得頭貼
                     $attendeeId = $account['accountId'];
                     $img_src = get_img_src($attendeeId, $conn);
-                    $img_src = str_replace('../', '', $img_src);
-                    $img_src = "../" . $img_src;
-
-                    $isApproved = $account['isApproved'];
-                    if ($isApproved == 1) {
-                      $accountName = $account['accountName'];
-                      echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                      echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
-                      echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
-                      $displayCount++;
-                    }
+                    $attendeeName = $account['accountName'];
+                    echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
+                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                    echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $attendeeName . '</label></span>';
+                    $displayCount++;
                   }
+
                   echo '<span class="more">';
                   echo '<button type="button" class="btn-icon" data-toggle="modal" data-target="#more2">';
                   echo '<a href="#more2">查看更多</a></button>';
@@ -537,7 +532,7 @@ function get_img_src($accountId, $conn)
                 ?>
                 <div class="box-side">
                   <?php
-                  if ($_COOKIE[$accountId]) {
+                  if (isset($_COOKIE["accountId"])) {
                     echo '<button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@mdo">我要參加！</button>';
                   } else {
