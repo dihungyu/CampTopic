@@ -88,7 +88,11 @@ $articleId = $_GET['articleId'];
       color: #dc3545;
 }
 
-
+    .btn{
+      font-size: 13px;
+      width: 60px;
+      height: 40px;
+    }
   </style>
 
   <script>
