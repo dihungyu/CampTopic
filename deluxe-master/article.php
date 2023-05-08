@@ -476,7 +476,9 @@ $articleId = $_GET['articleId'];
           <!-- END comment-list -->
 
 
-        </div> <!-- .col-md-8 -->
+        </div>
+        </div>
+        <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
 
           <div class="sidebar-box ftco-animate mt-5">
@@ -547,12 +549,8 @@ $articleId = $_GET['articleId'];
             }
             ?>
 
-
-
-
-          </div>
-        </div>
       </div>
+    </div>
     </div>
   </section> <!-- .section -->
 
