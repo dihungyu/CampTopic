@@ -321,7 +321,7 @@ if (mysqli_num_rows($result_activities) > 0) {
       activitiesContainer.innerHTML = '';
 
       if (activities.length === 0) {
-        activitiesContainer.innerHTML = '<h5>無相符的資料！</h5>';
+        activitiesContainer.innerHTML = '<h6>無相符的資料！</h6>';
       } else {
         activities.forEach(activity => {
           let activityHTML = generateActivityCard(activity);
