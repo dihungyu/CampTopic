@@ -1,4 +1,9 @@
 <?php
+// 錯誤訊息
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
 session_start();
@@ -18,6 +23,43 @@ function format_like_count($count)
 //判斷是否登入，若有則對變數初始化
 if (isset($_COOKIE["accountId"])) {
   $accountId = $_COOKIE["accountId"];
+}
+
+//收藏文章
+if (isset($_POST["collectArticleAdd"])) {
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+  $articleId = $_POST["collectArticleAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $collectionId = uuid_generator();
+  $sql = "INSERT INTO `collections` (`collectionId`,`accountId`, `articleId`) VALUES ('$collectionId','$accountId', '$articleId')";
+  $sql2 = "UPDATE `articles` SET `articleCollectCount` = `articleCollectCount` + 1 WHERE `articleId` = '$articleId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已加入收藏!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+//移除收藏文章
+if (isset($_POST["collectArticleDel"])) {
+
+  $articleId = $_POST["collectArticleDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `articleId` = '$articleId'";
+  $sql2 = "UPDATE `articles` SET `articleCollectCount` = `articleCollectCount` - 1 WHERE `articleId` = '$articleId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: all-article.php");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
 }
 
 // 文章按讚
@@ -362,6 +404,17 @@ if (isset($_POST["likeEquipDel"])) {
                 }
 
 
+                // 取出已被收藏的文章
+                $article_collect_sql = "SELECT `articleId` FROM `collections` WHERE `accountId` = '$accountId'";
+                $article_collect_result = mysqli_query($conn, $article_collect_sql);
+
+                // 將查詢結果轉換為包含已收藏文章ID的陣列
+                $collectedArticles = array();
+                while ($row = mysqli_fetch_assoc($article_collect_result)) {
+                  $collectedArticles[] = $row['articleId'];
+                }
+
+
                 if ($article_result && mysqli_num_rows($article_result) > 0) {
                   while ($article_row = mysqli_fetch_assoc($article_result)) {
                     $articleId = $article_row["articleId"];
@@ -377,6 +430,9 @@ if (isset($_POST["likeEquipDel"])) {
 
                     // 檢查當前文章是否已按讚
                     $isArticleLiked = in_array($article_row["articleId"], $likedArticles);
+
+                    // 檢查當前文章是否已收藏
+                    $isArticleCollected = in_array($article_row["articleId"], $collectedArticles);
 
                     // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
                     $timestamp = strtotime($article_row["articleCreateDate"]);
@@ -404,41 +460,47 @@ if (isset($_POST["likeEquipDel"])) {
                     $formatted_like_count = format_like_count($article_row["articleLikeCount"]);
 
                     echo "<article class='col-md-11 article-list mb-4'>
-                  <div class='inner'>
-                    <figure>
-                      <a href='article.php?articleId=" . $articleId . "'>
-                        <img src='" . $image_src . "'>
-                      </a>
-                    </figure>
-                    <div class='details'>
-                      <div class='detail' style='justify-content: space-between;'>
-                        <span style='display: flex;'>
-                          <div class='category'>
-                            <a href='article.php?articleId=" . $articleId . "'>" . $article_row["accountName"] . "</a>
-                          </div>
-                          <div class='time'>" . $formatted_date . "</div>
-                        </span>
-                      </div>
-                      <h5><a href='article.php?articleId=" . $articleId . "'>" . $article_row["articleTitle"] . "</a></h5>
-                      <p style='padding-top: 10px;'>
-                        " . $truncated_content . "
-                      </p>
-                      <footer class='article-footer-div'>
-                        <p>" . $comment_count .
-                      " 留言</p>
-                        <span class='article-footer'>
-                          <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
-                    <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
-                    <button type='submit' class='btn-icon'>";
-                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+    <div class='inner'>
+        <figure>
+            <a href='article.php?articleId=" . $articleId . "'>
+                <img src='" . $image_src . "'>
+            </a>
+        </figure>
+        <div class='details'>
+            <div class='detail' style='justify-content: space-between;'>
+                <span style='display: flex;'>
+                    <div class='category'>
+                        <a href='article.php?articleId=" . $articleId . "'>" . $article_row["accountName"] . "</a>
+                    </div>
+                    <div class='time'>" . $formatted_date . "</div>
+                </span>
+            </div>
+            <h5 style='position: relative;'><a href='article.php?articleId=" . $articleId . "'>" . $article_row["articleTitle"] . "</a>";
+                    echo "<form action='all-article.php' method='post' style='position: absolute; right: 0; top: 50%; transform: translateY(-50%);'>
+                <input type='hidden' name='" . ($isArticleCollected ? "collectArticleDel" : "collectArticleAdd") . "' value='" . $articleId . "'>
+                <button type='submit' class='btn-icon'>";
+                    echo "<i class='" . ($isArticleCollected ? "fas" : "fa-regular") . " fa-bookmark'></i>";
+                    echo "</button>
+            </form>
+            </h5>
+            <p style='padding-top: 10px;'>
+                " . $truncated_content . "
+            </p>
+            <footer class='article-footer-div'>
+                <p>" . $comment_count . " 留言</p>
+                <span class='article-footer'>
+                    <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
+                        <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
+                        <button type='submit' class='btn-icon'>";
+                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart'></i>";
                     echo "</button>
                     </form>
-                          <p>" . $formatted_like_count . "</p>
-                        </span>
-                      </footer>
-                    </div>
-                  </div>
-                </article>";
+                    <p>" . $formatted_like_count . "</p>
+                </span>
+            </footer>
+        </div>
+    </div>
+</article>";
                   }
                 }
                 ?>

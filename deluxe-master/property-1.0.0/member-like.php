@@ -59,6 +59,22 @@ if (isset($_POST["collectEquipDel"])) {
   }
 }
 
+// 移除收藏文章
+if (isset($_POST["collectArticleDel"])) {
+
+  $articleId = $_POST["collectArticleDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `articleId` = '$articleId'";
+  $sql2 = "UPDATE `articles` SET `articleCollectCount` = `articleCollectCount` - 1 WHERE `articleId` = '$articleId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消收藏!";
+    header("Location: member-like.php#article");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
 // 按讚營區
 if (isset($_POST["likeCampAdd"])) {
 
@@ -121,6 +137,39 @@ if (isset($_POST["likeEquipDel"])) {
   if ($result) {
     $_SESSION["system_message"] = "已取消讚!";
     header("Location: member-like.php#equip");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 按讚文章
+if (isset($_POST["likeArticleAdd"])) {
+
+  $articleId = $_POST["likeArticleAdd"];
+  $accountId = $_COOKIE["accountId"];
+  $likeId = uuid_generator();
+  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `articleId`) VALUES ('$likeId', '$accountId', '$articleId')";
+  $sql2 = "UPDATE `articles` SET `articleLikeCount` = `articleLikeCount` + 1 WHERE `articleId` = '$articleId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已按讚!";
+    header("Location: member-like.php#article");
+    exit; // 確保重新導向後停止執行後續代碼
+  }
+}
+
+// 取消讚文章
+if (isset($_POST["likeArticleDel"])) {
+
+  $articleId = $_POST["likeArticleDel"];
+  $accountId = $_COOKIE["accountId"];
+  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `articleId` = '$articleId'";
+  $sql2 = "UPDATE `articles` SET `articleLikeCount` = `articleLikeCount` - 1 WHERE `articleId` = '$articleId'";
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+  if ($result) {
+    $_SESSION["system_message"] = "已取消讚!";
+    header("Location: member-like.php#article");
     exit; // 確保重新導向後停止執行後續代碼
   }
 }
@@ -490,6 +539,17 @@ if (isset($_POST["likeEquipDel"])) {
             $sql = "SELECT articleId FROM collections WHERE accountId='$accountId'";
             $result = $conn->query($sql);
 
+            // 取出已被按讚的文章
+            $article_like_sql = "SELECT articleId FROM likes WHERE accountId='$accountId'";
+            $article_like_result = $conn->query($article_like_sql);
+
+            // 將查詢結果轉換為包含已按讚文章ID的陣列
+            $likedArticles = array();
+            while ($row = mysqli_fetch_assoc($article_like_result)) {
+              $likedArticles[] = $row['articleId'];
+            }
+
+
             // 檢查是否有結果，如果有則進行文章查詢
             if ($result && $result->num_rows > 0) {
               // 建立一個空陣列，用於存儲收藏的文章id
@@ -532,6 +592,9 @@ if (isset($_POST["likeEquipDel"])) {
 
                 $counter = 0;
                 while ($articleData = $articleResult->fetch_assoc()) {
+
+                  // 檢查當前文章是否已按讚
+                  $isArticleLiked = in_array($articleData["articleId"], $likedArticles);
 
 
                   $files_query = "SELECT * FROM files WHERE articleId = '$articleData[articleId]'";
@@ -586,14 +649,26 @@ if (isset($_POST["likeEquipDel"])) {
                         </div>
                         <div class='time'>" . $formatted_date . "</div>
                       </div>
-                      <h5><a href='#'>" . $articleData["articleTitle"] . "</a></h5>
+                      <h5><a href='#'>" . $articleData["articleTitle"] . "</a>
+                      <form action='member-like.php' method='post' class='d-inline'>
+                                <input type='hidden' name='collectArticleDel' value='" . $articleId . "'>
+                                <button type='submit' class='btn-icon'><i class='fas fa-bookmark'></i></button>
+                            </form></h5>
                       <p>
                         " . $truncated_content . "
                       </p>
                       <footer style='justify-content: space-between; padding-top: 10px;'>
-                        <p style='white-space: nowrap;'>" . $comment_count . " 則留言</p>
+                        <p style='white-space: nowrap;'>" . $comment_count .
+                    " 則留言</p>
                         <span style='display:flex; align-items:center;'>
-                        <i class='fa-regular fa-heart'></i>
+                        <form action='member-like.php' method='post'>
+                    <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
+                    <button type='submit' class='btn-icon'>";
+                  echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+
+
+                  echo "</button>
+                    </form>
                         <p style='margin-right: 0px;'>" . $formatted_like_count . "</p></span>
                       </footer>
                     </div>
