@@ -249,8 +249,9 @@ if (isset($_POST["likeEquipDel"])) {
 
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -261,9 +262,11 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -276,7 +279,8 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -440,7 +444,7 @@ if (isset($_POST["likeEquipDel"])) {
                   $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteData[campsiteId]'";
                   $files_result = mysqli_query($conn, $files_query);
                   $image_src = 'images/Rectangle 332.png'; // Default image
-
+              
                   if ($file_result = mysqli_fetch_assoc($files_result)) {
                     $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                     $image_src = $file_path;
@@ -491,7 +495,7 @@ if (isset($_POST["likeEquipDel"])) {
                   }
 
                   echo
-                  "</div>
+                    "</div>
                         <span style='display: flex; align-items: center;'>
                         <form action='index.php' method='post'>
                     <input type='hidden' name='" . ($isCampLiked ? "likeCampDel" : "likeCampAdd") . "' value='" . $campsiteData["campsiteId"] . "'>
@@ -515,7 +519,8 @@ if (isset($_POST["likeEquipDel"])) {
 
               <!-- .item -->
               <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" style='width: 412px; height: 412px;' />
+                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid"
+                  style='width: 412px; height: 412px;' />
 
 
                 <div class="property-content">
@@ -626,7 +631,10 @@ if (isset($_POST["likeEquipDel"])) {
                   $image_src = get_first_image_src($equipmentData["equipmentDescription"]);
                   if ($image_src === "") {
                     $image_src = "images/image 3.png";
+                  } else {
+                    $image_src = '../' . $image_src;
                   }
+
 
                   //格式化按讚數
                   $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
@@ -664,7 +672,7 @@ if (isset($_POST["likeEquipDel"])) {
                   }
                   echo "<a href='../equip-single.php?equipmentId=" . $equipmentData["equipmentId"] . "'><div class='city d-block'>" . $equipmentData["equipmentName"] . "</div></a>
                   </span>
-                  
+
                   <span class='span-adj'>
                     <div class='price mb-1'><span>$" . number_format($equipmentData["equipmentPrice"]) . "</span></div>
                       <form action='index.php' method='post'>
@@ -674,7 +682,7 @@ if (isset($_POST["likeEquipDel"])) {
                   echo "</button>
                       </form>
                   </span>
-                  
+
                 </div>
               <div>
             <span class='d-block mb-4 mt-3 text-black-50'><div class='equipment-description-container'>
@@ -935,7 +943,8 @@ if (isset($_POST["likeEquipDel"])) {
         </div>
       </div>
 
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">
           <div class="modal-content">
             <div class="modal-header">
@@ -999,7 +1008,8 @@ if (isset($_POST["likeEquipDel"])) {
         </div>
       </div>
 
-      <div class="modal fade" id="contectus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="contectus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -1134,18 +1144,25 @@ if (isset($_POST["likeEquipDel"])) {
       <script src="js/bootstrap-datepicker.js"></script>
       <script src="js/jquery.timepicker.min.js"></script>
       <script src="js/scrollax.min.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
       <script src="js/google-map.js"></script>
       <script src="js/main.js"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
       <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
 
       <script>
         function hideMessage() {
           document.getElementById("message").style.opacity = "0";
-          setTimeout(function() {
+          setTimeout(function () {
             document.getElementById("message").style.display = "none";
           }, 500);
         }
