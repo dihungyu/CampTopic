@@ -228,6 +228,19 @@ if (isset($_POST["likeEquipDel"])) {
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css" />
 
+  <style>
+    .equipment-description-container {
+      max-height: 50px;
+      /* 適當調整高度 */
+      overflow-y: auto;
+    }
+
+    .property-content {
+      min-height: 250px;
+      /* 根據需要調整最小高度 */
+    }
+  </style>
+
 
 
 </head>
@@ -609,17 +622,22 @@ if (isset($_POST["likeEquipDel"])) {
 
 
 
-                  $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
-                  $files_result = mysqli_query($conn, $files_query);
-                  $image_src = 'images/image 3.png'; // Default image
-
-                  if ($file_result = mysqli_fetch_assoc($files_result)) {
-                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                    $image_src = $file_path;
+                  //取出設備圖片
+                  $image_src = get_first_image_src($equipmentData["equipmentDescription"]);
+                  if ($image_src === "") {
+                    $image_src = "images/image 3.png";
                   }
 
                   //格式化按讚數
                   $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
+
+                  //若文章內容超過30字做限制
+                  $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
+                  if ($content_length > 30) {
+                    $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
+                  }
 
                   echo "<div class='property-item'>
                   <a href='#' class='img'>
@@ -644,8 +662,9 @@ if (isset($_POST["likeEquipDel"])) {
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
-                  echo "<div class='city d-block'>" . $equipmentData["equipmentName"] . "</div>
+                  echo "<a href='../equip-single.php?equipmentId=" . $equipmentData["equipmentId"] . "'><div class='city d-block'>" . $equipmentData["equipmentName"] . "</div></a>
                   </span>
+                  
                   <span class='span-adj'>
                     <div class='price mb-1'><span>$" . number_format($equipmentData["equipmentPrice"]) . "</span></div>
                       <form action='index.php' method='post'>
@@ -655,10 +674,12 @@ if (isset($_POST["likeEquipDel"])) {
                   echo "</button>
                       </form>
                   </span>
+                  
                 </div>
               <div>
-            <span class='d-block mb-4 mt-3 text-black-50'>
-              " . $equipmentData["equipmentDescription"] . "</span>
+            <span class='d-block mb-4 mt-3 text-black-50'><div class='equipment-description-container'>
+    " . $truncated_content . "
+  </div></span>
             <footer style='margin-top:40px'>
               <div class='card-icon-footer'>
                 <div class='tagcloud'>";
@@ -697,7 +718,7 @@ if (isset($_POST["likeEquipDel"])) {
               }
 
               ?>
-              <div class="property-item">
+              <!-- <div class="property-item">
                 <a href="property-single.html" class="img">
                   <img src="images/image 3.png" alt="Image" class="img-fluid" style='width: 398px; height: 400px;' />
                 </a>
@@ -736,7 +757,7 @@ if (isset($_POST["likeEquipDel"])) {
                     </footer>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
               <!-- 分頁導航 -->
