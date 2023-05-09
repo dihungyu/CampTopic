@@ -810,7 +810,7 @@ if (isset($_POST["likeEquipDel"])) {
               if (!$image_src) {
                 $image_src = 'images/image 1.png';
               }
-
+              
               //取得文章留言數
               $comment_query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
               $comment_result = mysqli_query($conn, $comment_query);
