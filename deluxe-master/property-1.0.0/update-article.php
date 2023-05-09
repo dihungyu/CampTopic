@@ -10,6 +10,7 @@ session_start();
 // 連接資料庫
 require_once '../../php/conn.php';
 require_once '../../php/uuid_generator.php';
+require_once '../../php/processFile.php';
 require_once '../../php/get_img_src.php';
 
 // 取得文章內容
@@ -41,6 +42,44 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
     // 刪除該文章的現有標籤
     $sql_delete = "DELETE FROM articles_labels WHERE articleId = '$articleId'";
     mysqli_query($conn, $sql_delete);
+
+    // 刪除該文章的現有檔案
+    $sql_query = "SELECT fileName, fileId FROM files WHERE articleId = '$articleId'";
+    $result = mysqli_query($conn, $sql_query);
+    $files_to_delete = array();
+    $file_ids_to_delete = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $files_to_delete[] = $row['fileName'];
+        $file_ids_to_delete[] = $row['fileId'];
+    }
+
+    // 執行批量刪除操作
+    if (!empty($file_ids_to_delete)) {
+
+        // 刪除 files 表中的資料
+        foreach ($file_ids_to_delete as $file_id) {
+            $sql_delete = "DELETE FROM files WHERE fileId = '$file_id'";
+            mysqli_query($conn, $sql_delete);
+        }
+
+        // 刪除 upload 目錄中的文件
+        $upload_dir = "../../upload/";
+        foreach ($files_to_delete as $file_name) {
+            $file_path = $upload_dir . $file_name;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+        }
+    }
+
+
+    // 新增新的檔案
+    $articleContent = process_and_save_images($articleContent, $conn, $articleId);
+
+    // Update the article content with the processed content
+    $sql_query_update = "UPDATE articles SET articleContent = '$articleContent' WHERE articleId = '$articleId'";
+    mysqli_query($conn, $sql_query_update);
+
 
     // 插入新的標籤
     foreach ($tags as $tagId) {
@@ -151,22 +190,21 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
             </button>
 
             <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+                    <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
+                    <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
+                    <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
+                    <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              帳號
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.php">會員帳號</a>
-              <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            帳號
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="member.php">會員帳號</a>
+                            <a class="dropdown-item" href="member-like.php">我的收藏</a>
+                            <a class="dropdown-item" href="member-record.php">我的紀錄</a>
                             <div class="dropdown-divider"></div>
                             <?php
                             // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -238,6 +276,11 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
                 <span style="display:flex; justify-content:center;margin-left:20px">
                     <form id="article-form" action="update-article.php" method="post" enctype="multipart/form-data">
+
+
+                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
+                            <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle" value="<?php echo htmlspecialchars($articleTitle); ?>">
+                        </span>
                         <select id="tags-select" name="tags[]" multiple style="width: 100%;">
                             <?php
                             // 取得所有文章標籤
@@ -265,10 +308,6 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                             }
                             ?>
                         </select>
-
-                        <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
-                            <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle" value="<?php echo htmlspecialchars($articleTitle); ?>">
-                        </span>
 
                         <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"><?php echo htmlspecialchars($articleContent); ?></textarea>
                 </span>
@@ -322,17 +361,17 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
                     <div class="widget">
                         <h3>頁面總覽</h3>
                         <ul class="list-unstyled float-start links">
-                  <li><a href="index.php">首頁</a></li>
-                  <li><a href="camp-information.php">找小鹿</a></li>
-                  <li><a href="../all-article.php">鹿的分享</a></li>
-                  <li><a href="../equipment.php">鹿的裝備</a></li>
-                  <li><a href="ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="member.php">帳號</a></li>
-                  <li><a href="member.php">會員帳號</a></li>
-                  <li><a href="member-like.php">我的收藏</a></li>
-                </ul>
+                            <li><a href="index.php">首頁</a></li>
+                            <li><a href="camp-information.php">找小鹿</a></li>
+                            <li><a href="../all-article.php">鹿的分享</a></li>
+                            <li><a href="../equipment.php">鹿的裝備</a></li>
+                            <li><a href="ad.php">廣告方案</a></li>
+                        </ul>
+                        <ul class="list-unstyled float-start links">
+                            <li><a href="member.php">帳號</a></li>
+                            <li><a href="member.php">會員帳號</a></li>
+                            <li><a href="member-like.php">我的收藏</a></li>
+                        </ul>
                     </div>
                     <!-- /.widget -->
                 </div>

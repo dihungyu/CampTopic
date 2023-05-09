@@ -81,7 +81,7 @@ $accountId = $_COOKIE["accountId"];
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
@@ -89,8 +89,7 @@ $accountId = $_COOKIE["accountId"];
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -168,6 +167,11 @@ $accountId = $_COOKIE["accountId"];
         </span>
         <span style="display:flex; justify-content:center;margin-left:20px">
           <form id="article-form" action="save-article.php" method="post" enctype="multipart/form-data">
+
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
+              <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
+            </span>
+
             <select id="tags-select" name="tags[]" multiple style="width: 100%;">
               <!-- 你的選項將在這裡生成，就像在你原始的程式碼中一樣 -->
               <?php
@@ -182,9 +186,6 @@ $accountId = $_COOKIE["accountId"];
               ?>
 
             </select>
-            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 16px;margin-top: 16px;">
-              <input type="text" name="articleTitle" placeholder="文章標題" class="articletitle">
-            </span>
 
             <textarea id="summernote-editor" name="articleContent" placeholder="開始撰寫貼文..." rows="20" class="articletext"></textarea>
         </span>
@@ -236,17 +237,17 @@ $accountId = $_COOKIE["accountId"];
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-                  <li><a href="index.php">首頁</a></li>
-                  <li><a href="camp-information.php">找小鹿</a></li>
-                  <li><a href="../all-article.php">鹿的分享</a></li>
-                  <li><a href="../equipment.php">鹿的裝備</a></li>
-                  <li><a href="ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="member.php">帳號</a></li>
-                  <li><a href="member.php">會員帳號</a></li>
-                  <li><a href="member-like.php">我的收藏</a></li>
-                </ul>
+              <li><a href="index.php">首頁</a></li>
+              <li><a href="camp-information.php">找小鹿</a></li>
+              <li><a href="../all-article.php">鹿的分享</a></li>
+              <li><a href="../equipment.php">鹿的裝備</a></li>
+              <li><a href="ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="member.php">帳號</a></li>
+              <li><a href="member.php">會員帳號</a></li>
+              <li><a href="member-like.php">我的收藏</a></li>
+            </ul>
           </div>
           <!-- /.widget -->
         </div>
