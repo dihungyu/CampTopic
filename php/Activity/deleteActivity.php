@@ -1,13 +1,7 @@
 <?php
-// 開啟錯誤報告
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// 連接資料庫
-require_once '../conn.php';
-
 session_start();
+
+require_once '../conn.php';
 
 if (isset($_GET["activityId"])) {
     $activityId = $_GET["activityId"];
@@ -15,38 +9,65 @@ if (isset($_GET["activityId"])) {
     // Start transaction
     mysqli_begin_transaction($conn);
 
-
-
-    $sql_query4 = "SELECT routeId FROM routes WHERE activityId = '$activityId'";
-    $result4 = mysqli_query($conn, $sql_query4);
+    $sql_query1 = "SELECT routeId FROM routes WHERE activityId = ?";
+    $stmt1 = mysqli_prepare($conn, $sql_query1);
+    mysqli_stmt_bind_param($stmt1, "s", $activityId);
+    mysqli_stmt_execute($stmt1);
+    $result1 = mysqli_stmt_get_result($stmt1);
     $routes = [];
-    while ($row = mysqli_fetch_assoc($result4)) {
+    while ($row = mysqli_fetch_assoc($result1)) {
         $routes[] = $row;
     }
+
+    $all_successful = true;
+
     foreach ($routes as $route) {
         $routeId = $route['routeId'];
-        $sql_query5 = "DELETE FROM tripIntroductions WHERE routeId = '$routeId'";
-        $result5 = mysqli_query($conn, $sql_query5);
+        $sql_query2 = "DELETE FROM tripIntroductions WHERE routeId = ?";
+        $stmt2 = mysqli_prepare($conn, $sql_query2);
+        mysqli_stmt_bind_param($stmt2, "s", $routeId);
+        $result2 = mysqli_stmt_execute($stmt2);
+        if (!$result2) {
+            $all_successful = false;
+            break;
+        }
     }
 
-    $sql_query6 = "DELETE FROM routes WHERE activityId = '$activityId'";
-    $result6 = mysqli_query($conn, $sql_query6);
+    if ($all_successful) {
+        $sql_query3 = "DELETE FROM routes WHERE activityId = ?";
+        $stmt3 = mysqli_prepare($conn, $sql_query3);
+        mysqli_stmt_bind_param($stmt3, "s", $activityId);
+        $result3 = mysqli_stmt_execute($stmt3);
 
-    $sql_query2 = "DELETE FROM activities WHERE activityId = '$activityId'";
-    $result2 = mysqli_query($conn, $sql_query2);
+        if (!$result3) {
+            $all_successful = false;
+        }
+    }
+
+    if ($all_successful) {
+        $sql_query4 = "DELETE FROM activities WHERE activityId = ?";
+        $stmt4 = mysqli_prepare($conn, $sql_query4);
+        mysqli_stmt_bind_param($stmt4, "s", $activityId);
+        $result4 = mysqli_stmt_execute($stmt4);
+
+        if (!$result4) {
+            $all_successful = false;
+        }
+    }
 
     // Check if all queries were successful
-    if ($result6 && $result2 && $result4 && $result5) {
+    if ($all_successful) {
         // Commit the transaction
         mysqli_commit($conn);
         $_SESSION["system_message"] = "活動已刪除";
+        header("Location: ../../deluxe-master/property-1.0.0/camp-information.php");
+        exit();
     } else {
+        echo "Error: " . mysqli_error($conn);
         // Rollback the transaction
         mysqli_rollback($conn);
         $_SESSION["system_message"] = "刪除失敗，請重試";
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
-
-    header("Location: ../../deluxe-master/property-1.0.0/camp-information.php");
-    exit();
 }
+?>

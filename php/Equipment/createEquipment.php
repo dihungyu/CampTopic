@@ -27,53 +27,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $insert_label_sql = "INSERT INTO equipments_labels (equipmentLabelId, equipmentId, labelId) VALUES ('$labelId','$equipmentId', '$tag')";
 
             if (!mysqli_query($conn, $insert_label_sql)) {
-                echo "Error: " . mysqli_error($conn);
+                $_SESSION['system_message'] = '新增標籤失敗，請再試一次！';
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
             }
         }
 
+        // Process images in the article content and adjust the image paths
+        $processedEquipmentDescription = process_and_save_images($equipmentDescription, $conn, $equipmentId);
 
-        // loop through all uploaded files
-        foreach ($_FILES["files"]["name"] as $key => $name) {
+        // Update the article content with the processed content
+        $sql_query_update = "UPDATE equipments SET equipmentDescription = '$processedEquipmentDescription' WHERE equipmentId = '$equipmentId'";
 
-            // check if file was uploaded successfully
-            if ($_FILES["files"]["error"][$key] === UPLOAD_ERR_OK) {
-
-                // check if file is an image
-                $allowed_types = [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF];
-                $detected_type = exif_imagetype($_FILES["files"]["tmp_name"][$key]);
-
-                if (in_array($detected_type, $allowed_types)) {
-                    $fileId = uuid_generator();
-                    $upload_dir = "../../upload/";
-                    $fileName = $_FILES["files"]["name"][$key];
-                    $filePath = $upload_dir . $fileName;
-                    $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
-                    $fileSize = round($_FILES["files"]["size"][$key] / 1024, 2); //KB
-
-                    move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
-
-                    $sql_query2 = "INSERT INTO files (fileId, equipmentId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
-                VALUES ('$fileId', '$equipmentId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'equipment')";
-
-                    mysqli_query($conn, $sql_query2);
-                } else {
-                    echo "檔案 $name 必須為圖片格式！<br>";
-                }
-            } else if ($_FILES["files"]["error"][$key] !== UPLOAD_ERR_NO_FILE) {
-                $error_messages = [
-                    UPLOAD_ERR_INI_SIZE => "檔案大小超出 php.ini:upload_max_filesize 限制",
-                    UPLOAD_ERR_FORM_SIZE => "檔案大小超出 MAX_FILE_SIZE 限制",
-                    UPLOAD_ERR_PARTIAL => "檔案大小僅被部份上傳",
-                    UPLOAD_ERR_NO_TMP_DIR => "找不到暫存資料夾",
-                    UPLOAD_ERR_CANT_WRITE => "檔案寫入失敗",
-                    UPLOAD_ERR_EXTENSION => "上傳檔案被中斷",
-                ];
-                $error_code = $_FILES["files"]["error"][$key];
-
-                echo "檔案 $name 上傳失敗：" . $error_messages[$error_code] . "<br>";
-            }
+        if (!mysqli_query($conn, $sql_query_update)) {
+            $_SESSION["system_message"] = "設備新增失敗，請再試一次！";
+            header("Location: ../all-article.php");
+            exit();
         }
-
         $_SESSION['system_message'] = '新增設備成功！';
         header('Location: ../../deluxe-master/equip-single.php?equipmentId=' . $equipmentId . '');
         exit();
@@ -82,4 +51,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
+}
+
+function process_and_save_images($content, $conn, $equipmentId)
+{
+    // 匹配文章內容中的圖片URL
+    preg_match_all('/src="([^"]+)"/i', $content, $matches);
+
+    $images = $matches[1];
+
+    foreach ($images as $image) {
+        if (substr($image, 0, 5) === 'data:') {
+            // Process data URLs
+            $fileId = uuid_generator();
+            $upload_dir = "../../upload/";
+            $image_parts = explode(";base64,", $image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+
+            // Save the decoded image to the uploads directory
+            $fileName = $fileId . '.' . $image_type;
+            $file_path = $upload_dir . $fileName;
+            file_put_contents($file_path, $image_base64);
+
+            $fileSize = round(filesize($file_path) / 1024, 2); //KB
+
+            $sql_query2 = "INSERT INTO files (fileId, equipmentId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+            VALUES ('$fileId', '$equipmentId', '$fileName', '$image_type', '$file_path', $fileSize, now(), 'eqiupment')";
+
+            if (!mysqli_query($conn, $sql_query2)) {
+                echo "Error: " . mysqli_error($conn);
+            }
+            // Replace the image src attribute with the fileId
+            $content = str_replace($image, '../upload/' . $fileName, $content);
+        }
+    }
+
+    return $content;
 }
