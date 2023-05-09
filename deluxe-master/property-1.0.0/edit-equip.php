@@ -26,6 +26,8 @@ if (isset($equipmentId)) {
     $equipmentPrice = $row['equipmentPrice'];
     $equipmentLocation = $row['equipmentLocation'];
     $equipmentType = $row['equipmentType'];
+    // 修改圖片路徑，使其適用於update-article.php所在的目錄層次
+    $equipmentDescription = str_replace('../upload/', '../../upload/', $equipmentDescription);
   }
 }
 
@@ -91,8 +93,9 @@ if (isset($equipmentId)) {
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -100,9 +103,11 @@ if (isset($equipmentId)) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -115,7 +120,8 @@ if (isset($equipmentId)) {
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -184,14 +190,18 @@ if (isset($equipmentId)) {
 
           <form action="../../php/Equipment/updateEquipment.php" method="post" enctype="multipart/form-data">
             <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-              <input name="equipmentName" type="text" placeholder="設備名稱" value=<?php echo $equipmentName ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-              <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+              <input name="equipmentName" type="text" placeholder="設備名稱" value=<?php echo $equipmentName ?>
+                style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+              <select name="equipmentType"
+                style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
                 <option value="租">租</option>
                 <option value="徵">徵</option>
                 <option value="賣">賣</option>
               </select>
-              <input type="text" name="equipmentPrice" placeholder="價錢" value=<?php echo $equipmentPrice ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-              <input type="text" name="equipmentLocation" placeholder="設備所在地" value=<?php echo $equipmentLocation ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+              <input type="text" name="equipmentPrice" placeholder="價錢" value=<?php echo $equipmentPrice ?>
+                style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+              <input type="text" name="equipmentLocation" placeholder="設備所在地" value=<?php echo $equipmentLocation ?>
+                style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
             </span>
             <select id="tags-select" name="tags[]" multiple style="width: 100%;">
               <?php
@@ -200,7 +210,7 @@ if (isset($equipmentId)) {
               $result = mysqli_query($conn, $sql);
 
               if (mysqli_num_rows($result) > 0) { // 檢查是否有資料
-
+              
                 // 取得該設備的標籤
                 $sql_equipmentLabel = "SELECT labelId FROM equipments_labels WHERE equipmentId = '$equipmentId'";
                 $result_equipmentLabel = mysqli_query($conn, $sql_equipmentLabel);
@@ -220,9 +230,11 @@ if (isset($equipmentId)) {
               }
               ?>
             </select>
-            <textarea id="summernote-editor" name="equipmentDescription" rows="20" class="articletext"><?php echo $equipmentDescription ?></textarea>
+            <textarea id="summernote-editor" name="equipmentDescription" rows="20"
+              class="articletext"><?php echo $equipmentDescription ?></textarea>
             <span style="margin-left: 990px;margin-top: 20px;">
-              <button class="btn-new1" type="button" onclick="window.location.href = '../equip-single.php?equipmentId=<?php echo $equipmentId ?>'">取消</button>
+              <button class="btn-new1" type="button"
+                onclick="window.location.href = '../equip-single.php?equipmentId=<?php echo $equipmentId ?>'">取消</button>
               <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
               <input type="hidden" name="action" value="update">
               <input type="hidden" name="equipmentId" value="<?php echo $equipmentId ?>">
@@ -362,9 +374,15 @@ if (isset($equipmentId)) {
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -380,7 +398,8 @@ if (isset($equipmentId)) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -400,7 +419,7 @@ if (isset($equipmentId)) {
 
 
     <script>
-      $(document).ready(function() {
+      $(document).ready(function () {
         $('#summernote-editor').summernote({
           // 設置編輯器的語言為繁體中文
           lang: 'zh-TW',
@@ -416,10 +435,10 @@ if (isset($equipmentId)) {
 
 
     <script>
-      $(document).ready(function() {
+      $(document).ready(function () {
         $('#summernote-editor').summernote({
           callbacks: {
-            onImageUpload: function(files) {
+            onImageUpload: function (files) {
               var maxSize = 2 * 1024 * 1024; // 限制檔案大小為 2 MB
               if (files[0].size > maxSize) {
                 alert('檔案大小不能超過 2 MB');
@@ -434,10 +453,10 @@ if (isset($equipmentId)) {
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                   $('#summernote-editor').summernote('insertImage', response.imageUrl);
                 },
-                error: function(error) {
+                error: function (error) {
                   console.error('圖片上傳失敗', error);
                 }
               });
@@ -448,7 +467,7 @@ if (isset($equipmentId)) {
 
       function hideMessage() {
         document.getElementById("message").style.opacity = "0";
-        setTimeout(function() {
+        setTimeout(function () {
           document.getElementById("message").style.display = "none";
         }, 500);
       }
@@ -457,7 +476,7 @@ if (isset($equipmentId)) {
     </script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function () {
         const choices = new Choices('#tags-select', {
           removeItemButton: true,
           searchEnabled: false,
