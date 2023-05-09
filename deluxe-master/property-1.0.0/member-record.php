@@ -512,9 +512,7 @@ function get_img_src($accountId, $conn)
                     <div class='time'>" . $formatted_date . "</div>
                   </div>
                   <h5><a href='../article.php?articleId=" . $articleId . "'>" . $articleData["articleTitle"] . "</a></h5>
-                  <p>
-                    " . $truncated_content . "
-                  </p>
+                  <p>" . $truncated_content . "</p>
                   <footer style='justify-content: space-between; padding-top: 10px;'>
                     <p style='white-space: nowrap;'>" . $comment_count .
                   " 則留言</p>
@@ -531,8 +529,10 @@ function get_img_src($accountId, $conn)
                     </span>
                   </footer>
                 </div>
-              </div>
-            </article>";
+                </div>
+            </article>
+            
+            ";
                 if ($counter <= 1) {
                   $counter++;
                   echo "<div class='col-md-4 sidebar'>
@@ -553,7 +553,6 @@ function get_img_src($accountId, $conn)
             }
 
             ?>
-
             <div class="row align-items-center py-5">
               <div class="col-lg-3"></div>
               <div class="col-lg-6 text-center">
@@ -569,6 +568,9 @@ function get_img_src($accountId, $conn)
           </div>
         </div>
       </div>
+      </div>
+      </div>
+
 
       <!-- 設備紀錄區 -->
       <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
@@ -652,7 +654,7 @@ function get_img_src($accountId, $conn)
                 }
                 // 每兩個card會被一個article標籤包裹
                 if ($equip_card_counter % 2 === 0) {
-                  echo '<article class="col-md-8 article-list"">
+                  echo '<article class="col-md-8 article-list">
               <div class="innereq">';
                 }
 
