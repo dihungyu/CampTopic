@@ -31,6 +31,36 @@ if (isset($_GET["activityId"])) {
             $all_successful = false;
             break;
         }
+
+        // Get the file names for the current routeId
+        $sql_query5 = "SELECT fileName FROM files WHERE routeId = ?";
+        $stmt5 = mysqli_prepare($conn, $sql_query5);
+        mysqli_stmt_bind_param($stmt5, "s", $routeId);
+        mysqli_stmt_execute($stmt5);
+        $result5 = mysqli_stmt_get_result($stmt5);
+        $files = [];
+        while ($row = mysqli_fetch_assoc($result5)) {
+            $files[] = $row;
+        }
+
+        // Delete the files from the '../../upload' folder
+        foreach ($files as $file) {
+            $fileName = $file['fileName'];
+            $filePath = '../../upload/' . $fileName;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        // Delete the file records from the 'files' table
+        $sql_query6 = "DELETE FROM files WHERE routeId = ?";
+        $stmt6 = mysqli_prepare($conn, $sql_query6);
+        mysqli_stmt_bind_param($stmt6, "s", $routeId);
+        $result6 = mysqli_stmt_execute($stmt6);
+        if (!$result6) {
+            $all_successful = false;
+            break;
+        }
     }
 
     if ($all_successful) {
