@@ -178,7 +178,8 @@ figure {
 img {
   vertical-align: middle;
   border-style: none;
-  width: 1519.2px; }
+  width: 1519.2px;
+ }
 
 svg:not(:root) {
   overflow: hidden; }
@@ -9634,6 +9635,10 @@ dialog::backdrop {
   margin-left: 6px; 
   font-size: 15px; 
   margin-right: 4px;
+}
+.insert{
+  padding:4px; 
+  margin-top:40px; 
 }
 .article-list {
   margin-bottom: 50px;

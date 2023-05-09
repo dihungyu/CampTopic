@@ -278,7 +278,7 @@ if (isset($_POST["likeEquipDel"])) {
         <div class="col-lg-8">
           <div class="row">
 
-            <div class="col-md-11 room-single mt-4 mb-5 ftco-animate">
+            <div class="col-md-11 room-single mt-4 mb-5 ftco-animate" style="overflow:hidden;">
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
                   <span class="fa-stack fa-1x" style="margin-right: 5px; ">
