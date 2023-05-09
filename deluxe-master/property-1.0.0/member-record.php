@@ -530,6 +530,7 @@ function get_img_src($accountId, $conn)
                   </footer>
                 </div>
                 </div>
+                
             </article>
             
             ";
@@ -548,7 +549,8 @@ function get_img_src($accountId, $conn)
           </div>";
                 }
               }
-            } else {
+            } 
+            else {
               echo "快去發表第一篇文章！";
             }
 
@@ -563,7 +565,6 @@ function get_img_src($accountId, $conn)
                 </div>
               </div>
             </div>
-
 
           </div>
         </div>
