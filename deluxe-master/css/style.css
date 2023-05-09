@@ -10395,3 +10395,14 @@ font-size: 18px;
   margin-top: 32px; 
   margin-left: 8px;
 }
+
+.article-footer-div{
+  display: flex;
+  justify-content: space-between; 
+  padding-top: 10px;
+  align-items: center;
+}
+.article-footer-div p{
+  margin-bottom: 0px;
+  font-size: 14px;
+}

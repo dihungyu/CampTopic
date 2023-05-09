@@ -505,7 +505,7 @@ if (isset($_POST["likeEquipDel"])) {
                     <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                         <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
                         <button type='submit' class='btn-icon' style='display:flex; align-items: center;'>";
-                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' style='margin-right: 4px; margin-left: 350px;'></i>";
+                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' ></i>";
                     echo "<p style='margin-bottom: 0px; margin-right:0px;'>" . $formatted_like_count . "</p>";
                     echo "</button>
                     </form>
