@@ -56,20 +56,20 @@ $articleId = $_GET['articleId'];
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
-  <style>    
-  #article-content .article-img {
+  <style>
+    #article-content .article-img {
       max-width: 100%;
       height: auto;
     }
 
-    .article-comment{
+    .article-comment {
       height: 40px;
       width: 300px;
-      border-radius: 35px; 
-      background-color: #F0F0F0; 
-      border: none; 
+      border-radius: 35px;
+      background-color: #F0F0F0;
+      border: none;
       padding: 20px;
-      color:#ADADAD;
+      color: #ADADAD;
       margin-left: 10px;
     }
 
@@ -82,25 +82,24 @@ $articleId = $_GET['articleId'];
       font-size: 1rem;
       color: #6c757d;
       cursor: pointer;
-}
+    }
 
     .delete-comment:hover {
       color: #dc3545;
-}
+    }
 
-    .btn{
+    .btn {
       font-size: 13px;
       width: 60px;
       height: 40px;
-      background-color:#d9d9d9;
+      background-color: #d9d9d9;
     }
 
-    .vcard bio{
-      border-radius: 50%; 
-      width: 5%; 
+    .vcard bio {
+      border-radius: 50%;
+      width: 5%;
       margin-right: 16px;
-}
-
+    }
   </style>
 
   <script>
@@ -193,96 +192,97 @@ $articleId = $_GET['articleId'];
 
 
 
-  <?php
-  //取得文章資料
-  $main_article_sql = "SELECT articles.*, accounts.accountId, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
-  $main_article_result = mysqli_query($conn, $main_article_sql);
-  $main_article_row = mysqli_fetch_assoc($main_article_result);
 
-  // 取得發文者頭貼
-  $img_src = get_profileImg_src($main_article_row["accountId"], $conn);
-  $img_src = str_replace("../", "", $img_src);
-  $img_src = "../" . $img_src;
-
-  ?>
   <section class="ftco-section ftco-degree-bg">
     <div class="container">
       <div class="row">
 
-      <div class="col-lg-4 sidebar ftco-animate">
+        <div class="col-lg-4 sidebar ftco-animate">
 
-<div class="sidebar-box ftco-animate mt-5">
-  <h3>熱門標籤</h3>
-  <div class="tagcloud">
-    <?php
-    //根據資料庫裡文章類別的標籤出現次數來選擇出現次數最多的前五個標籤
-    $label_query = "SELECT labels.labelName, COUNT(articles_labels.labelId) AS labelCount FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId GROUP BY articles_labels.labelId ORDER BY labelCount DESC LIMIT 5";
-    $label_result = mysqli_query($conn, $label_query);
+          <div class="sidebar-box ftco-animate mt-5">
+            <h3>熱門標籤</h3>
+            <div class="tagcloud">
+              <?php
+              //根據資料庫裡文章類別的標籤出現次數來選擇出現次數最多的前五個標籤
+              $label_query = "SELECT labels.labelName, COUNT(articles_labels.labelId) AS labelCount FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId GROUP BY articles_labels.labelId ORDER BY labelCount DESC LIMIT 5";
+              $label_result = mysqli_query($conn, $label_query);
 
-    // 檢查錯誤
-    if (!$label_result) {
-      echo "Error: " . mysqli_error($conn);
-    }
+              // 檢查錯誤
+              if (!$label_result) {
+                echo "Error: " . mysqli_error($conn);
+              }
 
-    while ($label_row = mysqli_fetch_assoc($label_result)) {
-      echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
-    }
-    ?>
-  </div>
-</div>
+              while ($label_row = mysqli_fetch_assoc($label_result)) {
+                echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
+              }
+              ?>
+            </div>
+          </div>
 
-<div class="sidebar-box ftco-animate">
-  <h3>推薦文章</h3>
+          <div class="sidebar-box ftco-animate">
+            <h3>推薦文章</h3>
 
-  <?php
-  // Top 3 熱門文章
-  $top3_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 3";
-  $top3_article_result = mysqli_query($conn, $top3_article_sql);
+            <?php
+            // Top 3 熱門文章
+            $top3_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 3";
+            $top3_article_result = mysqli_query($conn, $top3_article_sql);
 
-  if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
-    while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
-      $articleId = $top3_article_row["articleId"];
-      $articleContent = $top3_article_row["articleContent"];
-
-
-      // 查詢文章圖片
-      $image_src = get_first_image_src($articleContent);
-      if (!$image_src) {
-        $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
-      }
+            if ($top3_article_result && mysqli_num_rows($top3_article_result) > 0) {
+              while ($top3_article_row = mysqli_fetch_assoc($top3_article_result)) {
+                $top3_articleId = $top3_article_row["articleId"];
+                $top3_articleContent = $top3_article_row["articleContent"];
 
 
-      // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
-      $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+                // 查詢文章圖片
+                $image_src = get_first_image_src($top3_articleContent);
+                if (!$image_src) {
+                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+                }
 
-      // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
-      $formatted_date = date('F j, Y', $timestamp);
 
-      // 在顯示卡片之前查詢留言數
-      $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
-      $result = mysqli_query($conn, $query);
-      $row = mysqli_fetch_assoc($result);
-      $comment_count = $row['comment_count'];
+                // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
 
-      echo "<div class='block-21 mb-4 d-flex'>
+                // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+                $formatted_date = date('F j, Y', $timestamp);
+
+                // 在顯示卡片之前查詢留言數
+                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$top3_articleId'";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                $comment_count = $row['comment_count'];
+
+                echo "<div class='block-21 mb-4 d-flex'>
     <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
     <div class='text'>
-      <h3 class='heading'><a href='article.php?articleId=" . $articleId . "'>" . $top3_article_row["articleTitle"] . "</a></h3>
+      <h3 class='heading'><a href='article.php?articleId=" . $top3_articleId . "'>" . $top3_article_row["articleTitle"] . "</a></h3>
       <div class='meta'>
-        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
-        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top3_article_row["accountName"] . "</a></div>
-        <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
+        <div><a href='article.php?articleId=" . $top3_articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+        <div><a href='article.php?articleId=" . $top3_articleId . "'><span class='icon-person'></span> " . $top3_article_row["accountName"] . "</a></div>
+        <div><a href='article.php?articleId=" . $top3_articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
       </div>
     </div>
   </div>";
-    }
-  }
-  ?>
+              }
+            }
+            ?>
 
-</div>
-</div>
+          </div>
+        </div>
 
+        <!-- 主要文章內容 -->
+        <?php
+        //取得文章資料
+        $main_article_sql = "SELECT articles.*, accounts.accountId, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId WHERE articleId = '$articleId'";
+        $main_article_result = mysqli_query($conn, $main_article_sql);
+        $main_article_row = mysqli_fetch_assoc($main_article_result);
 
+        // 取得發文者頭貼
+        $img_src = get_profileImg_src($main_article_row["accountId"], $conn);
+        $img_src = str_replace("../", "", $img_src);
+        $img_src = "../" . $img_src;
+
+        ?>
         <div class="col-lg-8 ">
           <span class="img-name">
             <img src="<?php echo $img_src ?>" alt="Image description" style="border-radius: 50%; width: 45px;
@@ -290,93 +290,93 @@ $articleId = $_GET['articleId'];
             <label style="font-size: 16px; margin-bottom: 0px; "><?php echo $main_article_row["accountName"]; ?></label>
           </span>
           <div style="display:flex; justify-content: space-between;">
-          <h5 class="mb-5 mt-4"><?php echo $main_article_row["articleTitle"]; ?></h5>
-          <span style="display:flex; align-items: center;">
-          <?php
-            if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
-              echo '<button class="btn-icon"> 
+            <h5 class="mb-5 mt-4"><?php echo $main_article_row["articleTitle"]; ?></h5>
+            <span style="display:flex; align-items: center;">
+              <?php
+              if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
+                echo '<button class="btn-icon"> 
               <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
             <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
 
-              echo '<button class="btn-icon">
+                echo '<button class="btn-icon">
           <a href="/CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=' . $articleId . '">
             <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
-            }
-            ?>
+              }
+              ?>
             </span>
           </div>
           <div id="article-content" class="mt-2">
             <?php echo $main_article_row["articleContent"]; ?>
           </div>
 
-          
+
 
           <!-- 此文章相關標籤 -->
           <div class="col-lg-8 ftco-animate order-md-last">
-          <div class="tag-widget post-tag-container mb-5 mt-5">
-            <div class="tagcloud">
-              <?php
-              // 查詢文章相關的標籤
-              $article_label_query = "SELECT articles_labels.labelId, labels.labelName FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId WHERE articles_labels.articleId = '$articleId'";
+            <div class="tag-widget post-tag-container mb-5 mt-5">
+              <div class="tagcloud">
+                <?php
+                // 查詢文章相關的標籤
+                $article_label_query = "SELECT articles_labels.labelId, labels.labelName FROM articles_labels JOIN labels ON articles_labels.labelId = labels.labelId WHERE articles_labels.articleId = '$articleId'";
 
-              $article_label_result = mysqli_query($conn, $article_label_query);
+                $article_label_result = mysqli_query($conn, $article_label_query);
 
-              // 檢查錯誤
-              if (!$article_label_result) {
-                echo "Error: " . mysqli_error($conn);
-              }
+                // 檢查錯誤
+                if (!$article_label_result) {
+                  echo "Error: " . mysqli_error($conn);
+                }
 
-              $printed_article_tags = 0;
-              while ($article_tags_row = mysqli_fetch_assoc($article_label_result)) {
-                echo "<a href='#' class='tag-cloud-link'>" . $article_tags_row["labelName"] . "</a>";
-              }
-              ?>
+                $printed_article_tags = 0;
+                while ($article_tags_row = mysqli_fetch_assoc($article_label_result)) {
+                  echo "<a href='#' class='tag-cloud-link'>" . $article_tags_row["labelName"] . "</a>";
+                }
+                ?>
+              </div>
             </div>
-          </div>
 
 
 
-          <!-- 留言區 -->
-          <?php
+            <!-- 留言區 -->
+            <?php
 
-          //可用函式
-          function format_timestamp($timestamp)
-          {
-            date_default_timezone_set("Asia/Taipei");
-            $unix_timestamp = strtotime($timestamp);
-            return date("F j, Y \a\\t g:ia", $unix_timestamp);
-          }
+            //可用函式
+            function format_timestamp($timestamp)
+            {
+              date_default_timezone_set("Asia/Taipei");
+              $unix_timestamp = strtotime($timestamp);
+              return date("F j, Y \a\\t g:ia", $unix_timestamp);
+            }
 
-          //留言區開始
-          // 查詢留言數量
-          $comment_count_sql = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
-          $comment_count_result = mysqli_query($conn, $comment_count_sql);
-          $comment_count_row = mysqli_fetch_assoc($comment_count_result);
-          $comment_count = $comment_count_row["comment_count"];
+            //留言區開始
+            // 查詢留言數量
+            $comment_count_sql = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+            $comment_count_result = mysqli_query($conn, $comment_count_sql);
+            $comment_count_row = mysqli_fetch_assoc($comment_count_result);
+            $comment_count = $comment_count_row["comment_count"];
 
 
-          // 查詢我的頭像
-          $accountId = $_COOKIE["accountId"];
-          $img_src = get_profileImg_src($accountId, $conn);
-          $img_src = str_replace("../", "", $img_src);
-          $img_src = "../" . $img_src;
+            // 查詢我的頭像
+            $accountId = $_COOKIE["accountId"];
+            $img_src = get_profileImg_src($accountId, $conn);
+            $img_src = str_replace("../", "", $img_src);
+            $img_src = "../" . $img_src;
 
-          echo "<div class='pt-5 mt-5'>
+            echo "<div class='pt-5 mt-5'>
             <h5 class='mb-5'>目前" . $comment_count . "留言</h5>
             <h6 class='mb-5'>由舊到新排序</h6>
             <ul class='comment-list'>";
 
-          // 輸出留言
-          // 如果未登入，則不顯示留言區塊
-          if (!isset($_COOKIE["accountId"])) {
-            echo "<h6 class='mb-5'>請先登入才能留言</h6>";
-          } else {
-            // 如果已登入，則顯示留言區塊
-            echo '<li class="comment">
+            // 輸出留言
+            // 如果未登入，則不顯示留言區塊
+            if (!isset($_COOKIE["accountId"])) {
+              echo "<h6 class='mb-5'>請先登入才能留言</h6>";
+            } else {
+              // 如果已登入，則顯示留言區塊
+              echo '<li class="comment">
                 <span class="img-name">
                   <img src="' . $img_src . '" style="border-radius: 50%; width: 45px;
                   height: 45px; margin-right: 8px;"\>
@@ -389,95 +389,88 @@ $articleId = $_GET['articleId'];
                     <input type="text"   name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
                     <button type="submit" class="btn" >發布</button>
                   </form>';
-          }
+            }
 
 
 
 
-          // 查詢留言和留言者名稱
-          $comment_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId IS NULL";
-          $comment_result = mysqli_query($conn, $comment_query);
+            // 查詢留言和留言者名稱
+            $comment_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId IS NULL";
+            $comment_result = mysqli_query($conn, $comment_query);
 
-          // 顯示留言
-          if ($comment_result && $comment_result->num_rows > 0) {
-            while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
+            // 顯示留言
+            if ($comment_result && $comment_result->num_rows > 0) {
+              while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
 
-              // 查詢該留言者頭像
-              $commenterId = $comment_result_row["accountId"]; 
-              $img_src = get_profileImg_src($commenterId, $conn);
-              $img_src = str_replace("../", "", $img_src);
-              $img_src = "../" . $img_src;
+                // 查詢該留言者頭像
+                $commenterId = $comment_result_row["accountId"];
+                $commenter_img_src = get_profileImg_src($commenterId, $conn);
+                $commenter_img_src = str_replace("../", "", $commenter_img_src);
+                $commenter_img_src = "../" . $commenter_img_src;
 
-              // 將 Unix 時間戳格式化為指定格式的日期時間字串
-              $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
+                // 將 Unix 時間戳格式化為指定格式的日期時間字串
+                $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
 
-              // 輸出留言
-              echo '<li class="comment">
+                // 輸出留言
+                echo '<li class="comment">
               <span class="img-name">
-                <img src="' . $img_src . '"  style="border-radius: 50%; width: 45px; height: 45px; margin-right: 8px;">
+                <img src="' . $commenter_img_src . '"  style="border-radius: 50%; width: 45px; height: 45px; margin-right: 8px;">
               </span>
               <div class="comment-body" style="position: relative;">
                 <h6>' . $comment_result_row["accountName"] . '</h6>
     <div class="meta" style="font-size:11px;"> ' . $date_string . '</div>
     <p style="margin-top:10px;" id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
 
-              // 如果是自己的留言，顯示刪除按鈕
-              if ($_COOKIE["accountId"] == $comment_result_row["accountId"]) {
-                echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $comment_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
-              }
+                // 如果是自己的留言，顯示刪除按鈕
+                if ($_COOKIE["accountId"] == $comment_result_row["accountId"]) {
+                  echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $comment_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
+                }
 
 
 
 
-              // 查詢留言回覆者名稱和內容
-              $replyId = $comment_result_row["commentId"];
-              $reply_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId= '$replyId' ORDER BY commentCreateDate ASC";
-              $reply_result = mysqli_query($conn, $reply_query);
+                // 查詢留言回覆者名稱和內容
+                $replyId = $comment_result_row["commentId"];
+                $reply_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId= '$replyId' ORDER BY commentCreateDate ASC";
+                $reply_result = mysqli_query($conn, $reply_query);
 
-              if ($reply_result && $reply_result->num_rows > 0) {
-                echo '<ul class="reply-list">';
-                while ($reply_result_row = mysqli_fetch_assoc($reply_result)) {
+                if ($reply_result && $reply_result->num_rows > 0) {
+                  echo '<ul class="reply-list">';
+                  while ($reply_result_row = mysqli_fetch_assoc($reply_result)) {
 
-                  // 查詢該留言者頭像
-                  $replyerId = $reply_result_row["accountId"];
-                  $img_src = get_profileImg_src($replyerId, $conn);
-                  $img_src = str_replace("../", "", $img_src);
-                  $img_src = "../" . $img_src;
+                    // 查詢該留言者頭像
+                    $replyerId = $reply_result_row["accountId"];
+                    $replyer_img_src = get_profileImg_src($replyerId, $conn);
+                    $replyer_img_src = str_replace("../", "", $replyer_img_src);
+                    $replyer_img_src = "../" . $replyer_img_src;
 
-                  // 將 Unix 時間戳格式化為指定格式的日期時間字串
-                  $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
+                    // 將 Unix 時間戳格式化為指定格式的日期時間字串
+                    $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
 
-                  echo '<li>
+                    echo '<li>
           <span class="img-name" >
-            <img src="' . $img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
+            <img src="' . $replyer_img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
           </span>
           <div class="comment-body" style="position: relative;">
             <h6>' . $reply_result_row["accountName"] . '</h6>
             <div class="meta">' . $date_string . '</div>
             <p id="comment-content-' . $reply_result_row["commentId"] . '">' . $reply_result_row["commentContent"] . '</p>';
 
-                  // 如果是自己的留言，顯示刪除按鈕
-                  if ($_COOKIE["accountId"] == $reply_result_row["accountId"]) {
-                    echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $reply_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
-                  }
+                    // 如果是自己的留言，顯示刪除按鈕
+                    if ($_COOKIE["accountId"] == $reply_result_row["accountId"]) {
+                      echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $reply_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
+                    }
 
 
 
-                  echo '</div>
+                    echo '</div>
         </li>';
+                  }
+                  echo '</ul>';
                 }
-                echo '</ul>';
-              }
 
-
-              // 查詢我的頭像
-              $accountId = $_COOKIE["accountId"];
-              $img_src = get_profileImg_src($accountId, $conn);
-              $img_src = str_replace("../", "", $img_src);
-              $img_src = "../" . $img_src;
-
-              if ($_COOKIE["accountName"]) {
-                echo '<!-- 使用者回覆區 -->
+                if ($_COOKIE["accountName"]) {
+                  echo '<!-- 使用者回覆區 -->
                     <span class="img-name" style="display: flex; align-items: center;">
                       <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 45px;
                       height: 45px; margin-right: 8px;">
@@ -492,22 +485,22 @@ $articleId = $_GET['articleId'];
                           <button type="submit" class="btn" >發布</button>
                         </form>
                       </div></span>';
+                }
               }
             }
-          }
 
 
 
-          ?>
+            ?>
 
-          </ul>
-          <!-- END comment-list -->
+            </ul>
+            <!-- END comment-list -->
+          </div>
         </div>
-        </div>
-        </div>
-        <!-- .col-md-8 -->
-       
       </div>
+      <!-- .col-md-8 -->
+
+    </div>
     </div>
   </section> <!-- .section -->
 
@@ -536,17 +529,17 @@ $articleId = $_GET['articleId'];
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/index.php">首頁</a></li>
-                  <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
-                  <li><a href="all-article.php">鹿的分享</a></li>
-                  <li><a href="equipment.php">鹿的裝備</a></li>
-                  <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/member.php">帳號</a></li>
-                  <li><a href="property-1.0.0/member.php">會員帳號</a></li>
-                  <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
-                </ul>
+              <li><a href="property-1.0.0/index.php">首頁</a></li>
+              <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+              <li><a href="all-article.php">鹿的分享</a></li>
+              <li><a href="equipment.php">鹿的裝備</a></li>
+              <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/member.php">帳號</a></li>
+              <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+              <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+            </ul>
           </div>
           <!-- /.widget -->
         </div>
