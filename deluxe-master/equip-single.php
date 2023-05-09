@@ -278,11 +278,10 @@ if (isset($_POST["likeEquipDel"])) {
         <div class="col-lg-8">
           <div class="row">
 
-            <div class="col-md-11 room-single mt-4 mb-5 ftco-animate" style="overflow:hidden;">
+            <div class="col-md-11 room-single mt-2 mb-5 ftco-animate" style="overflow:hidden;">
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
                   <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-
                     <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:30px;padding-left: 0px; "></i>
                     <i class="fas fa-stack-1x" style="font-size: 13px;padding-left: 0px;">
                       <?php echo $equipmentType ?>
@@ -313,8 +312,7 @@ if (isset($_POST["likeEquipDel"])) {
                   ?>
                 </span>
               </div>
-              <br>
-              <p style="padding:4px; margin-top:40px;">
+              <p style="padding:4px; margin-top:20px;">
                 <?php echo $equipmentDescription ?>
               </p>
               <div class="col-md-7 room-single mt-2 mb-2 ftco-animate" style="margin-bottom: -100px;">
