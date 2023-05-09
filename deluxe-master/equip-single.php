@@ -179,7 +179,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -197,8 +197,9 @@ if (isset($_POST["likeEquipDel"])) {
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -206,9 +207,11 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -221,7 +224,8 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -273,13 +277,7 @@ if (isset($_POST["likeEquipDel"])) {
       <div class="row">
         <div class="col-lg-8">
           <div class="row">
-            <div class="col-md-11 ftco-animate">
-              <div class="single-slider owl-carousel">
-                <div class="item">
-                  <div class="room-img" style="background-image: url(images/Rectangle\ 222.png);"></div>
-                </div>
-              </div>
-            </div>
+
             <div class="col-md-11 room-single mt-4 mb-5 ftco-animate">
               <div class="detail" style="display: flex; align-items: center; justify-content: space-between;">
                 <span class="span-adj">
@@ -548,48 +546,49 @@ if (isset($_POST["likeEquipDel"])) {
 
 
   <div class="site-footer" style="clear: both;">
-    <div class="container"><div class="row">
+    <div class="container">
+      <div class="row">
 
-<!-- /.col-lg-4 -->
-<div class="col-lg-5">
-  <div class="widget">
-    <h3>聯絡資訊</h3>
-    <address>StartCamping 營在起跑點！</address>
-    <ul class="list-unstyled links">
-      <li><a href="tel://11234567890">0911222345</a></li>
-      <li><a href="tel://11234567890">@startcamping</a></li>
-      <li>
-        <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-      </li>
-    </ul>
-  </div>
-  <!-- /.widget -->
-</div>
-<!-- /.col-lg-4 -->
-<div class="col-lg-5">
-  <div class="widget">
-    <h3>頁面總覽</h3>
-    <ul class="list-unstyled float-start links">
-<li><a href="property-1.0.0/index.php">首頁</a></li>
-<li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
-<li><a href="all-article.php">鹿的分享</a></li>
-<li><a href="equipment.php">鹿的裝備</a></li>
-<li><a href="property-1.0.0/ad.php">廣告方案</a></li>
-</ul>
-<ul class="list-unstyled float-start links">
-<li><a href="property-1.0.0/member.php">帳號</a></li>
-<li><a href="property-1.0.0/member.php">會員帳號</a></li>
-<li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
-</ul>
-  </div>
-  <!-- /.widget -->
-</div>
-<!-- /.col-lg-4 -->
-<div class="col-lg-2">
-  <!-- /.widget -->
-</div>
-</div>
-<!-- /.row -->
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>聯絡資訊</h3>
+            <address>StartCamping 營在起跑點！</address>
+            <ul class="list-unstyled links">
+              <li><a href="tel://11234567890">0911222345</a></li>
+              <li><a href="tel://11234567890">@startcamping</a></li>
+              <li>
+                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>頁面總覽</h3>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/index.php">首頁</a></li>
+              <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+              <li><a href="all-article.php">鹿的分享</a></li>
+              <li><a href="equipment.php">鹿的裝備</a></li>
+              <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/member.php">帳號</a></li>
+              <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+              <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <!-- /.widget -->
+        </div>
+      </div>
+      <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">
@@ -622,7 +621,8 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+          stroke="#F96D00" />
       </svg></div>
 
 
@@ -640,7 +640,8 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

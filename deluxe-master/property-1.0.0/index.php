@@ -228,6 +228,19 @@ if (isset($_POST["likeEquipDel"])) {
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css" />
 
+  <style>
+    .equipment-description-container {
+      max-height: 50px;
+      /* 適當調整高度 */
+      overflow-y: auto;
+    }
+
+    .property-content {
+      min-height: 250px;
+      /* 根據需要調整最小高度 */
+    }
+  </style>
+
 
 
 </head>
@@ -507,7 +520,7 @@ if (isset($_POST["likeEquipDel"])) {
               <!-- .item -->
               <div class="property-item">
                 <img src="images/Rectangle 332.png" alt="Image" class="img-fluid"
-                  style="style='width: 412px; height: 412px;'" />
+                  style='width: 412px; height: 412px;' />
 
 
                 <div class="property-content">
@@ -614,17 +627,25 @@ if (isset($_POST["likeEquipDel"])) {
 
 
 
-                  $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
-                  $files_result = mysqli_query($conn, $files_query);
-                  $image_src = 'images/image 3.png'; // Default image
-              
-                  if ($file_result = mysqli_fetch_assoc($files_result)) {
-                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                    $image_src = $file_path;
+                  //取出設備圖片
+                  $image_src = get_first_image_src($equipmentData["equipmentDescription"]);
+                  if ($image_src === "") {
+                    $image_src = "images/image 3.png";
+                  } else {
+                    $image_src = '../' . $image_src;
                   }
+
 
                   //格式化按讚數
                   $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
+
+                  //若文章內容超過30字做限制
+                  $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
+                  if ($content_length > 30) {
+                    $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
+                  }
 
                   echo "<div class='property-item'>
                   <a href='#' class='img'>
@@ -649,8 +670,9 @@ if (isset($_POST["likeEquipDel"])) {
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
-                  echo "<div class='city d-block'>" . $equipmentData["equipmentName"] . "</div>
+                  echo "<a href='../equip-single.php?equipmentId=" . $equipmentData["equipmentId"] . "'><div class='city d-block'>" . $equipmentData["equipmentName"] . "</div></a>
                   </span>
+
                   <span class='span-adj'>
                     <div class='price mb-1'><span>$" . number_format($equipmentData["equipmentPrice"]) . "</span></div>
                       <form action='index.php' method='post'>
@@ -660,10 +682,12 @@ if (isset($_POST["likeEquipDel"])) {
                   echo "</button>
                       </form>
                   </span>
+
                 </div>
               <div>
-            <span class='d-block mb-4 mt-3 text-black-50'>
-              " . $equipmentData["equipmentDescription"] . "</span>
+            <span class='d-block mb-4 mt-3 text-black-50'><div class='equipment-description-container'>
+    " . $truncated_content . "
+  </div></span>
             <footer style='margin-top:40px'>
               <div class='card-icon-footer'>
                 <div class='tagcloud'>";
@@ -702,7 +726,7 @@ if (isset($_POST["likeEquipDel"])) {
               }
 
               ?>
-              <div class="property-item">
+              <!-- <div class="property-item">
                 <a href="property-single.html" class="img">
                   <img src="images/image 3.png" alt="Image" class="img-fluid" style='width: 398px; height: 400px;' />
                 </a>
@@ -741,7 +765,7 @@ if (isset($_POST["likeEquipDel"])) {
                     </footer>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
               <!-- 分頁導航 -->
@@ -795,21 +819,18 @@ if (isset($_POST["likeEquipDel"])) {
               // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
               $formatted_date = date('F j, Y', $timestamp);
 
-              $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-              $files_result = mysqli_query($conn, $files_query);
-              $image_src = 'images/image 3.png'; // Default image
-          
+
               // 取得文章創作者名稱
               $author_query = "SELECT accountName FROM accounts WHERE accountId = '$articleCreator'";
               $author_result = mysqli_query($conn, $author_query);
               $author_name = mysqli_fetch_assoc($author_result)['accountName'];
 
               // 取得文章圖片
-              // $image_src = get_first_image_src($articleContent);
-              // $image_src = "../" . $image_src;
-              // if (!$image_src) {
+              $image_src = get_first_image_src($articleContent);
+              $image_src = "../" . $image_src;
+              if (!$image_src) {
                 $image_src = 'images/1.jpg';
-              // }
+              }
 
               //取得文章留言數
               $comment_query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";

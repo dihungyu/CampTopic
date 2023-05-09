@@ -28,8 +28,8 @@ $row_result_campsite = mysqli_fetch_assoc($result_campsite);
 $campsiteName = $row_result_campsite['campsiteName'];
 
 $sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
-$result_account = mysqli_query($conn, $sql_account);
-$row_result_account = mysqli_fetch_assoc($result_account);
+$result_all_account = mysqli_query($conn, $sql_account);
+$row_result_account = mysqli_fetch_assoc($result_all_account);
 
 $activityCreator = $row_result_account['accountName'];
 
@@ -340,16 +340,16 @@ function get_img_src($accountId, $conn)
                 <h5 class="mb-4" style="font-weight:bold;">
                   <?php echo $activityTitle ?>
                 </h5>
-            <span class="span-adj;">
-                <button class="btn-icon">
-                  <a href="../php/Activity/deleteActivity.php?activityId=<?php echo $activityId ?>">
-                    <i class="fas fa-trash-alt" style="font-weight: 500;color: #B02626; margin-left: 500px;"></i>
-                  </a>
-                </button>
-                <button type="button" class="btn-icon" data-toggle="modal" data-target="#main">
-                  <i class="fa-regular fa-pen-to-square"></i></button>
+                <span class="span-adj;">
+                  <button class="btn-icon">
+                    <a href="../php/Activity/deleteActivity.php?activityId=<?php echo $activityId ?>">
+                      <i class="fas fa-trash-alt" style="font-weight: 500;color: #B02626; margin-left: 500px;"></i>
+                    </a>
+                  </button>
+                  <button type="button" class="btn-icon" data-toggle="modal" data-target="#main">
+                    <i class="fa-regular fa-pen-to-square"></i></button>
+                </span>
               </span>
-            </span>
               <span style="display: flex;margin-bottom: 64px;align-items: center;">
                 <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%;
                   width: 40px;
@@ -552,28 +552,30 @@ function get_img_src($accountId, $conn)
                 </div>
 
                 <?php
-                if ($result_account->num_rows > 0) {
+                $sql_attendee_account = "SELECT * FROM activities_accounts WHERE activityId = '$activityId' AND isApproved = 1";
+                $result_attendee_account = mysqli_query($conn, $sql_attendee_account);
+                $attendees = [];
+                while ($attendee_result = mysqli_fetch_assoc($result_attendee_account)) {
+                  $attendees[] = $attendee_result;
+                }
+                if (!empty($attendees)) {
                   // 輸出 accountName
                   $displayCount = 0;
-                  foreach ($accounts as $account) {
+                  foreach ($attendees as $account) {
                     if ($displayCount >= 3) {
                       break;
                     }
-
                     // 取得頭貼
                     $accountId = $account['accountId'];
                     $img_src = get_img_src($accountId, $conn);
                     $img_src = str_replace('../', '', $img_src);
                     $img_src = "../" . $img_src;
 
-                    $isApproved = $account['isApproved'];
-                    if ($isApproved == 1) {
-                      $accountName = $account['accountName'];
-                      echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                      echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
-                      echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
-                      $displayCount++;
-                    }
+                    $accountName = $account['accountName'];
+                    echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
+                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                    echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $accountName . '</label></span>';
+                    $displayCount++;
                   }
 
                   echo '<span class="more">';
@@ -632,17 +634,17 @@ function get_img_src($accountId, $conn)
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-        <li><a href="property-1.0.0/index.php">首頁</a></li>
-        <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
-        <li><a href="all-article.php">鹿的分享</a></li>
-        <li><a href="equipment.php">鹿的裝備</a></li>
-        <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
-      </ul>
-      <ul class="list-unstyled float-start links">
-        <li><a href="property-1.0.0/member.php">帳號</a></li>
-        <li><a href="property-1.0.0/member.php">會員帳號</a></li>
-        <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
-      </ul>
+              <li><a href="property-1.0.0/index.php">首頁</a></li>
+              <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+              <li><a href="all-article.php">鹿的分享</a></li>
+              <li><a href="equipment.php">鹿的裝備</a></li>
+              <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/member.php">帳號</a></li>
+              <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+              <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+            </ul>
           </div>
           <!-- /.widget -->
         </div>
