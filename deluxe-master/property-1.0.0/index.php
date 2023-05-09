@@ -332,7 +332,7 @@ if (isset($_POST["likeEquipDel"])) {
             <p>
               眾多營地不知從何下手？<br>透過標籤篩選，幫你找出心目中理想的營地！
             </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
+            <p><a href="index.php" class="learn-more">Learn More</a></p>
           </div>
         </div>
         <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
@@ -343,7 +343,7 @@ if (isset($_POST["likeEquipDel"])) {
               找不到夥伴一起露營？<br>
               「找小鹿」功能帶你找到志同道合的營友一同露營冒險！
             </p>
-            <p><a href="#" class="learn-more">Learn More</a></p>
+            <p><a href="camp-information.php" class="learn-more">Learn More</a></p>
           </div>
         </div>
         <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
@@ -354,7 +354,7 @@ if (isset($_POST["likeEquipDel"])) {
               有閒置或多餘的裝備不用好浪費？<br>
               「鹿的裝備」讓你的裝備能被妥善運用！
             </p>
-            <p><a href="../equipment.html" class="learn-more">Learn More</a></p>
+            <p><a href="../equipment.php" class="learn-more">Learn More</a></p>
           </div>
         </div>
         <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
@@ -364,7 +364,7 @@ if (isset($_POST["likeEquipDel"])) {
             <p>
               透過文章分享，輕鬆地將露營心得、照片和建議分享給其他露營愛好者，也能從中發掘更多露營靈感！
             </p>
-            <p><a href="../all-article.html" class="learn-more">Learn More</a></p>
+            <p><a href="../all-article.php" class="learn-more">Learn More</a></p>
           </div>
         </div>
       </div>
@@ -379,11 +379,11 @@ if (isset($_POST["likeEquipDel"])) {
             推薦營地
           </h3>
         </div>
-        <div class="col-lg-6 text-lg-end">
+        <!-- <div class="col-lg-6 text-lg-end">
           <p>
             <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有營地</a>
           </p>
-        </div>
+        </div> -->
       </div>
       <div class="row">
         <div class="col-12">
@@ -805,12 +805,12 @@ if (isset($_POST["likeEquipDel"])) {
               $author_name = mysqli_fetch_assoc($author_result)['accountName'];
 
               // 取得文章圖片
-              $image_src = get_first_image_src($articleContent);
-              $image_src = "../" . $image_src;
-              if (!$image_src) {
-                $image_src = 'images/image 1.png';
-              }
-              
+              // $image_src = get_first_image_src($articleContent);
+              // $image_src = "../" . $image_src;
+              // if (!$image_src) {
+                $image_src = 'images/1.jpg';
+              // }
+
               //取得文章留言數
               $comment_query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
               $comment_result = mysqli_query($conn, $comment_query);
@@ -1043,9 +1043,9 @@ if (isset($_POST["likeEquipDel"])) {
                 <h3>頁面總覽</h3>
                 <ul class="list-unstyled float-start links">
                   <li><a href="index.php">首頁</a></li>
-                  <li><a href="camp-information.html">找小鹿</a></li>
-                  <li><a href="../all-article.html">鹿的分享</a></li>
-                  <li><a href="../equipment.html">鹿的裝備</a></li>
+                  <li><a href="camp-information.php">找小鹿</a></li>
+                  <li><a href="../all-article.php">鹿的分享</a></li>
+                  <li><a href="../equipment.php">鹿的裝備</a></li>
                   <li><a href="ad.php">廣告方案</a></li>
                 </ul>
                 <ul class="list-unstyled float-start links">

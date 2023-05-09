@@ -130,7 +130,7 @@ $files_result = mysqli_query($conn, $files_query);
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle 341.jpg');
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle 341.png');
       height:70vh;
       min-height: 300px;">
     <div class="container">
@@ -358,17 +358,17 @@ $files_result = mysqli_query($conn, $files_query);
             <div class="widget">
               <h3>頁面總覽</h3>
               <ul class="list-unstyled float-start links">
-                <li><a href="property1.0.0/index.php">首頁</a></li>
-                <li><a href="#">找小鹿</a></li>
-                <li><a href="#">鹿的分享</a></li>
-                <li><a href="#">鹿的裝備</a></li>
-                <li><a href="#">廣告方案</a></li>
-              </ul>
-              <ul class="list-unstyled float-start links">
-                <li><a href="property1.0.0/member.php">帳號</a></li>
-                <li><a href="property1.0.0/member.php">會員帳號</a></li>
-                <li><a href="property1.0.0/member-like.php">我的收藏</a></li>
-              </ul>
+                  <li><a href="property-1.0.0/index.php">首頁</a></li>
+                  <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+                  <li><a href="all-article.php">鹿的分享</a></li>
+                  <li><a href="equipment.php">鹿的裝備</a></li>
+                  <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+                </ul>
+                <ul class="list-unstyled float-start links">
+                  <li><a href="property-1.0.0/member.php">帳號</a></li>
+                  <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+                  <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+                </ul>
             </div>
             <!-- /.widget -->
           </div>

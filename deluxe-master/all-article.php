@@ -837,48 +837,48 @@ if (isset($_POST["likeEquipDel"])) {
 
   <div class="site-footer" style="clear: both;">
     <div class="container">
-      <div class="row">
+          <div class="row">
 
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>聯絡資訊</h3>
-            <address>StartCamping 營在起跑點！</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">0911222345</a></li>
-              <li><a href="tel://11234567890">@startcamping</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-              </li>
-            </ul>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-5">
+              <div class="widget">
+                <h3>聯絡資訊</h3>
+                <address>StartCamping 營在起跑點！</address>
+                <ul class="list-unstyled links">
+                  <li><a href="tel://11234567890">0911222345</a></li>
+                  <li><a href="tel://11234567890">@startcamping</a></li>
+                  <li>
+                    <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.widget -->
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-5">
+              <div class="widget">
+                <h3>頁面總覽</h3>
+                <ul class="list-unstyled float-start links">
+                  <li><a href="property-1.0.0/index.php">首頁</a></li>
+                  <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+                  <li><a href="all-article.php">鹿的分享</a></li>
+                  <li><a href="equipment.php">鹿的裝備</a></li>
+                  <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+                </ul>
+                <ul class="list-unstyled float-start links">
+                  <li><a href="property-1.0.0/member.php">帳號</a></li>
+                  <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+                  <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+                </ul>
+              </div>
+              <!-- /.widget -->
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-2">
+              <!-- /.widget -->
+            </div>
           </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>頁面總覽</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="property1.0.0/index.php">首頁</a></li>
-              <li><a href="#">找小鹿</a></li>
-              <li><a href="#">鹿的分享</a></li>
-              <li><a href="#">鹿的裝備</a></li>
-              <li><a href="#">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="property1.0.0/member.php">帳號</a></li>
-              <li><a href="property1.0.0/member.php">會員帳號</a></li>
-              <li><a href="property1.0.0/member-like.php">我的收藏</a></li>
-            </ul>
-          </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-2">
-          <!-- /.widget -->
-        </div>
-      </div>
-      <!-- /.row -->
+          <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">

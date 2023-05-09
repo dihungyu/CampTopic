@@ -357,17 +357,17 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-              <li><a href="index.html">首頁</a></li>
-              <li><a href="#">找小鹿</a></li>
-              <li><a href="#">鹿的分享</a></li>
-              <li><a href="#">鹿的裝備</a></li>
-              <li><a href="#">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="member.php">帳號</a></li>
-              <li><a href="member.php">會員帳號</a></li>
-              <li><a href="member-like.php">我的收藏</a></li>
-            </ul>
+                  <li><a href="index.php">首頁</a></li>
+                  <li><a href="camp-information.php">找小鹿</a></li>
+                  <li><a href="../all-article.php">鹿的分享</a></li>
+                  <li><a href="../equipment.php">鹿的裝備</a></li>
+                  <li><a href="ad.php">廣告方案</a></li>
+                </ul>
+                <ul class="list-unstyled float-start links">
+                  <li><a href="member.php">帳號</a></li>
+                  <li><a href="member.php">會員帳號</a></li>
+                  <li><a href="member-like.php">我的收藏</a></li>
+                </ul>
           </div>
           <!-- /.widget -->
         </div>
