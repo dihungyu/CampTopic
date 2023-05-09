@@ -790,9 +790,6 @@ if (isset($_POST["likeEquipDel"])) {
               // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
               $formatted_date = date('F j, Y', $timestamp);
 
-              $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-              $files_result = mysqli_query($conn, $files_query);
-              $image_src = 'images/image 3.png'; // Default image
 
               // 取得文章創作者名稱
               $author_query = "SELECT accountName FROM accounts WHERE accountId = '$articleCreator'";
@@ -800,11 +797,11 @@ if (isset($_POST["likeEquipDel"])) {
               $author_name = mysqli_fetch_assoc($author_result)['accountName'];
 
               // 取得文章圖片
-              // $image_src = get_first_image_src($articleContent);
-              // $image_src = "../" . $image_src;
-              // if (!$image_src) {
-              $image_src = 'images/1.jpg';
-              // }
+              $image_src = get_first_image_src($articleContent);
+              $image_src = "../" . $image_src;
+              if (!$image_src) {
+                $image_src = 'images/1.jpg';
+              }
 
               //取得文章留言數
               $comment_query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";

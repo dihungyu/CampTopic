@@ -243,9 +243,8 @@ if (isset($_POST["likeEquipDel"])) {
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -253,11 +252,9 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -270,8 +267,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -297,8 +293,7 @@ if (isset($_POST["likeEquipDel"])) {
     </div>
   </nav>
   <!-- END nav -->
-  <div class="hero page-inner overlay"
-    style="background-image: url('images/Rectangle\ 56.jpg'); height:70vh; min-height: 300px;">
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 56.jpg'); height:70vh; min-height: 300px;">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-12 text-center mt-5">
@@ -337,7 +332,7 @@ if (isset($_POST["likeEquipDel"])) {
     }
     // Default image
     //  $image_src = 'images/6540.jpg';
-  
+
   }
 
 
@@ -392,7 +387,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $row = $article_count_result->fetch_assoc();
                 $article_total_rows = $row['total'];
                 $article_total_pages = ceil($article_total_rows / 4); // 每四個文章換下一頁
-                
+
                 $article_perPage = 4;
                 $article_current_page = isset($_GET['article_page']) ? (int) $_GET['article_page'] : 1;
                 $article_offset = ($article_current_page - 1) * $article_perPage;
@@ -524,7 +519,7 @@ if (isset($_POST["likeEquipDel"])) {
               <div class="row align-items-center py-5">
                 <div class="col-12 d-flex justify-content-center">
                   <div class="custom-pagination">
-                    <?php for ($i = 1; $i <= $article_total_pages; $i++): ?>
+                    <?php for ($i = 1; $i <= $article_total_pages; $i++) : ?>
                       <a href="?article_page=<?= $i ?>" <?= ($i == $article_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                     <?php endfor; ?>
                   </div>
@@ -613,8 +608,7 @@ if (isset($_POST["likeEquipDel"])) {
             <div class="input-group " style=" justify-content: flex-end;">
               <div id="navbar-search-autocomplete" class="form-outline">
                 <form>
-                  <input type="search" id="form1" name="article_search_keyword" class="form-control"
-                    style="height: 40px; border-radius: 35px;" placeholder="搜尋文章標題..." />
+                  <input type="search" id="form1" name="article_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋文章標題..." />
               </div>
               <button type="submit" class="button-search" style="margin-left: 10px;">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -623,8 +617,7 @@ if (isset($_POST["likeEquipDel"])) {
             </div>
 
             <a href="/CampTopic/deluxe-master/property-1.0.0/add-article.php">
-              <button type="button" class="gray-lg" data-toggle="modal" data-target="#create"
-                style="margin-left: 120px;">
+              <button type="button" class="gray-lg" data-toggle="modal" data-target="#create" style="margin-left: 120px;">
                 <h6 style="font-weight: bold;margin-right: -20px;">分享你的露營心得</h6>
                 <div class="verticle-line"></div>
                 <span style="display: flex; align-items: center; justify-content: flex-start">
@@ -706,7 +699,7 @@ if (isset($_POST["likeEquipDel"])) {
                   $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
                   $files_result = mysqli_query($conn, $files_query);
                   $image_src = 'images/M85318677_big.jpeg'; // Default image
-              
+
                   if ($file_result = mysqli_fetch_assoc($files_result)) {
                     $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                     $image_src = $file_path;
@@ -772,7 +765,7 @@ if (isset($_POST["likeEquipDel"])) {
                     $printed_tags++;
                   }
                   echo
-                    "</div>
+                  "</div>
                       <span style='display: flex; align-items: center;'>
                         <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                   <input type='hidden' name='" . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
@@ -837,48 +830,48 @@ if (isset($_POST["likeEquipDel"])) {
 
   <div class="site-footer" style="clear: both;">
     <div class="container">
-          <div class="row">
+      <div class="row">
 
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-5">
-              <div class="widget">
-                <h3>聯絡資訊</h3>
-                <address>StartCamping 營在起跑點！</address>
-                <ul class="list-unstyled links">
-                  <li><a href="tel://11234567890">0911222345</a></li>
-                  <li><a href="tel://11234567890">@startcamping</a></li>
-                  <li>
-                    <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.widget -->
-            </div>
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-5">
-              <div class="widget">
-                <h3>頁面總覽</h3>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/index.php">首頁</a></li>
-                  <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
-                  <li><a href="all-article.php">鹿的分享</a></li>
-                  <li><a href="equipment.php">鹿的裝備</a></li>
-                  <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/member.php">帳號</a></li>
-                  <li><a href="property-1.0.0/member.php">會員帳號</a></li>
-                  <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
-                </ul>
-              </div>
-              <!-- /.widget -->
-            </div>
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-2">
-              <!-- /.widget -->
-            </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>聯絡資訊</h3>
+            <address>StartCamping 營在起跑點！</address>
+            <ul class="list-unstyled links">
+              <li><a href="tel://11234567890">0911222345</a></li>
+              <li><a href="tel://11234567890">@startcamping</a></li>
+              <li>
+                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+              </li>
+            </ul>
           </div>
-          <!-- /.row -->
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-5">
+          <div class="widget">
+            <h3>頁面總覽</h3>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/index.php">首頁</a></li>
+              <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+              <li><a href="all-article.php">鹿的分享</a></li>
+              <li><a href="equipment.php">鹿的裝備</a></li>
+              <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="property-1.0.0/member.php">帳號</a></li>
+              <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+              <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <!-- /.widget -->
+        </div>
+      </div>
+      <!-- /.row -->
 
       <div class="row mt-5">
         <div class="col-12 text-center">
@@ -911,8 +904,7 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
       </svg></div>
 
 
@@ -930,8 +922,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -939,7 +930,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script>
       function hideMessage() {
         document.getElementById("message").style.opacity = "0";
-        setTimeout(function () {
+        setTimeout(function() {
           document.getElementById("message").style.display = "none";
         }, 500);
       }
