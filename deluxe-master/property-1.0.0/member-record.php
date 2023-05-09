@@ -343,7 +343,7 @@ function get_img_src($accountId, $conn)
                 echo '    <p>' . $accountName . '</p>';
                 echo '  </span>';
 
-                echo '  <div class="card-body" style="margin-top: 0px;">';
+                echo '  <div class="card-body" style="padding-top: 10px;">';
 
                 echo '    <h5 class="card-title">' . $activityStartMonthDay . '-' . $activityEndMonthDay . ' ' . $activityTitle . '</h5>';
                 echo '    <div style="display: flex;flex-direction: column">';
@@ -353,10 +353,7 @@ function get_img_src($accountId, $conn)
                 echo '        <span class="findcamper-icon">';
                 echo '          <i class="fa-solid fa-person"></i>' . $minAttendee . '-' . $maxAttendee . ' 人';
                 echo '        </span>';
-                echo '      </div>';
-
-                echo '      <div class="findcamper">';
-                echo '        <span class="findcamper-icon" style="display: flex; align-items: center;">';
+                echo '        <span class="findcamper-icon" style="display: flex; align-items: center; width:240px;">';
                 echo '          <i class="icon-map"></i>' . $campsiteName . '</span>';
                 echo '        <span class="findcamper-icon">';
                 echo '          <i class="fa-solid fa-sack-dollar"></i>' . $leastAttendeeFee . '-' . $maxAttendeeFee . '元</span>';

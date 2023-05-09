@@ -324,7 +324,7 @@ if (isset($_POST["likeEquipDel"])) {
             $equipmentPrice = $equipment["equipmentPrice"];
             $equipmentLikeCount = $equipment["equipmentLikeCount"];
             echo '<div class="card-eq" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
-            echo '<img src="' . $image_src . '" class="card-img-top" alt="...">';
+            echo '<img src="' . $image_src . '" class="card-img-top" alt="..." style="width:397px; height:263px;">';
             echo '<div class="card-body-eq"style=" margin-top:0px;">';
             echo '<div class="detail" style="flex-wrap: wrap; display: flex;">';
             echo '<span style="display: flex; align-items: center;">';
