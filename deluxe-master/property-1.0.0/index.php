@@ -563,7 +563,7 @@ if (isset($_POST["likeEquipDel"])) {
         </div>
         <div class="col-lg-6 text-lg-end">
           <p>
-            <a href="../equipment.html" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
+            <a href="../equipment.php" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
           </p>
         </div>
       </div>

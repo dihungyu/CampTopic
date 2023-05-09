@@ -178,7 +178,7 @@ $accountName = $row_account['accountName'];
             <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
 
               <input name="equipmentName" type="text" placeholder="設備名稱" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-              <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+              <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 10px;margin-left: 8px;">
                 <option value="租">租</option>
                 <option value="徵">徵</option>
                 <option value="賣">賣</option>

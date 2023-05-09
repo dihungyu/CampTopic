@@ -479,7 +479,7 @@ if (isset($_POST["likeEquipDel"])) {
 
                 if ($file_result = mysqli_fetch_assoc($files_result)) {
                   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                  $image_src = $file_path;
+                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; 
                 }
 
                 $timestamp = strtotime($top234_article_row["articleCreateDate"]);
