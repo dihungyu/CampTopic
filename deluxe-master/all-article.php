@@ -435,7 +435,7 @@ if (isset($_POST["likeEquipDel"])) {
                     $image_src = get_first_image_src($articleContent);
 
                     // 如果文章沒有圖片，則使用預設圖片
-                    if (!$image_src) {
+                    if ($image_src == "") {
                       $image_src = 'images/img15.jpg';
                     }
 
@@ -550,7 +550,7 @@ if (isset($_POST["likeEquipDel"])) {
                 // 取得文章第一張圖片
                 $image_src = get_first_image_src($articleContent);
 
-                if (!$image_src) {
+                if ($image_src == "") {
                   $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
                 }
 
@@ -698,7 +698,7 @@ if (isset($_POST["likeEquipDel"])) {
 
                   //若文章內容超過30字做限制
                   $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
-                  if ($content_length > 30) {
+                  if ($content_length > 20) {
                     $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 20, 'UTF-8') . '...'; // 截斷文章內容
                   } else {
                     $truncated_content = strip_tags($equipmentData["equipmentDescription"]);

@@ -1,6 +1,7 @@
 <?php
 require_once '../php/conn.php';
 require_once '../php/uuid_generator.php';
+require_once '../php/get_img_src.php';
 
 session_start();
 
@@ -179,7 +180,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -197,9 +198,8 @@ if (isset($_POST["likeEquipDel"])) {
 
 <body>
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -207,11 +207,9 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -224,8 +222,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -464,6 +461,17 @@ if (isset($_POST["likeEquipDel"])) {
                 // 檢查當前設備是否已按讚
                 $isEquipLiked = in_array($recommand_equipment["equipmentId"], $likedEquips);
 
+                // 取出設備圖片
+                $equip_img_src = get_first_image_src($recommand_equipment['equipmentDescription']);
+
+                //若文章內容超過30字做限制
+                $content_length = mb_strlen(strip_tags($recommand_equipment["equipmentDescription"]), 'UTF-8');
+                if ($content_length > 30) {
+                  $truncated_content = mb_substr(strip_tags($recommand_equipment["equipmentDescription"]), 0, 30, 'UTF-8') . '...'; // 截斷文章內容
+                } else {
+                  $truncated_content = strip_tags($recommand_equipment["equipmentDescription"]);
+                }
+
                 $recommand_equipmentId = $recommand_equipment['equipmentId'];
                 $recommand_equipmentName = $recommand_equipment['equipmentName'];
                 $recommand_equipmentType = $recommand_equipment['equipmentType'];
@@ -471,7 +479,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $recommand_equipmentDescription = $recommand_equipment['equipmentDescription'];
                 $recommand_equipmentLikeCount = $recommand_equipment['equipmentLikeCount'];
                 echo '<div class="card-eq" style=" margin-right: 25px;">';
-                echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
+                echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
                 echo '<div class="card-body-eq">';
 
                 echo '<div class="detail" style="flex-wrap: wrap">';
@@ -496,7 +504,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '</span>';
                 echo '</div>';
                 echo '<p class="card-text-eq">';
-                echo '' . $recommand_equipmentDescription . '</p>';
+                echo '' . $truncated_content . '</p>';
                 echo '<footer style="margin-top:40px">';
                 echo '<span>';
                 echo '<div class="card-icon-footer">';
@@ -619,8 +627,7 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-          stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
       </svg></div>
 
 
@@ -638,8 +645,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
