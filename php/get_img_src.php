@@ -30,6 +30,10 @@ function get_img_src($typeId, $fileTypeId, $defaultImg, $conn)
 
 function get_first_image_src($html)
 {
+    if (empty($html)) {
+        return "";
+    }
+
     $dom = new DOMDocument();
     $dom->loadHTML($html);
 

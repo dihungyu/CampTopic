@@ -1,4 +1,7 @@
 <?php
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
 require_once "../php/get_img_src.php";
@@ -693,23 +696,37 @@ if (isset($_POST["likeEquipDel"])) {
                   // 檢查當前設備是否已按讚
                   $isEquipLiked = in_array($equipmentData["equipmentId"], $likedEquips);
 
-
-
-
-                  $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
-                  $files_result = mysqli_query($conn, $files_query);
-                  $image_src = 'images/M85318677_big.jpeg'; // Default image
-
-                  if ($file_result = mysqli_fetch_assoc($files_result)) {
-                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                    $image_src = $file_path;
+                  //若文章內容超過30字做限制
+                  $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
+                  if ($content_length > 30) {
+                    $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 20, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
                   }
+
+                  // 取得設備圖片
+                  $equip_img_src = get_first_image_src($equipmentData["equipmentDescription"]);
+                  if ($equip_img_src == '') {
+                    $equip_img_src = 'images/M85318677_big.jpeg'; // Default image
+                  }
+
+
+
+
+                  // $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
+                  // $files_result = mysqli_query($conn, $files_query);
+                  // $image_src = 'images/M85318677_big.jpeg'; // Default image
+
+                  // if ($file_result = mysqli_fetch_assoc($files_result)) {
+                  //   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                  //   $image_src = $file_path;
+                  // }
 
                   //格式化按讚數
                   $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
 
                   echo "<div class='card' style='margin-right: 20px; margin-bottom: 20px;'>
-                <img src='" . $image_src . "' class='card-img-top' alt='...'>
+                <img src='" . $equip_img_src . "' class='card-img-top' alt='...'>
 
                 <div class='card-body'>
                   <div class='detail' style='margin-bottom: 0px;'>
@@ -744,7 +761,7 @@ if (isset($_POST["likeEquipDel"])) {
                     </span>
                   </div>
                   <p class='card-text'>
-                    " . $equipmentData["equipmentDescription"] . "</p>
+                    " . $truncated_content . "</p>
                   <footer style='margin-top:40px'>
                     <div class='card-icon-footer'>
                       <div class='tagcloud'>";
