@@ -153,9 +153,7 @@ if (isset($_POST["likeEquipDel"])) {
   <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
   <!-- 引入 Bootstrap 的 CSS 檔案 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"
-    integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw=="
-    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
 
 
   <title>
@@ -181,7 +179,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -192,9 +190,8 @@ if (isset($_POST["likeEquipDel"])) {
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -203,11 +200,9 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -220,8 +215,7 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -248,8 +242,7 @@ if (isset($_POST["likeEquipDel"])) {
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay"
-    style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
+  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-12 text-center mt-5">
@@ -303,7 +296,7 @@ if (isset($_POST["likeEquipDel"])) {
 
             //取出設備圖片
             $image_src = get_first_image_src($equipment["equipmentDescription"]);
-            if ($image_src === "") {
+            if ($image_src == "") {
               $image_src = "property-1.0.0/images/image_8.jpg";
             }
 
@@ -395,7 +388,7 @@ if (isset($_POST["likeEquipDel"])) {
             <div class="col-lg-3"></div>
             <div class="col-lg-6 text-center">
               <div class="custom-pagination">
-                <?php for ($i = 1; $i <= $equipment_total_pages; $i++): ?>
+                <?php for ($i = 1; $i <= $equipment_total_pages; $i++) : ?>
                   <a href="?equipment_page=<?= $i ?>" <?= ($i == $equipment_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                 <?php endfor; ?>
               </div>
@@ -412,7 +405,7 @@ if (isset($_POST["likeEquipDel"])) {
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
               <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 6px;">
-                <input type="search" id="form1" name="equipment_search_keyword" class="form-control" />
+                <input type="search" id="form1" name="equipment_search_keyword" class="form-control" placeholder="搜尋裝備..." />
               </div>
             </div>
           </form>
@@ -493,13 +486,18 @@ if (isset($_POST["likeEquipDel"])) {
               while ($top234_article_row = mysqli_fetch_assoc($top234_article_result)) {
                 $articleId = $top234_article_row["articleId"];
 
-                $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
-                $files_result = mysqli_query($conn, $files_query);
-                $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
-            
-                if ($file_result = mysqli_fetch_assoc($files_result)) {
-                  $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; 
+                // $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
+                // $files_result = mysqli_query($conn, $files_query);
+                // $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+
+                // if ($file_result = mysqli_fetch_assoc($files_result)) {
+                //   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                //   $image_src = '../property-1.0.0/images/Rectangle\ 135.png';
+                // }
+                // 取得文章圖片
+                $article_img_src = get_first_image_src($top234_article_row["articleContent"]);
+                if ($article_img_src == '') {
+                  $article_img_src = '../property-1.0.0/images/Rectangle\ 135.png';
                 }
 
                 $timestamp = strtotime($top234_article_row["articleCreateDate"]);
@@ -511,7 +509,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $comment_count = $row['comment_count'];
 
                 echo "<div class='block-21 mb-4 d-flex'>
-                        <a class='blog-img mr-4' style='background-image: url(" . $image_src . ");'></a>
+                        <a class='blog-img mr-4' style='background-image: url(" . $article_img_src . ");'></a>
                         <div class='text'>
                         <div>
                             <h3 class='heading'>
@@ -611,8 +609,7 @@ if (isset($_POST["likeEquipDel"])) {
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg></div>
 
 
@@ -630,8 +627,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

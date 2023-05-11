@@ -625,11 +625,11 @@ if (isset($_POST["likeArticleDel"])) {
                   $formatted_date = date('F j, Y', $timestamp);
 
                   //若文章內容超過30字做限制
-                  $content_length = mb_strlen($articleData["articleContent"], 'UTF-8');
+                  $content_length = mb_strlen(strip_tags($articleData["articleContent"]), 'UTF-8');
                   if ($content_length > 30) {
-                    $truncated_content = mb_substr($articleData["articleContent"], 0, 30, 'UTF-8') . '...';
+                    $truncated_content = mb_substr(strip_tags($articleData["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
                   } else {
-                    $truncated_content = $articleData["articleContent"];
+                    $truncated_content = strip_tags($articleData["articleContent"]);
                   }
 
                   // 在顯示卡片之前查詢留言數
@@ -787,9 +787,9 @@ if (isset($_POST["likeArticleDel"])) {
           $equip_count_result = $conn->query($equip_count_sql);
           $row = $equip_count_result->fetch_assoc();
           $equip_total_rows = $row['total'];
-          $equip_total_pages = ceil($equip_total_rows / 8);
+          $equip_total_pages = ceil($equip_total_rows / 9);
 
-          $equip_perPage = 8;
+          $equip_perPage = 9;
           $equip_current_page = isset($_GET['equip_page']) ? (int) $_GET['equip_page'] : 1;
           $equip_offset = ($equip_current_page - 1) * $equip_perPage;
 
@@ -801,21 +801,21 @@ if (isset($_POST["likeArticleDel"])) {
           if ($equipmentResult && $equipmentResult->num_rows > 0) {
 
             $equip_card_counter = 0;
-            $ad_counter = 0;
             echo
             '<div class="container">';
             echo '<div class="row">';
             while ($equipmentData = $equipmentResult->fetch_assoc()) {
 
-              // $files_query = "SELECT * FROM files WHERE equipmentId = '$equipmentData[equipmentId]'";
-              // $files_result = mysqli_query($conn, $files_query);
-              // $image_src = 'images/M85318677_big.jpeg'; // Default image
+              //若文章內容超過30字做限制
+              $content_length = mb_strlen($equipmentData["equipmentDescription"], 'UTF-8');
+              if ($content_length > 30) {
+                $truncated_content = mb_substr($equipmentData["equipmentDescription"], 0, 30, 'UTF-8') . '...';
+              } else {
+                $truncated_content = $equipmentData["equipmentDescription"];
+              }
 
-              // if ($file_result = mysqli_fetch_assoc($files_result)) {
-              //   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-              //   $image_src = $file_path;
-              // }
 
+              // 取得設備的第一張圖片
               $equip_img_src = get_first_image_src($equipmentData['equipmentDescription']);
               if ($equip_img_src) {
                 $equip_img_src = "../" . $equip_img_src;
@@ -830,13 +830,19 @@ if (isset($_POST["likeArticleDel"])) {
               $isEquipLiked = in_array($equipmentData["equipmentId"], $likedEquips);
 
 
-              // 每兩個card會被一個article標籤包裹
-              if ($equip_card_counter % 2 === 0) {
-                echo '<article class="col-md-8 article-list"">
-              <div class="innereq">';
+              //若文章內容超過30字做限制
+              $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
+              if ($content_length > 30) {
+                $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+              } else {
+                $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
               }
 
+
+
+
               // 輸出card
+              echo '<div class="col-md-4">';
               echo '<div class="card">';
               echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
               echo '<div class="card-body">';
@@ -867,7 +873,7 @@ if (isset($_POST["likeArticleDel"])) {
 
               echo '</div>';
               echo '<div class="row">';
-              echo '<p class="card-text mb-2">' . $equipmentData['equipmentDescription'] . '</p>';
+              echo '<p class="card-text mb-2">' . $truncated_content . '</p>';
               echo '</div>'; // row
 
 
@@ -913,46 +919,23 @@ if (isset($_POST["likeArticleDel"])) {
 
               echo "</footer>";
 
-
               echo '</div>';
-              echo '</div>';
+              echo '</div>'; // card
+              echo '</div>'; // col-md-4
 
               $equip_card_counter++;
-
-              // 每兩個card生成後，右邊會顯示一個廣告
-              if ($equip_card_counter % 2 === 0) {
-                echo '</div>';
-                echo '</article>';
-
-                // 當生成兩個廣告後，將不再顯示廣告
-                if ($ad_counter < 2) {
-                  echo '<div class="col-md-2 sidebar">';
-                  echo '<aside>';
-                  echo '<div class="aside-body">';
-                  echo '<figure class="ads">';
-                  echo '<a href="#">';
-                  echo '<img src="images/Group 74.png">';
-                  echo '</a>';
-                  echo '<figcaption>Advertisement</figcaption>';
-                  echo '</figure>';
-                  echo '</div>';
-                  echo '</aside>';
-                  echo '</div>';
-
-                  $ad_counter++;
-                }
+              // 每9個card生成後，結束循環
+              if (
+                $equip_card_counter % 9 === 0
+              ) {
+                break;
               }
-            }
-
-            // 如果card數量為奇數，則需要閉合最後一個article標籤
-            if ($equip_card_counter % 2 !== 0) {
-              echo '</article>';
             }
 
             echo '</div>'; // row
             echo '</div>'; // container
           } else {
-            echo '目前還沒有收藏的設備喔！';
+            echo '上架你的設備吧！';
           }
         }
         ?>

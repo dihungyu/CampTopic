@@ -1,7 +1,7 @@
 <?php
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// 開啟錯誤報告
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
 require_once "../php/get_img_src.php";
