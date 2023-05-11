@@ -6338,8 +6338,16 @@ margin-left: 15px;
 .d-inline-block {
   display: inline-block !important; }
 
+.city.d-bflex{
+  display: flex;
+  box-sizing: content-box;
+  width: 200px;
+  height: 90px;
+  padding: 10px;
+}
 .d-block {
-  display: block !important; }
+  display: block !important;
+   }
 
 .d-grid {
   display: -ms-grid !important;

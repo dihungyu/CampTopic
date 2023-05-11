@@ -452,7 +452,7 @@ if (isset($_POST["likeEquipDel"])) {
 
 
                   echo "<div class='property-item'>
-                <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 412px; height: 412px;' />
+                <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 412px; height: 412px;' data-toggle='modal' data-target='#exampleModalCenter' />
 
                 <div class='property-content'>
                   <span class='span-adj' style='justify-content: space-between;'>
@@ -468,7 +468,7 @@ if (isset($_POST["likeEquipDel"])) {
                   </span>
                   <div>
                     <a href='../camp-single.php?campsiteId=$campsiteId' class='img'>
-                      <span class='city d-block mb-3 mt-3'>" . $campsiteData["campsiteName"] . "</span></a>
+                      <span class='city d-block mb-3 mt-3' style='box-sizing: content-box; width: 200px; height: 90px;'>" . $campsiteData["campsiteName"] . "</span></a>
                     <span class='d-block mb-4 text-black-50'>" . $campsiteData["campsiteAddress"] . "</span>";
 
                   echo "<div class='card-icon-footer'>
@@ -515,7 +515,7 @@ if (isset($_POST["likeEquipDel"])) {
 
               <!-- .item -->
               <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" style='width: 412px; height: 412px;' />
+                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" style='width: 412px; height: 412px;'  data-toggle="modal" data-target="#exampleModalCenter"/>
 
 
                 <div class="property-content">
@@ -526,7 +526,7 @@ if (isset($_POST["likeEquipDel"])) {
                     </button>
                   </span>
                   <div>
-                    <a href="property-single.html" class="img">
+                    <a href="property-single.html" class="img" >
                       <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
                     <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
                     <div class="card-icon-footer">
@@ -665,7 +665,8 @@ if (isset($_POST["likeEquipDel"])) {
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
-                  echo "<a href='../equip-single.php?equipmentId=" . $equipmentData["equipmentId"] . "'><div class='city d-block'>" . $equipmentData["equipmentName"] . "</div></a>
+                  echo "<a href='../equip-single.php?equipmentId=" . $equipmentData["equipmentId"] . "'>
+                  <div class='city d-bflex' style='  display: flex; box-sizing: content-box; width: 200px; height: 90px; padding: 10px;'>" . $equipmentData["equipmentName"] . "</div></a>
                   </span>
 
                   <span class='span-adj'>
