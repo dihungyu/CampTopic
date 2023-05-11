@@ -197,6 +197,44 @@ if (isset($_POST["likeEquipDel"])) {
 </head>
 
 <body>
+
+  <!-- 模态框 HTML 结构 -->
+  <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportModalLabel">舉報設備</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="report-form">
+            <div class="form-group">
+              <label for="report-reason">舉報原因</label>
+              <select class="form-control" id="report-reason" name="reportReason">
+                <option value="垃圾訊息">垃圾訊息</option>
+                <option value="冒犯性内容">冒犯性内容</option>
+                <option value="疑似詐騙">疑似詐騙</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="report-description">詳細描述</label>
+              <textarea class="form-control" id="report-description" name="reportDescription" rows="3"></textarea>
+              <input type="hidden" id="reported-equipment-id" name="equipmentId" value="<?= $equipmentId ?>">
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="submit-report">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 系統訊息 -->
   <?php if (isset($_SESSION["system_message"])) : ?>
     <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
@@ -305,6 +343,10 @@ if (isset($_POST["likeEquipDel"])) {
             <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
+                  } else {
+                    echo '<button class="btn-icon report-btn" data-equipment-id="' . $equipmentId . '">
+    <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
+  </button>';
                   }
                   ?>
                 </span>
@@ -649,6 +691,40 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+
+    <script>
+      $(document).ready(function() {
+        // 當使用者點擊檢舉按鈕時，顯示模態框
+        $('.report-btn').on('click', function() {
+          var equipmentId = $(this).data('equipment-id');
+          $('#equipmentId').val(equipmentId);
+          $('#reportModal').modal('show');
+        });
+
+        // 處理表單提交
+        $('#submit-report').on('click', function() {
+          var formData = $('#report-form').serialize();
+          console.log("表單數據:", formData); // 輸出表單數據到控制台
+
+          // 使用 AJAX 將表單資料發送到伺服器
+          $.post('report-equipment.php', formData, function(response) {
+            // 解析伺服器返回的 JSON 响應
+            var jsonResponse = JSON.parse(response);
+            console.log("伺服器回應:", jsonResponse); // 輸出伺服器回應到控制台
+
+            // 根據回應狀態顯示相應的提示訊息
+            if (jsonResponse.status === 'success') {
+              alert('提交成功！謝謝您為我們的平台盡一份力，請耐心等待管理員審核。');
+            } else {
+              alert(jsonResponse.message);
+            }
+          });
+
+          // 關閉模態框
+          $('#reportModal').modal('hide');
+        });
+      });
+    </script>
 </body>
 
 </html>

@@ -113,6 +113,43 @@ $articleId = $_GET['articleId'];
 </head>
 
 <body>
+  <!-- 模态框 HTML 结构 -->
+  <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportModalLabel">舉報文章</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="report-form">
+            <div class="form-group">
+              <label for="report-reason">舉報原因</label>
+              <select class="form-control" id="report-reason" name="reportReason">
+                <option value="垃圾訊息">垃圾訊息</option>
+                <option value="冒犯性内容">冒犯性内容</option>
+                <option value="侵犯版權">侵犯版權</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="report-description">詳細描述</label>
+              <textarea class="form-control" id="report-description" name="reportDescription" rows="3"></textarea>
+              <input type="hidden" id="reported-article-id" name="articleId" value="<?= $articleId ?>">
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="submit-report">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- 系統訊息 -->
   <?php if (isset($_SESSION["system_message"])) : ?>
@@ -305,6 +342,10 @@ $articleId = $_GET['articleId'];
             <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
           </a>
         </button>';
+              } else {
+                echo '<button class="btn-icon report-btn" data-article-id="' . $articleId . '">
+    <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
+  </button>';
               }
               ?>
             </span>
@@ -337,82 +378,89 @@ $articleId = $_GET['articleId'];
                 ?>
               </div>
             </div>
+          </div>
 
 
 
-            <!-- 留言區 -->
-            <?php
+          <!-- 留言區 -->
+          <?php
 
-            //可用函式
-            function format_timestamp($timestamp)
-            {
-              date_default_timezone_set("Asia/Taipei");
-              $unix_timestamp = strtotime($timestamp);
-              return date("F j, Y \a\\t g:ia", $unix_timestamp);
-            }
+          //可用函式
+          function format_timestamp($timestamp)
+          {
+            date_default_timezone_set("Asia/Taipei");
+            $unix_timestamp = strtotime($timestamp);
+            return date("F j, Y \a\\t g:ia", $unix_timestamp);
+          }
 
-            //留言區開始
-            // 查詢留言數量
-            $comment_count_sql = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
-            $comment_count_result = mysqli_query($conn, $comment_count_sql);
-            $comment_count_row = mysqli_fetch_assoc($comment_count_result);
-            $comment_count = $comment_count_row["comment_count"];
+          //留言區開始
+          // 查詢留言數量
+          $comment_count_sql = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+          $comment_count_result = mysqli_query($conn, $comment_count_sql);
+          $comment_count_row = mysqli_fetch_assoc($comment_count_result);
+          $comment_count = $comment_count_row["comment_count"];
 
 
-            // 查詢我的頭像
-            $accountId = $_COOKIE["accountId"];
-            $img_src = get_profileImg_src($accountId, $conn);
-            $img_src = str_replace("../", "", $img_src);
-            $img_src = "../" . $img_src;
+          // 查詢我的頭像
+          $accountId = $_COOKIE["accountId"];
+          $img_src = get_profileImg_src($accountId, $conn);
+          $img_src = str_replace("../", "", $img_src);
+          $img_src = "../" . $img_src;
 
-            echo "<div class='pt-5 mt-5'>
+          echo "<div class='pt-5 mt-5'>
             <h5 class='mb-5'>目前" . $comment_count . "留言</h5>
             <h6 class='mb-5'>由舊到新排序</h6>
             <ul class='comment-list'>";
 
-            // 輸出留言
-            // 如果未登入，則不顯示留言區塊
-            if (!isset($_COOKIE["accountId"])) {
-              echo "<h6 class='mb-5'>請先登入才能留言</h6>";
-            } else {
-              // 如果已登入，則顯示留言區塊
+          // 輸出留言
+          // 如果未登入，則不顯示留言區塊
+          if (!isset($_COOKIE["accountId"])) {
+            echo "<h6 class='mb-5'>請先登入才能留言</h6>";
+          } else {
+            // 如果已登入，則顯示留言區塊
+            echo '<li class="comment">
+  <div style="display: flex; align-items: center;">
+    <span class="img-name">
+      <img src="' . $img_src . '" style="border-radius: 50%; width: 45px; height: 45px; margin-right: 8px;">
+    </span>
+    <div class="comment-body" style="position: relative;">
+      <h6>' . $_COOKIE["accountName"] . '</h6>
+      <form action="submit_comment.php" method="post">
+        <input type="hidden" name="action" value="comment">
+        <input type="hidden" name="articleId" value="' . $articleId . '">
+        <input type="hidden" name="type" value="article">
+        <input type="text" name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
+        <button type="submit" class="btn">發布</button>
+      </form>
+    </div>
+  </div>
+</li>';
+          }
+
+
+
+
+
+          // 查詢留言和留言者名稱
+          $comment_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId IS NULL ORDER BY commentCreateDate ASC";
+          $comment_result = mysqli_query($conn, $comment_query);
+
+
+          // 顯示留言
+          if ($comment_result && $comment_result->num_rows > 0) {
+            while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
+
+              // 查詢該留言者頭像
+              $commenterId = $comment_result_row["accountId"];
+              $commenter_img_src = get_profileImg_src($commenterId, $conn);
+              $commenter_img_src = str_replace("../", "", $commenter_img_src);
+              $commenter_img_src = "../" . $commenter_img_src;
+
+              // 將 Unix 時間戳格式化為指定格式的日期時間字串
+              $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
+
+              // 輸出留言
               echo '<li class="comment">
-                <span class="img-name">
-                  <img src="' . $img_src . '" style="border-radius: 50%; width: 45px;
-                  height: 45px; margin-right: 8px;"\>
-                </span>
-                <div class="comment-body" style="position: relative;">
-                  <h6>' . $_COOKIE["accountName"] . '</h6>
-                  <form action="submit_comment.php" method="post">
-                    <input type="hidden" name="action" value="comment">
-                    <input type="hidden" name="articleId" value="' . $articleId . '">
-                    <input type="text"   name="commentContent" placeholder="發表您的看法！" id="form1" class="article-comment" />
-                    <button type="submit" class="btn" >發布</button>
-                  </form>';
-            }
-
-
-
-
-            // 查詢留言和留言者名稱
-            $comment_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId IS NULL";
-            $comment_result = mysqli_query($conn, $comment_query);
-
-            // 顯示留言
-            if ($comment_result && $comment_result->num_rows > 0) {
-              while ($comment_result_row = mysqli_fetch_assoc($comment_result)) {
-
-                // 查詢該留言者頭像
-                $commenterId = $comment_result_row["accountId"];
-                $commenter_img_src = get_profileImg_src($commenterId, $conn);
-                $commenter_img_src = str_replace("../", "", $commenter_img_src);
-                $commenter_img_src = "../" . $commenter_img_src;
-
-                // 將 Unix 時間戳格式化為指定格式的日期時間字串
-                $date_string = format_timestamp($comment_result_row["commentCreateDate"]);
-
-                // 輸出留言
-                echo '<li class="comment">
               <span class="img-name">
                 <img src="' . $commenter_img_src . '"  style="border-radius: 50%; width: 45px; height: 45px; margin-right: 8px;">
               </span>
@@ -421,84 +469,111 @@ $articleId = $_GET['articleId'];
     <div class="meta" style="font-size:11px;"> ' . $date_string . '</div>
     <p style="margin-top:10px;" id="comment-content-' . $comment_result_row["commentId"] . '" >' . $comment_result_row["commentContent"] . '</p>';
 
-                // 如果是自己的留言，顯示刪除按鈕
-                if ($_COOKIE["accountId"] == $comment_result_row["accountId"]) {
-                  echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $comment_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
-                }
+              // 如果是自己的留言，或者是發文者，顯示刪除按鈕
+              if ($_COOKIE["accountId"] == $comment_result_row["accountId"] || $_COOKIE["accountId"] == $main_article_row["accountId"]) {
+                echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $comment_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
+              }
 
 
 
 
-                // 查詢留言回覆者名稱和內容
-                $replyId = $comment_result_row["commentId"];
-                $reply_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId= '$replyId' ORDER BY commentCreateDate ASC";
-                $reply_result = mysqli_query($conn, $reply_query);
 
-                if ($reply_result && $reply_result->num_rows > 0) {
-                  echo '<ul class="reply-list">';
-                  while ($reply_result_row = mysqli_fetch_assoc($reply_result)) {
 
-                    // 查詢該留言者頭像
-                    $replyerId = $reply_result_row["accountId"];
-                    $replyer_img_src = get_profileImg_src($replyerId, $conn);
-                    $replyer_img_src = str_replace("../", "", $replyer_img_src);
-                    $replyer_img_src = "../" . $replyer_img_src;
+              // 查詢留言回覆者名稱和內容
+              $replyId = $comment_result_row["commentId"];
+              $reply_query = "SELECT comments.*, accounts.accountName FROM comments JOIN accounts ON comments.accountId = accounts.accountId WHERE articleId = '$articleId' AND replyId= '$replyId' ORDER BY commentCreateDate ASC";
+              $reply_result = mysqli_query($conn, $reply_query);
 
-                    // 將 Unix 時間戳格式化為指定格式的日期時間字串
-                    $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
 
-                    echo '<li>
+              if ($reply_result && $reply_result->num_rows > 0) {
+                echo '<ul class="reply-list">';
+                while ($reply_result_row = mysqli_fetch_assoc($reply_result)) {
+
+                  // 查詢該留言者頭像
+                  $replyerId = $reply_result_row["accountId"];
+                  $replyer_img_src = get_profileImg_src($replyerId, $conn);
+                  $replyer_img_src = str_replace("../", "", $replyer_img_src);
+                  $replyer_img_src = "../" . $replyer_img_src;
+
+                  // 將 Unix 時間戳格式化為指定格式的日期時間字串
+                  $date_string = format_timestamp($reply_result_row["commentCreateDate"]);
+
+                  echo '<li>
           <span class="img-name" >
-            <img src="' . $replyer_img_src . '" style="border-radius: 50%; width: 5%; margin-right: 16px;">
+            <img src="' . $replyer_img_src . '"  style="border-radius: 50%; width: 30px; height: 30px; margin-right: 8px;">
           </span>
           <div class="comment-body" style="position: relative;">
             <h6>' . $reply_result_row["accountName"] . '</h6>
             <div class="meta">' . $date_string . '</div>
             <p id="comment-content-' . $reply_result_row["commentId"] . '">' . $reply_result_row["commentContent"] . '</p>';
 
-                    // 如果是自己的留言，顯示刪除按鈕
-                    if ($_COOKIE["accountId"] == $reply_result_row["accountId"]) {
-                      echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $reply_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
-                    }
-
-
-
-                    echo '</div>
-        </li>';
+                  // 如果是自己的留言，或者是發文者，顯示刪除按鈕
+                  if ($_COOKIE["accountId"] == $reply_result_row["accountId"] || $_COOKIE["accountId"] == $reply_result_row["accountId"]) {
+                    echo '<span class="delete-comment" onclick="confirmDelete(\'' . $articleId . '\', \'' . $reply_result_row["commentId"] . '\')"><i class="far fa-trash-alt"></i></span>';
                   }
-                  echo '</ul>';
-                }
 
+
+
+                  echo '</div>
+        </li>';
+                }
                 if ($_COOKIE["accountName"]) {
                   echo '<!-- 使用者回覆區 -->
-                    <span class="img-name" style="display: flex; align-items: center;">
-                      <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 45px;
-                      height: 45px; margin-right: 8px;">
-                      
-                      <div class="reply-form" style="display: flex;align-items: center;">
-                        <h6 style="color: #000; text-transform: none;">' . $_COOKIE["accountName"] . '</h6>
-                        <form action="submit_comment.php" method="post">
-                          <input type="hidden" name="action" value="reply">
-                          <input type="hidden" name="articleId" value="' . $articleId . '">
-                          <input type="hidden" name="replyId" value="' . $comment_result_row["commentId"] . '">
-                          <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
-                          <button type="submit" class="btn" >發布</button>
-                        </form>
-                      </div></span>';
+  <li>
+    <div style="display: flex; align-items: center;">
+      <span class="img-name">
+        <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30px; height: 30px; margin-right: 8px;">
+      </span>
+      <div class="reply-form" style="display: flex; align-items: center;">
+        <form action="submit_comment.php" method="post">
+        <input type="hidden" name="type" value="article">
+          <input type="hidden" name="action" value="reply">
+          <input type="hidden" name="articleId" value="' . $articleId . '">
+          <input type="hidden" name="replyId" value="' . $comment_result_row["commentId"] . '">
+          <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
+          <button type="submit" class="btn" >發布</button>
+        </form>
+      </div>
+    </div>
+  </li>';
+                }
+                echo '</ul>';
+              } else {
+                if ($_COOKIE["accountName"]) {
+                  echo '<!-- 使用者回覆區 -->
+  <li>
+    <div style="display: flex; align-items: center;">
+      <span class="img-name">
+        <img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30px; height: 30px; margin-right: 8px;">
+      </span>
+      <div class="reply-form" style="display: flex; align-items: center;">
+        <form action="submit_comment.php" method="post">
+        <input type="hidden" name="type" value="article">
+          <input type="hidden" name="action" value="reply">
+          <input type="hidden" name="articleId" value="' . $articleId . '">
+          <input type="hidden" name="replyId" value="' . $comment_result_row["commentId"] . '">
+          <input type="text"   name="commentContent" placeholder="回覆" id="form1" class="article-comment" />
+          <button type="submit" class="btn" >發布</button>
+        </form>
+      </div>
+    </div>
+  </li>';
                 }
               }
             }
+          }
 
 
 
-            ?>
+          ?>
 
-            </ul>
-            <!-- END comment-list -->
-          </div>
+          </ul>
         </div>
+        <!-- END comment-list -->
+
       </div>
-      <!-- .col-md-8 -->
+    </div>
+    <!-- .col-md-8 -->
 
     </div>
     </div>
@@ -607,6 +682,7 @@ $articleId = $_GET['articleId'];
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
       $(document).ready(function() {
         $('#article-content img').addClass('article-img');
@@ -632,7 +708,7 @@ $articleId = $_GET['articleId'];
     <script>
       function confirmDelete(articleId, commentId) {
         if (confirm('確定要刪除這條留言嗎？')) {
-          window.location.href = 'delete_comment.php?articleId=' + articleId + '&commentId=' + commentId;
+          window.location.href = 'delete_comment.php?type=article&id=' + articleId + '&commentId=' + commentId;
         }
       }
     </script>
@@ -649,6 +725,45 @@ $articleId = $_GET['articleId'];
         });
       });
     </script>
+
+
+
+    <script>
+      $(document).ready(function() {
+        // 當使用者點擊檢舉按鈕時，顯示模態框
+        $('.report-btn').on('click', function() {
+          var articleId = $(this).data('article-id');
+          $('#articleId').val(articleId);
+          $('#reportModal').modal('show');
+        });
+
+        // 處理表單提交
+        $('#submit-report').on('click', function() {
+          var formData = $('#report-form').serialize();
+          console.log("表單數據:", formData); // 輸出表單數據到控制台
+
+          // 使用 AJAX 將表單資料發送到伺服器
+          $.post('report-article.php', formData, function(response) {
+            // 解析伺服器返回的 JSON 响應
+            var jsonResponse = JSON.parse(response);
+            console.log("伺服器回應:", jsonResponse); // 輸出伺服器回應到控制台
+
+            // 根據回應狀態顯示相應的提示訊息
+            if (jsonResponse.status === 'success') {
+              alert('提交成功！謝謝您為我們的平台盡一份力，請耐心等待管理員審核。');
+            } else {
+              alert(jsonResponse.message);
+            }
+          });
+
+          // 關閉模態框
+          $('#reportModal').modal('hide');
+        });
+      });
+    </script>
+
+
+
 
 
 
