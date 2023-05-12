@@ -184,7 +184,11 @@ function format_count($count)
             <div class="row">
               <article class="col-md-12 article-list" style="display: flex;">
                 <?php
-                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1";
+                $records_per_page = 6;
+                $current_page = isset($_GET['reviewedPage']) ? $_GET['reviewedPage'] : 1;
+                $offset = ($current_page - 1) * $records_per_page;
+
+                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
                 $result_isReviewed_campsites = mysqli_query($conn, $sql_isReviewed_campsites);
                 $isReviewed_campsites = [];
                 if (mysqli_num_rows($result_isReviewed_campsites) > 0) {
@@ -192,21 +196,24 @@ function format_count($count)
                     $isReviewed_campsites[] = $row;
                   }
                 }
+
+                $sql_total_campsites = "SELECT COUNT(*) as total FROM campsites WHERE isReviewed = 1";
+                $result_total_campsites = mysqli_query($conn, $sql_total_campsites);
+                $total_campsites = mysqli_fetch_assoc($result_total_campsites)['total'];
+                $total_pages = ceil($total_campsites / $records_per_page);
+
                 foreach ($isReviewed_campsites as $isReviewed_campsite) {
-                  $campsiteId = $isReviewed_campsite['campsiteId'];
-                  $campsiteLowerLimit = $isReviewed_campsite['campsiteLowerLimit'];
-                  $campsiteName = $isReviewed_campsite['campsiteName'];
                   echo '<div class="card isReviewed-card">';
                   echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
                   echo '  <div class="card-body">';
                   echo '    <span class="span-adj" style="justify-content: space-between;">';
-                  echo '      <h4><span>$' . format_count($campsiteLowerLimit) . '起</span></h4>';
-                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $campsiteId . '">';
+                  echo '      <h4><span>$' . format_count($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
+                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $isReviewed_campsite['campsiteId'] . '">';
                   echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
                   echo '      </button>';
                   echo '    </span>';
                   echo '    <div>';
-                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $campsiteName . '</h5></a>';
+                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $isReviewed_campsite['campsiteName'] . '</h5></a>';
                   //若文章內容超過30字做限制
                   $isReviewed_content_length = mb_strlen(strip_tags($isReviewed_campsite["campsiteDescription"]), 'UTF-8');
                   if ($isReviewed_content_length > 30) {
@@ -218,9 +225,9 @@ function format_count($count)
                   echo '      <div class="card-icon-footer">';
                   echo '        <div class="tagcloud">';
                   $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
-                      FROM campsites_labels
-                      JOIN labels ON campsites_labels.labelId = labels.labelId
-                      WHERE campsites_labels.campsiteId = '$campsiteId'";
+                     FROM campsites_labels
+                     JOIN labels ON campsites_labels.labelId = labels.labelId
+                     WHERE campsites_labels.campsiteId = '" . $isReviewed_campsite['campsiteId'] . "'";
                   $result_labels = mysqli_query($conn, $sql_query_labels);
 
                   $printed_tags = 0;
@@ -248,11 +255,12 @@ function format_count($count)
           <div class="col-lg-3"></div>
           <div class="col-lg-6 text-center">
             <div class="custom-pagination">
-              <a href="#">1</a>
-              <a href="#" class="active">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
+              <?php
+              for ($i = 1; $i <= $total_pages; $i++) {
+                $active_class = ($i == $current_page) ? 'class="active"' : '';
+                echo "<a href=\"?reviewedPage=$i\" $active_class>$i</a>";
+              }
+              ?>
             </div>
           </div>
         </div>
@@ -264,7 +272,11 @@ function format_count($count)
             <div class="row">
               <article class="col-md-12 article-list" style="display: flex;">
                 <?php
-                $sql_unReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 0";
+                $recordsPerPage = 6;
+                $currentPage = isset($_GET['unReviewedPage']) ? $_GET['unReviewedPage'] : 1;
+                $offSet = ($currentPage - 1) * $recordsPerPage;
+
+                $sql_unReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 0 LIMIT $recordsPerPage OFFSET $offSet";
                 $result_unReviewed_campsites = mysqli_query($conn, $sql_unReviewed_campsites);
                 $unReviewed_campsites = [];
                 if (mysqli_num_rows($result_unReviewed_campsites) > 0) {
@@ -272,21 +284,32 @@ function format_count($count)
                     $unReviewed_campsites[] = $row;
                   }
                 }
+
+                $sql_total_unReviewed_campsites = "SELECT COUNT(*) as total FROM campsites WHERE isReviewed = 0";
+                $result_total_unReviewed_campsites = mysqli_query($conn, $sql_total_unReviewed_campsites);
+                $total_unReviewed_campsites = mysqli_fetch_assoc($result_total_unReviewed_campsites)['total'];
+                $total_unReviewed_pages = ceil($total_unReviewed_campsites / $recordsPerPage);
+
                 foreach ($unReviewed_campsites as $unReviewed_campsite) {
-                  $campsiteId = $unReviewed_campsite['campsiteId'];
-                  $campsiteLowerLimit = $unReviewed_campsite['campsiteLowerLimit'];
-                  $campsiteName = $unReviewed_campsite['campsiteName'];
                   echo '<div class="card unReviewed-card">';
                   echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
                   echo '  <div class="card-body">';
-                  echo '    <span class="span-adj" style="justify-content: space-between;">';
-                  echo '      <h4><span>$' . format_count($campsiteLowerLimit) . '起</span></h4>';
-                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $campsiteId . '">';
-                  echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
-                  echo '      </button>';
-                  echo '    </span>';
+                  echo '<div class="d-flex justify-content-between align-items-center">';
                   echo '    <div>';
-                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $campsiteName . '</h5></a>';
+                  echo '        <h4><span>$' . format_count($unReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
+                  echo '    </div>';
+                  echo '    <div>';
+                  echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal' . $unReviewed_campsite["campsiteId"] . '">';
+                  echo '            <i class="fas fa-check" style="color: #28A745"></i>';
+                  echo '        </button>';
+                  echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal' . $unReviewed_campsite["campsiteId"] . '">';
+                  echo '            <i class="fas fa-times" style="color: #B02626"></i>';
+                  echo '        </button>';
+                  echo '    </div>';
+                  echo '</div>';
+
+                  echo '    <div>';
+                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $unReviewed_campsite['campsiteName'] . '</h5></a>';
                   //若文章內容超過30字做限制
                   $unReviewed_content_length = mb_strlen(strip_tags($unReviewed_campsite["campsiteDescription"]), 'UTF-8');
                   if ($unReviewed_content_length > 30) {
@@ -298,9 +321,9 @@ function format_count($count)
                   echo '      <div class="card-icon-footer">';
                   echo '        <div class="tagcloud">';
                   $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
-                      FROM campsites_labels
-                      JOIN labels ON campsites_labels.labelId = labels.labelId
-                      WHERE campsites_labels.campsiteId = '$campsiteId'";
+                    FROM campsites_labels
+                    JOIN labels ON campsites_labels.labelId = labels.labelId
+                    WHERE campsites_labels.campsiteId = '" . $unReviewed_campsite["campsiteId"] . "'";
                   $result_labels = mysqli_query($conn, $sql_query_labels);
 
                   $printed_tags = 0;
@@ -328,209 +351,257 @@ function format_count($count)
           <div class="col-lg-3"></div>
           <div class="col-lg-6 text-center">
             <div class="custom-pagination">
-              <a href="#">1</a>
-              <a href="#" class="active">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
+              <?php
+              for ($k = 1; $k <= $total_unReviewed_pages; $k++) {
+                $activeClass = ($k == $currentPage) ? 'class="active"' : '';
+                echo "<a href=\"?unReviewedPage=$k\" $activeClass>$k</a>";
+              }
+              ?>
             </div>
           </div>
         </div>
       </div>
+
     </div>
 
-  </div>
+    <div class="site-footer">
+      <div class="container">
+        <div class="row">
 
-  <div class="site-footer">
-    <div class="container">
-      <div class="row">
-
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>聯絡資訊</h3>
-            <address>StartCamping 營在起跑點！</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">0911222345</a></li>
-              <li><a href="tel://11234567890">@startcamping</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-              </li>
-            </ul>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>聯絡資訊</h3>
+              <address>StartCamping 營在起跑點！</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">0911222345</a></li>
+                <li><a href="tel://11234567890">@startcamping</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>頁面總覽</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="index.php">首頁</a></li>
-              <li><a href="camp-information.html">找小鹿</a></li>
-              <li><a href="../all-article.html">鹿的分享</a></li>
-              <li><a href="../equipment.html">鹿的裝備</a></li>
-              <li><a href="#">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="member.php">帳號</a></li>
-              <li><a href="member.php">會員帳號</a></li>
-              <li><a href="member-like.php">我的收藏</a></li>
-            </ul>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>頁面總覽</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="camp-information.html">找小鹿</a></li>
+                <li><a href="../all-article.html">鹿的分享</a></li>
+                <li><a href="../equipment.html">鹿的裝備</a></li>
+                <li><a href="#">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="member.php">帳號</a></li>
+                <li><a href="member.php">會員帳號</a></li>
+                <li><a href="member-like.php">我的收藏</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-2">
+            <!-- /.widget -->
+          </div>
         </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-2">
-          <!-- /.widget -->
-        </div>
-      </div>
-      <!-- /.row -->
+        <!-- /.row -->
 
 
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <!--
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!--
               **==========
               NOTE:
               Please don't remove this copyright link unless you buy the license here https://untree.co/license/
               **==========
             -->
 
-          <p>
-            Copyright &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            . All Rights Reserved. &mdash; Designed with love by
-            <a href="https://untree.co">Untree.co</a>
-            <!-- License information: https://untree.co/license/ -->
-          </p>
-          <div>
-            Distributed by
-            <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            </div>
           </div>
         </div>
       </div>
+      <!-- /.container -->
     </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.site-footer -->
-  <?php
-  foreach ($isReviewed_campsites as $isReviewed_campsite) {
-    $campsiteId = $isReviewed_campsite["campsiteId"];
-    $campsiteName = $isReviewed_campsite["campsiteName"];
-    echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
-    echo '<div class="modal fade" id="deleteModal' . $campsiteId . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
-    echo '<div class="modal-dialog" role="document">';
-    echo '<div class="modal-content">';
-    echo '<div class="modal-header">';
-    echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-    echo '<span aria-hidden="true">&times;</span>';
-    echo '</button>';
-    echo '</div>';
-    echo '<div class="modal-body">';
-    echo '確定要刪除「' . $campsiteName . '」嗎？';
-    echo '</div>';
-    echo '<div class="modal-footer">';
-    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
-    echo '<input type="hidden" name="campsiteId" value="' . $campsiteId . '">';
-    echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</form>';
-  }
-  ?>
+    <!-- /.site-footer -->
+    <?php
+    foreach ($isReviewed_campsites as $isReviewed_campsite) {
+      echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
+      echo '<div class="modal fade" id="deleteModal' . $isReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
+      echo '<div class="modal-dialog" role="document">';
+      echo '<div class="modal-content">';
+      echo '<div class="modal-header">';
+      echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
+      echo '<span aria-hidden="true">&times;</span>';
+      echo '</button>';
+      echo '</div>';
+      echo '<div class="modal-body">';
+      echo '確定要刪除「' . $isReviewed_campsite["campsiteName"] . '」嗎？';
+      echo '</div>';
+      echo '<div class="modal-footer">';
+      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
+      echo '<input type="hidden" name="campsiteId" value="' . $isReviewed_campsite["campsiteId"] . '">';
+      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</form>';
+    }
+
+    foreach ($unReviewed_campsites as $unReviewed_campsite) {
+      echo '<form method="UPDATE" action="../../php/Campsite/isReviewed_update.php">';
+      echo '<div class="modal fade" id="confirmModal' . $unReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">';
+      echo '<div class="modal-dialog" role="document">';
+      echo '<div class="modal-content">';
+      echo '<div class="modal-header">';
+      echo '<h5 class="modal-title" id="deleteModalLabel">審核確認</h5>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
+      echo '<span aria-hidden="true">&times;</span>';
+      echo '</button>';
+      echo '</div>';
+      echo '<div class="modal-body">';
+      echo '確定要讓「' . $unReviewed_campsite["campsiteName"] . '」上架嗎？';
+      echo '</div>';
+      echo '<div class="modal-footer">';
+      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
+      echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
+      echo '<button type="submit" class="btn-new" style="background-color: #28A745;">確認</button>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</form>';
+    }
+
+    foreach ($unReviewed_campsites as $unReviewed_campsite) {
+      echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
+      echo '<div class="modal fade" id="disagreeModal' . $unReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="disagreeModalLabel" aria-hidden="true">';
+      echo '<div class="modal-dialog" role="document">';
+      echo '<div class="modal-content">';
+      echo '<div class="modal-header">';
+      echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
+      echo '<span aria-hidden="true">&times;</span>';
+      echo '</button>';
+      echo '</div>';
+      echo '<div class="modal-body">';
+      echo '確定要否決「' . $unReviewed_campsite["campsiteName"] . '」嗎？';
+      echo '</div>';
+      echo '<div class="modal-footer">';
+      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
+      echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
+      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認</button>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</form>';
+    }
+    ?>
 
 
-  <!-- Preloader -->
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
-  </div>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/tiny-slider.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/navbar.js"></script>
-  <script src="js/counter.js"></script>
-  <script src="js/custom.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-  <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
-  <script src="js/e-magz.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+    <script src="js/e-magz.js"></script>
 
-  <script>
-    $(document).ready(function () {
-      // 將 "已上架" tab 設為顯示
-      $('#isReviewed-tab').addClass('active');
-      $('#isReviewed').addClass('show active');
-
-      // 當 "已上架" tab 被點擊時的觸發事件
-      $('#isReviewed-tab').on('click', function () {
-        $(this).addClass('active');
-        $('#unReviewed-tab').removeClass('active');
+    <script>
+      $(document).ready(function () {
+        // 將 "已上架" tab 設為顯示
+        $('#isReviewed-tab').addClass('active');
         $('#isReviewed').addClass('show active');
-        $('#unReviewed').removeClass('show active');
-      });
 
-      // 當 "待審核" tab 被點擊時的觸發事件
-      $('#unReviewed-tab').on('click', function () {
-        $(this).addClass('active');
-        $('#isReviewed-tab').removeClass('active');
-        $('#unReviewed').addClass('show active');
-        $('#isReviewed').removeClass('show active');
-      });
-
-
-      // 搜索功能
-      $('#form1').on('input', function () {
-        let searchKeyword = $(this).val().toLowerCase();
-        let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
-        let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
-
-        $(targetCards).each(function () {
-          let campsiteName = $(this).find('.city').text().toLowerCase();
-          if (campsiteName.indexOf(searchKeyword) !== -1) {
-            $(this).show();
-          } else {
-            $(this).hide();
-          }
+        // 當 "已上架" tab 被點擊時的觸發事件
+        $('#isReviewed-tab').on('click', function () {
+          $(this).addClass('active');
+          $('#unReviewed-tab').removeClass('active');
+          $('#isReviewed').addClass('show active');
+          $('#unReviewed').removeClass('show active');
         });
-      });
 
-    });
-  </script>
+        // 當 "待審核" tab 被點擊時的觸發事件
+        $('#unReviewed-tab').on('click', function () {
+          $(this).addClass('active');
+          $('#isReviewed-tab').removeClass('active');
+          $('#unReviewed').addClass('show active');
+          $('#isReviewed').removeClass('show active');
+        });
+
+
+        // 搜索功能
+        $('#form1').on('input', function () {
+          let searchKeyword = $(this).val().toLowerCase();
+          let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
+          let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
+
+          $(targetCards).each(function () {
+            let campsiteName = $(this).find('.city').text().toLowerCase();
+            if (campsiteName.indexOf(searchKeyword) !== -1) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+          });
+        });
+
+      });
+    </script>
 
 
 
