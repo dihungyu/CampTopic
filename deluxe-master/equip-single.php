@@ -26,7 +26,7 @@ $equipmentId = $_GET['equipmentId'];
 $sql_equipment = "SELECT * FROM equipments WHERE equipmentId = '$equipmentId'";
 $result_equipment = mysqli_query($conn, $sql_equipment);
 $row_equipment = mysqli_fetch_assoc($result_equipment);
-
+$equipmentOwnerId = $row_equipment["accountId"];
 $equipmentName = $row_equipment['equipmentName'];
 $equipmentType = $row_equipment["equipmentType"];
 $equipmentName = $row_equipment["equipmentName"];
@@ -34,13 +34,13 @@ $equipmentDescription = $row_equipment["equipmentDescription"];
 $equipmentPrice = $row_equipment["equipmentPrice"];
 $equipmentLikeCount = $row_equipment["equipmentLikeCount"];
 
-$sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
+$sql_account = "SELECT * FROM accounts WHERE accountId = '$equipmentOwnerId'";
 $result_account = mysqli_query($conn, $sql_account);
 $row_account = mysqli_fetch_assoc($result_account);
 
-$accountName = $row_account['accountName'];
-$accountEmail = $row_account['accountEmail'];
-$accountPhoneNumber = $row_account['accountPhoneNumber'];
+$ownerName = $row_account['accountName'];
+$ownerEmail = $row_account['accountEmail'];
+$ownerPhoneNumber = $row_account['accountPhoneNumber'];
 
 //收藏設備
 if (isset($_POST["collectEquipAdd"])) {
@@ -327,28 +327,32 @@ if (isset($_POST["likeEquipDel"])) {
                     </a></h1>
                 </span>
                 <span style="display:flex; align-items: center;">
-                  <h4 class="equiph4">$
-                    <?php echo $equipmentPrice ?>
+                  <h4 class="equiph4">
+                    <?php echo "$" . number_format($equipmentPrice) ?>
                   </h4>
                   <?php
-                  if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
-                    echo '<button class="btn-icon">
-                      <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
-            <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
-
-                    echo '<button class="btn-icon">
-          <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
-            <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
-                  } else {
-                    echo '<button class="btn-icon report-btn" data-equipment-id="' . $equipmentId . '">
-    <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
-  </button>';
+                  if (isset($_COOKIE["accountId"])) {
+                    if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
+                      echo '
+      <button class="btn-icon">
+        <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
+          <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>
+      <button class="btn-icon">
+        <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
+          <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>';
+                    } else {
+                      echo '
+      <button class="btn-icon report-btn" data-equipment-id="' . $equipmentId . '">
+        <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
+      </button>';
+                    }
                   }
                   ?>
+
                 </span>
               </div>
               <p style="padding:4px; margin-top:20px;">
@@ -363,7 +367,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <i class="fa-regular fa-user fa-xl"></i>
                         <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">聯絡人</p>
                         <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountName ?>
+                          <?php echo $ownerName ?>
                         </p>
                       </span>
                     </li>
@@ -372,7 +376,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <i class="fa-regular fa-envelope fa-lg"></i>
                         <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">信箱</p>
                         <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountEmail ?>
+                          <?php echo $ownerEmail ?>
                         </p>
                       </span>
                     </li>
@@ -382,7 +386,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <i class="fa-solid fa-phone fa-lg"></i>
                         <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">電話</p>
                         <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountPhoneNumber ?>
+                          <?php echo $ownerPhoneNumber ?>
                         </p>
                       </span>
                     </li>
@@ -503,8 +507,11 @@ if (isset($_POST["likeEquipDel"])) {
                 // 檢查當前設備是否已按讚
                 $isEquipLiked = in_array($recommand_equipment["equipmentId"], $likedEquips);
 
-                // 取出設備圖片
-                $equip_img_src = get_first_image_src($recommand_equipment['equipmentDescription']);
+                //取出設備圖片
+                $equip_img_src = get_first_image_src($recommand_equipment["equipmentDescription"]);
+                if ($equip_img_src == "") {
+                  $equip_img_src = "property-1.0.0/images/image_8.jpg";
+                }
 
                 //若文章內容超過30字做限制
                 $content_length = mb_strlen(strip_tags($recommand_equipment["equipmentDescription"]), 'UTF-8');
@@ -536,7 +543,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
-                echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
+                echo '<h4 style="margin-left: 24px;">$' . number_format($equipmentPrice) . '</h4>';
                 echo "<form action='equip-single.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";

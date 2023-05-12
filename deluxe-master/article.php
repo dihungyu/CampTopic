@@ -330,24 +330,28 @@ $articleId = $_GET['articleId'];
             <h5 class="mb-5 mt-4"><?php echo $main_article_row["articleTitle"]; ?></h5>
             <span style="display:flex; align-items: center;">
               <?php
-              if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
-                echo '<button class="btn-icon"> 
-              <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
-            <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
-
-                echo '<button class="btn-icon">
-          <a href="/CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=' . $articleId . '">
-            <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
-              } else {
-                echo '<button class="btn-icon report-btn" data-article-id="' . $articleId . '">
-    <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
-  </button>';
+              if (isset($_COOKIE["accountId"])) {
+                if ($main_article_row["accountId"] == $_COOKIE["accountId"]) {
+                  echo '
+      <button class="btn-icon"> 
+        <a href="javascript:void(0)" class="delete-link" data-article-id="' . $articleId . '">
+          <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>
+      <button class="btn-icon">
+        <a href="/CampTopic/deluxe-master/property-1.0.0/update-article.php?articleId=' . $articleId . '">
+          <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>';
+                } else {
+                  echo '
+      <button class="btn-icon report-btn" data-article-id="' . $articleId . '">
+        <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
+      </button>';
+                }
               }
               ?>
+
             </span>
           </div>
           <div id="article-content" class="mt-2">

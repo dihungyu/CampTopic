@@ -1,6 +1,9 @@
 <?php
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 require_once '../php/conn.php';
 require_once '../php/uuid_generator.php';
+require_once '../php/get_img_src.php';
 
 session_start();
 
@@ -139,8 +142,7 @@ if (isset($_POST["likeEquipDel"])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
@@ -153,9 +155,7 @@ if (isset($_POST["likeEquipDel"])) {
     <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
     <!-- 引入 Bootstrap 的 CSS 檔案 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"
-        integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
 
 
     <title>
@@ -181,7 +181,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script>
         function hideMessage() {
             document.getElementById("message").style.opacity = "0";
-            setTimeout(function () {
+            setTimeout(function() {
                 document.getElementById("message").style.display = "none";
             }, 500);
         }
@@ -192,9 +192,8 @@ if (isset($_POST["likeEquipDel"])) {
 <body>
 
     <!-- 系統訊息 -->
-    <?php if (isset($_SESSION["system_message"])): ?>
-        <div id="message" class="alert alert-success"
-            style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+    <?php if (isset($_SESSION["system_message"])) : ?>
+        <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
             <?php echo $_SESSION["system_message"]; ?>
         </div>
         <?php unset($_SESSION["system_message"]); ?>
@@ -203,11 +202,9 @@ if (isset($_POST["likeEquipDel"])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-                    style="width: 90px; height: auto;"></img></a>
+            <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
             </button>
 
@@ -220,8 +217,7 @@ if (isset($_POST["likeEquipDel"])) {
                     <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -248,8 +244,7 @@ if (isset($_POST["likeEquipDel"])) {
     </nav>
     <!-- END nav -->
 
-    <div class="hero page-inner overlay"
-        style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
+    <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-12 text-center mt-5">
@@ -301,6 +296,20 @@ if (isset($_POST["likeEquipDel"])) {
                         // 檢查當前設備是否已按讚
                         $isEquipLiked = in_array($equipment["equipmentId"], $likedEquips);
 
+                        //取出設備圖片
+                        $image_src = get_first_image_src($equipment["equipmentDescription"]);
+                        if ($image_src == "") {
+                            $image_src = "property-1.0.0/images/image_8.jpg";
+                        }
+
+                        //若文章內容超過30字做限制
+                        $content_length = mb_strlen(strip_tags($equipment["equipmentDescription"]), 'UTF-8');
+                        if ($content_length > 30) {
+                            $truncated_content = mb_substr(strip_tags($equipment["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                        } else {
+                            $truncated_content = strip_tags($equipment["equipmentDescription"]);
+                        }
+
                         if ($count % 2 == 0) {
                             echo '<div class="inner" style="display: flex; margin-left: 20px; justify-content: center">';
                         }
@@ -311,7 +320,7 @@ if (isset($_POST["likeEquipDel"])) {
                         $equipmentPrice = $equipment["equipmentPrice"];
                         $equipmentLikeCount = $equipment["equipmentLikeCount"];
                         echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px;">';
-                        echo '<img src="images/M85318677_big.jpeg" class="card-img-top" alt="...">';
+                        echo '<img src="' . $image_src . '" class="card-img-top" alt="...">';
                         echo '<div class="card-body">';
                         echo '<div class="detail" style="margin-bottom: 0px;">';
                         echo '<span style="display: flex; align-items: center;">';
@@ -322,7 +331,7 @@ if (isset($_POST["likeEquipDel"])) {
                         echo '<h5>' . $equipmentName . '</h5>';
                         echo '</span>';
                         echo '<span class="span-adj">';
-                        echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
+                        echo '<h4 style="margin-left: 24px;">$' . number_format($equipmentPrice) . '</h4>';
                         echo "<form action='equipment.php' method='post'>";
                         echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $equipment["equipmentId"] . "'>";
                         echo "<button type='submit' class='btn-icon'>";
@@ -332,7 +341,7 @@ if (isset($_POST["likeEquipDel"])) {
                         echo '</span>';
                         echo '</div>';
                         echo '<p class="card-text">';
-                        echo '' . $equipmentDescription . '</p>';
+                        echo '' . $truncated_content . '</p>';
                         echo '<footer style="margin-top:40px">';
                         echo '<div class="card-icon-footer">';
                         echo '<div class="tagcloud">';
@@ -380,7 +389,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <div class="col-lg-3"></div>
                         <div class="col-lg-6 text-center">
                             <div class="custom-pagination">
-                                <?php for ($i = 1; $i <= $equipment_total_pages; $i++): ?>
+                                <?php for ($i = 1; $i <= $equipment_total_pages; $i++) : ?>
                                     <a href="?equipment_page=<?= $i ?>" <?= ($i == $equipment_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                                 <?php endfor; ?>
                             </div>
@@ -468,51 +477,58 @@ if (isset($_POST["likeEquipDel"])) {
                     </div>
                     <div class="sidebar-box ftco-animate">
                         <h3>推薦文章</h3>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 333.png);"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">親子露營：營地挑選重點</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                </div>
+                        <?php
+                        $top234_article_sql = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId ORDER BY articleLikeCount DESC LIMIT 1, 3";
+                        $top234_article_result = mysqli_query($conn, $top234_article_sql);
+
+                        if ($top234_article_result && mysqli_num_rows($top234_article_result) > 0) {
+                            while ($top234_article_row = mysqli_fetch_assoc($top234_article_result)) {
+                                $articleId = $top234_article_row["articleId"];
+
+                                // $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
+                                // $files_result = mysqli_query($conn, $files_query);
+                                // $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+
+                                // if ($file_result = mysqli_fetch_assoc($files_result)) {
+                                //   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
+                                //   $image_src = '../property-1.0.0/images/Rectangle\ 135.png';
+                                // }
+                                // 取得文章圖片
+                                $article_img_src = get_first_image_src($top234_article_row["articleContent"]);
+                                if ($article_img_src == '') {
+                                    $article_img_src = '../property-1.0.0/images/Rectangle\ 135.png';
+                                }
+
+                                $timestamp = strtotime($top234_article_row["articleCreateDate"]);
+                                $formatted_date = date('F j, Y', $timestamp);
+
+                                $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                                $result = mysqli_query($conn, $query);
+                                $row = mysqli_fetch_assoc($result);
+                                $comment_count = $row['comment_count'];
+
+                                echo "<div class='block-21 mb-4 d-flex'>
+                        <a class='blog-img mr-4' style='background-image: url(" . $article_img_src . ");'></a>
+                        <div class='text'>
+                        <div>
+                            <h3 class='heading'>
+                            <a href='article.php?articleId=" . $articleId . "'>" . $top234_article_row["articleTitle"] . "</a></h3>
+
+                            <div class='meta'>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-calendar'></span> " . $formatted_date . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-person'></span> " . $top234_article_row["accountName"] . "</a></div>
+                                <div><a href='article.php?articleId=" . $articleId . "'><span class='icon-chat'></span> " . $comment_count . "</a></div>
                             </div>
                         </div>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 337.png);"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">溪谷型營區注意事項</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                </div>
-                            </div>
                         </div>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url(../property-1.0.0/images/Rectangle\ 332.png);"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">武陵櫻花季來了！<br>賞櫻不必自行開車</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> December 7, 2018</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                </div>
-                            </div>
-                        </div>
+                      </div>";
+                            }
+                        }
+                        ?>
                     </div>
 
-
-
-
                 </div>
-
             </div>
-        </div>
     </section> <!-- .section -->
 
     <div class="site-footer" style="clear: both;">
@@ -593,8 +609,7 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#F96D00" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
 
@@ -612,8 +627,7 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
