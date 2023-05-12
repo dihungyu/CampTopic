@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // 準備 SQL 語句
-    $sql = "INSERT INTO reports (reportId, accountId, equipmentId, reportReason, reportDescription) VALUES ('$reportId', '$reporterId', '$equipmentId', '$reportReason', '$reportDescription')";
+    $sql = "INSERT INTO reports (reportId, accountId, equipmentId, reportReason, reportDescription, reportCreateDate, reportUpdateDate) VALUES ('$reportId', '$reporterId', '$equipmentId', '$reportReason', '$reportDescription', now(), now())";
     $sql_result = mysqli_query($conn, $sql);
 
     // 檢查錯誤
