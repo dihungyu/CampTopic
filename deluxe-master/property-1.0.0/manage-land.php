@@ -1,5 +1,18 @@
 <?php
+require_once '../../php/conn.php';
+
 session_start();
+
+function format_count($count)
+{
+  if ($count < 1000) {
+    return $count;
+  } elseif ($count < 1000000) {
+    return round($count / 1000, 1) . 'k';
+  } else {
+    return round($count / 1000000, 1) . 'm';
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,9 +37,6 @@ session_start();
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
-
 
   <title>
     Start Camping &mdash; 一起展開露營冒險！
@@ -130,285 +140,205 @@ session_start();
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-
-        <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
-          <div id="navbar-search-autocomplete" class="form-outline">
-            <input type="search" id="form1" name="camp_search_keyword" class="form-control"
-              style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
-          </div>&nbsp;
-          <button type="submit" class="button-search">
-            <i class="fas fa-search"></i>
-          </button>
+        <div class="col-3">
+          <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab"
+                aria-controls="isReviewed" aria-selected="true">已上架</a>
+            </li>
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link unReviewed" id="unReviewed-tab" data-toggle="tab" href="#unReviewed" role="tab"
+                aria-controls="unReviewed" aria-selected="true">待審核</a>
+            </li>
+          </ul>
         </div>
-        <span class="span-adj" style="justify-content: flex-end;">
-          <a href="add-land.html">
-            <button class="btn-new" style=" margin-right: 20px; margin-bottom: 0px;">
-              新增
-            </button></a>
-        </span>
-      </div>
-    </div>
-
-    <div class="section section-properties">
-      <div class="container">
-        <div class="row">
-          <article class="col-md-12 article-list" style="display: flex;">
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <div class="col-5">
+          <div class="input-group" style=" margin-left: 530px;">
+            <div id="navbar-search-autocomplete" class="form-outline">
+              <input type="search" id="form1" name="camp_search_keyword" class="form-control"
+                style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
             </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="col-md-12 article-list" style="display: flex;">
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="col-md-12 article-list" style="display: flex;">
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <img src="images/Rectangle 137.png" class="card-img-top" alt="...">
-              <div class="card-body">
-                <span class="span-adj" style="justify-content: space-between;">
-                  <h4><span>$1,291起</span></h4>
-                  <button type="button" class="btn-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                  </button>
-                </span>
-                <div>
-                  <h5 class='city d-block mb-3 mt-3'>北得拉曼露營區</h5></a>
-                  <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                  <div class="card-icon-footer">
-                    <div class="tagcloud">
-                      <a href="property-single.html">雲海</a>
-                      <a href="property-single.html">櫻花</a>
-                      <a href="property-single.html">森林</a>
-                    </div>
-                    <span style="display: flex; align-items: center;">
-                      <i class="fa-regular fa-heart"></i>
-                      <p style="margin-top:0px">1,098</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+            <button type="submit" class="button-search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-4">
+          <span class="span-adj" style="justify-content: flex-end;">
+            <a href="add-land.php">
+              <button class="btn-new">
+                新增營地
+              </button>
+            </a>
+          </span>
         </div>
       </div>
     </div>
-    <div class="row align-items-center py-5">
-      <div class="col-lg-3"></div>
-      <div class="col-lg-6 text-center">
-        <div class="custom-pagination">
-          <a href="#">1</a>
-          <a href="#" class="active">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
+
+
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show" id="isReviewed" role="tabpanel" aria-labelledby="isReviewed-tab">
+        <div class="section section-properties">
+          <div class="container">
+            <div class="row">
+              <article class="col-md-12 article-list" style="display: flex;">
+                <?php
+                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1";
+                $result_isReviewed_campsites = mysqli_query($conn, $sql_isReviewed_campsites);
+                $isReviewed_campsites = [];
+                if (mysqli_num_rows($result_isReviewed_campsites) > 0) {
+                  while ($row = mysqli_fetch_assoc($result_isReviewed_campsites)) {
+                    $isReviewed_campsites[] = $row;
+                  }
+                }
+                foreach ($isReviewed_campsites as $isReviewed_campsite) {
+                  $campsiteId = $isReviewed_campsite['campsiteId'];
+                  $campsiteLowerLimit = $isReviewed_campsite['campsiteLowerLimit'];
+                  $campsiteName = $isReviewed_campsite['campsiteName'];
+                  echo '<div class="card isReviewed-card">';
+                  echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
+                  echo '  <div class="card-body">';
+                  echo '    <span class="span-adj" style="justify-content: space-between;">';
+                  echo '      <h4><span>$' . format_count($campsiteLowerLimit) . '起</span></h4>';
+                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $campsiteId . '">';
+                  echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
+                  echo '      </button>';
+                  echo '    </span>';
+                  echo '    <div>';
+                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $campsiteName . '</h5></a>';
+                  //若文章內容超過30字做限制
+                  $isReviewed_content_length = mb_strlen(strip_tags($isReviewed_campsite["campsiteDescription"]), 'UTF-8');
+                  if ($isReviewed_content_length > 30) {
+                    $isReviewed_content = mb_substr(strip_tags($isReviewed_campsite["campsiteDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $isReviewed_content = strip_tags($isReviewed_campsite["campsiteDescription"]);
+                  }
+                  echo '      <span class="d-block mb-4 text-black-50">' . $isReviewed_content . '</span>';
+                  echo '      <div class="card-icon-footer">';
+                  echo '        <div class="tagcloud">';
+                  $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+                      FROM campsites_labels
+                      JOIN labels ON campsites_labels.labelId = labels.labelId
+                      WHERE campsites_labels.campsiteId = '$campsiteId'";
+                  $result_labels = mysqli_query($conn, $sql_query_labels);
+
+                  $printed_tags = 0;
+                  while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                    if ($printed_tags >= 3) {
+                      break;
+                    }
+
+                    echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
+
+                    $printed_tags++;
+                  }
+                  echo '        </div>';
+                  echo '      </div>';
+                  echo '    </div>';
+                  echo '  </div>';
+                  echo '</div>';
+                }
+                ?>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center py-5">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6 text-center">
+            <div class="custom-pagination">
+              <a href="#">1</a>
+              <a href="#" class="active">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="unReviewed" role="tabpanel" aria-labelledby="unReviewed-tab">
+        <div class="section section-properties">
+          <div class="container">
+            <div class="row">
+              <article class="col-md-12 article-list" style="display: flex;">
+                <?php
+                $sql_unReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 0";
+                $result_unReviewed_campsites = mysqli_query($conn, $sql_unReviewed_campsites);
+                $unReviewed_campsites = [];
+                if (mysqli_num_rows($result_unReviewed_campsites) > 0) {
+                  while ($row = mysqli_fetch_assoc($result_unReviewed_campsites)) {
+                    $unReviewed_campsites[] = $row;
+                  }
+                }
+                foreach ($unReviewed_campsites as $unReviewed_campsite) {
+                  $campsiteId = $unReviewed_campsite['campsiteId'];
+                  $campsiteLowerLimit = $unReviewed_campsite['campsiteLowerLimit'];
+                  $campsiteName = $unReviewed_campsite['campsiteName'];
+                  echo '<div class="card unReviewed-card">';
+                  echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
+                  echo '  <div class="card-body">';
+                  echo '    <span class="span-adj" style="justify-content: space-between;">';
+                  echo '      <h4><span>$' . format_count($campsiteLowerLimit) . '起</span></h4>';
+                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $campsiteId . '">';
+                  echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
+                  echo '      </button>';
+                  echo '    </span>';
+                  echo '    <div>';
+                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $campsiteName . '</h5></a>';
+                  //若文章內容超過30字做限制
+                  $unReviewed_content_length = mb_strlen(strip_tags($unReviewed_campsite["campsiteDescription"]), 'UTF-8');
+                  if ($unReviewed_content_length > 30) {
+                    $unReviewed_content = mb_substr(strip_tags($unReviewed_campsite["campsiteDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $unReviewed_content = strip_tags($unReviewed_campsite["campsiteDescription"]);
+                  }
+                  echo '      <span class="d-block mb-4 text-black-50">' . $unReviewed_content . '</span>';
+                  echo '      <div class="card-icon-footer">';
+                  echo '        <div class="tagcloud">';
+                  $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+                      FROM campsites_labels
+                      JOIN labels ON campsites_labels.labelId = labels.labelId
+                      WHERE campsites_labels.campsiteId = '$campsiteId'";
+                  $result_labels = mysqli_query($conn, $sql_query_labels);
+
+                  $printed_tags = 0;
+                  while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                    if ($printed_tags >= 3) {
+                      break;
+                    }
+
+                    echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
+
+                    $printed_tags++;
+                  }
+                  echo '        </div>';
+                  echo '      </div>';
+                  echo '    </div>';
+                  echo '  </div>';
+                  echo '</div>';
+                }
+                ?>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center py-5">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6 text-center">
+            <div class="custom-pagination">
+              <a href="#">1</a>
+              <a href="#" class="active">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="site-footer">
@@ -485,6 +415,35 @@ session_start();
     <!-- /.container -->
   </div>
   <!-- /.site-footer -->
+  <?php
+  foreach ($isReviewed_campsites as $isReviewed_campsite) {
+    $campsiteId = $isReviewed_campsite["campsiteId"];
+    $campsiteName = $isReviewed_campsite["campsiteName"];
+    echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
+    echo '<div class="modal fade" id="deleteModal' . $campsiteId . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
+    echo '<div class="modal-dialog" role="document">';
+    echo '<div class="modal-content">';
+    echo '<div class="modal-header">';
+    echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
+    echo '<span aria-hidden="true">&times;</span>';
+    echo '</button>';
+    echo '</div>';
+    echo '<div class="modal-body">';
+    echo '確定要刪除「' . $campsiteName . '」嗎？';
+    echo '</div>';
+    echo '<div class="modal-footer">';
+    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
+    echo '<input type="hidden" name="campsiteId" value="' . $campsiteId . '">';
+    echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</form>';
+  }
+  ?>
+
 
   <!-- Preloader -->
   <div id="overlayer"></div>
@@ -530,6 +489,50 @@ session_start();
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // 將 "已上架" tab 設為顯示
+      $('#isReviewed-tab').addClass('active');
+      $('#isReviewed').addClass('show active');
+
+      // 當 "已上架" tab 被點擊時的觸發事件
+      $('#isReviewed-tab').on('click', function () {
+        $(this).addClass('active');
+        $('#unReviewed-tab').removeClass('active');
+        $('#isReviewed').addClass('show active');
+        $('#unReviewed').removeClass('show active');
+      });
+
+      // 當 "待審核" tab 被點擊時的觸發事件
+      $('#unReviewed-tab').on('click', function () {
+        $(this).addClass('active');
+        $('#isReviewed-tab').removeClass('active');
+        $('#unReviewed').addClass('show active');
+        $('#isReviewed').removeClass('show active');
+      });
+
+
+      // 搜索功能
+      $('#form1').on('input', function () {
+        let searchKeyword = $(this).val().toLowerCase();
+        let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
+        let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
+
+        $(targetCards).each(function () {
+          let campsiteName = $(this).find('.city').text().toLowerCase();
+          if (campsiteName.indexOf(searchKeyword) !== -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+
+    });
+  </script>
+
+
 
 
 

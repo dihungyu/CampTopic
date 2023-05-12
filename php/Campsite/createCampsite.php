@@ -10,7 +10,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
     if (!empty($_COOKIE['accountId']) && !empty($_POST["cityId"]) && !empty($_POST["campsiteName"]) && !empty($_POST["campsiteDescription"]) && !empty($_POST["campsiteAddress"]) && !empty($_POST["campsiteAddressLink"]) && !empty($_POST["campsiteVideoLink"]) && !empty($_POST["campsiteLowerLimit"]) && !empty($_POST["campsiteUpperLimit"])) {
-
         $cityId = $_POST["cityId"];
         $campsiteName = $_POST["campsiteName"];
         $campsiteDescription = $_POST["campsiteDescription"];
@@ -26,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
         $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit)
                 VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit')";
-
         if (!mysqli_query($conn, $sql_query1)) {
             $_SESSION["system_message"] = "營地新增失敗，請再試一次！";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -38,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         foreach ($tags as $tag) {
             $labelId = uuid_generator();
             $insert_label_sql = "INSERT INTO campsites_labels (campsiteLabelId, campsiteId, labelId) VALUES ('$labelId','$campsiteId', '$tag')";
-
             if (!mysqli_query($conn, $insert_label_sql)) {
                 $_SESSION["system_message"] = "標籤新增失敗，請再試一次！";
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -49,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         foreach ($services as $service) {
             $serviceId = uuid_generator();
             $insert_service_sql = "INSERT INTO campsites_services (campsiteServiceId, campsiteId, serviceId) VALUES ('$serviceId','$campsiteId', '$service')";
-
             if (!mysqli_query($conn, $insert_service_sql)) {
                 $_SESSION["system_message"] = "服務項目新增失敗，請再試一次！";
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -59,14 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
         // loop through all uploaded files
         foreach ($_FILES["files"]["name"] as $key => $name) {
-
             // check if file was uploaded successfully
             if ($_FILES["files"]["error"][$key] === UPLOAD_ERR_OK) {
-
                 // check if file is an image
                 $allowed_types = [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF];
                 $detected_type = exif_imagetype($_FILES["files"]["tmp_name"][$key]);
-
                 if (in_array($detected_type, $allowed_types)) {
                     $fileId = uuid_generator();
                     $upload_dir = "../../upload/";
@@ -74,9 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
                     $filePath = $upload_dir . $fileName;
                     $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
                     $fileSize = round($_FILES["files"]["size"][$key] / 1024, 2); //KB
-
                     move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
-
                     $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
                 VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
                     mysqli_query($conn, $sql_query2);
@@ -102,18 +93,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
         // Update the article content with the processed content
         $sql_query_update = "UPDATE campsites SET campsiteDescription = '$processedCampsiteDescription' WHERE campsiteId = '$campsiteId'";
-
         if (!mysqli_query($conn, $sql_query_update)) {
             $_SESSION["system_message"] = "營地詳細內容更新失敗，請再試一次！";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit();
         }
-
         $_SESSION["system_message"] = "營地新增成功！";
         header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
         exit();
     } else {
-        $_SESSION["system_message"] = "營地新增失敗，請再試一次！";
+        $_SESSION["system_message"] = "營地新增失敗，所有欄位不得為空！";
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
