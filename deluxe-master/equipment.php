@@ -3,12 +3,121 @@ require_once '../php/conn.php';
 require_once '../php/uuid_generator.php';
 require_once '../php/get_img_src.php';
 
-session_start();
-
-//判斷是否登入，若有則對變數初始化
 if (isset($_COOKIE["accountId"])) {
   $accountId = $_COOKIE["accountId"];
 }
+
+session_start();
+
+function getEquipments($conn, $labelId = null, $equipmentType = null, $equipment_search_keyword = '', $equipment_page = 1)
+{
+  $conditions = array();
+
+  if ($equipmentType) {
+    $conditions[] = "equipmentType = '$equipmentType'";
+  }
+
+  if ($equipment_search_keyword) {
+    $conditions[] = "equipmentName LIKE '%$equipment_search_keyword%'";
+  }
+
+  $whereClause = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
+
+  // 如果提供了$labelId，則使用INNER JOIN連接equipments_labels表
+  if ($labelId) {
+    $joinClause = "INNER JOIN equipments_labels ON equipments.equipmentId = equipments_labels.equipmentId AND equipments_labels.labelId = '$labelId'";
+  } else {
+    $joinClause = "";
+  }
+
+  $equipment_count_sql = "SELECT COUNT(*) as total FROM equipments $joinClause $whereClause";
+  $equipment_count_result = $conn->query($equipment_count_sql);
+  $row = $equipment_count_result->fetch_assoc();
+  $equipment_total_rows = $row['total'];
+  $equipment_total_pages = ceil($equipment_total_rows / 4);
+
+  $equipment_perPage = 4;
+  $equipment_offset = ($equipment_page - 1) * $equipment_perPage;
+
+  $sql_equipments = "SELECT * FROM equipments $joinClause $whereClause LIMIT $equipment_perPage OFFSET $equipment_offset";
+  $result_equipments = mysqli_query($conn, $sql_equipments);
+
+  $equipments = array();
+  if (mysqli_num_rows($result_equipments) > 0) {
+    while ($row_equipments = mysqli_fetch_assoc($result_equipments)) {
+      $equipments[] = $row_equipments;
+    }
+  }
+
+  return array(
+    'equipments' => $equipments,
+    'total_pages' => $equipment_total_pages,
+    'current_page' => $equipment_page,
+  );
+}
+
+
+if (isset($_POST["collectEquipAdd"]) || isset($_POST["collectEquipDel"]) || isset($_POST["likeEquipAdd"]) || isset($_POST["likeEquipDel"])) {
+  if (!isset($_COOKIE["accountId"])) {
+    $_SESSION["system_message"] = "請先登入會員，才能進行操作喔!";
+    header("Location: equipment.php");
+    exit;
+  }
+
+  $action = '';
+  $equipmentField = '';
+  $interactionTable = '';
+  $interactionField = '';
+  $increment = 0;
+
+  if (isset($_POST["collectEquipAdd"])) {
+    $action = "collectEquipAdd";
+    $equipmentField = "equipmentCollectCount";
+    $interactionTable = "collections";
+    $interactionField = "collectionId";
+    $increment = 1;
+  } elseif (isset($_POST["collectEquipDel"])) {
+    $action = "collectEquipDel";
+    $equipmentField = "equipmentCollectCount";
+    $interactionTable = "collections";
+    $interactionField = "collectionId";
+    $increment = -1;
+  } elseif (isset($_POST["likeEquipAdd"])) {
+    $action = "likeEquipAdd";
+    $equipmentField = "equipmentLikeCount";
+    $interactionTable = "likes";
+    $interactionField = "likeId";
+    $increment = 1;
+  } elseif (isset($_POST["likeEquipDel"])) {
+    $action = "likeEquipDel";
+    $equipmentField = "equipmentLikeCount";
+    $interactionTable = "likes";
+    $interactionField = "likeId";
+    $increment = -1;
+  }
+
+  $equipmentId = $_POST[$action];
+  $interactionId = uuid_generator();
+
+  if ($increment == 1) {
+    $sql = "INSERT INTO `$interactionTable` (`$interactionField`, `accountId`, `equipmentId`) VALUES ('$interactionId', '$accountId', '$equipmentId')";
+  } else {
+    $sql = "DELETE FROM `$interactionTable` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
+  }
+  $sql2 = "UPDATE `equipments` SET `$equipmentField` = `$equipmentField` + $increment WHERE `equipmentId` = '$equipmentId'";
+
+  $result = mysqli_query($conn, $sql);
+  $result2 = mysqli_query($conn, $sql2);
+
+  if ($result && $result2) {
+    $message = $increment == 1 ? "新增完成!" : "移除成功!";
+    $_SESSION["system_message"] = $message;
+    header("Location: equipment.php");
+    exit;
+  }
+}
+
+
 function format_count($count)
 {
   if ($count < 1000) {
@@ -17,110 +126,6 @@ function format_count($count)
     return round($count / 1000, 1) . 'k';
   } else {
     return round($count / 1000000, 1) . 'm';
-  }
-}
-
-// 搜尋關鍵字
-$equipment_search_keyword = isset($_GET['equipment_search_keyword']) ? trim($_GET['equipment_search_keyword']) : '';
-
-// 使用關鍵字搜尋裝備
-$equipment_keyword_condition = $equipment_search_keyword ? "WHERE equipmentName LIKE '%$equipment_search_keyword%'" : "";
-
-// 查詢所有裝備總數
-$equipment_count_sql = "SELECT COUNT(*) as total FROM equipments $equipment_keyword_condition";
-$equipment_count_result = $conn->query($equipment_count_sql);
-$row = $equipment_count_result->fetch_assoc();
-$equipment_total_rows = $row['total'];
-$equipment_total_pages = ceil($equipment_total_rows / 4); // 每四個裝備換下一頁
-
-$equipment_perPage = 4;
-$equipment_current_page = isset($_GET['equipment_page']) ? (int) $_GET['equipment_page'] : 1;
-$equipment_offset = ($equipment_current_page - 1) * $equipment_perPage;
-
-// 查詢所有裝備資料
-$sql_equipments = "SELECT * FROM equipments $equipment_keyword_condition LIMIT $equipment_perPage OFFSET $equipment_offset";
-$result_equipments = mysqli_query($conn, $sql_equipments);
-
-$equipments = array();
-if (mysqli_num_rows($result_equipments) > 0) {
-  while ($row_equipments = mysqli_fetch_assoc($result_equipments)) {
-    $equipments[] = $row_equipments;
-  }
-}
-
-//收藏設備
-if (isset($_POST["collectEquipAdd"])) {
-  if (!isset($_COOKIE["accountId"])) {
-    $_SESSION["system_message"] = "請先登入會員，才能進行收藏喔!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
-  }
-  $equipmentId = $_POST["collectEquipAdd"];
-  $accountId = $_COOKIE["accountId"];
-  $collectionId = uuid_generator();
-  $sql = "INSERT INTO `collections` (`collectionId`,`accountId`, `equipmentId`) VALUES ('$collectionId','$accountId', '$equipmentId')";
-  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` + 1 WHERE `equipmentId` = '$equipmentId'";
-  $result = mysqli_query($conn, $sql);
-  $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
-    $_SESSION["system_message"] = "已加入收藏!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
-  }
-}
-
-//移除收藏設備
-if (isset($_POST["collectEquipDel"])) {
-
-  $equipmentId = $_POST["collectEquipDel"];
-  $accountId = $_COOKIE["accountId"];
-  $sql = "DELETE FROM `collections` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
-  $sql2 = "UPDATE `equipments` SET `equipmentCollectCount` = `equipmentCollectCount` - 1 WHERE `equipmentId` = '$equipmentId'";
-  $result = mysqli_query($conn, $sql);
-  $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
-    $_SESSION["system_message"] = "已取消收藏!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
-  }
-}
-
-// 按讚設備
-if (isset($_POST["likeEquipAdd"])) {
-
-  if (!isset($_COOKIE["accountId"])) {
-    $_SESSION["system_message"] = "請先登入會員，才能進行按讚喔!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
-  }
-
-  $equipmentId = $_POST["likeEquipAdd"];
-  $accountId = $_COOKIE["accountId"];
-  $likeId = uuid_generator();
-  $sql = "INSERT INTO `likes` (`likeId`, `accountId`, `equipmentId`) VALUES ('$likeId', '$accountId', '$equipmentId')";
-  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` + 1 WHERE `equipmentId` = '$equipmentId'";
-  $result = mysqli_query($conn, $sql);
-  $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
-    $_SESSION["system_message"] = "已按讚!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
-  }
-}
-
-// 取消讚設備
-if (isset($_POST["likeEquipDel"])) {
-
-  $equipmentId = $_POST["likeEquipDel"];
-  $accountId = $_COOKIE["accountId"];
-  $sql = "DELETE FROM `likes` WHERE `accountId` = '$accountId' AND `equipmentId` = '$equipmentId'";
-  $sql2 = "UPDATE `equipments` SET `equipmentLikeCount` = `equipmentLikeCount` - 1 WHERE `equipmentId` = '$equipmentId'";
-  $result = mysqli_query($conn, $sql);
-  $result2 = mysqli_query($conn, $sql2);
-  if ($result) {
-    $_SESSION["system_message"] = "已取消讚!";
-    header("Location: equipment.php");
-    exit; // 確保重新導向後停止執行後續代碼
   }
 }
 
@@ -286,6 +291,17 @@ if (isset($_POST["likeEquipDel"])) {
           while ($row = mysqli_fetch_assoc($equip_like_result)) {
             $likedEquips[] = $row['equipmentId'];
           }
+
+          $labelId = isset($_GET["labelId"]) ? $_GET["labelId"] : null;
+          $equipmentType = isset($_GET["equipmentType"]) ? $_GET["equipmentType"] : null;
+          $equipment_search_keyword = isset($_GET['equipment_search_keyword']) ? trim($_GET['equipment_search_keyword']) : '';
+          $equipment_page = isset($_GET['equipment_page']) ? (int) $_GET['equipment_page'] : 1;
+
+          $result = getEquipments($conn, $labelId, $equipmentType, $equipment_search_keyword, $equipment_page);
+          $equipments = $result['equipments'];
+          $equipment_total_pages = $result['total_pages'];
+          $equipment_current_page = $result['current_page'];
+
           $count = 0;
           foreach ($equipments as $equipment) {
             // 檢查當前設備是否已收藏
@@ -303,7 +319,7 @@ if (isset($_POST["likeEquipDel"])) {
             //若文章內容超過30字做限制
             $content_length = mb_strlen(strip_tags($equipment["equipmentDescription"]), 'UTF-8');
             if ($content_length > 30) {
-              $truncated_content = mb_substr(strip_tags($equipment["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+              $truncated_content = mb_substr(strip_tags($equipment["equipmentDescription"]), 0, 30, 'UTF-8') . '...'; // 截斷文章內容
             } else {
               $truncated_content = strip_tags($equipment["equipmentDescription"]);
             }
@@ -406,6 +422,8 @@ if (isset($_POST["likeEquipDel"])) {
               </button>
               <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 6px;">
                 <input type="search" id="form1" name="equipment_search_keyword" class="form-control" placeholder="搜尋裝備..." />
+                <input type="hidden" name="labelId" value="<?php echo $labelId; ?>">
+                <input type="hidden" name="equipmentType" value="<?php echo $equipmentType; ?>">
               </div>
             </div>
           </form>
@@ -440,7 +458,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $row_request = mysqli_fetch_assoc($result_request);
                 $count_request = $row_request['COUNT(*)'];
 
-                $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '賣'";
+                $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '售'";
                 $result_sell = mysqli_query($conn, $sql_sell);
                 $row_sell = mysqli_fetch_assoc($result_sell);
                 $count_sell = $row_sell['COUNT(*)'];
@@ -448,13 +466,13 @@ if (isset($_POST["likeEquipDel"])) {
                 <li><a href="equipment.php">全部 <span>(
                       <?php echo $count_all ?>)
                     </span></a></li>
-                <li><a href="equipment_rent.php">租 <span>(
+                <li><a href="equipment.php?equipmentType=租">租 <span>(
                       <?php echo $count_rent ?>)
                     </span></a></li>
-                <li><a href="equipment_request.php">徵 <span>(
+                <li><a href="equipment.php?equipmentType=徵">徵 <span>(
                       <?php echo $count_request ?>)
                     </span></a></li>
-                <li><a href="equipment_sell.php">售 <span>(
+                <li><a href="equipment.php?equipmentType=售">售 <span>(
                       <?php echo $count_sell ?>)
                     </span></a></li>
               </div>
@@ -471,7 +489,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $labels[] = $row_labels;
               }
               foreach ($labels as $label) {
-                echo "<a href='#' class=tag-cloud-link'>" . $label['labelName'] . "</a>";
+                echo "<a href='equipment.php?labelId=" . $label["labelId"] . "' class=tag-cloud-link'>" . $label['labelName'] . "</a>";
               }
               ?>
             </div>

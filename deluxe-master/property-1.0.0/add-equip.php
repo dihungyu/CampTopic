@@ -101,7 +101,7 @@ $accountName = $row_account['accountName'];
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
@@ -109,8 +109,7 @@ $accountName = $row_account['accountName'];
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -181,7 +180,7 @@ $accountName = $row_account['accountName'];
               <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 10px;margin-left: 8px;">
                 <option value="租">租</option>
                 <option value="徵">徵</option>
-                <option value="賣">賣</option>
+                <option value="售">售</option>
               </select>
               <input type="text" name="equipmentPrice" placeholder="價錢" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
               <input type="text" name="equipmentLocation" placeholder="設備所在地" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
@@ -221,48 +220,48 @@ $accountName = $row_account['accountName'];
 
     <div class="site-footer">
       <div class="container">
-          <div class="row">
+        <div class="row">
 
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-5">
-              <div class="widget">
-                <h3>聯絡資訊</h3>
-                <address>StartCamping 營在起跑點！</address>
-                <ul class="list-unstyled links">
-                  <li><a href="tel://11234567890">0911222345</a></li>
-                  <li><a href="tel://11234567890">@startcamping</a></li>
-                  <li>
-                    <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.widget -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>聯絡資訊</h3>
+              <address>StartCamping 營在起跑點！</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">0911222345</a></li>
+                <li><a href="tel://11234567890">@startcamping</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                </li>
+              </ul>
             </div>
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-5">
-              <div class="widget">
-                <h3>頁面總覽</h3>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="index.php">首頁</a></li>
-                  <li><a href="camp-information.php">找小鹿</a></li>
-                  <li><a href="../all-article.php">鹿的分享</a></li>
-                  <li><a href="../equipment.php">鹿的裝備</a></li>
-                  <li><a href="ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="member.php">帳號</a></li>
-                  <li><a href="member.php">會員帳號</a></li>
-                  <li><a href="member-like.php">我的收藏</a></li>
-                </ul>
-              </div>
-              <!-- /.widget -->
-            </div>
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-2">
-              <!-- /.widget -->
-            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.row -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>頁面總覽</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="camp-information.php">找小鹿</a></li>
+                <li><a href="../all-article.php">鹿的分享</a></li>
+                <li><a href="../equipment.php">鹿的裝備</a></li>
+                <li><a href="ad.php">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="member.php">帳號</a></li>
+                <li><a href="member.php">會員帳號</a></li>
+                <li><a href="member-like.php">我的收藏</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-2">
+            <!-- /.widget -->
+          </div>
+        </div>
+        <!-- /.row -->
 
         <div class="row mt-5">
           <div class="col-12 text-center">

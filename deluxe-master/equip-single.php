@@ -380,16 +380,6 @@ if (isset($_POST["likeEquipDel"])) {
                         </p>
                       </span>
                     </li>
-
-                    <li>
-                      <span style="display: flex; align-items: center;">
-                        <i class="fa-solid fa-phone fa-lg"></i>
-                        <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">電話</p>
-                        <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $ownerPhoneNumber ?>
-                        </p>
-                      </span>
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -420,7 +410,7 @@ if (isset($_POST["likeEquipDel"])) {
             $row_request = mysqli_fetch_assoc($result_request);
             $count_request = $row_request['COUNT(*)'];
 
-            $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '賣'";
+            $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '售'";
             $result_sell = mysqli_query($conn, $sql_sell);
             $row_sell = mysqli_fetch_assoc($result_sell);
             $count_sell = $row_sell['COUNT(*)'];
@@ -434,7 +424,7 @@ if (isset($_POST["likeEquipDel"])) {
             <li><a href="equipment_request.php">徵<span>(
                   <?php echo $count_request ?>)
                 </span></a></li>
-            <li><a href="equipment_sell.php">賣<span>(
+            <li><a href="equipment_sell.php">售<span>(
                   <?php echo $count_sell ?>)
                 </span></a></li>
           </div>
