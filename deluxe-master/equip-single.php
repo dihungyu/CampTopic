@@ -26,7 +26,7 @@ $equipmentId = $_GET['equipmentId'];
 $sql_equipment = "SELECT * FROM equipments WHERE equipmentId = '$equipmentId'";
 $result_equipment = mysqli_query($conn, $sql_equipment);
 $row_equipment = mysqli_fetch_assoc($result_equipment);
-
+$equipmentOwnerId = $row_equipment["accountId"];
 $equipmentName = $row_equipment['equipmentName'];
 $equipmentType = $row_equipment["equipmentType"];
 $equipmentName = $row_equipment["equipmentName"];
@@ -34,13 +34,13 @@ $equipmentDescription = $row_equipment["equipmentDescription"];
 $equipmentPrice = $row_equipment["equipmentPrice"];
 $equipmentLikeCount = $row_equipment["equipmentLikeCount"];
 
-$sql_account = "SELECT * FROM accounts WHERE accountId = '$accountId'";
+$sql_account = "SELECT * FROM accounts WHERE accountId = '$equipmentOwnerId'";
 $result_account = mysqli_query($conn, $sql_account);
 $row_account = mysqli_fetch_assoc($result_account);
 
-$accountName = $row_account['accountName'];
-$accountEmail = $row_account['accountEmail'];
-$accountPhoneNumber = $row_account['accountPhoneNumber'];
+$ownerName = $row_account['accountName'];
+$ownerEmail = $row_account['accountEmail'];
+$ownerPhoneNumber = $row_account['accountPhoneNumber'];
 
 //收藏設備
 if (isset($_POST["collectEquipAdd"])) {
@@ -197,6 +197,44 @@ if (isset($_POST["likeEquipDel"])) {
 </head>
 
 <body>
+
+  <!-- 模态框 HTML 结构 -->
+  <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportModalLabel">舉報設備</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="report-form">
+            <div class="form-group">
+              <label for="report-reason">舉報原因</label>
+              <select class="form-control" id="report-reason" name="reportReason">
+                <option value="垃圾訊息">垃圾訊息</option>
+                <option value="冒犯性内容">冒犯性内容</option>
+                <option value="疑似詐騙">疑似詐騙</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="report-description">詳細描述</label>
+              <textarea class="form-control" id="report-description" name="reportDescription" rows="3"></textarea>
+              <input type="hidden" id="reported-equipment-id" name="equipmentId" value="<?= $equipmentId ?>">
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="submit-report">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 系統訊息 -->
   <?php if (isset($_SESSION["system_message"])) : ?>
     <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
@@ -289,24 +327,32 @@ if (isset($_POST["likeEquipDel"])) {
                     </a></h1>
                 </span>
                 <span style="display:flex; align-items: center;">
-                  <h4 class="equiph4">$
-                    <?php echo $equipmentPrice ?>
+                  <h4 class="equiph4">
+                    <?php echo "$" . number_format($equipmentPrice) ?>
                   </h4>
                   <?php
-                  if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
-                    echo '<button class="btn-icon">
-                      <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
-            <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
-
-                    echo '<button class="btn-icon">
-          <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
-            <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
-          </a>
-        </button>';
+                  if (isset($_COOKIE["accountId"])) {
+                    if ($row_equipment["accountId"] == $_COOKIE["accountId"]) {
+                      echo '
+      <button class="btn-icon">
+        <a href="../php/Equipment/deleteEquipment.php?equipmentId=' . $equipmentId . '">
+          <i class="fas fa-trash-alt" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>
+      <button class="btn-icon">
+        <a href="property-1.0.0/edit-equip.php?equipmentId=' . $equipmentId . '">
+          <i class="fas fa-edit" style="font-weight: 500;color: #000;"></i>
+        </a>
+      </button>';
+                    } else {
+                      echo '
+      <button class="btn-icon report-btn" data-equipment-id="' . $equipmentId . '">
+        <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>
+      </button>';
+                    }
                   }
                   ?>
+
                 </span>
               </div>
               <p style="padding:4px; margin-top:20px;">
@@ -321,7 +367,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <i class="fa-regular fa-user fa-xl"></i>
                         <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">聯絡人</p>
                         <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountName ?>
+                          <?php echo $ownerName ?>
                         </p>
                       </span>
                     </li>
@@ -330,17 +376,7 @@ if (isset($_POST["likeEquipDel"])) {
                         <i class="fa-regular fa-envelope fa-lg"></i>
                         <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">信箱</p>
                         <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountEmail ?>
-                        </p>
-                      </span>
-                    </li>
-
-                    <li>
-                      <span style="display: flex; align-items: center;">
-                        <i class="fa-solid fa-phone fa-lg"></i>
-                        <p style="margin-bottom: 0px; box-sizing: content-box;width: 60px;">電話</p>
-                        <p style="margin-bottom: 0px; margin-left: 10px;">
-                          <?php echo $accountPhoneNumber ?>
+                          <?php echo $ownerEmail ?>
                         </p>
                       </span>
                     </li>
@@ -374,7 +410,7 @@ if (isset($_POST["likeEquipDel"])) {
             $row_request = mysqli_fetch_assoc($result_request);
             $count_request = $row_request['COUNT(*)'];
 
-            $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '賣'";
+            $sql_sell = "SELECT COUNT(*) FROM equipments WHERE equipmentType = '售'";
             $result_sell = mysqli_query($conn, $sql_sell);
             $row_sell = mysqli_fetch_assoc($result_sell);
             $count_sell = $row_sell['COUNT(*)'];
@@ -388,7 +424,7 @@ if (isset($_POST["likeEquipDel"])) {
             <li><a href="equipment_request.php">徵<span>(
                   <?php echo $count_request ?>)
                 </span></a></li>
-            <li><a href="equipment_sell.php">賣<span>(
+            <li><a href="equipment_sell.php">售<span>(
                   <?php echo $count_sell ?>)
                 </span></a></li>
           </div>
@@ -461,8 +497,11 @@ if (isset($_POST["likeEquipDel"])) {
                 // 檢查當前設備是否已按讚
                 $isEquipLiked = in_array($recommand_equipment["equipmentId"], $likedEquips);
 
-                // 取出設備圖片
-                $equip_img_src = get_first_image_src($recommand_equipment['equipmentDescription']);
+                //取出設備圖片
+                $equip_img_src = get_first_image_src($recommand_equipment["equipmentDescription"]);
+                if ($equip_img_src == "") {
+                  $equip_img_src = "property-1.0.0/images/image_8.jpg";
+                }
 
                 //若文章內容超過30字做限制
                 $content_length = mb_strlen(strip_tags($recommand_equipment["equipmentDescription"]), 'UTF-8');
@@ -494,7 +533,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
-                echo '<h4 style="margin-left: 24px;">$' . format_count($equipmentPrice) . '</h4>';
+                echo '<h4 style="margin-left: 24px;">$' . number_format($equipmentPrice) . '</h4>';
                 echo "<form action='equip-single.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";
@@ -649,6 +688,40 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+
+    <script>
+      $(document).ready(function() {
+        // 當使用者點擊檢舉按鈕時，顯示模態框
+        $('.report-btn').on('click', function() {
+          var equipmentId = $(this).data('equipment-id');
+          $('#equipmentId').val(equipmentId);
+          $('#reportModal').modal('show');
+        });
+
+        // 處理表單提交
+        $('#submit-report').on('click', function() {
+          var formData = $('#report-form').serialize();
+          console.log("表單數據:", formData); // 輸出表單數據到控制台
+
+          // 使用 AJAX 將表單資料發送到伺服器
+          $.post('report-equipment.php', formData, function(response) {
+            // 解析伺服器返回的 JSON 响應
+            var jsonResponse = JSON.parse(response);
+            console.log("伺服器回應:", jsonResponse); // 輸出伺服器回應到控制台
+
+            // 根據回應狀態顯示相應的提示訊息
+            if (jsonResponse.status === 'success') {
+              alert('提交成功！謝謝您為我們的平台盡一份力，請耐心等待管理員審核。');
+            } else {
+              alert(jsonResponse.message);
+            }
+          });
+
+          // 關閉模態框
+          $('#reportModal').modal('hide');
+        });
+      });
+    </script>
 </body>
 
 </html>

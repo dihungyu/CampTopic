@@ -1,49 +1,104 @@
 <?php
-$campsiteId = $_GET['campsiteId'];
+session_start();
 
 require_once '../conn.php';
 
-// Get file names of files to be deleted
-$sql_query = "SELECT fileName FROM files WHERE campsiteId = '$campsiteId'";
-$result = mysqli_query($conn, $sql_query);
-$files_to_delete = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $files_to_delete[] = $row['fileName'];
-}
+if (isset($_GET["campsiteId"])) {
+    $campsiteId = $_GET["campsiteId"];
 
-// Delete related data from collections table
-$sql_query4 = "DELETE FROM collections WHERE campsiteId = '$campsiteId'";
-if (!mysqli_query($conn, $sql_query4)) {
-    echo "Error: " . mysqli_error($conn);
-}
+    // Start transaction
+    mysqli_begin_transaction($conn);
 
-// Delete data from files table
-$sql_query3 = "DELETE FROM files WHERE campsiteId = '$campsiteId'";
-if (!mysqli_query($conn, $sql_query3)) {
-    echo "Error: " . mysqli_error($conn);
-}
+    $all_successful = true;
 
-// Delete data from database
-$sql_query1 = "DELETE FROM campsites_labels WHERE campsiteId = '$campsiteId'";
-if (!mysqli_query($conn, $sql_query1)) {
-    echo "Error: " . mysqli_error($conn);
-}
-$sql_query2 = "DELETE FROM campsites WHERE campsiteId = '$campsiteId'";
-if (!mysqli_query($conn, $sql_query2)) {
-    echo "Error: " . mysqli_error($conn);
-}
+    // Get the file names for the current routeId
+    $sql_query1 = "SELECT fileName FROM files WHERE campsiteId = ?";
+    $stmt1 = mysqli_prepare($conn, $sql_query1);
+    mysqli_stmt_bind_param($stmt1, "s", $campsiteId);
+    mysqli_stmt_execute($stmt1);
+    $result1 = mysqli_stmt_get_result($stmt1);
+    $files = [];
+    while ($row = mysqli_fetch_assoc($result1)) {
+        $files[] = $row;
+    }
 
+    // Delete the files from the '../../upload' folder
+    foreach ($files as $file) {
+        $fileName = $file['fileName'];
+        $filePath = '../../upload/' . $fileName;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
 
+    if ($all_successful) {
+        // Delete the file records from the 'files' table
+        $sql_query2 = "DELETE FROM files WHERE campsiteId = ?";
+        $stmt2 = mysqli_prepare($conn, $sql_query2);
+        mysqli_stmt_bind_param($stmt2, "s", $campsiteId);
+        $result2 = mysqli_stmt_execute($stmt2);
+        if (!$result2) {
+            $all_successful = false;
+        }
+    }
 
+    if ($all_successful) {
+        // Delete the file records from the 'files' table
+        $sql_query4 = "DELETE FROM campsites_services WHERE campsiteId = ?";
+        $stmt4 = mysqli_prepare($conn, $sql_query4);
+        mysqli_stmt_bind_param($stmt4, "s", $campsiteId);
+        $result4 = mysqli_stmt_execute($stmt4);
+        if (!$result4) {
+            $all_successful = false;
+        }
+    }
 
+    if ($all_successful) {
+        // Delete the file records from the 'files' table
+        $sql_query5 = "DELETE FROM campsites_labels WHERE campsiteId = ?";
+        $stmt5 = mysqli_prepare($conn, $sql_query5);
+        mysqli_stmt_bind_param($stmt5, "s", $campsiteId);
+        $result5 = mysqli_stmt_execute($stmt5);
+        if (!$result5) {
+            $all_successful = false;
+        }
+    }
 
-// Delete files from upload folder
-$upload_dir = "../../upload/";
-foreach ($files_to_delete as $file_name) {
-    $file_path = $upload_dir . $file_name;
-    if (file_exists($file_path)) {
-        unlink($file_path);
+    if ($all_successful) {
+        // Delete the file records from the 'files' table
+        $sql_query6 = "DELETE FROM collections WHERE campsiteId = ?";
+        $stmt6 = mysqli_prepare($conn, $sql_query6);
+        mysqli_stmt_bind_param($stmt6, "s", $campsiteId);
+        $result6 = mysqli_stmt_execute($stmt6);
+        if (!$result6) {
+            $all_successful = false;
+        }
+    }
+
+    if ($all_successful) {
+        $sql_query3 = "DELETE FROM campsites WHERE campsiteId = ?";
+        $stmt3 = mysqli_prepare($conn, $sql_query3);
+        mysqli_stmt_bind_param($stmt3, "s", $campsiteId);
+        $result3 = mysqli_stmt_execute($stmt3);
+
+        if (!$result3) {
+            $all_successful = false;
+        }
+    }
+
+    // Check if all queries were successful
+    if ($all_successful) {
+        // Commit the transaction
+        mysqli_commit($conn);
+        $_SESSION["system_message"] = "營地已刪除！";
+        header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($conn);
+        // Rollback the transaction
+        mysqli_rollback($conn);
+        $_SESSION["system_message"] = "刪除失敗，請重試！";
+        header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
     }
 }
-
-// header("Location: readCampsite.php");
+?>

@@ -1,12 +1,16 @@
 <?php
 // 開啟錯誤報告
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once "../php/conn.php";
 require_once "../php/uuid_generator.php";
 require_once "../php/get_img_src.php";
 session_start();
 
+//判斷是否登入，若有則對變數初始化
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
 
 function format_like_count($count)
 {
@@ -19,10 +23,55 @@ function format_like_count($count)
   }
 }
 
-//判斷是否登入，若有則對變數初始化
-if (isset($_COOKIE["accountId"])) {
-  $accountId = $_COOKIE["accountId"];
+function getArticles($conn, $labelId = null, $article_search_keyword = '', $article_page = 1)
+{
+  $conditions = array();
+
+  if ($article_search_keyword) {
+    $conditions[] = "articleTitle LIKE '%$article_search_keyword%'";
+  }
+
+  $whereClause = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
+
+  // 如果提供了$labelId，则使用INNER JOIN连接articles_labels表
+  if ($labelId) {
+    $joinClause = "INNER JOIN articles_labels ON articles.articleId = articles_labels.articleId AND articles_labels.labelId = '$labelId'";
+  } else {
+    $joinClause = "";
+  }
+
+  $article_count_sql = "SELECT COUNT(*) as total FROM articles $joinClause $whereClause";
+  $article_count_result = $conn->query($article_count_sql);
+  $row = $article_count_result->fetch_assoc();
+  $article_total_rows = $row['total'];
+  $article_total_pages = ceil($article_total_rows / 4);
+
+  $article_perPage = 4;
+  $article_offset = ($article_page - 1) * $article_perPage;
+
+  $sql_articles = "SELECT articles.*, accounts.accountName FROM articles JOIN accounts ON articles.accountId = accounts.accountId $joinClause $whereClause ORDER BY articles.articleCreateDate DESC, articles.articleLikeCount DESC LIMIT $article_perPage OFFSET $article_offset";
+  $result_articles = mysqli_query($conn, $sql_articles);
+  if (!$result_articles) {
+    die("Error in SQL query: " . mysqli_error($conn));
+  }
+
+
+  $articles = array();
+  if (mysqli_num_rows($result_articles) > 0) {
+    while ($row_articles = mysqli_fetch_assoc($result_articles)) {
+      $articles[] = $row_articles;
+    }
+  }
+
+  return array(
+    'articles' => $articles,
+    'total_pages' => $article_total_pages,
+    'current_page' => $article_page,
+  );
 }
+
+
+
 
 //收藏文章
 if (isset($_POST["collectArticleAdd"])) {
@@ -378,32 +427,6 @@ if (isset($_POST["likeEquipDel"])) {
               <div class="row mb-5">
 
                 <?php
-                // 搜尋關鍵字
-                $article_search_keyword = isset($_GET['article_search_keyword']) ? trim($_GET['article_search_keyword']) : '';
-
-                // 使用關鍵字搜尋文章
-                $article_keyword_condition = $article_search_keyword ? "WHERE articleTitle LIKE '%$article_search_keyword%'" : "";
-
-                // 查詢所有文章總數
-                $article_count_sql = "SELECT COUNT(*) as total FROM articles $article_keyword_condition";
-                $article_count_result = $conn->query($article_count_sql);
-                $row = $article_count_result->fetch_assoc();
-                $article_total_rows = $row['total'];
-                $article_total_pages = ceil($article_total_rows / 4); // 每四個文章換下一頁
-
-                $article_perPage = 4;
-                $article_current_page = isset($_GET['article_page']) ? (int) $_GET['article_page'] : 1;
-                $article_offset = ($article_current_page - 1) * $article_perPage;
-
-                // 查詢所有文章資料並根據建立時間以及按讚數排序
-                $sql = "SELECT articles.*, accounts.accountName FROM articles
-          LEFT JOIN accounts ON articles.accountId = accounts.accountId
-          $article_keyword_condition
-          ORDER BY articles.articleCreateDate DESC, articles.articleLikeCount DESC
-          LIMIT $article_offset, $article_perPage";
-
-                $article_result = $conn->query($sql);
-
                 // 取出已被按讚的文章
                 $article_like_sql = "SELECT `articleId` FROM `likes` WHERE `accountId` = '$accountId'";
                 $article_like_result = mysqli_query($conn, $article_like_sql);
@@ -425,52 +448,59 @@ if (isset($_POST["likeEquipDel"])) {
                   $collectedArticles[] = $row['articleId'];
                 }
 
+                $labelId = isset($_GET["labelId"]) ? $_GET["labelId"] : null;
+                $article_search_keyword = isset($_GET['article_search_keyword']) ? trim($_GET['article_search_keyword']) : '';
+                $article_page = isset($_GET['article_page']) ? (int) $_GET['article_page'] : 1;
 
-                if ($article_result && mysqli_num_rows($article_result) > 0) {
-                  while ($article_row = mysqli_fetch_assoc($article_result)) {
-                    $articleId = $article_row["articleId"];
-                    $articleContent = $article_row["articleContent"];
+                $result = getArticles($conn, $labelId, $article_search_keyword, $article_page);
+                $articles = $result['articles'];
+                $article_total_pages = $result['total_pages'];
+                $article_current_page = $result['current_page'];
 
-                    // 取得文章第一張圖片
-                    $image_src = get_first_image_src($articleContent);
+                foreach ($articles as $article_row) {
+                  $articleId = $article_row["articleId"];
+                  $articleContent = $article_row["articleContent"];
 
-                    // 如果文章沒有圖片，則使用預設圖片
-                    if ($image_src == "") {
-                      $image_src = 'images/img15.jpg';
-                    }
+                  // 取得文章第一張圖片
+                  $image_src = get_first_image_src($articleContent);
 
-                    // 檢查當前文章是否已按讚
-                    $isArticleLiked = in_array($article_row["articleId"], $likedArticles);
+                  // 如果文章沒有圖片，則使用預設圖片
+                  if ($image_src == "") {
+                    $image_src = 'images/img15.jpg';
+                  }
 
-                    // 檢查當前文章是否已收藏
-                    $isArticleCollected = in_array($article_row["articleId"], $collectedArticles);
+                  // 檢查當前文章是否已按讚
+                  $isArticleLiked = in_array($article_row["articleId"], $likedArticles);
 
-                    // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
-                    $timestamp = strtotime($article_row["articleCreateDate"]);
+                  // 檢查當前文章是否已收藏
+                  $isArticleCollected = in_array($article_row["articleId"], $collectedArticles);
 
-                    // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
-                    $formatted_date = date('F j, Y', $timestamp);
+                  // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+                  $timestamp = strtotime($article_row["articleCreateDate"]);
 
-                    //若文章內容超過30字做限制
-                    $content_length = mb_strlen(strip_tags($article_row["articleContent"]), 'UTF-8');
-                    if ($content_length > 30) {
-                      $truncated_content = mb_substr(strip_tags($article_row["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
-                    } else {
-                      $truncated_content = strip_tags($article_row["articleContent"]);
-                    }
+                  // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+                  $formatted_date = date('F j, Y', $timestamp);
+
+                  //若文章內容超過30字做限制
+                  $content_length = mb_strlen(strip_tags($article_row["articleContent"]), 'UTF-8');
+                  if ($content_length > 30) {
+                    $truncated_content = mb_substr(strip_tags($article_row["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $truncated_content = strip_tags($article_row["articleContent"]);
+                  }
 
 
 
-                    // 在顯示卡片之前查詢留言數
-                    $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
-                    $result = mysqli_query($conn, $query);
-                    $row = mysqli_fetch_assoc($result);
-                    $comment_count = $row['comment_count'];
+                  // 在顯示卡片之前查詢留言數
+                  $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                  $result = mysqli_query($conn, $query);
+                  $row = mysqli_fetch_assoc($result);
+                  $comment_count = $row['comment_count'];
 
-                    // 格式化按讚數
-                    $formatted_like_count = format_like_count($article_row["articleLikeCount"]);
+                  // 格式化按讚數
+                  $formatted_like_count = format_like_count($article_row["articleLikeCount"]);
 
-                    echo "<article class='col-md-11 article-list mb-4'>
+                  echo "<article class='col-md-11 article-list mb-4'>
     <div class='inner'>
         <figure>
             <a href='article.php?articleId=" . $articleId . "'>
@@ -487,11 +517,11 @@ if (isset($_POST["likeEquipDel"])) {
                 </span>
             </div>
             <h5 style='position: relative;'><a href='article.php?articleId=" . $articleId . "'style='color:#00204a;'>" . $article_row["articleTitle"] . "</a>";
-                    echo "<form action='all-article.php' method='post' style='position: absolute; right: 0; top: 50%; transform: translateY(-50%);'>
+                  echo "<form action='all-article.php' method='post' style='position: absolute; right: 0; top: 50%; transform: translateY(-50%);'>
                 <input type='hidden' name='" . ($isArticleCollected ? "collectArticleDel" : "collectArticleAdd") . "' value='" . $articleId . "'>
                 <button type='submit' class='btn-icon' >";
-                    echo "<i class='" . ($isArticleCollected ? "fas" : "fa-regular") . " fa-bookmark'></i>";
-                    echo "</button>
+                  echo "<i class='" . ($isArticleCollected ? "fas" : "fa-regular") . " fa-bookmark'></i>";
+                  echo "</button>
             </form>
             </h5>
             <p style='padding-top: 10px;'>
@@ -503,9 +533,9 @@ if (isset($_POST["likeEquipDel"])) {
                     <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
                         <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
                         <button type='submit' class='btn-icon' style='display:flex; align-items: center;'>";
-                    echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' ></i>";
-                    echo "<p style='margin-bottom: 0px; margin-right:0px;'>" . $formatted_like_count . "</p>";
-                    echo "</button>
+                  echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' ></i>";
+                  echo "<p style='margin-bottom: 0px; margin-right:0px;'>" . $formatted_like_count . "</p>";
+                  echo "</button>
                     </form>
 
                 </span>
@@ -513,8 +543,98 @@ if (isset($_POST["likeEquipDel"])) {
         </div>
     </div>
 </article>";
-                  }
                 }
+
+
+                //                 if ($article_result && mysqli_num_rows($article_result) > 0) {
+                //                   while ($article_row = mysqli_fetch_assoc($article_result)) {
+                //                     $articleId = $article_row["articleId"];
+                //                     $articleContent = $article_row["articleContent"];
+
+                //                     // 取得文章第一張圖片
+                //                     $image_src = get_first_image_src($articleContent);
+
+                //                     // 如果文章沒有圖片，則使用預設圖片
+                //                     if ($image_src == "") {
+                //                       $image_src = 'images/img15.jpg';
+                //                     }
+
+                //                     // 檢查當前文章是否已按讚
+                //                     $isArticleLiked = in_array($article_row["articleId"], $likedArticles);
+
+                //                     // 檢查當前文章是否已收藏
+                //                     $isArticleCollected = in_array($article_row["articleId"], $collectedArticles);
+
+                //                     // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+                //                     $timestamp = strtotime($article_row["articleCreateDate"]);
+
+                //                     // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+                //                     $formatted_date = date('F j, Y', $timestamp);
+
+                //                     //若文章內容超過30字做限制
+                //                     $content_length = mb_strlen(strip_tags($article_row["articleContent"]), 'UTF-8');
+                //                     if ($content_length > 30) {
+                //                       $truncated_content = mb_substr(strip_tags($article_row["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                //                     } else {
+                //                       $truncated_content = strip_tags($article_row["articleContent"]);
+                //                     }
+
+
+
+                //                     // 在顯示卡片之前查詢留言數
+                //                     $query = "SELECT COUNT(*) as comment_count FROM comments WHERE articleId = '$articleId'";
+                //                     $result = mysqli_query($conn, $query);
+                //                     $row = mysqli_fetch_assoc($result);
+                //                     $comment_count = $row['comment_count'];
+
+                //                     // 格式化按讚數
+                //                     $formatted_like_count = format_like_count($article_row["articleLikeCount"]);
+
+                //                     echo "<article class='col-md-11 article-list mb-4'>
+                //     <div class='inner'>
+                //         <figure>
+                //             <a href='article.php?articleId=" . $articleId . "'>
+                //                 <img src='" . $image_src . "'>
+                //             </a>
+                //         </figure>
+                //         <div class='details'>
+                //             <div class='detail' style='justify-content: space-between;'>
+                //                 <span style='display: flex;'>
+                //                     <div class='category'>
+                //                         <a href='article.php?articleId=" . $articleId . "' style='color:#00204a;'>" . $article_row["accountName"] . "</a>
+                //                     </div>
+                //                     <div class='time'>" . $formatted_date . "</div>
+                //                 </span>
+                //             </div>
+                //             <h5 style='position: relative;'><a href='article.php?articleId=" . $articleId . "'style='color:#00204a;'>" . $article_row["articleTitle"] . "</a>";
+                //                     echo "<form action='all-article.php' method='post' style='position: absolute; right: 0; top: 50%; transform: translateY(-50%);'>
+                //                 <input type='hidden' name='" . ($isArticleCollected ? "collectArticleDel" : "collectArticleAdd") . "' value='" . $articleId . "'>
+                //                 <button type='submit' class='btn-icon' >";
+                //                     echo "<i class='" . ($isArticleCollected ? "fas" : "fa-regular") . " fa-bookmark'></i>";
+                //                     echo "</button>
+                //             </form>
+                //             </h5>
+                //             <p style='padding-top: 10px;'>
+                //                 " . $truncated_content . "
+                //             </p>
+                //             <footer class='article-footer-div'>
+                //                 <p style='margin-bottom: 0px;'>" . $comment_count . " 留言</p>
+                //                 <span class='article-footer'>
+                //                     <form action='all-article.php' method='post' style='margin-bottom: 0px;'>
+                //                         <input type='hidden' name='" . ($isArticleLiked ? "likeArticleDel" : "likeArticleAdd") . "' value='" . $articleId . "'>
+                //                         <button type='submit' class='btn-icon' style='display:flex; align-items: center;'>";
+                //                     echo "<i class='" . ($isArticleLiked ? "fas" : "fa-regular") . " fa-heart' ></i>";
+                //                     echo "<p style='margin-bottom: 0px; margin-right:0px;'>" . $formatted_like_count . "</p>";
+                //                     echo "</button>
+                //                     </form>
+
+                //                 </span>
+                //             </footer>
+                //         </div>
+                //     </div>
+                // </article>";
+                //                   }
+                //                 }
                 ?>
 
               </div>
@@ -612,6 +732,7 @@ if (isset($_POST["likeEquipDel"])) {
               <div id="navbar-search-autocomplete" class="form-outline">
                 <form>
                   <input type="search" id="form1" name="article_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋文章標題..." />
+                  <input type="hidden" name="labelId" value="<?php echo $labelId; ?>">
               </div>
               <button type="submit" class="button-search" style="margin-left: 10px;">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -638,7 +759,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $label_sql = "SELECT * FROM labels WHERE labelType='文章' ";
                 $label_result = mysqli_query($conn, $label_sql);
                 while ($label_row = mysqli_fetch_assoc($label_result)) {
-                  echo "<a href='#' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
+                  echo "<a href='all-article.php?labelId=" . $label_row["labelId"] . "' class='tag-cloud-link'>" . $label_row["labelName"] . "</a>";
                 }
                 ?>
               </div>
