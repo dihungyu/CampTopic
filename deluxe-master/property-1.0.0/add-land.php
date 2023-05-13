@@ -282,7 +282,7 @@ session_start();
               style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 17px;margin-left: 100px;margin-top: 10px;">
               <div class="preview"
                 style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
-                <input type="file" id="image_upload1" name="files[]" accept=".jpg, .jpeg, .png"
+                <input type="file" id="image_upload1" name="cover[]" accept=".jpg, .jpeg, .png"
                   style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
                 <div class="upload-placeholder"
                   style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">
@@ -297,7 +297,7 @@ session_start();
               </div>
               <div class="preview"
                 style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px; margin-left: 20px;">
-                <input type="file" id="image_upload2" name="files[]" accept=".jpg, .jpeg, .png"
+                <input type="file" id="image_upload2" name="cover[]" accept=".jpg, .jpeg, .png"
                   style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
                 <div class="upload-placeholder"
                   style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">
@@ -312,7 +312,7 @@ session_start();
               </div>
               <div class="preview"
                 style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px; margin-left: 20px;">
-                <input type="file" id="image_upload3" name="files[]" accept=".jpg, .jpeg, .png"
+                <input type="file" id="image_upload3" name="cover[]" accept=".jpg, .jpeg, .png"
                   style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
                 <div class="upload-placeholder"
                   style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">

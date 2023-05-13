@@ -1,8 +1,4 @@
 <?php
-// 開啟錯誤報告
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once '../conn.php';
 require_once '../uuid_generator.php';
 
@@ -20,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
         $campsiteUpperLimit = $_POST["campsiteUpperLimit"];
         $tags = $_POST['tags']; // 取得選擇的標籤值，以陣列的形式傳回
         $services = $_POST['services']; // 取得選擇的服務值，以陣列的形式傳回
+        $files = $_FILES['cover'];
 
         $campsiteId = uuid_generator();
 
@@ -53,43 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
             }
         }
 
-        // loop through all uploaded files
-        foreach ($_FILES["files"]["name"] as $key => $name) {
-            // check if file was uploaded successfully
-            if ($_FILES["files"]["error"][$key] === UPLOAD_ERR_OK) {
-                // check if file is an image
-                $allowed_types = [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF];
-                $detected_type = exif_imagetype($_FILES["files"]["tmp_name"][$key]);
-                if (in_array($detected_type, $allowed_types)) {
-                    $fileId = uuid_generator();
-                    $upload_dir = "../../upload/";
-                    $fileName = $_FILES["files"]["name"][$key];
-                    $filePath = $upload_dir . $fileName;
-                    $fileExtensionName = pathinfo($_FILES["files"]["name"][$key], PATHINFO_EXTENSION);
-                    $fileSize = round($_FILES["files"]["size"][$key] / 1024, 2); //KB
-                    move_uploaded_file($_FILES["files"]["tmp_name"][$key], $filePath);
-                    $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
-                VALUES ('$fileId', '$campsiteId', '$fileName', '$fileExtensionName', '$filePath', $fileSize, now(), 'campsite')";
-                    mysqli_query($conn, $sql_query2);
-                } else {
-                    echo "檔案 $name 必須為圖片格式！<br>";
-                }
-            } else if ($_FILES["files"]["error"][$key] !== UPLOAD_ERR_NO_FILE) {
-                $error_messages = [
-                    UPLOAD_ERR_INI_SIZE => "檔案大小超出 php.ini:upload_max_filesize 限制",
-                    UPLOAD_ERR_FORM_SIZE => "檔案大小超出 MAX_FILE_SIZE 限制",
-                    UPLOAD_ERR_PARTIAL => "檔案大小僅被部份上傳",
-                    UPLOAD_ERR_NO_TMP_DIR => "找不到暫存資料夾",
-                    UPLOAD_ERR_CANT_WRITE => "檔案寫入失敗",
-                    UPLOAD_ERR_EXTENSION => "上傳檔案被中斷",
-                ];
-                $error_code = $_FILES["files"]["error"][$key];
-                echo "檔案 $name 上傳失敗：" . $error_messages[$error_code] . "<br>";
-            }
-        }
+        // 在這裡調用處理封面圖片的函數
+        process_and_save_cover_images($conn, $campsiteId);
 
         // Process images in the article content and adjust the image paths
-        $processedCampsiteDescription = process_and_save_images($processedCampsiteDescription, $conn, $campsiteId);
+        $processedCampsiteDescription = process_and_save_images($campsiteDescription, $conn, $campsiteId);
 
         // Update the article content with the processed content
         $sql_query_update = "UPDATE campsites SET campsiteDescription = '$processedCampsiteDescription' WHERE campsiteId = '$campsiteId'";
@@ -132,10 +97,10 @@ function process_and_save_images($content, $conn, $campsiteId)
 
             $fileSize = round(filesize($file_path) / 1024, 2); //KB
 
-            $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+            $sql_query3 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
             VALUES ('$fileId', '$campsiteId', '$fileName', '$image_type', '$file_path', $fileSize, now(), 'campsite')";
 
-            if (!mysqli_query($conn, $sql_query2)) {
+            if (!mysqli_query($conn, $sql_query3)) {
                 echo "Error: " . mysqli_error($conn);
             }
             // Replace the image src attribute with the fileId
@@ -144,5 +109,47 @@ function process_and_save_images($content, $conn, $campsiteId)
     }
 
     return $content;
+}
+
+function process_and_save_cover_images($conn, $campsiteId)
+{
+    // loop through all uploaded files
+    foreach ($_FILES["cover"]["name"] as $key => $name) {
+        // check if file was uploaded successfully
+        if ($_FILES["cover"]["error"][$key] === UPLOAD_ERR_OK) {
+            // check if file is an image
+            $allowed_types = [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF];
+            $detected_type = exif_imagetype($_FILES["cover"]["tmp_name"][$key]);
+            if (in_array($detected_type, $allowed_types)) {
+                $coverId = uuid_generator();
+                $uploadDir = "../../upload/";
+                $coverExtensionName = pathinfo($_FILES["cover"]["name"][$key], PATHINFO_EXTENSION);
+                $coverName = $coverId . '.' . $coverExtensionName;
+                $coverPath = $uploadDir . $coverName;
+                $coverSize = round($_FILES["cover"]["size"][$key] / 1024, 2); //KB
+                move_uploaded_file($_FILES["cover"]["tmp_name"][$key], $coverPath);
+                $sql_query2 = "INSERT INTO files (fileId, campsiteId, fileName, fileExtensionName, filePath, fileSize, fileCreateDate, filePathType)
+    VALUES ('$coverId', '$campsiteId', '$coverName', '$coverExtensionName', '$coverPath', $coverSize, now(), 'campsiteCover')";
+                if (!mysqli_query($conn, $sql_query2)) {
+                    $_SESSION["system_message"] = "營地封面新增失敗，請再試一次！";
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit();
+                }
+            } else {
+                echo "檔案 $name 必須為圖片格式！<br>";
+            }
+        } else if ($_FILES["cover"]["error"][$key] !== UPLOAD_ERR_NO_FILE) {
+            $error_messages = [
+                UPLOAD_ERR_INI_SIZE => "檔案大小超出 php.ini:upload_max_filesize 限制",
+                UPLOAD_ERR_FORM_SIZE => "檔案大小超出 MAX_FILE_SIZE 限制",
+                UPLOAD_ERR_PARTIAL => "檔案大小僅被部份上傳",
+                UPLOAD_ERR_NO_TMP_DIR => "找不到暫存資料夾",
+                UPLOAD_ERR_CANT_WRITE => "檔案寫入失敗",
+                UPLOAD_ERR_EXTENSION => "上傳檔案被中斷",
+            ];
+            $error_code = $_FILES["cover"]["error"][$key];
+            echo "檔案 $name 上傳失敗：" . $error_messages[$error_code] . "<br>";
+        }
+    }
 }
 ?>
