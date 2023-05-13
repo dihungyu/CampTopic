@@ -26,6 +26,12 @@ $maxAttendee = $row_result['maxAttendee'];
 $leastAttendeeFee = $row_result['leastAttendeeFee'];
 $maxAttendeeFee = $row_result['maxAttendeeFee'];
 
+// 判斷活動是否已結束
+$activityEndTimestamp = strtotime($activityEndDate);
+$currentTimestamp = strtotime(date('Y-m-d'));
+$isActivityEnded = $currentTimestamp > $activityEndTimestamp;
+$isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
+
 $sql_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 $result_campsite = mysqli_query($conn, $sql_campsite);
 $row_result_campsite = mysqli_fetch_assoc($result_campsite);
@@ -627,9 +633,48 @@ function format_timestamp($timestamp)
                   echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">目前無參加人員！</span>';
                 }
                 ?>
+                <?php
+                $hasUnapprovedAccounts = false;
+                foreach ($accounts as $account) {
+                  if ($account['isApproved'] == 0) {
+                    $hasUnapprovedAccounts = true;
+                    break;
+                  }
+                }
+                ?>
+
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">審核人員</button>
+                  <?php if (!$isActivityOngoing && !$isActivityEnded) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                      審核人員
+                      <?php if ($hasUnapprovedAccounts) : ?>
+                        <span class="badge badge-warning" style="position: relative; top: -13px; left: 125px;">•</span>
+                      <?php endif; ?>
+                    </button>
+                  <?php endif; ?>
+
+                  <?php if ($isActivityOngoing) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>
+                      進行中
+                      <?php if ($hasUnapprovedAccounts) : ?>
+                        <span class="badge badge-warning" style="position: relative; top: -13px; left: 125px;">•</span>
+                      <?php endif; ?>
+                    </button>
+                  <?php endif; ?>
+
+                  <?php if ($isActivityEnded) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>
+                      活動已結束
+                      <?php if ($hasUnapprovedAccounts) : ?>
+                        <span class="badge badge-warning" style="position: relative; top: -13px; left: 125px;">•</span>
+                      <?php endif; ?>
+                    </button>
+                  <?php endif; ?>
                 </div>
+
+
+
+
               </div>
             </div>
 

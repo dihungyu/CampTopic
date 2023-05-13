@@ -288,7 +288,9 @@ if (isset($_POST["likeArticleDel"])) {
   LEFT JOIN accounts ON activities.accountId = accounts.accountId
   LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId
   WHERE activities.accountId = '$accountId' $activity_keyword_condition LIMIT $offset, $perPage";
+
             $result_activities = mysqli_query($conn, $sql_activities);
+
 
 
             // 檢查是否有結果
@@ -303,6 +305,7 @@ if (isset($_POST["likeArticleDel"])) {
             foreach ($activities as $activity) {
               $activityCreatorId = $activity['accountId'];
               $activityId = $activity['activityId'];
+              $campsiteId = $activity['campsiteId'];
               $campsiteName = $activity['campsiteName'];
               $accountName = $activity['accountName'];
               $activityTitle = $activity['activityTitle'];
@@ -315,11 +318,43 @@ if (isset($_POST["likeArticleDel"])) {
               $activityAttendence = $activity['activityAttendence'];
               $leastAttendeeFee = $activity['leastAttendeeFee'];
               $maxAttendeeFee = $activity['maxAttendeeFee'];
+
+              // 判斷當前時間是否在活動時間內
+              $activityEndTimestamp = strtotime($activityEndDate);
+              $currentTimestamp = strtotime(date('Y-m-d'));
+              $isActivityEnded = $currentTimestamp > $activityEndTimestamp;
+              $isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
+
+              // 判斷是否有未審核的帳號
+              $isApproved_sql = "SELECT isApproved FROM activities_accounts WHERE activityId = '$activityId'";
+              $isApproved_result = mysqli_query($conn, $isApproved_sql);
+
+              $hasUnapprovedAccounts = false;
+
+              if (mysqli_num_rows($isApproved_result) > 0) {
+                while ($row_isApproved = mysqli_fetch_assoc($isApproved_result)) {
+                  if ($row_isApproved['isApproved'] == 0) {
+                    $hasUnapprovedAccounts = true;
+                    break;
+                  }
+                }
+              }
+
               // 取得頭像
               $activity_img_src = get_profileImg_src($activityCreatorId, $conn);
 
+              // 取得營地封面
+              $cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteId . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+              $cover_result = mysqli_query($conn, $cover_sql);
+
+              if ($cover_row = mysqli_fetch_assoc($cover_result)) {
+                $cover_src = $cover_row["filePath"];
+              } else {
+                $cover_src = "images/Rectangle 134.png";
+              }
+
               echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px; padding: 0px;">';
-              echo '  <img class="card-img-top" src="images/Rectangle 134.png" alt="Card image cap">';
+              echo '  <img class="card-img-top" src="' . $cover_src . '" alt="Card image cap">';
               echo '<a href="../check.php?activityId=' . $activityId . '">';
               echo '  <span class="card-head">';
               echo '    <img src="' . $activity_img_src . '"  />';
@@ -346,6 +381,19 @@ if (isset($_POST["likeArticleDel"])) {
               echo '    <hr>';
               echo '    <div class="findcamper-bottom">';
               echo '      <p>已有' . $activityAttendence . '人參加 </p>';
+              if (!$isActivityEnded) {
+                if ($isActivityOngoing) {
+                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>進行中</button>';
+                } else {
+                  if ($hasUnapprovedAccounts) {
+                    echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>您有新的審核</button>';
+                  } else {
+                    echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>未到活動時間</button>';
+                  }
+                }
+              } else {
+                echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>已結束</button>';
+              }
               echo '    </div>';
               echo '  </div>';
               echo '</a>';
