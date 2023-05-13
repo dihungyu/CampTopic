@@ -555,7 +555,7 @@ if (mysqli_num_rows($result_activities) > 0) {
         ?>
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <button type="button" class="gray-lg" data-toggle="modal" data-target="#exampleModalCenter">
-            <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%; width: 15%;">
+            <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%; width: 40px;height: 40px;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">
               <?php if (isset($_COOKIE["accountId"])) {
                 echo $accountName;

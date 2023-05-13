@@ -519,9 +519,7 @@ if (isset($_POST["likeArticleDel"])) {
               echo "快去發表第一篇文章！";
             }
             ?>
-          </div> <!-- Close the "row" div here -->
-        </div> <!-- Close the "container" div here -->
-
+         
         <div class="row align-items-center py-5">
           <div class="col-lg-3"></div>
           <div class="col-lg-6 text-center">
@@ -533,9 +531,9 @@ if (isset($_POST["likeArticleDel"])) {
           </div>
         </div>
 
-      </div>
+      </div> <!-- Close the "row" div here -->
+    </div> <!-- Close the "container" div here -->
     </div>
-  </div>
 
 
   <!-- 設備紀錄區 -->

@@ -473,7 +473,6 @@ if (isset($_POST["likeArticleDel"])) {
                     </div>";
                     echo "</div>";
                     echo "</div>
-                          </div>
                           </div>"; // Close the card div
 
 
@@ -509,7 +508,6 @@ if (isset($_POST["likeArticleDel"])) {
             </div>
           </div>
         </div>
-      </div>
 
       <!-- 收藏文章區 -->
       <div class="tab-pane fade show " id="paper" role="tabpanel" aria-labelledby="paper-tab">
@@ -697,8 +695,7 @@ if (isset($_POST["likeArticleDel"])) {
               </a>
               <figcaption>Advertisement</figcaption>
               </div>
-            </aside>
-          </div>";
+            </aside> ";
                   }
                 }
               } else {
@@ -718,13 +715,10 @@ if (isset($_POST["likeArticleDel"])) {
               </div>
             </div>
 
-
-
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+        </div>
+
 
   <!-- 收藏設備區 -->
   <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">

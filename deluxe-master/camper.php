@@ -512,7 +512,7 @@ function get_img_src($accountId, $conn)
                     $img_src = get_img_src($attendeeId, $conn);
                     $attendeeName = $account['accountName'];
                     echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">';
-                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 10%; margin-right: 16px;">';
+                    echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30px; height:30px;margin-right: 16px;">';
                     echo '<label style="font-size: 16px; margin-bottom: 0px;">' . $attendeeName . '</label></span>';
                     $displayCount++;
                   }
@@ -689,7 +689,7 @@ function get_img_src($accountId, $conn)
 
                 echo '<div class="col-md-4">';
                 echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
-                echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
+                echo '<img src="' . $img_src . '" alt="Image description" style="border-radius: 50%; width: 400px; height:400px; margin-right: 16px;">';
                 echo '<label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label></span>';
                 echo '</div>';
                 echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
