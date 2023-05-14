@@ -215,9 +215,6 @@ function format_count($count)
                   echo '  <div class="card-body">';
                   echo '    <span class="span-adj" style="justify-content: space-between;">';
                   echo '      <h4><span>$' . format_count($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
-                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $isReviewed_campsite['campsiteId'] . '">';
-                  echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
-                  echo '      </button>';
                   echo '    </span>';
                   echo '    <div>';
                   echo '      <a href="../camp-single-manage.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
@@ -452,35 +449,6 @@ function format_count($count)
       </div>
       <!-- /.container -->
     </div>
-    <!-- /.site-footer -->
-    <?php
-    foreach ($isReviewed_campsites as $isReviewed_campsite) {
-      echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
-      echo '<div class="modal fade" id="deleteModal' . $isReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
-      echo '<div class="modal-dialog" role="document">';
-      echo '<div class="modal-content">';
-      echo '<div class="modal-header">';
-      echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-      echo '<span aria-hidden="true">&times;</span>';
-      echo '</button>';
-      echo '</div>';
-      echo '<div class="modal-body">';
-      echo '確定要刪除「' . $isReviewed_campsite["campsiteName"] . '」嗎？';
-      echo '</div>';
-      echo '<div class="modal-footer">';
-      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
-      echo '<input type="hidden" name="campsiteId" value="' . $isReviewed_campsite["campsiteId"] . '">';
-      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</form>';
-    }
-    ?>
-
-
     <!-- Preloader -->
     <div id="overlayer"></div>
     <div class="loader">

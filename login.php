@@ -38,8 +38,14 @@ if ($_POST["FormType"] == "Login") {
 				$_SESSION["system_message"] = "歡迎回來！";
 
 				// 轉址至登入頁面
-				header("Location: /CampTopic/deluxe-master/property-1.0.0/index.php");
-				exit;
+				if ($_COOKIE["accountType"] == "ADMIN") {
+					header("Location: /CampTopic/deluxe-master/property-1.0.0/index-manage.php");
+					exit;
+				} elseif ($_COOKIE["accountType"] == "USER" || $_COOKIE["accountType"] == "BUSINESS") {
+					header("Location: /CampTopic/deluxe-master/property-1.0.0/index.php");
+					exit;
+				}
+
 
 				// echo "<script>{window.alert('登入成功！'); location.href='/CampTopic/deluxe-master/property-1.0.0/index.php'}</script>";
 			} else {
@@ -104,8 +110,9 @@ if ($_POST["FormType"] == "Login") {
 
 <body>
 	<!-- 系統訊息 -->
-	<?php if (isset($_SESSION["system_message"])) : ?>
-		<div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+	<?php if (isset($_SESSION["system_message"])): ?>
+		<div id="message" class="alert alert-success"
+			style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
 			<?php echo $_SESSION["system_message"]; ?>
 		</div>
 		<?php unset($_SESSION["system_message"]); ?>
@@ -117,7 +124,9 @@ if ($_POST["FormType"] == "Login") {
 			<div class="row fullscreen align-items-center justify-content-between">
 				<div class="col-lg-5 col-md-6 banner-left">
 					<h5 class="text-white" style="font-family: Arial Black, sans-serif;">Start Camping</h5>
-					<h1 class="text-white" style="font-size: 40px;"><a href="../CampTopic/deluxe-master/property-1.0.0/index.php" style=" color: #f1f1f1f1;">營在起跑點</a></h1>
+					<h1 class="text-white" style="font-size: 40px;"><a
+							href="../CampTopic/deluxe-master/property-1.0.0/index.php"
+							style=" color: #f1f1f1f1;">營在起跑點</a></h1>
 					<p class="text-white" style="font-size: 14px;">
 						邀請你一同進入露營的世界，快速開始一趟冒險旅程，多處地點一覽，不怕踩雷，讓你能夠「營」在起跑點！☺ ☺ ☺
 					</p>
@@ -131,10 +140,17 @@ if ($_POST["FormType"] == "Login") {
 							<h4 style="text-align: center; margin-left: 12px; margin-bottom: 24px; ">歡迎回來！</h4>
 							<input type="hidden" name="FormType" value="Login">
 
-							<input type="email" class="form-control" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; " name="accountEmail" placeholder="電子信箱" onfocus="this.placeholder = ''" onblur="this.placeholder = '電子信箱 '" required>
+							<input type="email" class="form-control"
+								style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; "
+								name="accountEmail" placeholder="電子信箱" onfocus="this.placeholder = ''"
+								onblur="this.placeholder = '電子信箱 '" required>
 
-							<input type="password" class="form-control" name="accountPassword" style="margin-bottom:5px; border-radius: 25px;background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" placeholder="密碼" onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'" required>
-							<button class="primary-btn" :hover style=" width:220px;  margin-top: 20px; margin-right: 5px; ">登入</button>
+							<input type="password" class="form-control" name="accountPassword"
+								style="margin-bottom:5px; border-radius: 25px;background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;"
+								placeholder="密碼" onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'"
+								required>
+							<button class="primary-btn" :hover
+								style=" width:220px;  margin-top: 20px; margin-right: 5px; ">登入</button>
 							<a class="secondary-btn-l" :hover style=" width:140px;" href="register.php">尚未註冊？</a>
 
 							</form>
@@ -165,7 +181,7 @@ if ($_POST["FormType"] == "Login") {
 		<script>
 			function hideMessage() {
 				document.getElementById("message").style.opacity = "0";
-				setTimeout(function() {
+				setTimeout(function () {
 					document.getElementById("message").style.display = "none";
 				}, 500);
 			}
