@@ -170,13 +170,14 @@ session_start();
 
           <div class="col-4">
             <div class="card">
-              <img src="images/5.png" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+              <img src="images/5.png" class="card-img-top" alt="..." style="margin-bottom: -15px; width:300px;">
               <div class="card-body">
                 <span style="display: flex;margin-bottom: 10px;margin-right: 10px;flex-wrap: wrap;flex-direction: column;align-items: center;font-weight: bold;color: #000;">
-                  <h4 style="color: #000;font-weight: bold;">商品販賣</h4>
+                  <h4 style="color: #000;font-weight: bold;">贊助我們</h4>
                   <p>
-                    &#8226; 不限期間，在「鹿的設備」頁面曝光商品<br>
-                    &#8226; 針對特定用戶推薦商品，提高購買率
+                  &#8226; 贊助會員制度中「徽章搜集」之獎品<br>
+                  &#8226; 提供特殊廣告位置投放<br>
+                  &#8226; 下一期間優先選擇時段、位置
                   </p>
                   <button class="btn-new" style="margin-top: 20px;" data-toggle="modal" data-target="#contectus">
                     聯絡我們
