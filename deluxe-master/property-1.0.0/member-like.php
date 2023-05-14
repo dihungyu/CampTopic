@@ -519,6 +519,7 @@ if (isset($_POST["likeArticleDel"])) {
             </div>
           </div>
         </div>
+        </div>
 
       <!-- 收藏文章區 -->
       <div class="tab-pane fade show " id="paper" role="tabpanel" aria-labelledby="paper-tab">
@@ -962,10 +963,12 @@ if (isset($_POST["likeArticleDel"])) {
         </div>
 
 
-      </div>
     </div>
   </div>
+
   </div>
+  </div>
+</div>
 
   <div class="site-footer">
     <div class="container">
