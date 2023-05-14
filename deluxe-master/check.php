@@ -26,6 +26,12 @@ $maxAttendee = $row_result['maxAttendee'];
 $leastAttendeeFee = $row_result['leastAttendeeFee'];
 $maxAttendeeFee = $row_result['maxAttendeeFee'];
 
+// 判斷活動是否已結束
+$activityEndTimestamp = strtotime($activityEndDate);
+$currentTimestamp = strtotime(date('Y-m-d'));
+$isActivityEnded = $currentTimestamp > $activityEndTimestamp;
+$isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
+
 $sql_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 $result_campsite = mysqli_query($conn, $sql_campsite);
 $row_result_campsite = mysqli_fetch_assoc($result_campsite);
@@ -49,7 +55,7 @@ while ($route_result = mysqli_fetch_assoc($result_route)) {
   $routes[] = $route_result;
 }
 
-$sql_account = "SELECT accounts.*, activities_accounts.isApproved FROM activities_accounts JOIN accounts
+$sql_account = "SELECT accounts.*, activities_accounts.isApproved, activities_accounts.attendeeEmail FROM activities_accounts JOIN accounts
   ON activities_accounts.accountId = accounts.accountId
   WHERE activities_accounts.activityId = '$activityId'";
 $result_account = mysqli_query($conn, $sql_account);
@@ -319,12 +325,13 @@ function format_timestamp($timestamp)
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
               if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
+                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
               }
               // 如果沒有設置 Cookie 則顯示登入選項
               else {
@@ -593,7 +600,7 @@ function format_timestamp($timestamp)
                 </div>
 
                 <?php
-                $sql_attendee_account = "SELECT * FROM activities_accounts WHERE activityId = '$activityId' AND isApproved = 1";
+                $sql_attendee_account = "SELECT a.*, b.accountName FROM activities_accounts a JOIN accounts b ON a.accountId = b.accountId WHERE a.activityId = '$activityId' AND a.isApproved = 1";
                 $result_attendee_account = mysqli_query($conn, $sql_attendee_account);
                 $attendees = [];
                 while ($attendee_result = mysqli_fetch_assoc($result_attendee_account)) {
@@ -627,9 +634,42 @@ function format_timestamp($timestamp)
                   echo '<span style="display: flex;margin-bottom: 16px; align-items: center;">目前無參加人員！</span>';
                 }
                 ?>
+                <?php
+                $hasUnapprovedAccounts = false;
+                $unapprovedCount = 0;
+
+                foreach ($accounts as $account) {
+                  if ($account['isApproved'] == 0) {
+                    $hasUnapprovedAccounts = true;
+                    $unapprovedCount++;
+                  }
+                }
+
+                ?>
+
                 <div class="box-side">
-                  <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">審核人員</button>
+                  <?php if (!$isActivityOngoing && !$isActivityEnded) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                      審核人員
+                      <?php if ($hasUnapprovedAccounts) : ?>
+                        <span class="badge badge-warning" style="position: relative; top: -13px; left: 125px;"><?php echo $unapprovedCount ?></span>
+                      <?php endif; ?>
+                    </button>
+                  <?php elseif ($isActivityOngoing) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>
+                      進行中
+                    </button>
+                  <?php elseif ($isActivityEnded) : ?>
+                    <button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>
+                      活動已結束
+                    </button>
+                  <?php endif; ?>
                 </div>
+
+
+
+
+
               </div>
             </div>
 
@@ -1153,6 +1193,7 @@ function format_timestamp($timestamp)
                 if ($isApproved == 1) {
                   $accountId = $account['accountId'];
                   $accountName = $account['accountName'];
+                  $attendeeEmail = $account['attendeeEmail'];
 
                   // 取得頭貼
                   $attendeeId = $account['accountId'];
@@ -1161,9 +1202,10 @@ function format_timestamp($timestamp)
                   $all_attendee_img_src = "../" . $all_attendee_img_src;
 
                   echo '<div class="col-md-4">';
-                  echo '<span style="display: flex; align-items: center; justify-content: flex-start">';
+                  echo '<span style="display: flex; align-items: center; justify-content: flex-start;">';
                   echo '<img src="' . $all_attendee_img_src . '" alt="Image description" style="border-radius: 50%; width: 30%; margin-right: 16px;">';
-                  echo '<label style="font-size: 16px; margin-bottom: 0px; ">' . $accountName . '</label></span>';
+                  echo '<div class="name-email-container" style="width: 150px;"><label class="account-name" style="font-size: 16px; margin-bottom: 0px;" data-name="' . $accountName . '" data-email="' . $attendeeEmail . '">' . $accountName . '</label></div>';
+                  echo '</span>';
                   echo '</div>';
                   echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">';
                   $attendeeActivityCount = $account['attendeeActivityCount'];
@@ -1187,8 +1229,9 @@ function format_timestamp($timestamp)
                     $color = '#525F58';
                     $text = '帳篷';
                   }
-                  echo '<i class="' . $iconClass . '" style="color: ' . $color . '; font-size:20px; margin-right: 8px;"></i>';
-                  echo '<p style="font-size: 14px;">' . $text . '</p>';
+                  echo '<i class="' . $iconClass . ' badge-icon" style="color: ' . $color . '; font-size:20px; margin-right: 8px;"></i>'; // 添加了 class "badge-icon"
+                  echo '<p class="badge-text" style="font-size: 14px;">' . $text . '</p>'; // 添加了 class "badge-text"
+
                   echo '</div>';
                   echo '<div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">';
                   if ($account['accountGender'] == 'Male') {
@@ -1251,6 +1294,23 @@ function format_timestamp($timestamp)
         window.location.href = 'delete_comment.php?level=check&type=activity&id=' + activityId + '&commentId=' + commentId;
       }
     }
+  </script>
+
+  <!-- 顯示用戶信箱 -->
+  <script>
+    $(document).ready(function() {
+      $(".name-email-container").on("mouseenter", function() {
+        var attendeeEmail = $(this).find(".account-name").data("email");
+        $(this).find(".account-name").text(attendeeEmail);
+        $(this).closest('.row').find(".badge-icon, .badge-text").hide(); // 隱藏徽章圖示和說明
+      });
+
+      $(".name-email-container").on("mouseleave", function() {
+        var accountName = $(this).find(".account-name").data("name");
+        $(this).find(".account-name").text(accountName);
+        $(this).closest('.row').find(".badge-icon, .badge-text").show(); // 顯示徽章圖示和說明
+      });
+    });
   </script>
 </body>
 

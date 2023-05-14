@@ -31,6 +31,12 @@ $maxAttendee = $row_result['maxAttendee'];
 $leastAttendeeFee = $row_result['leastAttendeeFee'];
 $maxAttendeeFee = $row_result['maxAttendeeFee'];
 
+// 判斷活動是否已結束
+$activityEndTimestamp = strtotime($activityEndDate);
+$currentTimestamp = strtotime(date('Y-m-d'));
+$isActivityEnded = $currentTimestamp > $activityEndTimestamp;
+$isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
+
 // 查詢營地詳細資料
 $sql_campsite = "SELECT * FROM campsites WHERE campsiteId = '$campsiteId'";
 $result_campsite = mysqli_query($conn, $sql_campsite);
@@ -50,6 +56,7 @@ $row_result_account = mysqli_fetch_assoc($result_account);
 
 // 活動發起人詳細資料
 $accountName = $row_result_account['accountName'];
+$accountEmail = $row_result_account['accountEmail'];
 
 // 查詢檔案資料
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
@@ -86,6 +93,11 @@ if ($result_account->num_rows > 0) {
     }
   }
 }
+
+// 取得當前使用者報名狀態
+$signUpStatus_query = "SELECT * FROM activities_accounts WHERE accountId = '$accountId' AND activityId = '$activityId'";
+$signUpStatus_result = mysqli_query($conn, $signUpStatus_query);
+$signUpStatus = mysqli_fetch_assoc($signUpStatus_result);
 
 
 
@@ -283,7 +295,8 @@ function format_timestamp($timestamp)
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -412,6 +425,22 @@ function format_timestamp($timestamp)
                   / 人
                 </p>
               </span>
+
+
+              <?php
+
+              if ($signUpStatus['isApproved'] == 1) {
+                echo '<span class="camp-icon">
+                <i class="fa-solid fa-envelope fa-xl"></i>
+                <label>聯絡方式</label>
+                &nbsp;&nbsp;
+                <p>
+                  ' . $accountEmail . '
+                </p>
+              </span>';
+              }
+
+              ?>
 
             </div>
 
@@ -570,13 +599,26 @@ function format_timestamp($timestamp)
                 ?>
                 <div class="box-side">
                   <?php
+                  // 參加狀態 (null:未報名, 0:待發起者確認, 1:已報名) 
                   if (isset($_COOKIE["accountId"])) {
-                    echo '<button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="@mdo">我要參加！</button>';
+                    if ($isActivityOngoing) {
+                      echo '<button type="button" class="btn-side" style="cursor: not-allowed;">進行中</button>';
+                    } elseif ($isActivityEnded) {
+                      echo '<button type="button" class="btn-side" style="cursor: not-allowed;">已結束</button>';
+                    } elseif ($signUpStatus === null) {
+                      echo '<button type="button" class="btn-side" id="show" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">我要參加！</button>';
+                    } elseif ($signUpStatus['isApproved'] == 0) {
+                      echo '<button type="button" class="btn-side" style="cursor: not-allowed;">待發起者確認</button>';
+                    } elseif ($signUpStatus['isApproved'] == 1) {
+                      echo '<button type="button" class="btn-side" style="cursor: not-allowed;">已參加！</button>';
+                    }
                   } else {
                     echo '<button type="button" class="btn-side" style="background-color: #ccc; color: #666; cursor: not-allowed;">請先登入再進行報名！</button>';
                   }
+
                   ?>
+
+
                 </div>
               </div>
             </div>
@@ -858,6 +900,12 @@ function format_timestamp($timestamp)
   <!-- /.container -->
 
   </div>
+  <?php
+  $get_account_mail = "SELECT accountEmail FROM accounts WHERE accountId = '$accountId'";
+  $get_account_mail_result = mysqli_query($conn, $get_account_mail);
+  $get_account_mail_result_row = mysqli_fetch_assoc($get_account_mail_result);
+  $accountMail = $get_account_mail_result_row["accountEmail"];
+  ?>
 
   <form name="attendForm" action="../php/Activity/attendActivity.php" method="POST" onsubmit="return validateForm()">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
@@ -878,7 +926,7 @@ function format_timestamp($timestamp)
 
             <div id="emailContainer" class="input-container">
               <div id="emailError" class="error-message">*必填</div>
-              <input name="attendeeEmail" type="email" placeholder="信箱">
+              <input name="attendeeEmail" type="email" placeholder="信箱" value="<?php echo $accountMail;  ?>">
             </div>
             <textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 / 建議"></textarea>
           </div>

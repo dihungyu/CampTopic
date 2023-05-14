@@ -40,7 +40,7 @@ if (isset($_COOKIE["accountId"])) {
   $sql_activities = "SELECT * FROM activities
   LEFT JOIN accounts ON activities.accountId = accounts.accountId
   LEFT JOIN campsites ON activities.campsiteId = campsites.campsiteId
-  WHERE activities.accountId != '$accountId' $activity_keyword_condition LIMIT $activity_offset, $activity_perPage";
+  WHERE activities.accountId != '$accountId' $activity_keyword_condition ORDER BY activities.activityEndDate DESC LIMIT $activity_offset, $activity_perPage";
 } else {
   $sql_activities = "SELECT * FROM activities
   LEFT JOIN accounts ON activities.accountId = accounts.accountId
@@ -440,7 +440,8 @@ if (mysqli_num_rows($result_activities) > 0) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
               <!-- <a class="dropdown-item" href="">文章管理</a>
                 <a class="dropdown-item" href="manage-equip.html">設備管理</a>
                 <a class="dropdown-item" href="manage-land.html">營地管理</a> -->
@@ -604,6 +605,7 @@ if (mysqli_num_rows($result_activities) > 0) {
           foreach ($activities as $activity) {
             $creatorId = $activity['accountId'];
             $activityId = $activity['activityId'];
+            $campsiteId = $activity['campsiteId'];
             $campsiteName = $activity['campsiteName'];
             $accountName = $activity['accountName'];
             $activityTitle = $activity['activityTitle'];
@@ -618,11 +620,35 @@ if (mysqli_num_rows($result_activities) > 0) {
             $maxAttendeeFee = $activity['maxAttendeeFee'];
             // 取得頭像
             $img_src = get_img_src($creatorId, $conn);
+            // 判斷當前時間是否在活動時間內
+            $activityEndTimestamp = strtotime($activityEndDate);
+            $currentTimestamp = strtotime(date('Y-m-d'));
+            $isActivityEnded = $currentTimestamp > $activityEndTimestamp;
+            $isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
+            // 取得營地封面
+
+            $cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteId . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+            $cover_result = mysqli_query($conn, $cover_sql);
+
+            if ($cover_row = mysqli_fetch_assoc($cover_result)) {
+              $cover_src = $cover_row["filePath"];
+            } else {
+              $cover_src = "images/Rectangle 144.png";
+            }
+
+            // 取得當前使用者報名狀態和信箱
+            $getAccountEmailQuery = "SELECT accounts.accountEmail, activities_accounts.* FROM accounts LEFT JOIN activities_accounts ON accounts.accountId = activities_accounts.accountId WHERE accounts.accountId = '$accountId' AND activities_accounts.activityId = '$activityId'";
+            $getAccountEmailResult = mysqli_query($conn, $getAccountEmailQuery);
+            $signUpStatus = mysqli_fetch_assoc($getAccountEmailResult);
+            $accountEmail = $signUpStatus['accountEmail'];
+
+
+
 
             echo '<div class="col-sm-6">';
             echo '<div class="card" style="width:600px; margin-left: 0px; margin-bottom: 40px;">';
-            echo '  <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">';
             echo '<a href="../camper.php?activityId=' . $activityId . '">';
+            echo '  <img class="card-img-top" src="' . $cover_src . '" alt="Card image cap">';
             echo '  <span class="card-head">';
             echo '    <img src="' . $img_src . '"  />';
             echo '    <p>' . $accountName . '</p>';
@@ -648,17 +674,31 @@ if (mysqli_num_rows($result_activities) > 0) {
             echo '      </div>';
 
             echo '    </div>';
+
+            echo '  </a>';
             echo '    <hr>';
             echo '    <div class="findcamper-bottom">';
             echo '      <p>已有' . $activityAttendence . '人參加 </p>';
             if (isset($_COOKIE["accountId"])) {
-              echo '      <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"';
-              echo '        data-toggle="modal" data-target="#Modal' . $activityId . '">';
-              echo '        參加！</button>';
+              if ($isActivityOngoing) {
+                echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>進行中</button>';
+              } elseif (!$isActivityEnded) {
+                if ($signUpStatus === null) {
+                  echo '<button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" data-toggle="modal" data-target="#Modal' . $activityId . '">參加！</button>';
+                } elseif ($signUpStatus['isApproved'] == 0) {
+                  echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>待發起者確認</button>';
+                } elseif ($signUpStatus['isApproved'] == 1) {
+                  echo '<button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>已參加！</button>';
+                }
+              } else {
+                echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>已結束</button>';
+              }
             }
+
+
+
             echo '    </div>';
             echo '  </div>';
-            echo '</a>';
             echo '</div>';
             echo '</div>';
           }
@@ -785,7 +825,7 @@ if (mysqli_num_rows($result_activities) > 0) {
         echo '</div>';
         echo '<div id="attendeeEmailContainer" class="input-container">';
         echo '<div id="attendeeEmailError" class="error-message">*必填</div>';
-        echo '<input name="attendeeEmail" type="email" placeholder="信箱">';
+        echo '<input name="attendeeEmail" type="email" placeholder="信箱" value=' . $accountEmail . '>';
         echo '</div>';
         echo '<textarea name="attendeeRemark" rows="4" type="text" placeholder="備註 /建議"></textarea>';
         echo '</div>';

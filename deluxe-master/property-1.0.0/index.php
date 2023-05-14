@@ -282,7 +282,8 @@ if (isset($_POST["likeEquipDel"])) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -511,42 +512,6 @@ if (isset($_POST["likeEquipDel"])) {
               }
 
               ?>
-
-
-              <!-- .item -->
-              <div class="property-item">
-                <img src="images/Rectangle 332.png" alt="Image" class="img-fluid" style='width: 412px; height: 412px;'  data-toggle="modal" data-target="#exampleModalCenter"/>
-
-
-                <div class="property-content">
-                  <span class="span-adj" style="justify-content: space-between;">
-                    <div class="price mb-2"><span>$1,291起</span></div>
-                    <button type="button" class="btn-icon">
-                      <i class="fa-regular fa-bookmark"></i>
-                    </button>
-                  </span>
-                  <div>
-                    <a href="property-single.html" class="img" >
-                      <span class="city d-block mb-3 mt-3">北得拉曼露營區</span></a>
-                    <span class="d-block mb-4 text-black-50">新竹縣尖石鄉水田部落</span>
-                    <div class="card-icon-footer">
-                      <div class="tagcloud">
-                        <a href="property-single.html">雲海</a>
-                        <a href="property-single.html">櫻花</a>
-                        <a href="property-single.html">森林</a>
-                      </div>
-                      <span style="display: flex; align-items: center;">
-                        <i class="fa-regular fa-heart"></i>
-                        <p style='margin-top:0px'>1,098</p>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- .item end -->
-
-
-
 
               <!-- 分頁導航 -->
             </div>

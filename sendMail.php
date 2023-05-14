@@ -77,11 +77,11 @@ function sendAttendeeConfirmSucess($accountId, $activityId, $conn)
     $officialEmail = "dihung0921@yahoo.com.tw";
 
     // 取得收件人信箱
-    $recipient_sql = "SELECT accountName, accountEmail FROM accounts WHERE accountId = '$accountId'";
+    $recipient_sql = "SELECT a.accountName, b.attendeeEmail FROM accounts a JOIN activities_accounts b ON a.accountId = b.accountId  WHERE a.accountId = '$accountId' AND b.activityId = '$activityId'";
     $recipient_result = $conn->query($recipient_sql);
     $recipient_row = $recipient_result->fetch_assoc();
     $recipientName = $recipient_row["accountName"];
-    $recipientEmail = $recipient_row["accountEmail"];
+    $recipientEmail = $recipient_row["attendeeEmail"];
 
     // 取得參加活動內容
     $activity_sql = "SELECT a.*, c.campsiteName FROM activities a JOIN campsites c ON a.campsiteId = c.campsiteId WHERE activityId = '$activityId'";
@@ -141,17 +141,23 @@ function sendAttendeeConfirmReject($accountId, $activityId, $conn)
     $officialEmail = "dihung0921@yahoo.com.tw";
 
     // 取得收件人信箱
-    $recipient_sql = "SELECT accountName, accountEmail FROM accounts WHERE accountId = '$accountId'";
+    $recipient_sql = "SELECT a.accountName, b.attendeeEmail FROM accounts a JOIN activities_accounts b ON a.accountId = b.accountId  WHERE a.accountId = '$accountId' AND b.activityId = '$activityId'";
     $recipient_result = $conn->query($recipient_sql);
     $recipient_row = $recipient_result->fetch_assoc();
     $recipientName = $recipient_row["accountName"];
-    $recipientEmail = $recipient_row["accountEmail"];
+    $recipientEmail = $recipient_row["attendeeEmail"];
 
     // 取得參加活動內容
     $activity_sql = "SELECT a.*, c.campsiteName FROM activities a JOIN campsites c ON a.campsiteId = c.campsiteId WHERE activityId = '$activityId'";
     $activity_result = $conn->query($activity_sql);
     $activity_row = $activity_result->fetch_assoc();
     $activityTitle = $activity_row["activityTitle"];
+    $activityStartDate = $activity_row["activityStartDate"];
+    $activityEndDate = $activity_row["activityEndDate"];
+
+    // 刪除活動報名紀錄
+    $delete_sql = "DELETE FROM activities_accounts WHERE accountId = '$accountId' AND activityId = '$activityId'";
+    $conn->query($delete_sql);
 
     // 建立PHPMailer對象
     $mail = new PHPMailer(true);
@@ -175,7 +181,12 @@ function sendAttendeeConfirmReject($accountId, $activityId, $conn)
         $mail->Subject = '活動報名駁回通知';
         $mail->Body = "親愛的 {$recipientName} 您好，
 
-很抱歉地告訴您，您的報名申請未能通過審核，您暫時無法參加 {$activityTitle} 活動。以下是一些可能的原因：
+我們很抱歉地告訴您，您先前報名的活動 
+
+活動名稱： {$activityTitle}
+時間： {$activityStartDate} ~ {$activityEndDate} 
+
+目前未能通過審核，故暫時無法參加。以下是一些可能的原因：
 
 - 您的報名資訊不完整或不符合活動發起人的要求
 - 活動名額已滿，您未能及時完成報名

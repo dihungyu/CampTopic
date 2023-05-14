@@ -94,10 +94,9 @@ function format_count($count)
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
-          <li class="nav-item"><a href="rooms.html" class="nav-link">找小鹿</a></li>
-          <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
-          <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">廣告方案</a></li>
+          <li class="nav-item"><a href="manage-article.php" class="nav-link">文章管理</a></li>
+          <li class="nav-item"><a href="manage-equip.php" class="nav-link">設備管理</a></li>
+          <li class="nav-item"><a href="manage-land.php" class="nav-link">營地管理</a></li>
 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
@@ -106,7 +105,6 @@ function format_count($count)
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
-              <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
@@ -563,25 +561,39 @@ function format_count($count)
 
     <script>
       $(document).ready(function () {
-        // 將 "已上架" tab 設為顯示
-        $('#isReviewed-tab').addClass('active');
-        $('#isReviewed').addClass('show active');
+        function showTab(tab) {
+          if (tab === 'isReviewed') {
+            $('#isReviewed-tab').addClass('active');
+            $('#unReviewed-tab').removeClass('active');
+            $('#isReviewed').addClass('show active');
+            $('#unReviewed').removeClass('show active');
+            window.location.hash = 'isReviewed';
+          } else if (tab === 'unReviewed') {
+            $('#unReviewed-tab').addClass('active');
+            $('#isReviewed-tab').removeClass('active');
+            $('#unReviewed').addClass('show active');
+            $('#isReviewed').removeClass('show active');
+            window.location.hash = 'unReviewed';
+          }
+        }
 
         // 當 "已上架" tab 被點擊時的觸發事件
         $('#isReviewed-tab').on('click', function () {
-          $(this).addClass('active');
-          $('#unReviewed-tab').removeClass('active');
-          $('#isReviewed').addClass('show active');
-          $('#unReviewed').removeClass('show active');
+          showTab('isReviewed');
         });
 
         // 當 "待審核" tab 被點擊時的觸發事件
         $('#unReviewed-tab').on('click', function () {
-          $(this).addClass('active');
-          $('#isReviewed-tab').removeClass('active');
-          $('#unReviewed').addClass('show active');
-          $('#isReviewed').removeClass('show active');
+          showTab('unReviewed');
         });
+
+        // 根據網址的 hash 來初始顯示的分頁內容
+        var currentHash = window.location.hash.slice(1);
+        if (currentHash === 'unReviewed') {
+          showTab('unReviewed');
+        } else {
+          showTab('isReviewed');
+        }
 
 
         // 搜索功能

@@ -151,7 +151,7 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
@@ -159,14 +159,14 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
@@ -357,17 +357,17 @@ if (isset($_POST["updateMember"]) && $_POST["updateMember"] == "yes") {
           <div class="widget">
             <h3>頁面總覽</h3>
             <ul class="list-unstyled float-start links">
-                  <li><a href="index.php">首頁</a></li>
-                  <li><a href="camp-information.php">找小鹿</a></li>
-                  <li><a href="../all-article.php">鹿的分享</a></li>
-                  <li><a href="../equipment.php">鹿的裝備</a></li>
-                  <li><a href="ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="member.php">帳號</a></li>
-                  <li><a href="member.php">會員帳號</a></li>
-                  <li><a href="member-like.php">我的收藏</a></li>
-                </ul>
+              <li><a href="index.php">首頁</a></li>
+              <li><a href="camp-information.php">找小鹿</a></li>
+              <li><a href="../all-article.php">鹿的分享</a></li>
+              <li><a href="../equipment.php">鹿的裝備</a></li>
+              <li><a href="ad.php">廣告方案</a></li>
+            </ul>
+            <ul class="list-unstyled float-start links">
+              <li><a href="member.php">帳號</a></li>
+              <li><a href="member.php">會員帳號</a></li>
+              <li><a href="member-like.php">我的收藏</a></li>
+            </ul>
           </div>
           <!-- /.widget -->
         </div>
