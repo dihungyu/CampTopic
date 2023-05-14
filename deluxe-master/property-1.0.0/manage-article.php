@@ -1,9 +1,20 @@
-<!-- /*
-* Template Name: Property
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+<?php
+require_once '../../php/conn.php';
+require_once '../../php/get_img_src.php';
+
+session_start();
+
+function format_count($count)
+{
+  if ($count < 1000) {
+    return $count;
+  } elseif ($count < 1000000) {
+    return round($count / 1000, 1) . 'k';
+  } else {
+    return round($count / 1000000, 1) . 'm';
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,190 +121,134 @@
 
   <div class="section">
     <div class="container" style="max-width: 1260px;">
-      <div class="row mb-6 align-items-center"
-        style="margin-top: 20px; margin-bottom: 40px; display:flex;justify-content: space-between;align-items: center;">
-        <ul class="nav nav-tabs" style="margin-left: 16px;width: 800px;" id="myTab" role="tablist">
-          <li class="nav-item" style="margin-right:20px">
-            <a class="nav-link equip" id="equip-tab" data-toggle="tab" href="#paper" role="tab" aria-controls="equip"
-              aria-selected="true">所有文章</a>
-          </li>
-          <li class="nav-item" style="margin-right:20px">
-            <a class="nav-link review" id="review-tab" data-toggle="tab" href="#check" role="tab" aria-controls="review"
-              aria-selected="true">待審核</a>
-          </li>
-        </ul>
-        <span style="display:flex; box-sizing: content-box; width: 285px;">
-          <div id="navbar-search-autocomplete" class="form-outline">
-            <input type="search" id="form1" class="form-control" style="border-radius: 35px; height: 40px;" />
+      <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
+        <div class="col-8">
+          <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab"
+                aria-controls="isReviewed" aria-selected="true">已上架</a>
+            </li>
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link unReviewed" id="unReviewed-tab" data-toggle="tab" href="#unReviewed" role="tab"
+                aria-controls="unReviewed" aria-selected="true">待審核</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4">
+          <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+            <div id="navbar-search-autocomplete" class="form-outline">
+              <input type="search" id="form1" name="article_search_keyword" class="form-control"
+                style="height: 40px; border-radius: 35px;" placeholder="搜尋文章名稱..." />
+            </div>&nbsp;
+            <button type="submit" class="button-search">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
-          <button type="button" class="button-search" style="margin-left: 10px; ">
-            <i class="fas fa-search"></i>
-          </button>
-        </span>
+        </div>
       </div>
-
     </div>
+
   </div>
 
   <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="paper" role="tabpanel" aria-labelledby="paper-tab">
+    <div class="tab-pane fade show" id="isReviewed" role="tabpanel" aria-labelledby="isReviewed-tab">
       <div class="container" style="max-width: 1260px;">
         <div class="row">
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                      <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                      <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                      <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                    <p>30 分享</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                      <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                    <p>30 分享</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
+          <?php
+          $records_per_page = 4;
+          $current_page = isset($_GET['reviewedPage']) ? $_GET['reviewedPage'] : 1;
+          $offset = ($current_page - 1) * $records_per_page;
 
+          $sql_isReviewed_articles = "SELECT articles.*, accounts.accountName FROM articles
+          LEFT JOIN accounts ON articles.accountId = accounts.accountId WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
+          $result_isReviewed_articles = mysqli_query($conn, $sql_isReviewed_articles);
+          $isReviewed_articles = [];
+          if (mysqli_num_rows($result_isReviewed_articles) > 0) {
+            while ($row = mysqli_fetch_assoc($result_isReviewed_articles)) {
+              $isReviewed_articles[] = $row;
+            }
+          }
+
+          $sql_total_articles = "SELECT COUNT(*) as total FROM articles WHERE isReviewed = 1";
+          $result_total_articles = mysqli_query($conn, $sql_total_articles);
+          $total_articles = mysqli_fetch_assoc($result_total_articles)['total'];
+          $total_pages = ceil($total_articles / $records_per_page);
+
+          foreach ($isReviewed_articles as $isReviewed_article) {
+            $isReviewed_image_src = get_first_image_src($isReviewed_article["articleContent"]);
+            if ($isReviewed_image_src == "") {
+              $isReviewed_image_src = "images/news/img15.jpg";
+            } else {
+              $isReviewed_image_src = '../' . $isReviewed_image_src;
+            }
+
+            // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+            $isReviewed_timestamp = strtotime($isReviewed_article["articleCreateDate"]);
+            // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+            $isReviewed_formatted_date = date('F j, Y', $isReviewed_timestamp);
+
+            //若文章內容超過30字做限制
+            $isReviewed_content_length = mb_strlen(strip_tags($isReviewed_article["articleContent"]), 'UTF-8');
+            if ($isReviewed_content_length > 30) {
+              $isReviewed_content = mb_substr(strip_tags($isReviewed_article["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+            } else {
+              $isReviewed_content = strip_tags($isReviewed_article["articleContent"]);
+            }
+
+            echo '<article class="col-md-12 article-list">';
+            echo '  <div class="inner isReviewed-card">';
+            echo '    <figure>';
+            echo '      <a href="single.html">';
+            echo '        <img src="' . $isReviewed_image_src . '">';
+            echo '      </a>';
+            echo '    </figure>';
+            echo '    <div class="details">';
+            echo '      <div class="detail" style="justify-content: space-between;">';
+            echo '        <span style="display: flex;">';
+            echo '          <div class="category">';
+            echo '            <a href="#">' . $isReviewed_article['accountName'] . '</a>';
+            echo '          </div>';
+            echo '          <div class="time">' . $isReviewed_formatted_date . '</div>';
+            echo '        </span>';
+            // echo '        <span style="display: flex; margin-right: 80px;">';
+            // echo '          <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">';
+            // echo '            <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>';
+            // echo '          </button>';
+            // echo '        </span>';
+            echo '      </div>';
+            echo '      <h1 class="city"><a href="single.html">' . $isReviewed_article['articleTitle'] . '</a></h1>';
+            echo '      <p>' . $isReviewed_content . '</p>';
+            echo '      <footer style="display: flex;align-items: center; justify-content: space-between;">';
+            echo '        <span style="display: flex;align-items: center;">';
+            $isReviewed_commentCount = "SELECT COUNT(*) as total FROM comments WHERE articleId = '" . $isReviewed_article["articleId"] . "'";
+            $result_isReviewed_commentCount = mysqli_query($conn, $isReviewed_commentCount);
+            $row_isReviewed_commentCount = mysqli_fetch_assoc($result_isReviewed_commentCount);
+            $isReviewed_comment_total = $row_isReviewed_commentCount['total'];
+            echo '          <p>' . $isReviewed_comment_total . ' 留言</p>';
+            echo '        </span>';
+            echo '        <span style="display: flex; align-items: center; margin-right: 80px;">';
+            echo '          <i class="fa-regular fa-heart"></i>';
+            echo '          <p style="margin-right: 0px;">' . format_count($isReviewed_article["articleLikeCount"]) . '</p>';
+            echo '        </span>';
+            echo '      </footer>';
+            echo '    </div>';
+            echo '  </div>';
+            echo '</article>';
+          }
+          ?>
+        </div>
+        <div class="row align-items-center py-5">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6 text-center">
+            <div class="custom-pagination">
+              <?php
+              for ($i = 1; $i <= $total_pages; $i++) {
+                $active_class = ($i == $current_page) ? 'class="active"' : '';
+                echo "<a href=\"?reviewedPage=$i\" $active_class>$i</a>";
+              }
+              ?>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -302,7 +257,7 @@
     <!-- Modal -->
 
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -334,184 +289,113 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="tab-pane fade show" id="check" role="tabpanel" aria-labelledby="check-tab">
+    <div class="tab-pane fade" id="unReviewed" role="tabpanel" aria-labelledby="unReviewed-tab">
       <div class="container" style="max-width: 1260px;">
         <div class="row">
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
-                      <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>
-                      <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
+          <?php
+          $recordsPerPage = 6;
+          $currentPage = isset($_GET['unReviewedPage']) ? $_GET['unReviewedPage'] : 1;
+          $offSet = ($currentPage - 1) * $recordsPerPage;
+
+          $sql_unReviewed_articles = "SELECT articles.*, accounts.accountName FROM articles
+            LEFT JOIN accounts ON articles.accountId = accounts.accountId WHERE isReviewed = 0 LIMIT $records_per_page OFFSET $offset";
+          $result_unReviewed_articles = mysqli_query($conn, $sql_unReviewed_articles);
+          $unReviewed_articles = [];
+          if (mysqli_num_rows($result_unReviewed_articles) > 0) {
+            while ($row = mysqli_fetch_assoc($result_unReviewed_articles)) {
+              $unReviewed_articles[] = $row;
+            }
+          }
+
+          $sql_total_unReviewed_articles = "SELECT COUNT(*) as total FROM articles WHERE isReviewed = 0";
+          $result_total_unReviewed_articles = mysqli_query($conn, $sql_total_unReviewed_articles);
+          $total_unReviewed_articles = mysqli_fetch_assoc($result_total_unReviewed_articles)['total'];
+          $total_unReviewed_pages = ceil($total_unReviewed_articles / $recordsPerPage);
+
+          foreach ($unReviewed_articles as $unReviewed_article) {
+            $unReviewed_image_src = get_first_image_src($unReviewed_article["articleContent"]);
+            if ($unReviewed_image_src == "") {
+              $unReviewed_image_src = "images/news/img15.jpg";
+            } else {
+              $unReviewed_image_src = '../' . $unReviewed_image_src;
+            }
+
+            // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
+            $unReviewed_timestamp = strtotime($unReviewed_article["articleCreateDate"]);
+            // 使用 date() 函數將 Unix 時間戳轉換為所需的格式
+            $unReviewed_formatted_date = date('F j, Y', $unReviewed_timestamp);
+
+            //若文章內容超過30字做限制
+            $unReviewed_content_length = mb_strlen(strip_tags($unReviewed_article["articleContent"]), 'UTF-8');
+            if ($unReviewed_content_length > 30) {
+              $unReviewed_content = mb_substr(strip_tags($unReviewed_article["articleContent"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+            } else {
+              $unReviewed_content = strip_tags($unReviewed_article["articleContent"]);
+            }
+
+            echo '<article class="col-md-12 article-list">';
+            echo '  <div class="inner unReviewed-card">';
+            echo '    <figure>';
+            echo '      <a href="single.html">';
+            echo '        <img src="' . $unReviewed_image_src . '">';
+            echo '      </a>';
+            echo '    </figure>';
+            echo '    <div class="details">';
+            echo '      <div class="detail" style="justify-content: space-between;">';
+            echo '        <span style="display: flex;">';
+            echo '          <div class="category">';
+            echo '            <a href="#">' . $unReviewed_article["accountName"] . '</a>';
+            echo '          </div>';
+            echo '          <div class="time">' . $unReviewed_formatted_date . '</div>';
+            echo '        </span>';
+            echo '        <span style="display: flex; margin-right: 80px;">';
+            echo '          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">';
+            echo '            <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>';
+            echo '            <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>';
+            echo '          </button>';
+            echo '        </span>';
+            echo '      </div>';
+            echo '      <h1 class="city"><a href="single.html">' . $unReviewed_article["articleTitle"] . '</a></h1>';
+            echo '      <p>' . $unReviewed_content . '</p>';
+            echo '      <footer style="display: flex;align-items: center; justify-content: space-between;">';
+            echo '        <span style="display: flex;align-items: center;">';
+            $unReviewed_commentCount = "SELECT COUNT(*) as total FROM comments WHERE articleId = '" . $unReviewed_article["articleId"] . "'";
+            $result_unReviewed_commentCount = mysqli_query($conn, $unReviewed_commentCount);
+            $row_unReviewed_commentCount = mysqli_fetch_assoc($result_unReviewed_commentCount);
+            $unReviewed_comment_total = $row_unReviewed_commentCount['total'];
+            echo '          <p>' . $unReviewed_comment_total . ' 留言</p>';
+            echo '        </span>';
+            echo '        <span style="display: flex; align-items: center; margin-right: 80px;">';
+            echo '          <i class="fa-regular fa-heart"></i>';
+            echo '          <p style="margin-right: 0px;">' . format_count($unReviewed_article["articleLikeCount"]) . '</p>';
+            echo '        </span>';
+            echo '      </footer>';
+            echo '    </div>';
+            echo '  </div>';
+            echo '</article>';
+          }
+          ?>
+        </div>
+        <div class="row align-items-center py-5">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6 text-center">
+            <div class="custom-pagination">
+              <?php
+              for ($k = 1; $k <= $total_unReviewed_pages; $k++) {
+                $activeClass = ($k == $currentPage) ? 'class="active"' : '';
+                echo "<a href=\"?unReviewedPage=$k\" $activeClass>$k</a>";
+              }
+              ?>
             </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
-                      <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>
-                      <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
-                      <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>
-                      <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-12 article-list">
-            <div class="inner">
-              <figure>
-                <a href="single.html">
-                  <img src="images/img15.jpg">
-                </a>
-              </figure>
-              <div class="details">
-                <div class="detail" style="justify-content: space-between;">
-                  <span style="display: flex;">
-                    <div class="category">
-                      <a href="category.html">Film</a>
-                    </div>
-                    <div class="time">December 26, 2016</div>
-                  </span>
-                  <span style="display: flex; margin-right: 80px;">
-                    <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">
-                      <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>
-                      <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>
-                    </button>
-                  </span>
-                </div>
-                <h1><a href="single.html">推薦給想露營卻沒有經驗的你！</a></h1>
-                <p>
-                  最近露營潮興起，讓許多想旅行的人，開始選擇懶人露營，
-                  不需要買任何配備任何露營用具，讓想露營的人也體以體驗露營的樂趣。.....
-                </p>
-                <footer style="display: flex;align-items: center; justify-content: space-between;">
-                  <span style="display: flex;align-items: center;">
-                    <p>100 留言</p>
-                  </span>
-                  <span style="display: flex; align-items: center; margin-right: 80px;">
-                    <i class="fa-regular fa-heart"></i>
-                    <p style="margin-right: 0px;">1,098</p>
-                  </span>
-                </footer>
-              </div>
-            </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row align-items-center py-5">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6 text-center">
-      <div class="custom-pagination">
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-      </div>
-    </div>
-  </div>
+
   </div>
 
   <div class="site-footer">
@@ -633,6 +517,61 @@
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      function showTab(tab) {
+        if (tab === 'isReviewed') {
+          $('#isReviewed-tab').addClass('active');
+          $('#unReviewed-tab').removeClass('active');
+          $('#isReviewed').addClass('show active');
+          $('#unReviewed').removeClass('show active');
+          window.location.hash = 'isReviewed';
+        } else if (tab === 'unReviewed') {
+          $('#unReviewed-tab').addClass('active');
+          $('#isReviewed-tab').removeClass('active');
+          $('#unReviewed').addClass('show active');
+          $('#isReviewed').removeClass('show active');
+          window.location.hash = 'unReviewed';
+        }
+      }
+
+      // 當 "已上架" tab 被點擊時的觸發事件
+      $('#isReviewed-tab').on('click', function () {
+        showTab('isReviewed');
+      });
+
+      // 當 "待審核" tab 被點擊時的觸發事件
+      $('#unReviewed-tab').on('click', function () {
+        showTab('unReviewed');
+      });
+
+      // 根據網址的 hash 來初始顯示的分頁內容
+      var currentHash = window.location.hash.slice(1);
+      if (currentHash === 'unReviewed') {
+        showTab('unReviewed');
+      } else {
+        showTab('isReviewed');
+      }
+
+      // 搜索功能
+      $('#form1').on('input', function () {
+        let searchKeyword = $(this).val().toLowerCase();
+        let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
+        let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
+
+        $(targetCards).each(function () {
+          let articleName = $(this).find('.city').text().toLowerCase();
+          if (articleName.indexOf(searchKeyword) !== -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+
+    });
+  </script>
 
 
 
