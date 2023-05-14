@@ -4,8 +4,8 @@ session_start();
 // 連接資料庫
 require_once '../conn.php';
 
-if (isset($_GET["equipmentId"])) {
-    $equipmentId = $_GET['equipmentId'];
+if (isset($_POST["equipmentId"])) {
+    $equipmentId = $_POST["equipmentId"];
 
     // Start transaction
     mysqli_begin_transaction($conn);
@@ -40,7 +40,6 @@ if (isset($_GET["equipmentId"])) {
     if (!$result6) {
         $all_successful = false;
     }
-
 
     // Delete related data from likes table
     $sql_query5 = "DELETE FROM likes WHERE equipmentId = '$equipmentId'";
@@ -96,6 +95,6 @@ if (isset($_GET["equipmentId"])) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
-    header("Location: ../../deluxe-master/equipment.php");
+    header('Location: ../../deluxe-master/property-1.0.0/manage-equip.php');
     exit();
 }

@@ -3,8 +3,8 @@ session_start();
 
 // 連接資料庫
 require_once '../../php/conn.php';
-if (isset($_GET["articleId"])) {
-    $articleId = $_GET['articleId'];
+if (isset($_POST["articleId"])) {
+    $articleId = $_POST['articleId'];
 
     // Start transaction
     mysqli_begin_transaction($conn);
@@ -79,13 +79,14 @@ if (isset($_GET["articleId"])) {
                 unlink($file_path);
             }
         }
-        $_SESSION["system_message"] = "文章已刪除";
+        $_SESSION["system_message"] = "檢舉已通過，並將文章已刪除！";
     } else {
         // Rollback the transaction
         mysqli_rollback($conn);
-        $_SESSION["system_message"] = "刪除失敗，請重試";
+        $_SESSION["system_message"] = "刪除失敗，請重試。";
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
-    header("Location: ../all-article.php");
+    header("Location: manage-article.php");
     exit();
 }

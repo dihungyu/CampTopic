@@ -180,7 +180,7 @@ if (isset($_POST["likeEquipDel"])) {
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -199,7 +199,8 @@ if (isset($_POST["likeEquipDel"])) {
 <body>
 
   <!-- 模态框 HTML 结构 -->
-  <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -236,8 +237,9 @@ if (isset($_POST["likeEquipDel"])) {
   </div>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -245,9 +247,11 @@ if (isset($_POST["likeEquipDel"])) {
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
+          style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -260,7 +264,8 @@ if (isset($_POST["likeEquipDel"])) {
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -323,9 +328,9 @@ if (isset($_POST["likeEquipDel"])) {
                       <?php echo $equipmentType ?>
                     </i>
                   </span>
-                  <h1><a href="#">
-                      <?php echo $equipmentName ?>
-                    </a></h1>
+                  <h1>
+                    <?php echo $equipmentName ?>
+                  </h1>
                 </span>
                 <span style="display:flex; align-items: center;">
                   <h4 class="equiph4">
@@ -356,11 +361,12 @@ if (isset($_POST["likeEquipDel"])) {
 
                 </span>
               </div>
+              <h6 style="margin-top: 56px">設備描述</h6>
               <p style="padding:4px; margin-top:20px;">
                 <?php echo $equipmentDescription ?>
               </p>
               <div class="col-md-7 room-single mt-2 mb-2 ftco-animate" style="margin-bottom: -100px;">
-                <h6 style="margin-top: 56px">設備與服務</h6>
+                <h6 style="margin-top: 56px">聯絡資訊</h6>
                 <div class="d-md-flex mt-4 mb-4">
                   <ul class="list">
                     <li>
@@ -431,17 +437,39 @@ if (isset($_POST["likeEquipDel"])) {
           </div>
 
           <div class="sidebar-box ftco-animate mt-5" style="padding-left:0px;">
-            <h3>熱門設備標籤</h3>
+            <h3>設備標籤</h3>
             <div class="tagcloud">
               <?php
-              $sql_labels = "SELECT * FROM labels WHERE labelType = '設備'";
-              $result_labels = mysqli_query($conn, $sql_labels);
-              $labels = [];
-              while ($row_labels = mysqli_fetch_assoc($result_labels)) {
-                $labels[] = $row_labels;
+              $sql1 = "SELECT labelId FROM equipments_labels WHERE equipmentId = ?";
+              $stmt1 = $conn->prepare($sql1);
+              $stmt1->bind_param("s", $equipmentId);
+              $stmt1->execute();
+              $result1 = $stmt1->get_result();
+
+              // 查詢labels資料表以獲取labelName
+              $labelNames = array();
+              if ($result1->num_rows > 0) {
+                while ($row1 = $result1->fetch_assoc()) {
+                  $labelId = $row1['labelId'];
+                  $sql2 = "SELECT labelName FROM labels WHERE labelId = ?";
+                  $stmt2 = $conn->prepare($sql2);
+                  $stmt2->bind_param("s", $labelId);
+                  $stmt2->execute();
+                  $result2 = $stmt2->get_result();
+
+                  if ($result2->num_rows > 0) {
+                    $row2 = $result2->fetch_assoc();
+                    $labelNames[] = $row2['labelName'];
+                  }
+                }
               }
-              foreach ($labels as $label) {
-                echo "<a href='#' class=tag-cloud-link'>" . $label['labelName'] . "</a>";
+              // 輸出結果
+              if (!empty($labelNames)) {
+                foreach ($labelNames as $labelName) {
+                  echo "<a href='#' class=tag-cloud-link'>" . $labelName . "</a>";
+                }
+              } else {
+                echo "<span>尚無相關標籤</span>";
               }
               ?>
             </div>
@@ -667,7 +695,8 @@ if (isset($_POST["likeEquipDel"])) {
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+          stroke="#F96D00" />
       </svg></div>
 
 
@@ -685,27 +714,28 @@ if (isset($_POST["likeEquipDel"])) {
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
 
     <script>
-      $(document).ready(function() {
+      $(document).ready(function () {
         // 當使用者點擊檢舉按鈕時，顯示模態框
-        $('.report-btn').on('click', function() {
+        $('.report-btn').on('click', function () {
           var equipmentId = $(this).data('equipment-id');
           $('#equipmentId').val(equipmentId);
           $('#reportModal').modal('show');
         });
 
         // 處理表單提交
-        $('#submit-report').on('click', function() {
+        $('#submit-report').on('click', function () {
           var formData = $('#report-form').serialize();
           console.log("表單數據:", formData); // 輸出表單數據到控制台
 
           // 使用 AJAX 將表單資料發送到伺服器
-          $.post('report-equipment.php', formData, function(response) {
+          $.post('report-equipment.php', formData, function (response) {
             // 解析伺服器返回的 JSON 响應
             var jsonResponse = JSON.parse(response);
             console.log("伺服器回應:", jsonResponse); // 輸出伺服器回應到控制台

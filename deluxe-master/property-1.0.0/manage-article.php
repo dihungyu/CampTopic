@@ -62,9 +62,29 @@ function format_count($count)
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+  </script>
+
 </head>
 
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
@@ -198,7 +218,7 @@ function format_count($count)
             echo '<article class="col-md-12 article-list">';
             echo '  <div class="inner isReviewed-card">';
             echo '    <figure>';
-            echo '      <a href="single.html">';
+            echo '  <a href="../article-manage.php?articleId=' . $isReviewed_article['articleId'] . '">';
             echo '        <img src="' . $isReviewed_image_src . '">';
             echo '      </a>';
             echo '    </figure>';
@@ -210,13 +230,10 @@ function format_count($count)
             echo '          </div>';
             echo '          <div class="time">' . $isReviewed_formatted_date . '</div>';
             echo '        </span>';
-            // echo '        <span style="display: flex; margin-right: 80px;">';
-            // echo '          <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">';
-            // echo '            <i style="color: #B02626;" class="fa-solid fa-circle-exclamation"></i>';
-            // echo '          </button>';
-            // echo '        </span>';
             echo '      </div>';
-            echo '      <h1 class="city"><a href="single.html">' . $isReviewed_article['articleTitle'] . '</a></h1>';
+            echo '  <a href="../article-manage.php?articleId=' . $isReviewed_article['articleId'] . '">';
+            echo '      <h1 class="city">' . $isReviewed_article['articleTitle'] . '</h1>';
+            echo '  </a>';
             echo '      <p>' . $isReviewed_content . '</p>';
             echo '      <footer style="display: flex;align-items: center; justify-content: space-between;">';
             echo '        <span style="display: flex;align-items: center;">';
@@ -255,42 +272,6 @@ function format_count($count)
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-
-
-    <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">發送警告</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <span style="display: flex; align-items: center; justify-content: flex-start">
-              <p style="margin-right: 15px;margin-left: 10px;">作者</p>
-              <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-              width: 8%;
-              margin-right: 16px;">
-              <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
-            </span>
-            <select class="warning">
-              <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
-              <option>不實資訊</option>
-              <option>搜擾</option>
-              <option>其他</option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <div style=" display: flex; justify-content: flex-end;">
-              <button class="btn-secondary">提交</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div class="tab-pane fade" id="unReviewed" role="tabpanel" aria-labelledby="unReviewed-tab">
       <div class="container" style="max-width: 1260px;">
         <div class="row">
@@ -338,7 +319,7 @@ function format_count($count)
             echo '<article class="col-md-12 article-list">';
             echo '  <div class="inner unReviewed-card">';
             echo '    <figure>';
-            echo '      <a href="single.html">';
+            echo '  <a href="../article-manage.php?articleId=' . $unReviewed_article['articleId'] . '">';
             echo '        <img src="' . $unReviewed_image_src . '">';
             echo '      </a>';
             echo '    </figure>';
@@ -350,14 +331,10 @@ function format_count($count)
             echo '          </div>';
             echo '          <div class="time">' . $unReviewed_formatted_date . '</div>';
             echo '        </span>';
-            echo '        <span style="display: flex; margin-right: 80px;">';
-            echo '          <button type="button" class="btn-icon" data-toggle="modal" data-target="example-modal">';
-            echo '            <i style="color: #005555; margin-right: 8px;" class="fa-solid fa-circle-check"></i>';
-            echo '            <i style="color: #B02626;" class="fa-solid fa-circle-xmark"></i>';
-            echo '          </button>';
-            echo '        </span>';
             echo '      </div>';
-            echo '      <h1 class="city"><a href="single.html">' . $unReviewed_article["articleTitle"] . '</a></h1>';
+            echo '  <a href="../article-manage.php?articleId=' . $unReviewed_article['articleId'] . '">';
+            echo '      <h1 class="city">' . $unReviewed_article["articleTitle"] . '</h1>';
+            echo '  </a>';
             echo '      <p>' . $unReviewed_content . '</p>';
             echo '      <footer style="display: flex;align-items: center; justify-content: space-between;">';
             echo '        <span style="display: flex;align-items: center;">';
@@ -367,9 +344,14 @@ function format_count($count)
             $unReviewed_comment_total = $row_unReviewed_commentCount['total'];
             echo '          <p>' . $unReviewed_comment_total . ' 留言</p>';
             echo '        </span>';
-            echo '        <span style="display: flex; align-items: center; margin-right: 80px;">';
-            echo '          <i class="fa-regular fa-heart"></i>';
-            echo '          <p style="margin-right: 0px;">' . format_count($unReviewed_article["articleLikeCount"]) . '</p>';
+            echo '<span style="display: flex; justify-content: flex-end; align-items: center;">';
+            echo '          <i class="fa-regular fa-heart" style="margin-left: 5px;"></i>';
+            echo '          <p style="margin-right: 0px; margin-left: 5px;">' . format_count($unReviewed_article["articleLikeCount"]) . '</p>';
+            echo '            <i class="fas fa-flag" style="font-weight: 500; color: #000; margin-left: 5px;"></i>';
+            $sql_report_count = "SELECT COUNT(*) AS reportCount FROM reports WHERE articleId = '" . $unReviewed_article["articleId"] . "'";
+            $result_report_count = mysqli_query($conn, $sql_report_count);
+            $row_report_count = mysqli_fetch_assoc($result_report_count);
+            echo '            <p style="margin-right: 0px; margin-left: 5px;">' . format_count($row_report_count["reportCount"]) . '</p>';
             echo '        </span>';
             echo '      </footer>';
             echo '    </div>';

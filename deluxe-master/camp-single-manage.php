@@ -271,18 +271,6 @@ $files_result = mysqli_query($conn, $files_query);
                                 echo "<span>尚無相關標籤</span>";
                             }
                             ?>
-
-                            <?php
-                            // $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
-                            // $result_labels = mysqli_query($conn, $sql_labels);
-                            // $labels = [];
-                            // while ($row_labels = mysqli_fetch_assoc($result_labels)) {
-                            //     $labels[] = $row_labels;
-                            // }
-                            // foreach ($labels as $label) {
-                            //     echo "<a href='#' class=tag-cloud-link'>" . $label['labelName'] . "</a>";
-                            // }
-                            ?>
                         </div>
                     </div>
 
@@ -325,7 +313,7 @@ $files_result = mysqli_query($conn, $files_query);
 
         <!-- footer -->
         <?php
-        echo '<form method="UPDATE" action="../php/Campsite/isReviewed_update.php">';
+        echo '<form method="POST" action="../php/Campsite/isReviewed_update.php">';
         echo '<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">';
         echo '<div class="modal-dialog" role="document">';
         echo '<div class="modal-content">';
@@ -348,7 +336,7 @@ $files_result = mysqli_query($conn, $files_query);
         echo '</div>';
         echo '</form>';
 
-        echo '<form method="DELETE" action="../php/Campsite/deleteCampsite.php">';
+        echo '<form method="POST" action="../php/Campsite/deleteCampsite.php">';
         echo '<div class="modal fade" id="disagreeModal" tabindex="-1" role="dialog" aria-labelledby="disagreeModalLabel" aria-hidden="true">';
         echo '<div class="modal-dialog" role="document">';
         echo '<div class="modal-content">';

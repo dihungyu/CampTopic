@@ -62,9 +62,30 @@ function format_count($count)
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
+  <script>
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+  </script>
+
 </head>
 
+
 <body>
+
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["system_message"]; ?>
+    </div>
+    <?php unset($_SESSION["system_message"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
@@ -203,12 +224,11 @@ function format_count($count)
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
+                  echo '  <a href="../equip-single-manage.php?equipmentId=' . $isReviewed_equipment['equipmentId'] . '">';
                   echo '      <h5 class="city">' . $isReviewed_equipment["equipmentName"] . '</h5>';
+                  echo '    </a>';
                   echo '      <span class="span-adj">';
                   echo '        <h4><span>$' . format_count($isReviewed_equipment["equipmentPrice"]) . '</span></h4>';
-                  // echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">';
-                  // echo '          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>';
-                  // echo '        </button>';
                   echo '      </span>';
                   echo '    </div>';
                   echo '    <div>';
@@ -323,18 +343,11 @@ function format_count($count)
                     echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                     echo '</span>';
                   }
-                  echo '      </span>';
+                  echo '  <a href="../equip-single-manage.php?equipmentId=' . $unReviewed_equipment['equipmentId'] . '">';
                   echo '      <h5 class="city">' . $unReviewed_equipment["equipmentName"] . '</h5>';
+                  echo '    </a>';
                   echo '      <span class="span-adj">';
                   echo '        <h4><span>$' . format_count($unReviewed_equipment["equipmentPrice"]) . '</span></h4>';
-                  echo '        <span style="display: flex;">';
-                  echo '          <button type="button" class="btn-icon">';
-                  echo '            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>';
-                  echo '          </button>';
-                  echo '          <button type="button" class="btn-icon">';
-                  echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>';
-                  echo '          </button>';
-                  echo '        </span>';
                   echo '      </span>';
                   echo '    </div>';
                   echo '    <div>';
@@ -367,6 +380,11 @@ function format_count($count)
                   }
                   echo '          </div>';
                   echo '          <span style="display: flex; align-items: center;">';
+                  echo '            <i class="fas fa-flag" style="font-weight: 500; color: #000;"></i>';
+                  $sql_report_count = "SELECT COUNT(*) AS reportCount FROM reports WHERE equipmentId = '" . $unReviewed_equipment["equipmentId"] . "'";
+                  $result_report_count = mysqli_query($conn, $sql_report_count);
+                  $row_report_count = mysqli_fetch_assoc($result_report_count);
+                  echo '            <p style="margin-top: 0px;">' . format_count($row_report_count["reportCount"]) . '</p>';
                   echo '            <i class="fa-regular fa-heart"></i>';
                   echo '            <p style="margin-top: 0px;">' . format_count($unReviewed_equipment["equipmentLikeCount"]) . '</p>';
                   echo '          </span>';
@@ -399,39 +417,6 @@ function format_count($count)
   </div>
   </div>
 
-  <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">發送警告</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <span style="display: flex; align-items: center; justify-content: flex-start">
-            <p style="margin-right: 15px;margin-left: 10px;">作者</p>
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%;
-                  width: 8%;
-                  margin-right: 16px;">
-            <label style="font-size: 16px; margin-bottom: 0px; ">yizzzzz</label>
-          </span>
-          <select class="warning">
-            <option>內容不當或濫用(例如：裸露、仇恨言語、威脅)</option>
-            <option>不實資訊</option>
-            <option>搜擾</option>
-            <option>其他</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          <div style=" display: flex; justify-content: flex-end;">
-            <button class="btn-secondary">提交</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 
 

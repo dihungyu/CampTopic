@@ -75,6 +75,17 @@ if (isset($_GET["activityId"])) {
     }
 
     if ($all_successful) {
+        $sql_query7 = "DELETE FROM comments WHERE activityId = ?";
+        $stmt7 = mysqli_prepare($conn, $sql_query7);
+        mysqli_stmt_bind_param($stmt7, "s", $activityId);
+        $result7 = mysqli_stmt_execute($stmt7);
+
+        if (!$result7) {
+            $all_successful = false;
+        }
+    }
+
+    if ($all_successful) {
         $sql_query4 = "DELETE FROM activities WHERE activityId = ?";
         $stmt4 = mysqli_prepare($conn, $sql_query4);
         mysqli_stmt_bind_param($stmt4, "s", $activityId);
