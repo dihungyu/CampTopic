@@ -138,7 +138,7 @@ function format_count($count)
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-        <div class="col-3">
+        <div class="col-7">
           <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
             <li class="nav-item" style="margin-right:20px">
               <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab"
@@ -151,7 +151,7 @@ function format_count($count)
           </ul>
         </div>
         <div class="col-5">
-          <div class="input-group" style=" margin-left: 530px;">
+          <div class="input-group" style="margin-left: 250px;">
             <div id="navbar-search-autocomplete" class="form-outline">
               <input type="search" id="form1" name="camp_search_keyword" class="form-control"
                 style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
@@ -160,15 +160,6 @@ function format_count($count)
               <i class="fas fa-search"></i>
             </button>
           </div>
-        </div>
-        <div class="col-4">
-          <span class="span-adj" style="justify-content: flex-end;">
-            <a href="add-land.php">
-              <button class="btn-new">
-                新增營地
-              </button>
-            </a>
-          </span>
         </div>
       </div>
     </div>
