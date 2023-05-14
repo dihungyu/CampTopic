@@ -440,7 +440,8 @@ if (mysqli_num_rows($result_activities) > 0) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
               <!-- <a class="dropdown-item" href="">文章管理</a>
                 <a class="dropdown-item" href="manage-equip.html">設備管理</a>
                 <a class="dropdown-item" href="manage-land.html">營地管理</a> -->

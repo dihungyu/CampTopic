@@ -94,16 +94,14 @@ $files_result = mysqli_query($conn, $files_query);
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
@@ -111,14 +109,14 @@ $files_result = mysqli_query($conn, $files_query);
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../login.php">登出</a>
             </div>
@@ -226,8 +224,7 @@ $files_result = mysqli_query($conn, $files_query);
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar ftco-animate">
           <div class="input-group mb-3" style="padding-left:20px">
-            <input type="text" class="form-control" placeholder=" search" aria-label="search"
-              aria-describedby="basic-addon2">
+            <input type="text" class="form-control" placeholder=" search" aria-label="search" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="button-search" type="button"><i class="fas fa-search"></i></button>
             </div>
@@ -246,7 +243,7 @@ $files_result = mysqli_query($conn, $files_query);
                 $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
                 $files_result = mysqli_query($conn, $files_query);
                 $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
-            
+
                 if ($file_result = mysqli_fetch_assoc($files_result)) {
                   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                   $image_src = $file_path;
@@ -358,17 +355,17 @@ $files_result = mysqli_query($conn, $files_query);
             <div class="widget">
               <h3>頁面總覽</h3>
               <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/index.php">首頁</a></li>
-                  <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
-                  <li><a href="all-article.php">鹿的分享</a></li>
-                  <li><a href="equipment.php">鹿的裝備</a></li>
-                  <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
-                </ul>
-                <ul class="list-unstyled float-start links">
-                  <li><a href="property-1.0.0/member.php">帳號</a></li>
-                  <li><a href="property-1.0.0/member.php">會員帳號</a></li>
-                  <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
-                </ul>
+                <li><a href="property-1.0.0/index.php">首頁</a></li>
+                <li><a href="property-1.0.0/camp-information.php">找小鹿</a></li>
+                <li><a href="all-article.php">鹿的分享</a></li>
+                <li><a href="equipment.php">鹿的裝備</a></li>
+                <li><a href="property-1.0.0/ad.php">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="property-1.0.0/member.php">帳號</a></li>
+                <li><a href="property-1.0.0/member.php">會員帳號</a></li>
+                <li><a href="property-1.0.0/member-like.php">我的收藏</a></li>
+              </ul>
             </div>
             <!-- /.widget -->
           </div>
@@ -411,8 +408,7 @@ $files_result = mysqli_query($conn, $files_query);
       <!-- loader -->
       <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
           <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-            stroke="#F96D00" />
+          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
 
@@ -430,8 +426,7 @@ $files_result = mysqli_query($conn, $files_query);
       <script src="js/bootstrap-datepicker.js"></script>
       <script src="js/jquery.timepicker.min.js"></script>
       <script src="js/scrollax.min.js"></script>
-      <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
       <script src="js/google-map.js"></script>
       <script src="js/main.js"></script>
       <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>

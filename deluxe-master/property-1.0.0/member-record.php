@@ -189,13 +189,14 @@ if (isset($_POST["likeArticleDel"])) {
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
@@ -210,14 +211,14 @@ if (isset($_POST["likeArticleDel"])) {
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-9 text-center mt-5">
-          <h1 class="heading" data-aos="fade-up">發布紀錄</h1>
+          <h1 class="heading" data-aos="fade-up">發表紀錄</h1>
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
               <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
               <li class="breadcrumb-item"><a href="member.php">會員帳號</a></li>
               <li class="breadcrumb-item active text-white-50" aria-current="page">
-                我的紀錄
+                發表記錄
               </li>
             </ol>
           </nav>
@@ -567,391 +568,391 @@ if (isset($_POST["likeArticleDel"])) {
               echo "快去發表第一篇文章！";
             }
             ?>
-         
-        <div class="row align-items-center py-5">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-6 text-center">
-            <div class="custom-pagination">
-              <?php for ($i = 1; $i <= $article_total_pages; $i++) : ?>
-                <a href="?article_page=<?= $i ?>#paper" <?= ($i == $article_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
-              <?php endfor; ?>
+
+            <div class="row align-items-center py-5">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6 text-center">
+                <div class="custom-pagination">
+                  <?php for ($i = 1; $i <= $article_total_pages; $i++) : ?>
+                    <a href="?article_page=<?= $i ?>#paper" <?= ($i == $article_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                  <?php endfor; ?>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-      </div> <!-- Close the "row" div here -->
-    </div> <!-- Close the "container" div here -->
-    </div>
+          </div> <!-- Close the "row" div here -->
+        </div> <!-- Close the "container" div here -->
+      </div>
 
 
-  <!-- 設備紀錄區 -->
-  <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
-    <div class="container">
-      <div class="row">
-
+      <!-- 設備紀錄區 -->
+      <div class="tab-pane fade show " id="equip" role="tabpanel" aria-labelledby="equip-tab">
         <div class="container">
           <div class="row">
-            <div class="col-md-12">
-              <form method="GET" action="member-record.php#equip" class="mb-4">
-                <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
-                  <div id="navbar-search-autocomplete" class="form-outline">
-                    <input type="search" id="form3" name="equip_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋設備名稱..." />
-                  </div>&nbsp;
-                  <button type="submit" class="button-search">
-                    <i class="fas fa-search"></i>
-                  </button>
+
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <form method="GET" action="member-record.php#equip" class="mb-4">
+                    <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+                      <div id="navbar-search-autocomplete" class="form-outline">
+                        <input type="search" id="form3" name="equip_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋設備名稱..." />
+                      </div>&nbsp;
+                      <button type="submit" class="button-search">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <?php
-        // 搜尋關鍵字
-        $equip_search_keyword = isset($_GET['equip_search_keyword']) ? trim($_GET['equip_search_keyword']) : '';
+            <?php
+            // 搜尋關鍵字
+            $equip_search_keyword = isset($_GET['equip_search_keyword']) ? trim($_GET['equip_search_keyword']) : '';
 
-        // 使用關鍵字搜尋已發布設備的總數
-        $equip_keyword_condition = $equip_search_keyword ? "AND equipmentName LIKE '%$equip_search_keyword%'" : "";
-        $equip_count_sql = "SELECT COUNT(*) as total FROM equipments WHERE accountId = '$accountId' $equip_keyword_condition";
-        $equip_count_result = $conn->query($equip_count_sql);
-        $row = $equip_count_result->fetch_assoc();
-        $equip_total_rows = $row['total'];
-        $equip_total_pages = ceil($equip_total_rows / 9);
+            // 使用關鍵字搜尋已發布設備的總數
+            $equip_keyword_condition = $equip_search_keyword ? "AND equipmentName LIKE '%$equip_search_keyword%'" : "";
+            $equip_count_sql = "SELECT COUNT(*) as total FROM equipments WHERE accountId = '$accountId' $equip_keyword_condition";
+            $equip_count_result = $conn->query($equip_count_sql);
+            $row = $equip_count_result->fetch_assoc();
+            $equip_total_rows = $row['total'];
+            $equip_total_pages = ceil($equip_total_rows / 9);
 
-        $equip_perPage = 9;
-        $equip_current_page = isset($_GET['equip_page']) ? (int)$_GET['equip_page'] : 1;
-        $equip_offset = ($equip_current_page - 1) * $equip_perPage;
+            $equip_perPage = 9;
+            $equip_current_page = isset($_GET['equip_page']) ? (int)$_GET['equip_page'] : 1;
+            $equip_offset = ($equip_current_page - 1) * $equip_perPage;
 
-        // 取出已被按讚的設備
-        $equip_like_sql = "SELECT `equipmentId` FROM `likes` WHERE `accountId` = '$accountId'";
-        $equip_like_result = mysqli_query($conn, $equip_like_sql);
+            // 取出已被按讚的設備
+            $equip_like_sql = "SELECT `equipmentId` FROM `likes` WHERE `accountId` = '$accountId'";
+            $equip_like_result = mysqli_query($conn, $equip_like_sql);
 
-        // 將查詢結果轉換為包含已按讚設備ID的陣列
-        $likedEquips = array();
-        while ($row = mysqli_fetch_assoc($equip_like_result)) {
-          $likedEquips[] = $row['equipmentId'];
-        }
-
-        // 使用使用者ID查詢相關設備資料
-        $sql = "SELECT * FROM equipments WHERE accountId = '$accountId' $equip_keyword_condition LIMIT $equip_offset, $equip_perPage";
-        $equipmentResult = $conn->query($sql);
-
-        // 檢查是否有結果，如果有則輸出設備資料
-        if ($equipmentResult && $equipmentResult->num_rows > 0) {
-
-          $equip_card_counter = 0;
-          echo
-          '<div class="container">';
-          echo '<div class="row">';
-          while ($equipmentData = $equipmentResult->fetch_assoc()) {
-
-            $equipmentId = $equipmentData['equipmentId'];
-
-            //格式化按讚數
-            $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
-
-            // 檢查當前設備是否已按讚
-            $isEquipLiked = in_array($equipmentId, $likedEquips);
-
-            // 取得設備封面
-            $equip_img_src = get_first_image_src($equipmentData["equipmentDescription"]);
-            if ($equip_img_src != "") {
-              $equip_img_src = "../" . $equip_img_src;
-            } else {
-              $equip_img_src = "../images/M85318677_big.jpeg";
+            // 將查詢結果轉換為包含已按讚設備ID的陣列
+            $likedEquips = array();
+            while ($row = mysqli_fetch_assoc($equip_like_result)) {
+              $likedEquips[] = $row['equipmentId'];
             }
 
-            //若文章內容超過30字做限制
-            $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
-            if ($content_length > 30) {
-              $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
-            } else {
-              $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
-            }
+            // 使用使用者ID查詢相關設備資料
+            $sql = "SELECT * FROM equipments WHERE accountId = '$accountId' $equip_keyword_condition LIMIT $equip_offset, $equip_perPage";
+            $equipmentResult = $conn->query($sql);
 
-            // 輸出card
-            echo '<div class="col-md-4">';
-            echo '<div class="card">';
-            echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
-            echo '<div class="card-body">';
-            echo '<div class="detail"style="margin-bottom: 0px;">';
-            if ($equipmentData["equipmentType"] === "租") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
-              echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
-              echo '</span>';
-            } else if ($equipmentData["equipmentType"] === "徵") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
-              echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
-              echo '</span>';
-            } else if ($equipmentData["equipmentType"] === "賣") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
-              echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
-              echo '</span>';
-            }
+            // 檢查是否有結果，如果有則輸出設備資料
+            if ($equipmentResult && $equipmentResult->num_rows > 0) {
 
-            echo '<h5><a href="../equip-single.php?equipmentId=' . $equipmentId . '">' . $equipmentData['equipmentName'] . '</a></h5>';
-            echo '<h4>$' . number_format($equipmentData["equipmentPrice"]) . '</h4>';
-            echo '</div>';
-            echo '<div class="row">';
-            echo '<p class="card-text mb-2">' . $truncated_content . '</p>';
-            echo '</div>'; // row
+              $equip_card_counter = 0;
+              echo
+              '<div class="container">';
+              echo '<div class="row">';
+              while ($equipmentData = $equipmentResult->fetch_assoc()) {
 
-            echo "<footer style='padding-top: 10px; display: flex; justify-content: space-between; align-items: center;'>";
-            echo "<span>";
+                $equipmentId = $equipmentData['equipmentId'];
 
-            // 以下程式碼用於查詢設備相關的標籤
-            // 請根據您的資料庫結構和命名進行調整
-            $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$equipmentData[equipmentId]'";
+                //格式化按讚數
+                $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
 
-            $equipment_label_result = mysqli_query($conn, $equipment_label_query);
+                // 檢查當前設備是否已按讚
+                $isEquipLiked = in_array($equipmentId, $likedEquips);
 
-            // 檢查錯誤
-            if (!$equipment_label_result) {
-              echo "Error: " . mysqli_error($conn);
-            }
+                // 取得設備封面
+                $equip_img_src = get_first_image_src($equipmentData["equipmentDescription"]);
+                if ($equip_img_src != "") {
+                  $equip_img_src = "../" . $equip_img_src;
+                } else {
+                  $equip_img_src = "../images/M85318677_big.jpeg";
+                }
 
-            $printed_equipment_tags = 0;
-            while ($equipment_tags_row = mysqli_fetch_assoc($equipment_label_result)) {
-              if ($printed_equipment_tags >= 3) {
-                break;
-              }
+                //若文章內容超過30字做限制
+                $content_length = mb_strlen(strip_tags($equipmentData["equipmentDescription"]), 'UTF-8');
+                if ($content_length > 30) {
+                  $truncated_content = mb_substr(strip_tags($equipmentData["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                } else {
+                  $truncated_content = strip_tags($equipmentData["equipmentDescription"]);
+                }
 
-              echo "<button class='tag-fav' disabled> " . $equipment_tags_row['labelName'] . " 
+                // 輸出card
+                echo '<div class="col-md-4">';
+                echo '<div class="card">';
+                echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
+                echo '<div class="card-body">';
+                echo '<div class="detail"style="margin-bottom: 0px;">';
+                if ($equipmentData["equipmentType"] === "租") {
+                  echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                  echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
+                  echo '</span>';
+                } else if ($equipmentData["equipmentType"] === "徵") {
+                  echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                  echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
+                  echo '</span>';
+                } else if ($equipmentData["equipmentType"] === "賣") {
+                  echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                  echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
+                  echo '</span>';
+                }
+
+                echo '<h5><a href="../equip-single.php?equipmentId=' . $equipmentId . '">' . $equipmentData['equipmentName'] . '</a></h5>';
+                echo '<h4>$' . number_format($equipmentData["equipmentPrice"]) . '</h4>';
+                echo '</div>';
+                echo '<div class="row">';
+                echo '<p class="card-text mb-2">' . $truncated_content . '</p>';
+                echo '</div>'; // row
+
+                echo "<footer style='padding-top: 10px; display: flex; justify-content: space-between; align-items: center;'>";
+                echo "<span>";
+
+                // 以下程式碼用於查詢設備相關的標籤
+                // 請根據您的資料庫結構和命名進行調整
+                $equipment_label_query = "SELECT equipments_labels.labelId, labels.labelName FROM equipments_labels JOIN labels ON equipments_labels.labelId = labels.labelId WHERE equipments_labels.equipmentId = '$equipmentData[equipmentId]'";
+
+                $equipment_label_result = mysqli_query($conn, $equipment_label_query);
+
+                // 檢查錯誤
+                if (!$equipment_label_result) {
+                  echo "Error: " . mysqli_error($conn);
+                }
+
+                $printed_equipment_tags = 0;
+                while ($equipment_tags_row = mysqli_fetch_assoc($equipment_label_result)) {
+                  if ($printed_equipment_tags >= 3) {
+                    break;
+                  }
+
+                  echo "<button class='tag-fav' disabled> " . $equipment_tags_row['labelName'] . " 
 
       </button>";
-              $printed_equipment_tags++;
-            }
+                  $printed_equipment_tags++;
+                }
 
-            echo "</span>";
+                echo "</span>";
 
-            // 插入愛心和按讚數代碼
-            echo
-            "<div style='display: flex; align-items: center;'>
+                // 插入愛心和按讚數代碼
+                echo
+                "<div style='display: flex; align-items: center;'>
               <form action='member-record.php' method='post'>
               <input type='hidden' name='" . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . "' value='" . $equipmentData["equipmentId"] . "'>
               <button type='submit' class='btn-icon'>";
-            echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
-            echo "</button>
+                echo "<i class='" . ($isEquipLiked ? "fas" : "fa-regular") . " fa-heart' " . "></i>";
+                echo "</button>
               </form>
               <p style='margin-left: 5px;'>" . $equipmentlikeCount . "</p>
               </div>";
 
-            echo "</footer>";
+                echo "</footer>";
 
-            echo '</div>';
-            echo '</div>'; // card
-            echo '</div>'; // col-md-4
+                echo '</div>';
+                echo '</div>'; // card
+                echo '</div>'; // col-md-4
 
-            $equip_card_counter++;
+                $equip_card_counter++;
 
-            // 每9個card生成後，結束循環
-            if ($equip_card_counter % 9 === 0) {
-              break;
+                // 每9個card生成後，結束循環
+                if ($equip_card_counter % 9 === 0) {
+                  break;
+                }
+              }
+
+              echo '</div>'; // row
+              echo '</div>'; // container
+            } else {
+              echo '上架你的設備吧！';
             }
-          }
 
-          echo '</div>'; // row
-          echo '</div>'; // container
-        } else {
-          echo '上架你的設備吧！';
-        }
+            ?>
 
-        ?>
-
-        <div class="row align-items-center py-5">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-6 text-center">
-            <div class="custom-pagination">
-              <?php for ($i = 1; $i <= $equip_total_pages; $i++) : ?>
-                <a href="?equip_page=<?= $i ?>#equip" <?= ($i == $equip_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
-              <?php endfor; ?>
+            <div class="row align-items-center py-5">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6 text-center">
+                <div class="custom-pagination">
+                  <?php for ($i = 1; $i <= $equip_total_pages; $i++) : ?>
+                    <a href="?equip_page=<?= $i ?>#equip" <?= ($i == $equip_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                  <?php endfor; ?>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
-
       </div>
     </div>
-  </div>
-  </div>
 
 
-  <div class="site-footer">
-    <div class="container">
-      <div class="row">
+    <div class="site-footer">
+      <div class="container">
+        <div class="row">
 
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>聯絡資訊</h3>
-            <address>StartCamping 營在起跑點！</address>
-            <ul class="list-unstyled links">
-              <li><a href="tel://11234567890">0911222345</a></li>
-              <li><a href="tel://11234567890">@startcamping</a></li>
-              <li>
-                <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
-              </li>
-            </ul>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>聯絡資訊</h3>
+              <address>StartCamping 營在起跑點！</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">0911222345</a></li>
+                <li><a href="tel://11234567890">@startcamping</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">startcamping@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-5">
-          <div class="widget">
-            <h3>頁面總覽</h3>
-            <ul class="list-unstyled float-start links">
-              <li><a href="index.php">首頁</a></li>
-              <li><a href="camp-information.php">找小鹿</a></li>
-              <li><a href="../all-article.php">鹿的分享</a></li>
-              <li><a href="../equipment.php">鹿的裝備</a></li>
-              <li><a href="ad.php">廣告方案</a></li>
-            </ul>
-            <ul class="list-unstyled float-start links">
-              <li><a href="member.php">帳號</a></li>
-              <li><a href="member.php">會員帳號</a></li>
-              <li><a href="member-like.php">我的收藏</a></li>
-            </ul>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-5">
+            <div class="widget">
+              <h3>頁面總覽</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="camp-information.php">找小鹿</a></li>
+                <li><a href="../all-article.php">鹿的分享</a></li>
+                <li><a href="../equipment.php">鹿的裝備</a></li>
+                <li><a href="ad.php">廣告方案</a></li>
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="member.php">帳號</a></li>
+                <li><a href="member.php">會員帳號</a></li>
+                <li><a href="member-like.php">我的收藏</a></li>
+              </ul>
+            </div>
+            <!-- /.widget -->
           </div>
-          <!-- /.widget -->
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-2">
+            <!-- /.widget -->
+          </div>
         </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-2">
-          <!-- /.widget -->
-        </div>
-      </div>
-      <!-- /.row -->
+        <!-- /.row -->
 
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <!-- 
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!-- 
               **==========
               NOTE: 
               Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
               **==========
             -->
 
-          <p>
-            Copyright &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            . All Rights Reserved. &mdash; Designed with love by
-            <a href="https://untree.co">Untree.co</a>
-            <!-- License information: https://untree.co/license/ -->
-          </p>
-          <div>
-            Distributed by
-            <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            </div>
           </div>
         </div>
       </div>
+      <!-- /.container -->
     </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.site-footer -->
+    <!-- /.site-footer -->
 
-  <!-- Preloader -->
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
-  </div>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/tiny-slider.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/navbar.js"></script>
-  <script src="js/counter.js"></script>
-  <script src="js/custom.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-  <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
-  <script src="js/e-magz.js"></script>
-  <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
-  <!-- 引入 Bootstrap 的 JavaScript 檔案，放在 </body> 前面 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
+    <script src="js/e-magz.js"></script>
+    <script src="https://kit.fontawesome.com/d02d7e1ecb.js"></script>
+    <!-- 引入 Bootstrap 的 JavaScript 檔案，放在 </body> 前面 
       -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-KsH8Gw+WJ4ZfTw3YqzWmn9pPpxdG+R14gTVjTdwryW8f/WQHm4mZ4z3qf0Wm9vBISlRlSjFVCyTlkWbBBwF0iA==" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-KsH8Gw+WJ4ZfTw3YqzWmn9pPpxdG+R14gTVjTdwryW8f/WQHm4mZ4z3qf0Wm9vBISlRlSjFVCyTlkWbBBwF0iA==" crossorigin="anonymous" defer></script>
 
-  <script>
-    $(document).ready(function() {
-      // Check if the URL hash is "#paper", "#activity", or "#equip"
-      if (window.location.hash === "#paper") {
-        // Remove "active" class from other tabs
-        $('.nav-link.activity').removeClass('active');
-        $('.tab-pane#activity').removeClass('active');
-        $('.nav-link.equip').removeClass('active');
-        $('.tab-pane#equip').removeClass('active');
+    <script>
+      $(document).ready(function() {
+        // Check if the URL hash is "#paper", "#activity", or "#equip"
+        if (window.location.hash === "#paper") {
+          // Remove "active" class from other tabs
+          $('.nav-link.activity').removeClass('active');
+          $('.tab-pane#activity').removeClass('active');
+          $('.nav-link.equip').removeClass('active');
+          $('.tab-pane#equip').removeClass('active');
 
-        // Add "active" class to the "文章" tab
-        $('.nav-link.paper').addClass('active');
-        $('.tab-pane#paper').addClass('active');
-      } else if (window.location.hash === "#activity") {
-        // Remove "active" class from other tabs
-        $('.nav-link.paper').removeClass('active');
-        $('.tab-pane#paper').removeClass('active');
-        $('.nav-link.equip').removeClass('active');
-        $('.tab-pane#equip').removeClass('active');
+          // Add "active" class to the "文章" tab
+          $('.nav-link.paper').addClass('active');
+          $('.tab-pane#paper').addClass('active');
+        } else if (window.location.hash === "#activity") {
+          // Remove "active" class from other tabs
+          $('.nav-link.paper').removeClass('active');
+          $('.tab-pane#paper').removeClass('active');
+          $('.nav-link.equip').removeClass('active');
+          $('.tab-pane#equip').removeClass('active');
 
-        // Add "active" class to the "活動" tab
-        $('.nav-link.activity').addClass('active');
-        $('.tab-pane#activity').addClass('active');
-      } else if (window.location.hash === "#equip") {
-        // Remove "active" class from other tabs
-        $('.nav-link.paper').removeClass('active');
-        $('.tab-pane#paper').removeClass('active');
-        $('.nav-link.activity').removeClass('active');
-        $('.tab-pane#activity').removeClass('active');
+          // Add "active" class to the "活動" tab
+          $('.nav-link.activity').addClass('active');
+          $('.tab-pane#activity').addClass('active');
+        } else if (window.location.hash === "#equip") {
+          // Remove "active" class from other tabs
+          $('.nav-link.paper').removeClass('active');
+          $('.tab-pane#paper').removeClass('active');
+          $('.nav-link.activity').removeClass('active');
+          $('.tab-pane#activity').removeClass('active');
 
-        // Add "active" class to the "設備" tab
-        $('.nav-link.equip').addClass('active');
-        $('.tab-pane#equip').addClass('active');
+          // Add "active" class to the "設備" tab
+          $('.nav-link.equip').addClass('active');
+          $('.tab-pane#equip').addClass('active');
+        }
+      });
+    </script>
+
+    <script>
+      // 獲取搜尋圖標和搜尋容器元素
+      const searchIcon = document.querySelector('.search-icon');
+      const searchContainer = document.querySelector('.search-container');
+
+      // 為搜尋圖標添加點擊事件
+      searchIcon.addEventListener('click', () => {
+        // 切換搜尋容器的顯示狀態
+        searchContainer.style.display = searchContainer.style.display === 'none' ? 'flex' : 'none';
+      });
+    </script>
+    <script>
+      function hideMessage() {
+        document.getElementById("message").style.opacity = "0";
+        setTimeout(function() {
+          document.getElementById("message").style.display = "none";
+        }, 500);
       }
-    });
-  </script>
 
-  <script>
-    // 獲取搜尋圖標和搜尋容器元素
-    const searchIcon = document.querySelector('.search-icon');
-    const searchContainer = document.querySelector('.search-container');
-
-    // 為搜尋圖標添加點擊事件
-    searchIcon.addEventListener('click', () => {
-      // 切換搜尋容器的顯示狀態
-      searchContainer.style.display = searchContainer.style.display === 'none' ? 'flex' : 'none';
-    });
-  </script>
-  <script>
-    function hideMessage() {
-      document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
-        document.getElementById("message").style.display = "none";
-      }, 500);
-    }
-
-    setTimeout(hideMessage, 3000);
-  </script>
+      setTimeout(hideMessage, 3000);
+    </script>
 
 
 

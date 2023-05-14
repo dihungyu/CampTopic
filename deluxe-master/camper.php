@@ -56,6 +56,7 @@ $row_result_account = mysqli_fetch_assoc($result_account);
 
 // 活動發起人詳細資料
 $accountName = $row_result_account['accountName'];
+$accountEmail = $row_result_account['accountEmail'];
 
 // 查詢檔案資料
 $sql_file = "SELECT * FROM files WHERE campsiteId = '$campsiteId'";
@@ -92,6 +93,11 @@ if ($result_account->num_rows > 0) {
     }
   }
 }
+
+// 取得當前使用者報名狀態
+$signUpStatus_query = "SELECT * FROM activities_accounts WHERE accountId = '$accountId' AND activityId = '$activityId'";
+$signUpStatus_result = mysqli_query($conn, $signUpStatus_query);
+$signUpStatus = mysqli_fetch_assoc($signUpStatus_result);
 
 
 
@@ -289,7 +295,8 @@ function format_timestamp($timestamp)
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -418,6 +425,22 @@ function format_timestamp($timestamp)
                   / 人
                 </p>
               </span>
+
+
+              <?php
+
+              if ($signUpStatus['isApproved'] == 1) {
+                echo '<span class="camp-icon">
+                <i class="fa-solid fa-envelope fa-xl"></i>
+                <label>聯絡方式</label>
+                &nbsp;&nbsp;
+                <p>
+                  ' . $accountEmail . '
+                </p>
+              </span>';
+              }
+
+              ?>
 
             </div>
 
@@ -576,11 +599,7 @@ function format_timestamp($timestamp)
                 ?>
                 <div class="box-side">
                   <?php
-                  $signUpStatus_query = "SELECT * FROM activities_accounts WHERE accountId = '$accountId' AND activityId = '$activityId'";
-                  $signUpStatus_result = mysqli_query($conn, $signUpStatus_query);
-                  $signUpStatus = mysqli_fetch_assoc($signUpStatus_result);
-
-
+                  // 參加狀態 (null:未報名, 0:待發起者確認, 1:已報名) 
                   if (isset($_COOKIE["accountId"])) {
                     if ($isActivityOngoing) {
                       echo '<button type="button" class="btn-side" style="cursor: not-allowed;">進行中</button>';

@@ -266,7 +266,8 @@ if (isset($_POST["likeEquipDel"])) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-              <a class="dropdown-item" href="property-1.0.0/member-record.php">我的紀錄</a>
+              <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
+              <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
