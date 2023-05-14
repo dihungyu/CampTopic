@@ -1,36 +1,7 @@
 <?php
-$equipmentId = $_GET['equipmentId'];
+require_once '../../php/conn.php';
 
 session_start();
-// 連接資料庫
-require_once '../../php/conn.php';
-require_once '../../php/get_img_src.php';
-require_once '../../php/uuid_generator.php';
-
-$equipmentName = '';
-$equipmentDescription = '';
-$equipmentPrice = '';
-$equipmentLocation = '';
-$equipmentType = '';
-
-if (isset($equipmentId)) {
-  $sql = "SELECT * FROM equipments WHERE equipmentId = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s", $equipmentId);
-
-  if ($stmt->execute()) {
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $equipmentName = $row['equipmentName'];
-    $equipmentDescription = $row['equipmentDescription'];
-    $equipmentPrice = $row['equipmentPrice'];
-    $equipmentLocation = $row['equipmentLocation'];
-    $equipmentType = $row['equipmentType'];
-    // 修改圖片路徑，使其適用於update-article.php所在的目錄層次
-    $equipmentDescription = str_replace('../upload/', '../../upload/', $equipmentDescription);
-  }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,9 +27,6 @@ if (isset($equipmentId)) {
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-
-
-
   <title>
     Start Camping &mdash; 一起展開露營冒險！
   </title>
@@ -79,19 +47,74 @@ if (isset($equipmentId)) {
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/icomoon.css">
 
-  <!-- 引入Summernote CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet" />
+  <!-- 引入Choices JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
   <!-- choices.js -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 
+  <!-- 引入Bootstrap JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
+  <!-- 引入Summernote CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet" />
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const choices = new Choices('#tags-select', {
+        removeItemButton: true,
+        searchEnabled: false,
+        placeholderValue: '請選擇標籤...',
+        searchPlaceholderValue: '搜尋標籤',
+        maxItemCount: 5
+      });
+    });
 
+    function previewImage(input) {
+      const previewDiv = input.parentElement;
+      const previewImg = previewDiv.querySelector('.preview-image');
+      const removeBtn = previewDiv.querySelector('.remove-image');
+      const file = input.files[0];
+
+      const uploadPlaceholder = previewDiv.querySelector('.upload-placeholder');
+      uploadPlaceholder.style.display = 'none';
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+          removeBtn.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removeImage(button) {
+      const previewDiv = button.parentElement;
+      const previewImg = previewDiv.querySelector('.preview-image');
+      const inputFile = previewDiv.querySelector('input[type="file"]');
+      const uploadPlaceholder = previewDiv.querySelector('.upload-placeholder');
+      uploadPlaceholder.style.display = 'flex';
+      inputFile.value = '';
+      previewImg.src = '';
+      previewImg.style.display = 'none';
+      button.style.display = 'none';
+    }
+
+    function hideMessage() {
+      document.getElementById("message").style.opacity = "0";
+      setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+      }, 500);
+    }
+    setTimeout(hideMessage, 3000);
+  </script>
 
 </head>
 
 <body>
+
   <!-- 系統訊息 -->
   <?php if (isset($_SESSION["system_message"])) : ?>
     <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
@@ -132,36 +155,27 @@ if (isset($equipmentId)) {
               }
               ?>
               <div class="dropdown-divider"></div>
-              <?php
-              // 檢查是否設置了 accountName 或 accountEmail Cookie
-              if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                echo '<a class="dropdown-item" href="../../logout.php?action=logout">登出</a>';
-              }
-              // 如果沒有設置 Cookie 則顯示登入選項
-              else {
-                echo '<a class="dropdown-item" href="../../login.php">登入</a>';
-              }
-              ?>
+              <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
-
           </li>
+
         </ul>
       </div>
     </div>
   </nav>
 
+
   <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 134.png')">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-9 text-center mt-5">
-          <h1 class="heading" data-aos="fade-up">設備管理</h1>
+          <h1 class="heading" data-aos="fade-up">我的營地</h1>
 
           <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
             <ol class="breadcrumb text-center justify-content-center">
               <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-              <li class="breadcrumb-item"><a href="member.php">會員帳號</a></li>
-              <li class="breadcrumb-item active text-white-50" aria-current="page">
-                設備管理
+              <li class="breadcrumb-item"><a href="member.php">帳號</a></li>
+              <li class="breadcrumb-item active text-white-50" aria-current="page"> 營地管理
               </li>
             </ol>
           </nav>
@@ -184,65 +198,119 @@ if (isset($equipmentId)) {
     <div class="section section-properties">
       <div class="container">
         <div class="row">
-          <span style="margin-left: 105px;margin-bottom: 20px;margin-bottom: 25px; margin-top: -65px;">
-            <img src="images/person_4.jpg" alt="Image description" style="border-radius: 50%; width: 5%;">
-            <label style="font-size: 14px; margin-bottom: 0px;margin-left: 20px; font-weight: 600; ">yizz</label>
+          <span style="display:flex;margin-bottom: 12px;flex-wrap: wrap; margin-left: 100px;">
+            <h5 style="font-weight:bold;">新增營地</h5>
           </span>
           <br>
-
-
-          <form action="../../php/Equipment/updateEquipment.php" method="post" enctype="multipart/form-data">
-            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;margin-top: 17px;">
-              <input name="equipmentName" type="text" placeholder="設備名稱" value=<?php echo $equipmentName ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 350px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 100px;">
-              <select name="equipmentType" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-                <option value="租">租</option>
-                <option value="徵">徵</option>
-                <option value="售">售</option>
-              </select>
-              <input type="text" name="equipmentPrice" placeholder="價錢" value=<?php echo $equipmentPrice ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
-              <input type="text" name="equipmentLocation" placeholder="設備所在地" value=<?php echo $equipmentLocation ?> style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 140px; height: 40px; border-radius: 30px;padding: 20px;margin-left: 8px;">
+          <form action="../../php/Campsite/createCampsite.php" method="post" enctype="multipart/form-data">
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px;">
+              <input type="text" placeholder="營地名稱" name="campsiteName" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 1050px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+              <br><br>
             </span>
-            <select id="tags-select" name="tags[]" multiple style="width: 100%;">
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px; margin-top: 17px;">
               <?php
-              // 取得所有設備標籤
-              $sql = "SELECT labelId, labelName FROM labels WHERE labelType = '設備'";
+              $sql = "SELECT cityId, cityName FROM cities";
               $result = mysqli_query($conn, $sql);
+              if (mysqli_num_rows($result) > 0) {
+                echo '<select name="cityId" id="cityId" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px; padding-left: 20px; margin-left: 100px;">';
+                echo '<option disabled selected hidden>請選擇營地所在縣市</option>';
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<option value="' . $row['cityId'] . '">' . $row['cityName'] . '</option>';
+                }
+                echo '</select><br />';
+              } else {
+                echo "沒有找到縣市資料。";
+              }
+              ?>
+              <br><br>
+              <input type="text" placeholder="營區地址" name="campsiteAddress" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 50px;">
+              <br><br>
+            </span>
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px; margin-top: 17px;">
+              <input type="text" placeholder="營區價格下限" name="campsiteLowerLimit" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+              <br><br>
+              <input type="text" placeholder="營區價格上限" name="campsiteUpperLimit" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 50px;">
+              <br><br>
+            </span>
+            <span style="display:flex;align-items: flex-end;flex-wrap: wrap;margin-bottom: 17px; margin-top: 17px;">
+              <input type="text" placeholder="介紹影片連結" name="campsiteVideoLink" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 100px;">
+              <br><br>
+              <input type="text" placeholder="Google地圖連結" name="campsiteAddressLink" style="background-color: #F0F0F0; border-style: none; color:#9D9D9D; width: 500px; height: 50px; border-radius: 30px;padding: 20px;margin-left: 50px;">
+              <br><br>
+            </span>
 
-              if (mysqli_num_rows($result) > 0) { // 檢查是否有資料
 
-                // 取得該設備的標籤
-                $sql_equipmentLabel = "SELECT labelId FROM equipments_labels WHERE equipmentId = '$equipmentId'";
-                $result_equipmentLabel = mysqli_query($conn, $sql_equipmentLabel);
-                $selectedLabels = array();
+            <span style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 17px;margin-left: 100px;margin-top: 10px;">
+              <select id="tags-select" name="tags[]" multiple style="width: 1050px;">
+                <!-- 你的選項將在這裡生成，就像在你原始的程式碼中一樣 -->
+                <?php
+                $sql = "SELECT labelId, labelName FROM labels WHERE labelType = '營地'";
+                $result = mysqli_query($conn, $sql);
 
-                if (mysqli_num_rows($result_equipmentLabel) > 0) {
-                  while ($row = mysqli_fetch_assoc($result_equipmentLabel)) {
-                    $selectedLabels[] = $row['labelId'];
+                if (mysqli_num_rows($result) > 0) { // 檢查是否有資料
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<option value="' . $row['labelId'] . '">' . $row['labelName'] . '</option>';
                   }
                 }
+                ?>
+              </select>
+            </span>
 
-                // 生成選項，根據是否已選擇設定 selected 屬性
-                while ($row = mysqli_fetch_assoc($result)) {
-                  $selected = in_array($row['labelId'], $selectedLabels) ? 'selected' : '';
-                  echo '<option value="' . $row['labelId'] . '" ' . $selected . '>' . $row['labelName'] . '</option>';
+            <h6 style="font-weight:bold;margin-left: 100px;margin-top: 17px;">設備與設施</h6>
+            <span style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 17px;margin-left: 100px;margin-top: 10px;">
+              <?php
+              $sql_services = "SELECT * FROM services";
+              $result_services = mysqli_query($conn, $sql_services);
+
+              if (mysqli_num_rows($result_services) > 0) { // 檢查是否有資料
+                while ($row_services = mysqli_fetch_assoc($result_services)) {
+                  echo '<input type="checkbox" name="services[]" value="' . $row_services['serviceId'] . '" style="color: #F0F0F0;">';
+                  echo '<span style="margin-right: 25px;">' . $row_services['serviceName'] . '</span>';
                 }
               }
               ?>
-            </select>
-            <textarea id="summernote-editor" name="equipmentDescription" rows="20" class="articletext"><?php echo $equipmentDescription ?></textarea>
-            <span style="margin-left: 990px;margin-top: 20px;">
-              <button class="btn-new1" type="button" onclick="window.location.href = '../equip-single.php?equipmentId=<?php echo $equipmentId ?>'">取消</button>
-              <input type="hidden" name="accountId" value="<?php echo $_COOKIE["accountId"] ?>">
-              <input type="hidden" name="action" value="update">
-              <input type="hidden" name="equipmentId" value="<?php echo $equipmentId ?>">
-              <button class="btn-new" type="submit">更新</button>
+            </span>
+            <h6 style="font-weight:bold;margin-left: 100px;margin-top: 17px;">封面圖片</h6>
+            <span style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 17px;margin-left: 100px;margin-top: 10px;">
+              <div class="preview" style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px;">
+                <input type="file" id="image_upload1" name="cover[]" accept=".jpg, .jpeg, .png" style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
+                <div class="upload-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">
+                  <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+                  <p style="color:#797979; margin-top: 10px;">上傳圖片</p>
+                </div>
+                <img src="" alt="" class="preview-image" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+                <button type="button" class="remove-image" style="display:none; position:absolute; top:0; right:0; background-color: red; border: none; font-size: 20px; color: white;" onclick="removeImage(this)">X</button>
+              </div>
+              <div class="preview" style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px; margin-left: 20px;">
+                <input type="file" id="image_upload2" name="cover[]" accept=".jpg, .jpeg, .png" style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
+                <div class="upload-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">
+                  <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+                  <p style="color:#797979; margin-top: 10px;">上傳圖片</p>
+                </div>
+                <img src="" alt="" class="preview-image" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+                <button type="button" class="remove-image" style="display:none; position:absolute; top:0; right:0; background-color: red; border: none; font-size: 20px; color: white;" onclick="removeImage(this)">X</button>
+              </div>
+              <div class="preview" style="position:relative;float:left;background-color: #F0F0F0;height:200px;width:330px;text-align:center;border-radius: 20px; margin-left: 20px;">
+                <input type="file" id="image_upload3" name="cover[]" accept=".jpg, .jpeg, .png" style="height:200px;width:330px;opacity: 0;" onchange="previewImage(this)">
+                <div class="upload-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;">
+                  <i class="icon-cloud_upload" style="font-size:50px;color:#acacac;"></i>
+                  <p style="color:#797979; margin-top: 10px;">上傳圖片</p>
+                </div>
+                <img src="" alt="" class="preview-image" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+                <button type="button" class="remove-image" style="display:none; position:absolute; top:0; right:0; background-color: red; border: none; font-size: 20px; color: white;" onclick="removeImage(this)">X</button>
+              </div>
+            </span>
+            <div style="display:flex; align-items: center; flex-wrap: nowrap; margin-bottom: 17px; margin-left: 100px; margin-top: 10px;">
+              <div style="width: 1050px;">
+                <textarea id="summernote-editor" name="campsiteDescription" rows="20" class="articletext"></textarea>
+              </div>
+            </div>
+            <span style="margin-left: 1005px;">
+              <button type="reset" class="btn-new1">取消</button>
+              <input type="hidden" name="action" value="insert">
+              <button type="submit" class="btn-new">新增</button>
             </span>
           </form>
-
-
-
-
-
 
         </div>
       </div>
@@ -396,17 +464,15 @@ if (isset($equipmentId)) {
     <script src="js/e-magz.js"></script>
     <script src="js/uploadphoto.js"></script>
 
-    <!-- 引入Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
     <!-- 引入Summernote JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-zh-TW.min.js"></script>
 
-    <!-- 引入Choices JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
-
+    <style>
+      .choices {
+        width: 1050px;
+      }
+    </style>
 
     <script>
       $(document).ready(function() {
@@ -417,8 +483,7 @@ if (isset($equipmentId)) {
           minHeight: null, // 設置編輯器的最小高度
           maxHeight: null, // 設置編輯器的最大高度
           focus: true, // 設置自動聚焦到編輯器
-          placeholder: '請輸入內容', // 設置placeholder
-
+          placeholder: '營區詳細介紹（可上傳圖片）'
         });
       });
     </script>
@@ -452,27 +517,6 @@ if (isset($equipmentId)) {
               });
             }
           }
-        });
-      });
-
-      function hideMessage() {
-        document.getElementById("message").style.opacity = "0";
-        setTimeout(function() {
-          document.getElementById("message").style.display = "none";
-        }, 500);
-      }
-
-      setTimeout(hideMessage, 3000);
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const choices = new Choices('#tags-select', {
-          removeItemButton: true,
-          searchEnabled: false,
-          placeholderValue: '請選擇標籤...',
-          searchPlaceholderValue: '搜尋標籤',
-          maxItemCount: 5
         });
       });
     </script>

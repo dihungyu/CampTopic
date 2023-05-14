@@ -442,6 +442,12 @@ if (mysqli_num_rows($result_activities) > 0) {
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <a class="dropdown-item" href="member-record.php">發表記錄</a>
               <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
+              <?php
+              // 是否為商家帳號
+              if ($_COOKIE["accountType"] == "BUSINESS") {
+                echo '<a class="dropdown-item" href="myCampsite.php">我的營地</a>';
+              }
+              ?>
               <!-- <a class="dropdown-item" href="">文章管理</a>
                 <a class="dropdown-item" href="manage-equip.html">設備管理</a>
                 <a class="dropdown-item" href="manage-land.html">營地管理</a> -->

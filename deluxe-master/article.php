@@ -185,6 +185,12 @@ $articleId = $_GET['articleId'];
               <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
               <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
               <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
+              <?php
+              // 是否為商家帳號
+              if ($_COOKIE["accountType"] == "BUSINESS") {
+                echo '<a class="dropdown-item" href="property-1.0.0/myCampsite.php">我的營地</a>';
+              }
+              ?>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie
@@ -575,10 +581,10 @@ $articleId = $_GET['articleId'];
 
           </ul>
         </div>
-        </div>
-        <!-- END comment-list -->
-
       </div>
+      <!-- END comment-list -->
+
+    </div>
     </div>
     <!-- .col-md-8 -->
 

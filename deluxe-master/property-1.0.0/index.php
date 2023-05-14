@@ -284,6 +284,12 @@ if (isset($_POST["likeEquipDel"])) {
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <a class="dropdown-item" href="member-record.php">發表記錄</a>
               <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
+              <?php
+              // 是否為商家帳號
+              if ($_COOKIE["accountType"] == "BUSINESS") {
+                echo '<a class="dropdown-item" href="myCampsite.php">我的營地</a>';
+              }
+              ?>
               <div class="dropdown-divider"></div>
               <?php
               // 檢查是否設置了 accountName 或 accountEmail Cookie

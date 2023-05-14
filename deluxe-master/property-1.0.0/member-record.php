@@ -197,6 +197,12 @@ if (isset($_POST["likeArticleDel"])) {
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <a class="dropdown-item" href="member-record.php">發表記錄</a>
               <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
+              <?php
+              // 是否為商家帳號
+              if ($_COOKIE["accountType"] == "BUSINESS") {
+                echo '<a class="dropdown-item" href="myCampsite.php">我的營地</a>';
+              }
+              ?>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
             </div>
