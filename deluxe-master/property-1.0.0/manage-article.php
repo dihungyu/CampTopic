@@ -261,7 +261,7 @@ function format_count($count)
               <?php
               for ($i = 1; $i <= $total_pages; $i++) {
                 $active_class = ($i == $current_page) ? 'class="active"' : '';
-                echo "<a href=\"?reviewedPage=$i\" $active_class>$i</a>";
+                echo "<a href=\"?reviewedPage=$i&tab=isReviewed\" $active_class>$i</a>";
               }
               ?>
             </div>
@@ -367,7 +367,7 @@ function format_count($count)
               <?php
               for ($k = 1; $k <= $total_unReviewed_pages; $k++) {
                 $activeClass = ($k == $currentPage) ? 'class="active"' : '';
-                echo "<a href=\"?unReviewedPage=$k\" $activeClass>$k</a>";
+                echo "<a href=\"?unReviewedPage=$k&tab=unReviewed\" $activeClass>$k</a>";
               }
               ?>
             </div>
@@ -530,7 +530,16 @@ function format_count($count)
 
       // 根據網址的 hash 來初始顯示的分頁內容
       var currentHash = window.location.hash.slice(1);
-      if (currentHash === 'unReviewed') {
+
+      // 獲取URL中的tab參數
+      var urlParams = new URLSearchParams(window.location.search);
+      var tabParam = urlParams.get('tab');
+
+      if (tabParam === 'unReviewed') {
+        showTab('unReviewed');
+      } else if (tabParam === 'isReviewed') {
+        showTab('isReviewed');
+      } else if (currentHash === 'unReviewed') {
         showTab('unReviewed');
       } else {
         showTab('isReviewed');
