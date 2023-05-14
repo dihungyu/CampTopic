@@ -201,8 +201,17 @@ function format_count($count)
                 $total_pages = ceil($total_campsites / $records_per_page);
 
                 foreach ($isReviewed_campsites as $isReviewed_campsite) {
+                  $isReviewed_cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $isReviewed_campsite['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+                  $isReviewed_cover_result = mysqli_query($conn, $isReviewed_cover_sql);
+                  if ($isReviewed_cover_row = mysqli_fetch_assoc($isReviewed_cover_result)) {
+                    $isReviewed_cover_src = $isReviewed_cover_row["filePath"];
+                  } else {
+                    $isReviewed_cover_src = "images/Rectangle 137.png";
+                  }
                   echo '<div class="card isReviewed-card">';
-                  echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
+                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
+                  echo '    <img src="' . $isReviewed_cover_src . '" class="card-img-top" alt="...">';
+                  echo '  </a>';
                   echo '  <div class="card-body">';
                   echo '    <span class="span-adj" style="justify-content: space-between;">';
                   echo '      <h4><span>$' . format_count($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
@@ -211,7 +220,9 @@ function format_count($count)
                   echo '      </button>';
                   echo '    </span>';
                   echo '    <div>';
-                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $isReviewed_campsite['campsiteName'] . '</h5></a>';
+                  echo '      <a href="../camp-single-manage.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
+                  echo '        <h5 class=\'city d-block mb-3 mt-3\'>' . $isReviewed_campsite['campsiteName'] . '</h5>';
+                  echo '      </a>';
                   //若文章內容超過30字做限制
                   $isReviewed_content_length = mb_strlen(strip_tags($isReviewed_campsite["campsiteDescription"]), 'UTF-8');
                   if ($isReviewed_content_length > 30) {
@@ -239,6 +250,10 @@ function format_count($count)
                     $printed_tags++;
                   }
                   echo '        </div>';
+                  echo '<span style="display: flex; align-items: center;">';
+                  echo ' <i class="fa-regular fa-heart"></i>';
+                  echo ' <p style="margin-top:0px">' . format_count($isReviewed_campsite["campsiteLikeCount"]) . '</p>';
+                  echo ' </span>';
                   echo '      </div>';
                   echo '    </div>';
                   echo '  </div>';
@@ -289,25 +304,27 @@ function format_count($count)
                 $total_unReviewed_pages = ceil($total_unReviewed_campsites / $recordsPerPage);
 
                 foreach ($unReviewed_campsites as $unReviewed_campsite) {
+                  $unReviewed_cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $unReviewed_campsite['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+                  $unReviewed_cover_result = mysqli_query($conn, $unReviewed_cover_sql);
+                  if ($unReviewed_cover_row = mysqli_fetch_assoc($unReviewed_cover_result)) {
+                    $unReviewed_cover_src = $unReviewed_cover_row["filePath"];
+                  } else {
+                    $unReviewed_cover_src = "images/Rectangle 137.png";
+                  }
                   echo '<div class="card unReviewed-card">';
-                  echo '  <img src="images/Rectangle 137.png" class="card-img-top" alt="...">';
+                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
+                  echo '    <img src="' . $unReviewed_cover_src . '" class="card-img-top" alt="...">';
+                  echo '  </a>';
                   echo '  <div class="card-body">';
                   echo '<div class="d-flex justify-content-between align-items-center">';
                   echo '    <div>';
                   echo '        <h4><span>$' . format_count($unReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
                   echo '    </div>';
-                  echo '    <div>';
-                  echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal' . $unReviewed_campsite["campsiteId"] . '">';
-                  echo '            <i class="fas fa-check" style="color: #28A745"></i>';
-                  echo '        </button>';
-                  echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal' . $unReviewed_campsite["campsiteId"] . '">';
-                  echo '            <i class="fas fa-times" style="color: #B02626"></i>';
-                  echo '        </button>';
-                  echo '    </div>';
                   echo '</div>';
-
                   echo '    <div>';
-                  echo '      <h5 class=\'city d-block mb-3 mt-3\'>' . $unReviewed_campsite['campsiteName'] . '</h5></a>';
+                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
+                  echo '    <h5 class=\'city d-block mb-3 mt-3\'>' . $unReviewed_campsite['campsiteName'] . '</h5>';
+                  echo '  </a>';
                   //若文章內容超過30字做限制
                   $unReviewed_content_length = mb_strlen(strip_tags($unReviewed_campsite["campsiteDescription"]), 'UTF-8');
                   if ($unReviewed_content_length > 30) {
@@ -461,56 +478,6 @@ function format_count($count)
       echo '</div>';
       echo '</form>';
     }
-
-    foreach ($unReviewed_campsites as $unReviewed_campsite) {
-      echo '<form method="UPDATE" action="../../php/Campsite/isReviewed_update.php">';
-      echo '<div class="modal fade" id="confirmModal' . $unReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">';
-      echo '<div class="modal-dialog" role="document">';
-      echo '<div class="modal-content">';
-      echo '<div class="modal-header">';
-      echo '<h5 class="modal-title" id="deleteModalLabel">審核確認</h5>';
-      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-      echo '<span aria-hidden="true">&times;</span>';
-      echo '</button>';
-      echo '</div>';
-      echo '<div class="modal-body">';
-      echo '確定要讓「' . $unReviewed_campsite["campsiteName"] . '」上架嗎？';
-      echo '</div>';
-      echo '<div class="modal-footer">';
-      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
-      echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
-      echo '<button type="submit" class="btn-new" style="background-color: #28A745;">確認</button>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</form>';
-    }
-
-    foreach ($unReviewed_campsites as $unReviewed_campsite) {
-      echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
-      echo '<div class="modal fade" id="disagreeModal' . $unReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="disagreeModalLabel" aria-hidden="true">';
-      echo '<div class="modal-dialog" role="document">';
-      echo '<div class="modal-content">';
-      echo '<div class="modal-header">';
-      echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-      echo '<span aria-hidden="true">&times;</span>';
-      echo '</button>';
-      echo '</div>';
-      echo '<div class="modal-body">';
-      echo '確定要否決「' . $unReviewed_campsite["campsiteName"] . '」嗎？';
-      echo '</div>';
-      echo '<div class="modal-footer">';
-      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
-      echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
-      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認</button>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</form>';
-    }
     ?>
 
 
@@ -595,7 +562,6 @@ function format_count($count)
           showTab('isReviewed');
         }
 
-
         // 搜索功能
         $('#form1').on('input', function () {
           let searchKeyword = $(this).val().toLowerCase();
@@ -611,7 +577,6 @@ function format_count($count)
             }
           });
         });
-
       });
     </script>
 

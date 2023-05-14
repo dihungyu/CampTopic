@@ -55,8 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO reports (reportId, accountId, equipmentId, reportReason, reportDescription, reportCreateDate, reportUpdateDate) VALUES ('$reportId', '$reporterId', '$equipmentId', '$reportReason', '$reportDescription', now(), now())";
     $sql_result = mysqli_query($conn, $sql);
 
+    $sql_update = "UPDATE equipment SET isReviewed = 0 WHERE equipmentId = '$equipmentId'";
+    $sql_update_result = mysqli_query($conn, $sql_update);
+
     // 檢查錯誤
     if (!$sql_result) {
+        // 返回錯誤信息
+        echo json_encode(['status' => 'error', 'message' => '數據庫操作失敗：' . mysqli_error($conn), 'equipmentId' => $equipmentId]);
+        exit;
+    } elseif (!$sql_update_result) {
         // 返回錯誤信息
         echo json_encode(['status' => 'error', 'message' => '數據庫操作失敗：' . mysqli_error($conn), 'equipmentId' => $equipmentId]);
         exit;
@@ -64,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // 返回成功信息
     echo json_encode([
-        'status' => 'success', 'message' => '舉報已提交', 'equipmentId' => $equipmentId
+        'status' => 'success',
+        'message' => '舉報已提交',
+        'equipmentId' => $equipmentId
     ]);
 }

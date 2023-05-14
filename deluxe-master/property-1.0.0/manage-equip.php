@@ -1,3 +1,20 @@
+<?php
+require_once '../../php/conn.php';
+require_once '../../php/get_img_src.php';
+
+session_start();
+
+function format_count($count)
+{
+  if ($count < 1000) {
+    return $count;
+  } elseif ($count < 1000000) {
+    return round($count / 1000, 1) . 'k';
+  } else {
+    return round($count / 1000000, 1) . 'm';
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,791 +122,284 @@
   <div class="section">
     <div class="container" style="max-width: 1260px;">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-        <ul class="nav nav-tabs" style="margin-left: 16px; width: 62%; " id="myTab" role="tablist">
-          <li class="nav-item" style="margin-right:20px">
-            <a class="nav-link land" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="land"
-              aria-selected="true">設備</a>
-          </li>
-          <li class="nav-item" style="margin-right:20px">
-            <a class=" nav-link paper" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="paper"
-              aria-selected="true">待審核</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <form method="GET" action="member-like.php#equip" class="mb-4">
-            <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
-              <div id="navbar-search-autocomplete" class="form-outline">
-                <input type="search" id="form1" name="equip_search_keyword" class="form-control"
-                  style="height: 40px; border-radius: 35px;" placeholder="搜尋設備名稱..." />
-              </div>&nbsp;
-              <button type="submit" class="button-search">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </form>
+        <div class="col-8">
+          <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab"
+                aria-controls="isReviewed" aria-selected="true">已上架</a>
+            </li>
+            <li class="nav-item" style="margin-right:20px">
+              <a class="nav-link unReviewed" id="unReviewed-tab" data-toggle="tab" href="#unReviewed" role="tab"
+                aria-controls="unReviewed" aria-selected="true">待審核</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4">
+          <div class="input-group " style="display:flex;justify-content: flex-end; margin-bottom: 40px; width: 98%;">
+            <div id="navbar-search-autocomplete" class="form-outline">
+              <input type="search" id="form1" name="equip_search_keyword" class="form-control"
+                style="height: 40px; border-radius: 35px;" placeholder="搜尋設備名稱..." />
+            </div>&nbsp;
+            <button type="submit" class="button-search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="equip" role="tabpanel" aria-labelledby="equip-tab">
+    <div class="tab-pane fade show" id="isReviewed" role="tabpanel" aria-labelledby="isReviewed-tab">
       <div class="section section-properties">
         <div class="container">
           <div class="row">
             <article class="col-md-12 article-list" style="display: flex;">
               <div class="inner" style="display: flex; ">
+                <?php
+                $records_per_page = 6;
+                $current_page = isset($_GET['reviewedPage']) ? $_GET['reviewedPage'] : 1;
+                $offset = ($current_page - 1) * $records_per_page;
 
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                $sql_isReviewed_equipments = "SELECT * FROM equipments WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
+                $result_isReviewed_equipments = mysqli_query($conn, $sql_isReviewed_equipments);
+                $isReviewed_equipments = [];
+                if (mysqli_num_rows($result_isReviewed_equipments) > 0) {
+                  while ($row = mysqli_fetch_assoc($result_isReviewed_equipments)) {
+                    $isReviewed_equipments[] = $row;
+                  }
+                }
 
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
+                $sql_total_equipments = "SELECT COUNT(*) as total FROM equipments WHERE isReviewed = 1";
+                $result_total_equipments = mysqli_query($conn, $sql_total_equipments);
+                $total_equipments = mysqli_fetch_assoc($result_total_equipments)['total'];
+                $total_pages = ceil($total_equipments / $records_per_page);
+                foreach ($isReviewed_equipments as $isReviewed_equipment) {
+                  //取出設備圖片
+                  $isReviewed_image_src = get_first_image_src($isReviewed_equipment["equipmentDescription"]);
+                  if ($isReviewed_image_src == "") {
+                    $isReviewed_image_src = "images/M85318677_big.jpeg";
+                  } else {
+                    $isReviewed_image_src = '../' . $isReviewed_image_src;
+                  }
+                  echo '<div class="card isReviewed-card">';
+                  echo '  <img src="' . $isReviewed_image_src . '" class="card-img-top" alt="..." style="margin-bottom: -15px;">';
+                  echo '  <div class="card-body">';
+                  echo '    <div class="detail" style="margin-bottom: 0px;">';
+                  if ($isReviewed_equipment["equipmentType"] === "租") {
+                    echo '      <span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
+                    echo '</span>';
+                  } else if ($isReviewed_equipment["equipmentType"] === "徵") {
+                    echo '      <span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
+                    echo '</span>';
+                  } else if ($isReviewed_equipment["equipmentType"] === "賣") {
+                    echo '      <span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
+                    echo '</span>';
+                  }
+                  echo '      <h5 class="city">' . $isReviewed_equipment["equipmentName"] . '</h5>';
+                  echo '      <span class="span-adj">';
+                  echo '        <h4><span>$' . format_count($isReviewed_equipment["equipmentPrice"]) . '</span></h4>';
+                  // echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">';
+                  // echo '          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>';
+                  // echo '        </button>';
+                  echo '      </span>';
+                  echo '    </div>';
+                  echo '    <div>';
+                  //若文章內容超過30字做限制
+                  $isReviewed_content_length = mb_strlen(strip_tags($isReviewed_equipment["equipmentDescription"]), 'UTF-8');
+                  if ($isReviewed_content_length > 30) {
+                    $isReviewed_content = mb_substr(strip_tags($isReviewed_equipment["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $isReviewed_content = strip_tags($isReviewed_equipment["equipmentDescription"]);
+                  }
+                  echo '      <span class="d-block mb-4 mt-3 text-black-50">' . $isReviewed_content . '</span>';
+                  echo '      <footer style="margin-top:40px">';
+                  echo '        <div class="card-icon-footer">';
+                  echo '          <div class="tagcloud">';
+                  $sql_query_labels = "SELECT equipments_labels.labelId, labels.labelName
+                     FROM equipments_labels
+                     JOIN labels ON equipments_labels.labelId = labels.labelId
+                     WHERE equipments_labels.equipmentId = '" . $isReviewed_equipment['equipmentId'] . "'";
+                  $result_labels = mysqli_query($conn, $sql_query_labels);
 
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                  $printed_tags = 0;
+                  while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                    if ($printed_tags >= 3) {
+                      break;
+                    }
 
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
+                    echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
 
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p>1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-
+                    $printed_tags++;
+                  }
+                  echo '          </div>';
+                  echo '          <span style="display: flex; align-items: center;">';
+                  echo '            <i class="fa-regular fa-heart"></i>';
+                  echo '            <p style="margin-top: 0px;">' . format_count($isReviewed_equipment["equipmentLikeCount"]) . '</p>';
+                  echo '          </span>';
+                  echo '        </div>';
+                  echo '      </footer>';
+                  echo '    </div>';
+                  echo '  </div>';
+                  echo '</div>';
+                }
+                ?>
               </div>
             </article>
-            <article class="col-md-12 article-list" style="display: flex;">
-              <div class="inner" style="display: flex; ">
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                          <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div>
-                      <span class="d-block mb-4 mt-3 text-black-50">
-                        四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </article>
-            <article class="col-md-12 article-list" style="display: flex;">
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                      </button>
-                    </span>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-heart"></i>
-                          <p style="margin-top: 0px;">1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                      </button>
-                    </span>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-heart"></i>
-                          <p style="margin-top: 0px;">1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <button type="button" class="btn-icon" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="fa-solid fa-circle-exclamation" style="color: #B02626;"></i>
-                      </button>
-                    </span>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-heart"></i>
-                          <p style="margin-top: 0px;">1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center py-5">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 text-center">
+          <div class="custom-pagination">
+            <?php
+            for ($i = 1; $i <= $total_pages; $i++) {
+              $active_class = ($i == $current_page) ? 'class="active"' : '';
+              echo "<a href=\"?reviewedPage=$i\" $active_class>$i</a>";
+            }
+            ?>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="tab-pane fade show" id="review" role="tabpanel" aria-labelledby="review-tab">
+    <div class="tab-pane fade" id="unReviewed" role="tabpanel" aria-labelledby="unReviewed-tab">
       <div class="section section-properties">
         <div class="container">
           <div class="row">
             <article class="col-md-12 article-list" style="display: flex;">
               <div class="inner" style="display: flex; ">
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                              </button>
-                            </span>
-                          </span>
-                          </div>
-                          <div>
-                            <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                <?php
+                $recordsPerPage = 6;
+                $currentPage = isset($_GET['unReviewedPage']) ? $_GET['unReviewedPage'] : 1;
+                $offSet = ($currentPage - 1) * $recordsPerPage;
 
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
+                $sql_unReviewed_equipments = "SELECT * FROM equipments WHERE isReviewed = 0 LIMIT $recordsPerPage OFFSET $offSet";
+                $result_unReviewed_equipments = mysqli_query($conn, $sql_unReviewed_equipments);
+                $unReviewed_equipments = [];
+                if (mysqli_num_rows($result_unReviewed_equipments) > 0) {
+                  while ($row = mysqli_fetch_assoc($result_unReviewed_equipments)) {
+                    $unReviewed_equipments[] = $row;
+                  }
+                }
 
+                $sql_total_unReviewed_equipments = "SELECT COUNT(*) as total FROM equipments WHERE isReviewed = 0";
+                $result_total_unReviewed_equipments = mysqli_query($conn, $sql_total_unReviewed_equipments);
+                $total_unReviewed_equipments = mysqli_fetch_assoc($result_total_unReviewed_equipments)['total'];
+                $total_unReviewed_pages = ceil($total_unReviewed_equipments / $recordsPerPage);
+                foreach ($unReviewed_equipments as $unReviewed_equipment) {
+                  //取出設備圖片
+                  $unReviewed_image_src = get_first_image_src($unReviewed_equipment["equipmentDescription"]);
+                  if ($unReviewed_image_src == "") {
+                    $unReviewed_image_src = "images/M85318677_big.jpeg";
+                  } else {
+                    $unReviewed_image_src = '../' . $unReviewed_image_src;
+                  }
+                  echo '<div class="card unReviewed-card">';
+                  echo '  <img src="' . $unReviewed_image_src . '" class="card-img-top" alt="..." style="margin-bottom: -15px;">';
+                  echo '  <div class="card-body">';
+                  echo '    <div class="detail" style="margin-bottom: 0px;">';
+                  if ($unReviewed_equipment["equipmentType"] === "租") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
+                    echo '</span>';
+                  } else if ($unReviewed_equipment["equipmentType"] === "徵") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
+                    echo '</span>';
+                  } else if ($unReviewed_equipment["equipmentType"] === "賣") {
+                    echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                    echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                    echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
+                    echo '</span>';
+                  }
+                  echo '      </span>';
+                  echo '      <h5 class="city">' . $unReviewed_equipment["equipmentName"] . '</h5>';
+                  echo '      <span class="span-adj">';
+                  echo '        <h4><span>$' . format_count($unReviewed_equipment["equipmentPrice"]) . '</span></h4>';
+                  echo '        <span style="display: flex;">';
+                  echo '          <button type="button" class="btn-icon">';
+                  echo '            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>';
+                  echo '          </button>';
+                  echo '          <button type="button" class="btn-icon">';
+                  echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>';
+                  echo '          </button>';
+                  echo '        </span>';
+                  echo '      </span>';
+                  echo '    </div>';
+                  echo '    <div>';
+                  //若文章內容超過30字做限制
+                  $unReviewed_content_length = mb_strlen(strip_tags($unReviewed_equipment["equipmentDescription"]), 'UTF-8');
+                  if ($unReviewed_content_length > 30) {
+                    $unReviewed_content = mb_substr(strip_tags($unReviewed_equipment["equipmentDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+                  } else {
+                    $unReviewed_content = strip_tags($unReviewed_equipment["equipmentDescription"]);
+                  }
+                  echo '      <span class=" d-block mb-4 mt-3 text-black-50">' . $unReviewed_content . '</span>';
+                  echo '      <footer style="margin-top:40px">';
+                  echo '        <div class="card-icon-footer">';
+                  echo '          <div class="tagcloud">';
+                  $sql_query_labels = "SELECT equipments_labels.labelId, labels.labelName
+                  FROM equipments_labels
+                  JOIN labels ON equipments_labels.labelId = labels.labelId
+                  WHERE equipments_labels.equipmentId = '" . $unReviewed_equipment["equipmentId"] . "'";
+                  $result_labels = mysqli_query($conn, $sql_query_labels);
 
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                                  </button>
-                                </span>
-                              </span>
-                              </div>
-                              <div>
-                                <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
+                  $printed_tags = 0;
+                  while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                    if ($printed_tags >= 3) {
+                      break;
+                    }
 
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
+                    echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
 
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                                      </button>
-                                    </span>
-                                  </span>
-                                  </div>
-                                  <div>
-                                    <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="col-md-12 article-list" style="display: flex;">
-              <div class="inner" style="display: flex; ">
-
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                            </button>
-                          </span>
-                        </span>
-                        </div>
-                        <div>
-                          <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                                </button>
-                              </span>
-                            </span>
-                            </div>
-                            <div>
-                              <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                  <div class="card-body">
-                    <div class="detail" style="margin-bottom: 0px;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <h5>露營帳篷</h5>
-                      <span class="span-adj">
-                        <h4><span>$1,291</span></h4>
-                        <span style="display: flex;">
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                          </button>
-                          <button type="button" class="btn-icon">
-                            <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                                    </button>
-                                  </span>
-                                </span>
-                                </div>
-                                <div>
-                                  <span class=" d-block mb-4 mt-3 text-black-50">
-                              四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                        <footer style="margin-top:40px">
-                          <div class="card-icon-footer">
-                            <div class="tagcloud">
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">家庭帳</a>
-                              <a href="property-single.html">帳篷</a>
-                            </div>
-                            <span style="display: flex; align-items: center;">
-                              <i class="fa-regular fa-heart"></i>
-                              <p style="margin-top: 0px;">1,098</p>
-                            </span>
-                          </div>
-                        </footer>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="col-md-12 article-list" style="display: flex;">
-
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <span style="display: flex;">
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                        </button>
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                      </button>
-                    </span>
-                  </span>
-                  </div>
-                  <div>
-                    <span class=" d-block mb-4 mt-3 text-black-50">
-                            四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <span style="display: flex;">
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                        </button>
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                          </button>
-                        </span>
-                      </span>
-                      </div>
-                      <div>
-                        <span class=" d-block mb-4 mt-3 text-black-50">
-                            四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="images/M85318677_big.jpeg" class="card-img-top" alt="..." style="margin-bottom: -15px;">
-                <div class="card-body">
-                  <div class="detail" style="margin-bottom: 0px;">
-                    <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                      <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                      <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                    </span>
-                    <h5>露營帳篷</h5>
-                    <span class="span-adj">
-                      <h4><span>$1,291</span></h4>
-                      <span style="display: flex;">
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-check" style="color: #005555; padding: 0px;"></i>
-                        </button>
-                        <button type="button" class="btn-icon">
-                          <i class="fa-solid fa-circle-xmark" style="color: #B02626; padding: 0px;""></i>
-                              </button>
-                            </span>
-                          </span>
-                          </div>
-                          <div>
-                            <span class=" d-block mb-4 mt-3 text-black-50">
-                            四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                      <footer style="margin-top:40px">
-                        <div class="card-icon-footer">
-                          <div class="tagcloud">
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">家庭帳</a>
-                            <a href="property-single.html">帳篷</a>
-                          </div>
-                          <span style="display: flex; align-items: center;">
-                            <i class="fa-regular fa-heart"></i>
-                            <p style="margin-top: 0px;">1,098</p>
-                          </span>
-                        </div>
-                      </footer>
-                  </div>
-                </div>
+                    $printed_tags++;
+                  }
+                  echo '          </div>';
+                  echo '          <span style="display: flex; align-items: center;">';
+                  echo '            <i class="fa-regular fa-heart"></i>';
+                  echo '            <p style="margin-top: 0px;">' . format_count($unReviewed_equipment["equipmentLikeCount"]) . '</p>';
+                  echo '          </span>';
+                  echo '        </div>';
+                  echo '      </footer>';
+                  echo '    </div>';
+                  echo '  </div>';
+                  echo '</div>';
+                }
+                ?>
               </div>
             </article>
           </div>
-
+        </div>
+      </div>
+      <div class="row align-items-center py-5">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 text-center">
+          <div class="custom-pagination">
+            <?php
+            for ($k = 1; $k <= $total_unReviewed_pages; $k++) {
+              $activeClass = ($k == $currentPage) ? 'class="active"' : '';
+              echo "<a href=\"?unReviewedPage=$k\" $activeClass>$k</a>";
+            }
+            ?>
+          </div>
         </div>
       </div>
     </div>
   </div>
   </div>
 
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -921,20 +431,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="row align-items-center py-5">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6 text-center">
-      <div class="custom-pagination">
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-      </div>
-    </div>
-  </div>
+
 
   <div class="site-footer">
     <div class="container">
@@ -1056,6 +555,61 @@
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
 
+
+  <script>
+    $(document).ready(function () {
+      function showTab(tab) {
+        if (tab === 'isReviewed') {
+          $('#isReviewed-tab').addClass('active');
+          $('#unReviewed-tab').removeClass('active');
+          $('#isReviewed').addClass('show active');
+          $('#unReviewed').removeClass('show active');
+          window.location.hash = 'isReviewed';
+        } else if (tab === 'unReviewed') {
+          $('#unReviewed-tab').addClass('active');
+          $('#isReviewed-tab').removeClass('active');
+          $('#unReviewed').addClass('show active');
+          $('#isReviewed').removeClass('show active');
+          window.location.hash = 'unReviewed';
+        }
+      }
+
+      // 當 "已上架" tab 被點擊時的觸發事件
+      $('#isReviewed-tab').on('click', function () {
+        showTab('isReviewed');
+      });
+
+      // 當 "待審核" tab 被點擊時的觸發事件
+      $('#unReviewed-tab').on('click', function () {
+        showTab('unReviewed');
+      });
+
+      // 根據網址的 hash 來初始顯示的分頁內容
+      var currentHash = window.location.hash.slice(1);
+      if (currentHash === 'unReviewed') {
+        showTab('unReviewed');
+      } else {
+        showTab('isReviewed');
+      }
+
+      // 搜索功能
+      $('#form1').on('input', function () {
+        let searchKeyword = $(this).val().toLowerCase();
+        let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
+        let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
+
+        $(targetCards).each(function () {
+          let equipmentName = $(this).find('.city').text().toLowerCase();
+          if (equipmentName.indexOf(searchKeyword) !== -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+
+    });
+  </script>
 </body>
 
 </html>
