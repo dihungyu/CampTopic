@@ -170,7 +170,7 @@ session_start();
 
           <div class="col-4">
             <div class="card">
-              <img src="images/5.png" class="card-img-top" alt="..." style="margin-bottom: -15px; width:300px;">
+              <img src="images/5.png" class="card-img-top" alt="..." style="margin-bottom: -15px;">
               <div class="card-body">
                 <span style="display: flex;margin-bottom: 10px;margin-right: 10px;flex-wrap: wrap;flex-direction: column;align-items: center;font-weight: bold;color: #000;">
                   <h4 style="color: #000;font-weight: bold;">贊助我們</h4>

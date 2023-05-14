@@ -518,11 +518,11 @@ if (isset($_POST["likeEquipDel"])) {
                 $recommand_equipmentPrice = $recommand_equipment['equipmentPrice'];
                 $recommand_equipmentDescription = $recommand_equipment['equipmentDescription'];
                 $recommand_equipmentLikeCount = $recommand_equipment['equipmentLikeCount'];
-                echo '<div class="card-eq" style=" margin-right: 25px;">';
-                echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
+                echo '<div class="card-eq" style=" margin-right: 24px;">';
+                echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="..." style="width:379px; height:205px;">';
                 echo '<div class="card-body-eq">';
 
-                echo '<div class="detail" style="flex-wrap: wrap">';
+                echo '<div class="detail" style="display:flex;">';
 
                 echo '<span class="fa-stack fa-1x" style="margin-right: 5px;">';
 
@@ -534,7 +534,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
-                echo '<h4 style="margin-left: 24px;">$' . number_format($equipmentPrice) . '</h4>';
+                echo '<h4 style="margin-left: 20px; margin-right:0px;">$' . number_format($equipmentPrice) . '</h4>';
                 echo "<form action='equip-single.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";
@@ -543,7 +543,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo "</form>";
                 echo '</span>';
                 echo '</div>';
-                echo '<p class="card-text-eq">';
+                echo '<p class="card-text-eq"  style="box-sizing: content-box; width: 300px;">';
                 echo '' . $truncated_content . '</p>';
                 echo '<footer style="margin-top:40px">';
                 echo '<span>';
