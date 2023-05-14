@@ -12,6 +12,7 @@ if ($_POST["FormType"] == "Register") {
 		$accountEmail = $_POST["accountEmail"];
 		$accountPhoneNumber = $_POST["accountPhoneNumber"];
 		$accountPassword = $_POST["accountPassword"];
+		$accountType = $_POST["accountType"];
 
 		//加密密碼
 		$hashedPassword = password_hash($accountPassword, PASSWORD_DEFAULT);
@@ -29,8 +30,8 @@ if ($_POST["FormType"] == "Register") {
 			$_SESSION["system_message"] = "此信箱已被註冊，請換信箱再試一次！";
 			header("Location: register.php");
 		} else {
-			$stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountGender, accountBirthday, accountPassword, accountEmail, accountPhoneNumber) VALUES ( REPLACE(UUID(),'-',''), ?,?,?,?,?,?)");
-			$stmt->bind_param("ssssss", $accountName, $accountGender, $accountBirthday, $hashedPassword, $accountEmail, $accountPhoneNumber);
+			$stmt = $conn->prepare("INSERT INTO accounts(accountId, accountName, accountGender, accountBirthday, accountPassword, accountEmail, accountPhoneNumber, accountType) VALUES ( REPLACE(UUID(),'-',''), ?,?,?,?,?,?,?)");
+			$stmt->bind_param("sssssss", $accountName, $accountGender, $accountBirthday, $hashedPassword, $accountEmail, $accountPhoneNumber, $accountType);
 			if ($stmt->execute()) {
 				$_SESSION["system_message"] = "註冊成功！";
 				header("Location: login.php");
@@ -117,6 +118,11 @@ if ($_POST["FormType"] == "Register") {
 									<input class="form-check-input" type="radio" name="accountGender" value="Male" required>
 									<label class="form-check-label" for="Male">男性</label>
 								</div>
+								<select class="form-control" name="accountType" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
+									<option value="">請選擇用戶類別</option>
+									<option value="USER">使用者</option>
+									<option value="BUSINESS">商家</option>
+								</select>
 								<hr style="margin-top :0px; margin-bottom: 2rem;">
 								<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" name="accountPassword" placeholder="密碼" onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'" id="accountPassword" required>
 								<input type="password" class="form-control " style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" name="checkPassword" placeholder="再次確認密碼 " onfocus="this.placeholder = ''" onblur="this.placeholder = '再次確認密碼'" id="checkPassword">
