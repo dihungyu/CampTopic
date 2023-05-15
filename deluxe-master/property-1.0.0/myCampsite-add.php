@@ -1,6 +1,11 @@
 <?php
 require_once '../../php/conn.php';
 
+
+// 初始化accountId
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
 session_start();
 ?>
 <!DOCTYPE html>
@@ -307,6 +312,7 @@ session_start();
             </div>
             <span style="margin-left: 1005px;">
               <button type="reset" class="btn-new1">取消</button>
+              <input type="hidden" name="accountId" value="<?php echo $accountId; ?>">
               <input type="hidden" name="action" value="insert">
               <button type="submit" class="btn-new">新增</button>
             </span>

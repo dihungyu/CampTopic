@@ -118,8 +118,8 @@ if ($_POST["FormType"] == "Register") {
 									<input class="form-check-input" type="radio" name="accountGender" value="Male" required>
 									<label class="form-check-label" for="Male">男性</label>
 								</div>
-								<select class="form-control" name="accountType" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem;" required>
-									<option value="">請選擇用戶類別</option>
+								<select class="form-control" name="accountType" style="margin-bottom:10px; border-radius: 25px; background-color:#f1f1f1f1; padding: 0.675rem 1.75rem; height: 50px;" required>
+									<option disabled selected hidden>請選擇用戶類別</option>
 									<option value="USER">使用者</option>
 									<option value="BUSINESS">商家</option>
 								</select>

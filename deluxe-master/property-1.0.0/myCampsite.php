@@ -3,6 +3,13 @@ require_once '../../php/conn.php';
 
 session_start();
 
+// 初始化accountId
+if (isset($_COOKIE["accountId"])) {
+  $accountId = $_COOKIE["accountId"];
+}
+
+
+
 function format_count($count)
 {
   if ($count < 1000) {
@@ -189,7 +196,7 @@ function format_count($count)
                 $current_page = isset($_GET['reviewedPage']) ? $_GET['reviewedPage'] : 1;
                 $offset = ($current_page - 1) * $records_per_page;
 
-                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
+                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE accountId = '$accountId' AND isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
                 $result_isReviewed_campsites = mysqli_query($conn, $sql_isReviewed_campsites);
                 $isReviewed_campsites = [];
                 if (mysqli_num_rows($result_isReviewed_campsites) > 0) {
@@ -198,7 +205,7 @@ function format_count($count)
                   }
                 }
 
-                $sql_total_campsites = "SELECT COUNT(*) as total FROM campsites WHERE isReviewed = 1";
+                $sql_total_campsites = "SELECT COUNT(*) as total FROM campsites WHERE accountId = '$accountId' AND isReviewed = 1";
                 $result_total_campsites = mysqli_query($conn, $sql_total_campsites);
                 $total_campsites = mysqli_fetch_assoc($result_total_campsites)['total'];
                 $total_pages = ceil($total_campsites / $records_per_page);
@@ -212,18 +219,18 @@ function format_count($count)
                     $isReviewed_cover_src = "images/Rectangle 137.png";
                   }
                   echo '<div class="card isReviewed-card">';
-                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
+                  echo '  <a href="../myCampsiteDetail.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
                   echo '    <img src="' . $isReviewed_cover_src . '" class="card-img-top" alt="...">';
                   echo '  </a>';
                   echo '  <div class="card-body">';
                   echo '    <span class="span-adj" style="justify-content: space-between;">';
                   echo '      <h4><span>$' . format_count($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
-                  echo '      <button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $isReviewed_campsite['campsiteId'] . '">';
-                  echo '        <i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
-                  echo '      </button>';
+                  echo '<button type="button" class="btn-icon" data-toggle="modal" data-target="#deleteModal' . $isReviewed_campsite['campsiteId'] . '">';
+                  echo '<i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
+                  echo '</button>';
                   echo '    </span>';
                   echo '    <div>';
-                  echo '      <a href="../camp-single-manage.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
+                  echo '      <a href="../myCampsiteDetail.php?campsiteId=' . $isReviewed_campsite['campsiteId'] . '">';
                   echo '        <h5 class=\'city d-block mb-3 mt-3\'>' . $isReviewed_campsite['campsiteName'] . '</h5>';
                   echo '      </a>';
                   //若文章內容超過30字做限制
@@ -292,7 +299,7 @@ function format_count($count)
                 $currentPage = isset($_GET['unReviewedPage']) ? $_GET['unReviewedPage'] : 1;
                 $offSet = ($currentPage - 1) * $recordsPerPage;
 
-                $sql_unReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 0 LIMIT $recordsPerPage OFFSET $offSet";
+                $sql_unReviewed_campsites = "SELECT * FROM campsites WHERE accountId = '$accountId' AND isReviewed = 0 LIMIT $recordsPerPage OFFSET $offSet";
                 $result_unReviewed_campsites = mysqli_query($conn, $sql_unReviewed_campsites);
                 $unReviewed_campsites = [];
                 if (mysqli_num_rows($result_unReviewed_campsites) > 0) {
@@ -301,7 +308,7 @@ function format_count($count)
                   }
                 }
 
-                $sql_total_unReviewed_campsites = "SELECT COUNT(*) as total FROM campsites WHERE isReviewed = 0";
+                $sql_total_unReviewed_campsites = "SELECT COUNT(*) as total FROM campsites WHERE accountId = '$accountId' AND isReviewed = 0";
                 $result_total_unReviewed_campsites = mysqli_query($conn, $sql_total_unReviewed_campsites);
                 $total_unReviewed_campsites = mysqli_fetch_assoc($result_total_unReviewed_campsites)['total'];
                 $total_unReviewed_pages = ceil($total_unReviewed_campsites / $recordsPerPage);
@@ -315,17 +322,20 @@ function format_count($count)
                     $unReviewed_cover_src = "images/Rectangle 137.png";
                   }
                   echo '<div class="card unReviewed-card">';
-                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
+                  echo '  <a href="../myCampsiteDetail.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
                   echo '    <img src="' . $unReviewed_cover_src . '" class="card-img-top" alt="...">';
                   echo '  </a>';
                   echo '  <div class="card-body">';
                   echo '<div class="d-flex justify-content-between align-items-center">';
                   echo '    <div>';
                   echo '        <h4><span>$' . format_count($unReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
+                  echo '<button type="button" class="btn-icon" data-toggle="modal" data-target="#unreviewedDeleteModal' . $unReviewed_campsite['campsiteId'] . '">';
+                  echo '<i class="fa-regular fa-trash-alt" style="color: #B02626"></i>';
+                  echo '</button>';
                   echo '    </div>';
                   echo '</div>';
                   echo '    <div>';
-                  echo '  <a href="../camp-single-manage.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
+                  echo '  <a href="../myCampsiteDetail.php?campsiteId=' . $unReviewed_campsite['campsiteId'] . '">';
                   echo '    <h5 class=\'city d-block mb-3 mt-3\'>' . $unReviewed_campsite['campsiteName'] . '</h5>';
                   echo '  </a>';
                   //若文章內容超過30字做限制
@@ -457,6 +467,7 @@ function format_count($count)
     </div>
     <!-- /.site-footer -->
     <?php
+    // isReviewed campsites
     foreach ($isReviewed_campsites as $isReviewed_campsite) {
       echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
       echo '<div class="modal fade" id="deleteModal' . $isReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
@@ -481,7 +492,34 @@ function format_count($count)
       echo '</div>';
       echo '</form>';
     }
+
+    // unReviewed campsites
+    foreach ($unReviewed_campsites as $unReviewed_campsite) {
+      echo '<form method="DELETE" action="../../php/Campsite/deleteCampsite.php">';
+      echo '<div class="modal fade" id="unreviewedDeleteModal' . $unReviewed_campsite["campsiteId"] . '" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">';
+      echo '<div class="modal-dialog" role="document">';
+      echo '<div class="modal-content">';
+      echo '<div class="modal-header">';
+      echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
+      echo '<span aria-hidden="true">&times;</span>';
+      echo '</button>';
+      echo '</div>';
+      echo '<div class="modal-body">';
+      echo '確定要刪除「' . $unReviewed_campsite["campsiteName"] . '」嗎？';
+      echo '</div>';
+      echo '<div class="modal-footer">';
+      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
+      echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
+      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</div>';
+      echo '</form>';
+    }
     ?>
+
 
 
     <!-- Preloader -->
