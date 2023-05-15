@@ -104,7 +104,8 @@ if (isset($_POST["likeCampDel"])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
 
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
@@ -143,8 +144,9 @@ if (isset($_POST["likeCampDel"])) {
 <body>
 
     <!-- 系統訊息 -->
-    <?php if (isset($_SESSION["system_message"])) : ?>
-        <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+    <?php if (isset($_SESSION["system_message"])): ?>
+        <div id="message" class="alert alert-success"
+            style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
             <?php echo $_SESSION["system_message"]; ?>
         </div>
         <?php unset($_SESSION["system_message"]); ?>
@@ -152,9 +154,11 @@ if (isset($_POST["likeCampDel"])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+            <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
+                    style="width: 90px; height: auto;"></img></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
             </button>
 
@@ -167,7 +171,8 @@ if (isset($_POST["likeCampDel"])) {
                     <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -225,18 +230,22 @@ if (isset($_POST["likeCampDel"])) {
             <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
                 <div class="input-group" style="display: flex; justify-content: space-between;">
                     <span style="display:flex ;">
-
                         <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
                             <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
                         </button>
-                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 1000px;">
-                            <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
+                        <div id="selected-tags-container" style="margin-top: 10px;"></div>
+                    </span>
+                    <span style="display:flex ;">
+                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 700px;">
+                            <input type="search" id="form1" name="camp_search_keyword" class="form-control"
+                                style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
                         </div>
                         <button type="submit" class="button-search" style="margin-left: 10px;">
                             <i class="fas fa-search"></i>
                         </button>
+                        </sapn>
                 </div>
-                </sapn>
+
             </div>
         </div>
 
@@ -315,7 +324,7 @@ if (isset($_POST["likeCampDel"])) {
                                     echo '  </a>';
                                     echo '  <div class="card-body">';
                                     echo '    <span class="span-adj" style="justify-content: space-between;">';
-                                    echo '      <h4><span>$' . format_count($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
+                                    echo '      <h4><span>$' . number_format($isReviewed_campsite['campsiteLowerLimit']) . '起</span></h4>';
                                     echo "<form action='all-land.php' method='post'>";
                                     echo "<input type='hidden' name='" . ($isCampCollected ? "collectCampDel" : "collectCampAdd") . "' value='" . $isReviewed_campsite["campsiteId"] . "'>";
                                     echo "<button type='submit' class='btn-icon'>";
@@ -391,7 +400,8 @@ if (isset($_POST["likeCampDel"])) {
         </div>
 
         <!--篩選 -->
-        <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modalContent-filter">
                     <div class="modal-header">
@@ -419,11 +429,12 @@ if (isset($_POST["likeCampDel"])) {
                         }
                         ?>
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <div style=" display: flex; justify-content: flex-end;">
-                            <button type="button" class="btn-secondary" data-dismiss="modal" onclick="filterCampsites()">確認</button>
+                            <button type="button" class="btn-secondary" data-dismiss="modal"
+                                onclick="filterCampsites()">確認</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -515,9 +526,15 @@ if (isset($_POST["likeCampDel"])) {
         <script src="js/navbar.js"></script>
         <script src="js/counter.js"></script>
         <script src="js/custom.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -533,7 +550,8 @@ if (isset($_POST["likeCampDel"])) {
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery.timepicker.min.js"></script>
         <script src="js/scrollax.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
         <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
@@ -543,7 +561,7 @@ if (isset($_POST["likeCampDel"])) {
         <script>
             function hideMessage() {
                 document.getElementById("message").style.opacity = "0";
-                setTimeout(function() {
+                setTimeout(function () {
                     document.getElementById("message").style.display = "none";
                 }, 500);
             }
@@ -552,15 +570,15 @@ if (isset($_POST["likeCampDel"])) {
 
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('#form1').on('input', function() {
+                $('#form1').on('input', function () {
                     let searchKeyword = $(this).val().toLowerCase();
 
                     // 若你只有一種卡片，可直接指定卡片的 class
                     let targetCards = '.isReviewed-card';
 
-                    $(targetCards).each(function() {
+                    $(targetCards).each(function () {
                         let campsiteName = $(this).find('.city').text().toLowerCase();
                         if (campsiteName.indexOf(searchKeyword) !== -1) {
                             $(this).show();
@@ -589,12 +607,12 @@ if (isset($_POST["likeCampDel"])) {
                 }
 
                 fetch("../../php/Filter/filter_campsites.php", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: bodyContent
-                    })
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: bodyContent
+                })
                     .then(response => response.json())
                     .then((filteredCampsites) => {
                         displayFilteredCampsites(filteredCampsites);
@@ -632,12 +650,12 @@ if (isset($_POST["likeCampDel"])) {
             }
 
             function displayFilteredCampsites(campsites) {
-                let campsitesContainer = document.querySelector(".col-xs-12");
+                let campsitesContainer = document.querySelector(".col-md-12");
 
                 campsitesContainer.innerHTML = '';
 
                 if (campsites.length === 0) {
-                    campsitesContainer.innerHTML = '<h6>無相符的資料！</h6>';
+                    campsitesContainer.innerHTML = '<h4 style="margin-left: 40px">無相符的資料！</h4>';
                 } else {
                     campsites.forEach(campsite => {
                         let campsiteHTML = generateCampsiteCard(campsite);
@@ -653,7 +671,7 @@ if (isset($_POST["likeCampDel"])) {
                 let campsiteDescription = campsite.campsiteDescription;
                 let campsiteLowerLimit = campsite.campsiteLowerLimit;
                 let campsiteLikeCount = campsite.campsiteLikeCount;
-                let img_src = campsite.cover_src; // 這裡我們使用回傳的 cover_src 當作營地的圖片
+                let img_src = campsite.img_src; // 這裡我們使用回傳的 cover_src 當作營地的圖片
                 let isCampCollected = campsite.isCampCollected;
                 let isCampLiked = campsite.isCampLiked;
                 let tags = campsite.tags;

@@ -1,6 +1,17 @@
 <?php
 require_once "../conn.php";
 
+function format_count($count)
+{
+    if ($count < 1000) {
+        return $count;
+    } elseif ($count < 1000000) {
+        return round($count / 1000, 1) . 'k';
+    } else {
+        return round($count / 1000000, 1) . 'm';
+    }
+}
+
 $labelIds = isset($_POST['labelIds']) ? json_decode($_POST['labelIds']) : null;
 $accountId = $_POST['accountId'];
 
@@ -13,9 +24,9 @@ if ($labelIds != null) {
         $campsiteIds[] = $row_campsiteId['campsiteId'];
     }
 
-    $sql_campsites = "SELECT * FROM campsites LEFT JOIN accounts ON campsites.accountId = accounts.accountId WHERE campsites.campsiteId IN ('" . implode("','", $campsiteIds) . "') AND campsites.accountId != '$accountId'";
+    $sql_campsites = "SELECT * FROM campsites LEFT JOIN accounts ON campsites.accountId = accounts.accountId WHERE isReviewed = 1 AND campsites.campsiteId IN ('" . implode("','", $campsiteIds) . "') AND campsites.accountId != '$accountId'";
 } else {
-    $sql_campsites = "SELECT * FROM campsites LEFT JOIN accounts ON campsites.accountId = accounts.accountId WHERE campsites.accountId != '$accountId'";
+    $sql_campsites = "SELECT * FROM campsites LEFT JOIN accounts ON campsites.accountId = accounts.accountId WHERE isReviewed = 1 AND campsites.accountId != '$accountId'";
 }
 
 $result_campsites = mysqli_query($conn, $sql_campsites);
@@ -36,12 +47,25 @@ while ($row = mysqli_fetch_assoc($camp_like_result)) {
 }
 
 while ($campsiteData = mysqli_fetch_assoc($result_campsites)) {
+    //若文章內容超過30字做限制
+    $content_length = mb_strlen(strip_tags($campsiteData["campsiteDescription"]), 'UTF-8');
+    if ($content_length > 30) {
+        $isReviewed_content = mb_substr(strip_tags($campsiteData["campsiteDescription"]), 0, 80, 'UTF-8') . '...'; // 截斷文章內容
+    } else {
+        $isReviewed_content = strip_tags($campsiteData["campsiteDescription"]);
+    }
+
     $isCampCollected = in_array($campsiteData["campsiteId"], $collectedCamps);
     $isCampLiked = in_array($campsiteData["campsiteId"], $likedCamps);
 
-    $cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteData['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
-    $cover_result = mysqli_query($conn, $cover_sql);
-    $cover_src = $cover_row = mysqli_fetch_assoc($cover_result) ? $cover_row["filePath"] : "images/Rectangle 144.png";
+    $files_query = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteData['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+    $files_result = mysqli_query($conn, $files_query);
+    if ($file_row = mysqli_fetch_assoc($files_result)) {
+        $cover_src = $file_row["filePath"];
+    } else {
+        $cover_src = "images/Rectangle 137.png";
+    }
+
 
     $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
                           FROM campsites_labels
@@ -57,12 +81,12 @@ while ($campsiteData = mysqli_fetch_assoc($result_campsites)) {
         'campsiteId' => $campsiteData['campsiteId'],
         'campsiteName' => $campsiteData['campsiteName'],
 
-        'campsiteDescription' => $campsiteData['campsiteDescription'],
-        'campsiteLowerLimit' => $campsiteData['campsiteLowerLimit'],
-        'campsiteLikeCount' => $campsiteData['campsiteLikeCount'],
+        'campsiteDescription' => $isReviewed_content,
+        'campsiteLowerLimit' => number_format($campsiteData['campsiteLowerLimit']),
+        'campsiteLikeCount' => format_count($campsiteData['campsiteLikeCount']),
         'img_src' => $cover_src,
         'isCampCollected' => $isCampCollected,
-        'isCampLiked' => $isCampLiked,
+        'isCampLiked' => format_count($isCampLiked),
         'tags' => $tags
     ];
 }

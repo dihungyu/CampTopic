@@ -108,21 +108,22 @@ if (mysqli_num_rows($result_activities) > 0) {
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     function setDateInputBehavior(dateInputId) {
       const dateInput = $(dateInputId);
 
-      dateInput.on('focus', function() {
+      dateInput.on('focus', function () {
         dateInput.attr('type', 'date');
       });
 
-      dateInput.on('blur', function() {
+      dateInput.on('blur', function () {
         if (!dateInput.val()) {
           dateInput.attr('type', 'text');
         }
       });
 
-      dateInput.on('change', function() {
+      dateInput.on('change', function () {
         if (dateInput.val()) {
           dateInput.attr('type', 'date');
         } else {
@@ -137,15 +138,15 @@ if (mysqli_num_rows($result_activities) > 0) {
 
     function validateForm() {
       const fields = [{
-          name: "attendeePhoneNumber",
-          errorId: "attendeePhoneNumberError",
-          containerId: "attendeePhoneNumberContainer"
-        },
-        {
-          name: "attendeeEmail",
-          errorId: "attendeeEmailError",
-          containerId: "attendeeEmailContainer"
-        },
+        name: "attendeePhoneNumber",
+        errorId: "attendeePhoneNumberError",
+        containerId: "attendeePhoneNumberContainer"
+      },
+      {
+        name: "attendeeEmail",
+        errorId: "attendeeEmailError",
+        containerId: "attendeeEmailContainer"
+      },
       ];
 
       let isValid = true;
@@ -171,45 +172,45 @@ if (mysqli_num_rows($result_activities) > 0) {
 
     function validateNewActivityForm() {
       const fields = [{
-          name: "activityTitle",
-          errorId: "activityTitleError",
-          containerId: "activityTitleContainer"
-        },
-        {
-          name: "activityStartDate",
-          errorId: "activityStartDateError",
-          containerId: "activityStartDateContainer"
-        },
-        {
-          name: "activityEndDate",
-          errorId: "activityEndDateError",
-          containerId: "activityEndDateContainer"
-        },
-        {
-          name: "minAttendee",
-          errorId: "minAttendeeError",
-          containerId: "minAttendeeContainer"
-        },
-        {
-          name: "maxAttendee",
-          errorId: "maxAttendeeError",
-          containerId: "maxAttendeeContainer"
-        },
-        {
-          name: "leastAttendeeFee",
-          errorId: "leastAttendeeFeeError",
-          containerId: "leastAttendeeFeeContainer"
-        },
-        {
-          name: "maxAttendeeFee",
-          errorId: "maxAttendeeFeeError",
-          containerId: "maxAttendeeFeeContainer"
-        },
-        {
-          name: "activityDescription",
-          errorId: "activityDescriptionError",
-          containerId: "activityDescriptionContainer"
-        },
+        name: "activityTitle",
+        errorId: "activityTitleError",
+        containerId: "activityTitleContainer"
+      },
+      {
+        name: "activityStartDate",
+        errorId: "activityStartDateError",
+        containerId: "activityStartDateContainer"
+      },
+      {
+        name: "activityEndDate",
+        errorId: "activityEndDateError",
+        containerId: "activityEndDateContainer"
+      },
+      {
+        name: "minAttendee",
+        errorId: "minAttendeeError",
+        containerId: "minAttendeeContainer"
+      },
+      {
+        name: "maxAttendee",
+        errorId: "maxAttendeeError",
+        containerId: "maxAttendeeContainer"
+      },
+      {
+        name: "leastAttendeeFee",
+        errorId: "leastAttendeeFeeError",
+        containerId: "leastAttendeeFeeContainer"
+      },
+      {
+        name: "maxAttendeeFee",
+        errorId: "maxAttendeeFeeError",
+        containerId: "maxAttendeeFeeContainer"
+      },
+      {
+        name: "activityDescription",
+        errorId: "activityDescriptionError",
+        containerId: "activityDescriptionContainer"
+      },
       ];
 
       let isValid = true;
@@ -233,12 +234,12 @@ if (mysqli_num_rows($result_activities) > 0) {
 
 
     // Run this when the document is ready
-    $(document).ready(function() {
+    $(document).ready(function () {
       setDateInputBehavior('#start-date-input');
       setDateInputBehavior('#end-date-input');
 
       // Add event listener to the attendForm submit button
-      $('#attendForm button.btn-secondary').on('click', function(event) {
+      $('#attendForm button.btn-secondary').on('click', function (event) {
         event.preventDefault();
         if (validateForm()) {
           // Submit the form
@@ -247,7 +248,7 @@ if (mysqli_num_rows($result_activities) > 0) {
       });
 
       // Add event listener to the newActivityForm submit button
-      $('#newActivityForm button.btn-secondary').on('click', function(event) {
+      $('#newActivityForm button.btn-secondary').on('click', function (event) {
         event.preventDefault();
         if (validateNewActivityForm()) {
           // Submit the form
@@ -273,12 +274,12 @@ if (mysqli_num_rows($result_activities) > 0) {
       }
 
       fetch("../../php/Filter/filter_activities.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: bodyContent
-        })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: bodyContent
+      })
         .then(response => response.json())
         .then((filteredActivities) => {
           displayFilteredActivities(filteredActivities);
@@ -396,7 +397,7 @@ if (mysqli_num_rows($result_activities) > 0) {
 
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -410,8 +411,9 @@ if (mysqli_num_rows($result_activities) > 0) {
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -421,7 +423,8 @@ if (mysqli_num_rows($result_activities) > 0) {
     <div class="container">
       <a href="property-1.0.0/index.php">
         <img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -434,7 +437,8 @@ if (mysqli_num_rows($result_activities) > 0) {
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -506,7 +510,8 @@ if (mysqli_num_rows($result_activities) > 0) {
           <span style="display:flex ;">
             <div id="navbar-search-autocomplete" class="form-outline">
               <form>
-                <input type="search" id="form1" name="activity_search_keyword" class="form-control" placeholder="搜尋活動..." style="border-radius: 35px;" />
+                <input type="search" id="form1" name="activity_search_keyword" class="form-control"
+                  placeholder="搜尋活動..." style="border-radius: 35px;" />
             </div>
             <button type="submit" class="button-search" style="margin-left: 10px; ">
               <i class="fas fa-search"></i>
@@ -562,7 +567,8 @@ if (mysqli_num_rows($result_activities) > 0) {
         ?>
         <div class="input-group" style="display: flex; justify-content: space-between;">
           <button type="button" class="gray-lg" data-toggle="modal" data-target="#exampleModalCenter">
-            <img src="<?php echo $img_src; ?>" alt="Image description" style="border-radius: 50%; width: 40px;height: 40px;">
+            <img src="<?php echo $img_src; ?>" alt="Image description"
+              style="border-radius: 50%; width: 40px;height: 40px;">
             <label style="font-size: 14px; margin-bottom: 0px;margin-left: -16px; font-weight: 600; ">
               <?php if (isset($_COOKIE["accountId"])) {
                 echo $accountName;
@@ -572,7 +578,8 @@ if (mysqli_num_rows($result_activities) > 0) {
             </label>
             <div class="verticle-line"></div>
             <span style="display: flex; align-items: center; justify-content: flex-start">
-              <i class="<?php echo $iconClass ?>" style="color: <?php echo $color ?>; font-size:18px; margin-right: 8px;"></i>
+              <i class="<?php echo $iconClass ?>"
+                style="color: <?php echo $color ?>; font-size:18px; margin-right: 8px;"></i>
               <h6 style="margin: 0rem;">
                 <?php echo $text ?>
               </h6>
@@ -632,7 +639,7 @@ if (mysqli_num_rows($result_activities) > 0) {
             $isActivityEnded = $currentTimestamp > $activityEndTimestamp;
             $isActivityOngoing = $currentTimestamp >= strtotime($activityStartDate) && $currentTimestamp <= $activityEndTimestamp;
             // 取得營地封面
-
+          
             $cover_sql = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteId . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
             $cover_result = mysqli_query($conn, $cover_sql);
 
@@ -718,7 +725,7 @@ if (mysqli_num_rows($result_activities) > 0) {
         <div class="col-lg-3"></div>
         <div class="col-lg-6 text-center">
           <div class="custom-pagination">
-            <?php for ($i = 1; $i <= $activity_total_pages; $i++) : ?>
+            <?php for ($i = 1; $i <= $activity_total_pages; $i++): ?>
               <a href="?activity_page=<?= $i ?>" <?= ($i == $activity_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
             <?php endfor; ?>
           </div>
@@ -848,8 +855,10 @@ if (mysqli_num_rows($result_activities) > 0) {
       ?>
 
 
-      <form action="../../php/Activity/createActivity.php" method="post" id="newActivityForm" onsubmit="return validateNewActivityForm();">
-        <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+      <form action="../../php/Activity/createActivity.php" method="post" id="newActivityForm"
+        onsubmit="return validateNewActivityForm();">
+        <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="false">
           <div class="modal-dialog" role="document">
             <div class="modalContent">
               <div class="box-mod">
@@ -888,14 +897,16 @@ if (mysqli_num_rows($result_activities) > 0) {
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="activityStartDateContainer">
                         <div id="activityStartDateError" class="error-message">*必填</div>
-                        <input id="start-date-input" type="text" name="activityStartDate" style="width: 200px;" placeholder="開始日期">
+                        <input id="start-date-input" type="text" name="activityStartDate" style="width: 200px;"
+                          placeholder="開始日期">
                       </div>
 
                     </div>
                     <div class="col-md-6" style="margin-bottom: 10px">
                       <div id="activityEndDateContainer">
                         <div id="activityEndDateError" class="error-message">*必填</div>
-                        <input id="end-date-input" type="text" name="activityEndDate" style="width: 200px;" placeholder="結束日期">
+                        <input id="end-date-input" type="text" name="activityEndDate" style="width: 200px;"
+                          placeholder="結束日期">
                       </div>
 
                     </div>
@@ -945,17 +956,22 @@ if (mysqli_num_rows($result_activities) > 0) {
         </div>
       </form>
 
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body">
               <span style="display: flex;">
                 <h6>徽章進度</h6>
                 <span-i style="margin-left: 20px;">
-                  <i class="fa-solid fa-fire" style="color: <?= ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) ? '#B02626' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
-                  <i class="fa-solid fa-compass" style="color: <?= ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) ? '#002049' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
-                  <i class="fa-solid fa-binoculars" style="color: <?= ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) ? '#7d7d7d' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
-                  <i class="fa-solid fa-campground" style="color: <?= ($attendeeActivityCount > 15) ? '#525F58' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-fire"
+                    style="color: <?= ($attendeeActivityCount >= 0 && $attendeeActivityCount <= 3) ? '#B02626' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-compass"
+                    style="color: <?= ($attendeeActivityCount >= 4 && $attendeeActivityCount <= 10) ? '#002049' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-binoculars"
+                    style="color: <?= ($attendeeActivityCount >= 11 && $attendeeActivityCount <= 15) ? '#7d7d7d' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
+                  <i class="fa-solid fa-campground"
+                    style="color: <?= ($attendeeActivityCount > 15) ? '#525F58' : 'rgba(0, 0, 0, 0.16)' ?>"></i>
                 </span-i>
 
               </span>
@@ -995,7 +1011,9 @@ if (mysqli_num_rows($result_activities) > 0) {
               </div>
               </span>
               <div class="progress" style="height:0.7rem; border-radius:35px;">
-                <div class="progress-bar" role="progressbar" style="width: <?= $progressPercentage ?>%; background-color:#8D703B;" aria-valuenow="<?= $progressPercentage ?>" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" role="progressbar"
+                  style="width: <?= $progressPercentage ?>%; background-color:#8D703B;"
+                  aria-valuenow="<?= $progressPercentage ?>" aria-valuemin="0" aria-valuemax="100">
                 </div>
               </div>
             </div>
@@ -1004,7 +1022,8 @@ if (mysqli_num_rows($result_activities) > 0) {
       </div>
 
       <!--篩選 -->
-      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modalContent-filter">
             <div class="modal-header">
@@ -1034,7 +1053,8 @@ if (mysqli_num_rows($result_activities) > 0) {
             </div>
             <div class="modal-footer">
               <div style=" display: flex; justify-content: flex-end;">
-                <button type="button" class="btn-secondary" data-dismiss="modal" onclick="filterActivities()">確認</button>
+                <button type="button" class="btn-secondary" data-dismiss="modal"
+                  onclick="filterActivities()">確認</button>
               </div>
             </div>
           </div>
@@ -1085,9 +1105,15 @@ if (mysqli_num_rows($result_activities) > 0) {
   <script src="js/navbar.js"></script>
   <script src="js/counter.js"></script>
   <script src="js/custom.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -1103,11 +1129,13 @@ if (mysqli_num_rows($result_activities) > 0) {
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
+
 
 
 
