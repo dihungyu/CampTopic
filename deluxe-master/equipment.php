@@ -205,7 +205,8 @@ function format_count($count)
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="property-1.0.0/index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
+      <a href="property-1.0.0/index.php">
+        <img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
@@ -320,7 +321,7 @@ function format_count($count)
             //取出設備圖片
             $image_src = get_first_image_src($equipment["equipmentDescription"]);
             if ($image_src == "") {
-              $image_src = "property-1.0.0/images/image_8.jpg";
+              $image_src = "images/Group 150.png";
             }
 
             //若文章內容超過30字做限制
@@ -534,7 +535,7 @@ function format_count($count)
                 // 取得文章圖片
                 $article_img_src = get_first_image_src($top234_article_row["articleContent"]);
                 if ($article_img_src == '') {
-                  $article_img_src = '../property-1.0.0/images/Rectangle\ 135.png';
+                  $article_img_src = 'images/Group 150.png';
                 }
 
                 $timestamp = strtotime($top234_article_row["articleCreateDate"]);

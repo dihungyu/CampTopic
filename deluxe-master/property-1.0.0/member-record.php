@@ -543,7 +543,7 @@ if (isset($_POST["likeArticleDel"])) {
                   </a>
                 </figure>
                 <div class='details'>
-                  <div class='detail' style='display: flex;'>
+                  <div class='detail' style='display: flex; align-items: center;'>
                     <div class='category'>
                       <a href='#'>" . $articleData["accountName"] . "</a>
                     </div>
@@ -681,7 +681,7 @@ if (isset($_POST["likeArticleDel"])) {
                 echo '<div class="card">';
                 echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
                 echo '<div class="card-body">';
-                echo '<div class="detail"style="margin-bottom: 0px;">';
+                echo '<div class="detail"style="margin-bottom: 0px; display: flex; align-items: center;">';
                 if ($equipmentData["equipmentType"] === "租") {
                   echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
                   echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';

@@ -473,7 +473,7 @@ if (isset($_POST["likeEquipDel"])) {
 
                   // 如果文章沒有圖片，則使用預設圖片
                   if ($image_src == "") {
-                    $image_src = 'images/img15.jpg';
+                    $image_src = 'images/Group 150.png';
                   }
 
                   // 檢查當前文章是否已按讚
@@ -678,7 +678,7 @@ if (isset($_POST["likeEquipDel"])) {
                 $image_src = get_first_image_src($articleContent);
 
                 if ($image_src == "") {
-                  $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
+                  $image_src = 'images/Group 150.png'; // Default image
                 }
 
                 // 使用 strtotime() 將 datetime 轉換為 Unix 時間戳
@@ -835,7 +835,7 @@ if (isset($_POST["likeEquipDel"])) {
                   // 取得設備圖片
                   $equip_img_src = get_first_image_src($equipmentData["equipmentDescription"]);
                   if ($equip_img_src == '') {
-                    $equip_img_src = 'images/M85318677_big.jpeg'; // Default image
+                    $equip_img_src = 'images/Group 150.png'; // Default image
                   }
 
 
@@ -854,7 +854,7 @@ if (isset($_POST["likeEquipDel"])) {
                   $equipmentlikeCount = format_like_count($equipmentData["equipmentLikeCount"]);
 
                   echo "<div class='card' style='margin-right: 20px; margin-bottom: 20px;'>
-                <img src='" . $equip_img_src . "' class='card-img-top' alt='...'>
+                <img src='" . $equip_img_src . "' class='card-img-top' alt='...' style='width:400px; height:260px'>
 
                 <div class='card-body'>
                   <div class='detail' style='margin-bottom: 0px;'>
