@@ -158,7 +158,9 @@ function format_count($count)
   <link rel="stylesheet" href="property-1.0.0/css/icomoon.css">
 
   <!-- 引入 Bootstrap 的 CSS 檔案 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"
+    integrity="sha512-6YRlfqlTKP+w6p+UqV3c6fPq7VpgG6+Iprc+OLIj6pw+hSWRZfY6UaV7eXQ/hGxVrUvj3amJ3Thf5Eu5OV5+aw=="
+    crossorigin="anonymous" />
 
 
   <title>
@@ -184,7 +186,7 @@ function format_count($count)
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -195,8 +197,9 @@ function format_count($count)
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])) : ?>
-    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])): ?>
+    <div id="message" class="alert alert-success"
+      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
@@ -208,7 +211,8 @@ function format_count($count)
       <a href="property-1.0.0/index.php">
         <img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -221,7 +225,8 @@ function format_count($count)
           <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -255,7 +260,8 @@ function format_count($count)
   </nav>
   <!-- END nav -->
 
-  <div class="hero page-inner overlay" style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
+  <div class="hero page-inner overlay"
+    style="background-image: url('images/Rectangle\ 340.png'); height:70vh; min-height: 300px;">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-12 text-center mt-5">
@@ -306,117 +312,121 @@ function format_count($count)
           $equipment_page = isset($_GET['equipment_page']) ? (int) $_GET['equipment_page'] : 1;
 
           $result = getEquipments($conn, $labelId, $equipmentType, $equipment_search_keyword, $equipment_page);
-          $equipments = $result['equipments'];
-          $equipment_total_pages = $result['total_pages'];
-          $equipment_current_page = $result['current_page'];
+          if (empty($result['equipments'])) {
+            echo '<div class="alert alert-warning" role="alert">查無符合條件的設備。</div>';
+          } else {
+            $equipments = $result['equipments'];
+            $equipment_total_pages = $result['total_pages'];
+            $equipment_current_page = $result['current_page'];
 
-          $count = 0;
-          foreach ($equipments as $equipment) {
-            // 檢查當前設備是否已收藏
-            $isEquipCollected = in_array($equipment["equipmentId"], $collectedEquips);
+            $count = 0;
+            foreach ($equipments as $equipment) {
+              // 檢查當前設備是否已收藏
+              $isEquipCollected = in_array($equipment["equipmentId"], $collectedEquips);
 
-            // 檢查當前設備是否已按讚
-            $isEquipLiked = in_array($equipment["equipmentId"], $likedEquips);
+              // 檢查當前設備是否已按讚
+              $isEquipLiked = in_array($equipment["equipmentId"], $likedEquips);
 
-            //取出設備圖片
-            $image_src = get_first_image_src($equipment["equipmentDescription"]);
-            if ($image_src == "") {
-              $image_src = "images/Group 150.png";
-            }
+              //取出設備圖片
+              $image_src = get_first_image_src($equipment["equipmentDescription"]);
+              if ($image_src == "") {
+                $image_src = "images/Group 150.png";
+              }
 
-            //若文章內容超過30字做限制
-            $content_length = mb_strlen(strip_tags($equipment["equipmentDescription"]), 'UTF-8');
-            if ($content_length > 30) {
-              $truncated_content = mb_substr(strip_tags($equipment["equipmentDescription"]), 0, 30, 'UTF-8') . '...'; // 截斷文章內容
-            } else {
-              $truncated_content = strip_tags($equipment["equipmentDescription"]);
-            }
+              //若文章內容超過30字做限制
+              $content_length = mb_strlen(strip_tags($equipment["equipmentDescription"]), 'UTF-8');
+              if ($content_length > 30) {
+                $truncated_content = mb_substr(strip_tags($equipment["equipmentDescription"]), 0, 30, 'UTF-8') . '...'; // 截斷文章內容
+              } else {
+                $truncated_content = strip_tags($equipment["equipmentDescription"]);
+              }
 
-            if ($count % 2 == 0) {
-              echo '<div class="inner" style="display: flex; margin-left: 20px; justify-content: center">';
-            }
-            $equipmentId = $equipment["equipmentId"];
-            $equipmentType = $equipment["equipmentType"];
-            $equipmentName = $equipment["equipmentName"];
-            $equipmentPrice = $equipment["equipmentPrice"];
-            $equipmentLikeCount = $equipment["equipmentLikeCount"];
-            echo '<div class="card-eq" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
-            echo '<img src="' . $image_src . '" class="card-img-top" alt="..." style="width:397px; height:263px;">';
-            echo '<div class="card-body-eq"style=" margin-top:0px;">';
-            echo '<div class="detail" style="flex-wrap: wrap; display: flex;">';
-            echo '<span style="display: flex; align-items: center;">';
-            if ($equipmentType === "租") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:28px;"></i>';
-              echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $equipmentType . '</i>';
+              if ($count % 2 == 0) {
+                echo '<div class="inner" style="display: flex; margin-left: 20px; justify-content: center">';
+              }
+              $equipmentId = $equipment["equipmentId"];
+              $equipmentType = $equipment["equipmentType"];
+              $equipmentName = $equipment["equipmentName"];
+              $equipmentPrice = $equipment["equipmentPrice"];
+              $equipmentLikeCount = $equipment["equipmentLikeCount"];
+              echo '<div class="card-eq" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
+              echo '<img src="' . $image_src . '" class="card-img-top" alt="..." style="width:397px; height:263px;">';
+              echo '<div class="card-body-eq"style=" margin-top:0px;">';
+              echo '<div class="detail" style="flex-wrap: wrap; display: flex;">';
+              echo '<span style="display: flex; align-items: center;">';
+              if ($equipmentType === "租") {
+                echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:28px;"></i>';
+                echo '<i class="fas fa-stack-1x" style="font-size: 13px;">' . $equipmentType . '</i>';
+                echo '</span>';
+              } else if ($equipmentType === "徵") {
+                echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:28px;"></i>';
+                echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">' . $equipmentType . '</i>';
+                echo '</span>';
+              } else if ($equipmentType === "賣") {
+                echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
+                echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:28px;"></i>';
+                echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">' . $equipmentType . '</i>';
+                echo '</span>';
+              }
+              echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
+              echo '<h5 style="width: 160px;">' . $equipmentName . '</h5>';
+              echo '</a>';
               echo '</span>';
-            } else if ($equipmentType === "徵") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:28px;"></i>';
-              echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">' . $equipmentType . '</i>';
+              echo '<span class="span-adj" style="justify-content: flex-end; box-sizing: content-box; width: 162px;">';
+              echo '<h4 style="margin-left: 24px; ">$' . format_count($equipmentPrice) . '</h4>';
+              echo "<form action='equipment.php' method='post'>";
+              echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $equipment["equipmentId"] . "'>";
+              echo "<button type='submit' class='btn-icon'>";
+              echo "<i class='" . ($isEquipCollected ? "fas" : "fa-regular") . " fa-bookmark' " . "></i>";
+              echo "</button>";
+              echo "</form>";
               echo '</span>';
-            } else if ($equipmentType === "賣") {
-              echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-              echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:28px;"></i>';
-              echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">' . $equipmentType . '</i>';
-              echo '</span>';
-            }
-            echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
-            echo '<h5 style="width: 160px;">' . $equipmentName . '</h5>';
-            echo '</a>';
-            echo '</span>';
-            echo '<span class="span-adj" style="justify-content: flex-end; box-sizing: content-box; width: 162px;">';
-            echo '<h4 style="margin-left: 24px; ">$' . format_count($equipmentPrice) . '</h4>';
-            echo "<form action='equipment.php' method='post'>";
-            echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $equipment["equipmentId"] . "'>";
-            echo "<button type='submit' class='btn-icon'>";
-            echo "<i class='" . ($isEquipCollected ? "fas" : "fa-regular") . " fa-bookmark' " . "></i>";
-            echo "</button>";
-            echo "</form>";
-            echo '</span>';
-            echo '</div>';
-            echo '<p class="card-text" style="padding: 10px;">';
-            echo '' . $truncated_content . '</p>';
-            echo '<footer style="margin-top:40px">';
-            echo '<div class="card-icon-footer">';
-            echo '<div class="tagcloud">';
-            $sql_query_labels = "SELECT equipments_labels.labelId, labels.labelName
+              echo '</div>';
+              echo '<p class="card-text" style="padding: 10px;">';
+              echo '' . $truncated_content . '</p>';
+              echo '<footer style="margin-top:40px">';
+              echo '<div class="card-icon-footer">';
+              echo '<div class="tagcloud">';
+              $sql_query_labels = "SELECT equipments_labels.labelId, labels.labelName
                       FROM equipments_labels
                       JOIN labels ON equipments_labels.labelId = labels.labelId
                       WHERE equipments_labels.equipmentId = '$equipmentId'";
-            $result_labels = mysqli_query($conn, $sql_query_labels);
+              $result_labels = mysqli_query($conn, $sql_query_labels);
 
-            $printed_tags = 0;
-            while ($tags_row = mysqli_fetch_assoc($result_labels)) {
-              if ($printed_tags >= 3) {
-                break;
-              }
+              $printed_tags = 0;
+              while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+                if ($printed_tags >= 3) {
+                  break;
+                }
 
-              echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
+                echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
 
-              $printed_tags++;
-            }
-            echo '</div>';
-            echo '<span style="display: flex; align-items: center;">';
-            echo '<form action="equipment.php" method="post">';
-            echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $equipment["equipmentId"] . '">';
-            echo '<button type="submit" class="btn-icon">';
-            echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . " style="margin-left:0px"></i>';
-            echo '</button>';
-            echo '</form>';
-            echo '<p>' . format_count($equipmentLikeCount) . '</p>';
-            echo '</span>';
-            echo '</div>';
-            echo '</footer>';
-            echo '</div>';
-            echo '</div>';
-            if ($count % 2 != 0 || $count == count($equipments) - 1) {
-              if ($count % 2 == 0) {
-                echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1; visibility: hidden;"></div>';
+                $printed_tags++;
               }
               echo '</div>';
+              echo '<span style="display: flex; align-items: center;">';
+              echo '<form action="equipment.php" method="post">';
+              echo '<input type="hidden" name="' . ($isEquipLiked ? "likeEquipDel" : "likeEquipAdd") . '" value="' . $equipment["equipmentId"] . '">';
+              echo '<button type="submit" class="btn-icon">';
+              echo '<i class="' . ($isEquipLiked ? "fas" : "fa-regular") . ' fa-heart" . " style="margin-left:0px"></i>';
+              echo '</button>';
+              echo '</form>';
+              echo '<p>' . format_count($equipmentLikeCount) . '</p>';
+              echo '</span>';
+              echo '</div>';
+              echo '</footer>';
+              echo '</div>';
+              echo '</div>';
+              if ($count % 2 != 0 || $count == count($equipments) - 1) {
+                if ($count % 2 == 0) {
+                  echo '<div class="card" style="margin-right: 20px;margin-bottom: 20px; flex: 1; visibility: hidden;"></div>';
+                }
+                echo '</div>';
+              }
+              $count++;
             }
-            $count++;
           }
           ?>
 
@@ -424,7 +434,7 @@ function format_count($count)
             <div class="col-lg-3"></div>
             <div class="col-lg-6 text-center">
               <div class="custom-pagination">
-                <?php for ($i = 1; $i <= $equipment_total_pages; $i++) : ?>
+                <?php for ($i = 1; $i <= $equipment_total_pages; $i++): ?>
                   <a href="?equipment_page=<?= $i ?>" <?= ($i == $equipment_current_page) ? 'class="active"' : '' ?>><?= $i ?></a>
                 <?php endfor; ?>
               </div>
@@ -441,7 +451,8 @@ function format_count($count)
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
               <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 6px;">
-                <input type="search" id="form1" name="equipment_search_keyword" class="form-control" placeholder="搜尋裝備..." />
+                <input type="search" id="form1" name="equipment_search_keyword" class="form-control"
+                  placeholder="搜尋裝備..." />
                 <input type="hidden" name="labelId" value="<?php echo $labelId; ?>">
                 <input type="hidden" name="equipmentType" value="<?php echo $equipmentType; ?>">
               </div>
@@ -499,7 +510,7 @@ function format_count($count)
             </div>
           </div>
           <div class="sidebar-box ftco-animate">
-            <h3>熱門標籤</h3>
+            <h3>所有設備標籤</h3>
             <div class="tagcloud">
               <?php
               $sql_labels = "SELECT * FROM labels WHERE labelType = '設備'";
@@ -527,7 +538,7 @@ function format_count($count)
                 // $files_query = "SELECT * FROM files WHERE articleId = '$articleId'";
                 // $files_result = mysqli_query($conn, $files_query);
                 // $image_src = '../property-1.0.0/images/Rectangle\ 135.png'; // Default image
-
+            
                 // if ($file_result = mysqli_fetch_assoc($files_result)) {
                 //   $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
                 //   $image_src = '../property-1.0.0/images/Rectangle\ 135.png';
@@ -647,7 +658,8 @@ function format_count($count)
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
     </svg></div>
 
 
@@ -665,7 +677,8 @@ function format_count($count)
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
