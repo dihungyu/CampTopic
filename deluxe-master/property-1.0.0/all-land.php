@@ -135,6 +135,8 @@ if (isset($_POST["likeCampDel"])) {
     <link rel="stylesheet" href="css/jquery.timepicker.css">
     <link rel="stylesheet" href="css/icomoon.css">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function hideMessage() {
             document.getElementById("message").style.opacity = "0";
@@ -234,25 +236,19 @@ if (isset($_POST["likeCampDel"])) {
     <div class="section">
         <div class="container" style="max-width: 1260px">
             <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-                    <div class="input-group" style="display: flex; justify-content: space-between;">
-                    <span style="display:flex;align-items: center;justify-content: center">
-                        <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
-                        <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
-                        </button>
-                        <div id="selected-tags-container"></div>
-                    </span>
+                <div class="input-group" style="display: flex; justify-content: space-between;">
                     <span style="display:flex ;">
-                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-right: 10px;">
+                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 1000px;">
                             <input type="search" id="form1" name="camp_search_keyword" class="form-control"
                                 style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
                         </div>
-                        <button type="submit" class="button-search">
+                        <button type="submit" class="button-search" style="margin-left: 10px;">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
-                    </sapn>
                 </div>
+                </sapn>
             </div>
+        </div>
 
 
 
@@ -287,7 +283,15 @@ if (isset($_POST["likeCampDel"])) {
                                 $current_page = isset($_GET['reviewedPage']) ? $_GET['reviewedPage'] : 1;
                                 $offset = ($current_page - 1) * $records_per_page;
 
-                                $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
+                                $sql_total_campsites = "SELECT COUNT(*) as total FROM campsites WHERE isReviewed = 1 AND accountId = '$accountId'";
+                                $result_total_campsites = mysqli_query($conn, $sql_total_campsites);
+                                $total_campsites = mysqli_fetch_assoc($result_total_campsites)['total'];
+                                $total_pages = ceil($total_campsites / $records_per_page);
+                                if ($_COOKIE["accountType"] == "BUSINESS") {
+                                    $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1 AND accountId != '$accountId' LIMIT $records_per_page OFFSET $offset";
+                                } else {
+                                    $sql_isReviewed_campsites = "SELECT * FROM campsites WHERE isReviewed = 1 LIMIT $records_per_page OFFSET $offset";
+                                }
                                 $result_isReviewed_campsites = mysqli_query($conn, $sql_isReviewed_campsites);
                                 $isReviewed_campsites = [];
                                 if (mysqli_num_rows($result_isReviewed_campsites) > 0) {
@@ -395,44 +399,6 @@ if (isset($_POST["likeCampDel"])) {
                 </div>
             </div>
         </div>
-
-         <!--篩選 -->
-      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modalContent-filter">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
-              </button>
-            </div>
-            <div class="modal-body">
-              <?php
-              $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
-              $result_labels = mysqli_query($conn, $sql_labels);
-              $labels = [];
-              while ($row_labels = mysqli_fetch_assoc($result_labels)) {
-                $labels[] = $row_labels;
-              }
-              foreach ($labels as $index => $label) {
-                $labelId = $label['labelId'];
-                $labelName = $label['labelName'];
-                $inputId = "flexCheck_" . $labelId;
-                echo '<div class="form-check">';
-                echo '<input class="form-check-input" type="checkbox" value="" id="' . $inputId . '" data-label-id="' . $labelId . '">';
-                echo '<label class="form-check-label" for="' . $inputId . '">' . $labelName . '</label>';
-                echo '</div>';
-              }
-              ?>
-            </div>
-            <div class="modal-footer">
-              <div style=" display: flex; justify-content: flex-end;">
-                <button type="button" class="btn-secondary" data-dismiss="modal" onclick="filterActivities()">確認</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
         <div class="site-footer">
             <div class="container">
@@ -551,11 +517,13 @@ if (isset($_POST["likeCampDel"])) {
         <script src="js/main.js"></script>
         <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
         <script src="js/e-magz.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
         <script>
+
             $(document).ready(function () {
 
-                // 搜索功能
                 $('#form1').on('input', function () {
                     let searchKeyword = $(this).val().toLowerCase();
 

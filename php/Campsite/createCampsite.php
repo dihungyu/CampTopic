@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
         $campsiteId = uuid_generator();
 
-        $sql_query1 = "INSERT INTO campsites (campsiteId, accountId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit)
-                VALUES ('$campsiteId', '$accountId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit')";
+        $sql_query1 = "INSERT INTO campsites (campsiteId, accountId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit, campsiteCreateDate)
+                VALUES ('$campsiteId', '$accountId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit', now())";
         if (!mysqli_query($conn, $sql_query1)) {
             $_SESSION["system_message"] = "營地新增失敗，請再試一次！";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
