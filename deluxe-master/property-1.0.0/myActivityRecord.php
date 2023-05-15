@@ -250,9 +250,9 @@ WHERE activities_accounts.accountId = '$accountId' $ongoing_activity_keyword_con
             }
 
             if (count($ongoing_activities) == 0) {
-              echo '<div class="col-md-12 text-center" style="margin-bottom: 40px;">
-              <h4>目前沒有正在進行的活動！</h4>
-              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 20px;">前往參加活動</a>
+              echo '<div class="col-md-12 text-center mb-4">
+              <h5>目前沒有正在進行的活動！</h5>
+              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 40px; font-size:14px">前往參加活動</a>
               </div>';
             } else {
               // 輸出活動資料
@@ -327,7 +327,7 @@ WHERE activities_accounts.accountId = '$accountId' $ongoing_activity_keyword_con
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>進行中</button>';
+                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#EFE9DA; color:#000"" disabled>進行中</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';
@@ -405,9 +405,9 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
             }
 
             if (count($upcoming_activities) == 0) {
-              echo '<div class="col-md-12 text-center" style="margin-bottom: 40px;">
-              <h4>目前沒有即將到來的活動，快去參加吧！</h4>
-              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 20px;">前往活動列表</a>
+              echo '<div class="col-md-12 text-center mb-4">
+              <h5>目前沒有即將到來的活動，快去參加吧！</h5>
+              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 40px; font-size:14px"">前往活動列表</a>
               </div>';
             } else {
               // 輸出活動資料
@@ -481,7 +481,7 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>未到活動時間</button>';
+                  echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#00204a" disabled>未到活動時間</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';
@@ -528,7 +528,7 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>待發起者確認</button>';
+                  echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed; background-color:#B02626"" disabled>待發起者確認</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';
@@ -613,9 +613,9 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
 
 
             if (count($ended_activities) == 0) {
-              echo '<div class="col-md-12 text-center" style="margin-bottom: 40px;">
-              <h4>目前沒有已結束的活動紀錄，快去參加吧！</h4>
-              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 20px;">前往活動列表</a>
+              echo '<div class="col-md-12 text-center mb-4">
+              <h5>目前沒有已結束的活動紀錄，快去參加吧！</h5>
+              <a href="camp-information.php" class="btn btn-primary" style="margin-top: 40px; font-size:14px"">前往活動列表</a>
               </div>';
             } else {
               // 輸出活動資料
@@ -689,7 +689,7 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>已結束</button>';
+                  echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#d9d9d9; color:#000"" disabled>已結束</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';

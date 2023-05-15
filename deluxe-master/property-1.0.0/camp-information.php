@@ -687,17 +687,17 @@ if (mysqli_num_rows($result_activities) > 0) {
             echo '      <p>已有' . $activityAttendence . '人參加 </p>';
             if (isset($_COOKIE["accountId"])) {
               if ($isActivityOngoing) {
-                echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>進行中</button>';
+                echo '<button class="btn btn-success" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed; background-color:#EFE9DA; color:#000" disabled>進行中</button>';
               } elseif (!$isActivityEnded) {
                 if ($signUpStatus === null) {
                   echo '<button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" data-toggle="modal" data-target="#Modal' . $activityId . '">參加！</button>';
                 } elseif ($signUpStatus['isApproved'] == 0) {
-                  echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>待發起者確認</button>';
+                  echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed; background-color:#B02626" disabled>待發起者確認</button>';
                 } elseif ($signUpStatus['isApproved'] == 1) {
-                  echo '<button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed;" disabled>已參加！</button>';
+                  echo '<button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; cursor: not-allowed; background-color:#8D703B" disabled>已參加！</button>';
                 }
               } else {
-                echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>已結束</button>';
+                echo '<button class="btn btn-dark" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#d9d9d9; color:#000" disabled>已結束</button>';
               }
             }
 
