@@ -104,8 +104,7 @@ if (isset($_POST["likeCampDel"])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
@@ -137,24 +136,15 @@ if (isset($_POST["likeCampDel"])) {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        function hideMessage() {
-            document.getElementById("message").style.opacity = "0";
-            setTimeout(function () {
-                document.getElementById("message").style.display = "none";
-            }, 500);
-        }
-        setTimeout(hideMessage, 3000);
-    </script>
+
 
 </head>
 
 <body>
 
     <!-- 系統訊息 -->
-    <?php if (isset($_SESSION["system_message"])): ?>
-        <div id="message" class="alert alert-success"
-            style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+    <?php if (isset($_SESSION["system_message"])) : ?>
+        <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
             <?php echo $_SESSION["system_message"]; ?>
         </div>
         <?php unset($_SESSION["system_message"]); ?>
@@ -162,11 +152,9 @@ if (isset($_POST["likeCampDel"])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a href="index.html"><img class="navbar-brand" src="images/Group 59.png"
-                    style="width: 90px; height: auto;"></img></a>
+            <a href="index.html"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> 選單
             </button>
 
@@ -179,8 +167,7 @@ if (isset($_POST["likeCampDel"])) {
                     <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -218,13 +205,13 @@ if (isset($_POST["likeCampDel"])) {
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-9 text-center mt-5">
-                    <h1 class="heading" data-aos="fade-up">營地管理</h1>
+                    <h1 class="heading" data-aos="fade-up">所有營地</h1>
 
                     <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                         <ol class="breadcrumb text-center justify-content-center">
                             <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
                             <li class="breadcrumb-item"><a href="member.php">帳號</a></li>
-                            <li class="breadcrumb-item active text-white-50" aria-current="page"> 營地管理
+                            <li class="breadcrumb-item active text-white-50" aria-current="page"> 所有營地
                             </li>
                         </ol>
                     </nav>
@@ -238,9 +225,12 @@ if (isset($_POST["likeCampDel"])) {
             <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
                 <div class="input-group" style="display: flex; justify-content: space-between;">
                     <span style="display:flex ;">
+
+                        <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
+                            <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
+                        </button>
                         <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 1000px;">
-                            <input type="search" id="form1" name="camp_search_keyword" class="form-control"
-                                style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
+                            <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
                         </div>
                         <button type="submit" class="button-search" style="margin-left: 10px;">
                             <i class="fas fa-search"></i>
@@ -400,6 +390,44 @@ if (isset($_POST["likeCampDel"])) {
             </div>
         </div>
 
+        <!--篩選 -->
+        <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modalContent-filter">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
+                        $result_labels = mysqli_query($conn, $sql_labels);
+                        $labels = [];
+                        while ($row_labels = mysqli_fetch_assoc($result_labels)) {
+                            $labels[] = $row_labels;
+                        }
+                        foreach ($labels as $index => $label) {
+                            $labelId = $label['labelId'];
+                            $labelName = $label['labelName'];
+                            $inputId = "flexCheck_" . $labelId;
+                            echo '<div class="form-check">';
+                            echo '<input class="form-check-input" type="checkbox" value="" id="' . $inputId . '" data-label-id="' . $labelId . '">';
+                            echo '<label class="form-check-label" for="' . $inputId . '">' . $labelName . '</label>';
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                    <div class="modal-footer">
+                        <div style=" display: flex; justify-content: flex-end;">
+                            <button type="button" class="btn-secondary" data-dismiss="modal" onclick="filterCampsites()">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="site-footer">
             <div class="container">
                 <div class="row">
@@ -487,15 +515,9 @@ if (isset($_POST["likeCampDel"])) {
         <script src="js/navbar.js"></script>
         <script src="js/counter.js"></script>
         <script src="js/custom.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -511,26 +533,34 @@ if (isset($_POST["likeCampDel"])) {
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery.timepicker.min.js"></script>
         <script src="js/scrollax.min.js"></script>
-        <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
         <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
         <script src="js/e-magz.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+        <script>
+            function hideMessage() {
+                document.getElementById("message").style.opacity = "0";
+                setTimeout(function() {
+                    document.getElementById("message").style.display = "none";
+                }, 500);
+            }
+            setTimeout(hideMessage, 3000);
+        </script>
+
 
         <script>
+            $(document).ready(function() {
 
-            $(document).ready(function () {
-
-                $('#form1').on('input', function () {
+                $('#form1').on('input', function() {
                     let searchKeyword = $(this).val().toLowerCase();
 
                     // 若你只有一種卡片，可直接指定卡片的 class
                     let targetCards = '.isReviewed-card';
 
-                    $(targetCards).each(function () {
+                    $(targetCards).each(function() {
                         let campsiteName = $(this).find('.city').text().toLowerCase();
                         if (campsiteName.indexOf(searchKeyword) !== -1) {
                             $(this).show();
@@ -540,6 +570,131 @@ if (isset($_POST["likeCampDel"])) {
                     });
                 });
             });
+        </script>
+
+        <script>
+            let selectedLabels = [];
+
+            function filterCampsites() {
+                selectedLabels = getSelectedLabels();
+                let labelIds = selectedLabels.map(label => label.labelId);
+                let accountId = <?php echo json_encode($accountId); ?>;
+
+                let bodyContent;
+
+                if (labelIds.length > 0) {
+                    bodyContent = "labelIds=" + JSON.stringify(labelIds) + "&accountId=" + accountId;
+                } else {
+                    bodyContent = "accountId=" + accountId;
+                }
+
+                fetch("../../php/Filter/filter_campsites.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: bodyContent
+                    })
+                    .then(response => response.json())
+                    .then((filteredCampsites) => {
+                        displayFilteredCampsites(filteredCampsites);
+                        displaySelectedLabels();
+                    });
+            }
+
+            document.querySelectorAll(".form-check-input").forEach(checkbox => {
+                checkbox.addEventListener("change", () => {
+                    filterCampsites();
+                });
+            });
+
+            function displaySelectedLabels() {
+                let container = document.getElementById("selected-tags-container");
+                container.innerHTML = "";
+
+                selectedLabels.forEach(label => {
+                    let tag = document.createElement("a");
+                    tag.classList.add("tag-filter");
+                    tag.setAttribute("data-label-id", label.labelId);
+                    tag.innerHTML = `${label.labelName}`;
+                    container.appendChild(tag);
+                });
+            }
+
+
+            function getSelectedLabels() {
+                let checkboxes = document.querySelectorAll(".form-check-input");
+                let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
+                    labelName: checkbox.nextElementSibling.textContent,
+                    labelId: checkbox.dataset.labelId
+                }));
+                return selectedLabels;
+            }
+
+            function displayFilteredCampsites(campsites) {
+                let campsitesContainer = document.querySelector(".col-xs-12");
+
+                campsitesContainer.innerHTML = '';
+
+                if (campsites.length === 0) {
+                    campsitesContainer.innerHTML = '<h6>無相符的資料！</h6>';
+                } else {
+                    campsites.forEach(campsite => {
+                        let campsiteHTML = generateCampsiteCard(campsite);
+                        campsitesContainer.innerHTML += campsiteHTML;
+                    });
+                }
+            }
+
+
+            function generateCampsiteCard(campsite) {
+                let campsiteId = campsite.campsiteId;
+                let campsiteName = campsite.campsiteName;
+                let campsiteDescription = campsite.campsiteDescription;
+                let campsiteLowerLimit = campsite.campsiteLowerLimit;
+                let campsiteLikeCount = campsite.campsiteLikeCount;
+                let img_src = campsite.cover_src; // 這裡我們使用回傳的 cover_src 當作營地的圖片
+                let isCampCollected = campsite.isCampCollected;
+                let isCampLiked = campsite.isCampLiked;
+                let tags = campsite.tags;
+
+                return `
+<div class="card isReviewed-card">
+    <a href="../camp-single.php?campsiteId=${campsiteId}">
+        <img src="${img_src}" class="card-img-top" alt="...">
+    </a>
+    <div class="card-body">
+        <span class="span-adj" style="justify-content: space-between;">
+            <h4><span>$${campsiteLowerLimit}起</span></h4>
+            <form action='all-land.php' method='post'>
+                <input type='hidden' name='${isCampCollected ? "collectCampDel" : "collectCampAdd"}' value='${campsiteId}'>
+                <button type='submit' class='btn-icon'>
+                    <i class='${isCampCollected ? "fas" : "far"} fa-bookmark'></i>
+                </button>
+            </form>
+        </span>
+        <div>
+            <a href="../camp-single.php?campsiteId=${campsiteId}">
+                <h5 class='city d-block mb-3 mt-3'>${campsiteName}</h5>
+            </a>
+            <span class="d-block mb-4 text-black-50">${campsiteDescription}</span>
+            <div class="card-icon-footer">
+                <div class="tagcloud">
+                    ${tags.slice(0, 3).map(tag => `<a href='#'>${tag}</a>`).join("")}
+                </div>
+                <span style="display: flex; align-items: center;">
+                    <form action='all-land.php' method='post'>
+                        <input type='hidden' name='${isCampLiked ? "likeCampDel" : "likeCampAdd"}' value='${campsiteId}'>
+                        <button type='submit' class='btn-icon'>
+                            <i class='${isCampLiked ? "fas" : "far"} fa-heart'></i>
+                        </button>
+                    </form>                    <p style="margin-top:0px">${campsiteLikeCount}</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>`;
+            }
         </script>
 
 </body>

@@ -333,6 +333,7 @@ WHERE activities_accounts.accountId = '$accountId' $ongoing_activity_keyword_con
                   echo '</a>';
                   echo '</div>';
                   echo '</div>'; // 關閉新增的 card-container div
+                  echo '</div>'; // 關閉新�加的 card div'
 
                 }
               }

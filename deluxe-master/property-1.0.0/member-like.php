@@ -428,14 +428,16 @@ if (isset($_POST["likeArticleDel"])) {
                     $image_src = $file_path;
                   }
                   // Card content
-                  echo "<div class='col-md-4'>
+                  echo "<div class='col-md-4'><a href='../camp-single.php?campsiteId=" . $campsiteData["campsiteId"] . "'>
             <div class='card'>
                 <img src='" . $image_src . "' class='card-img-top' alt='...'>
+                
                 <div class='card-body'>
+                </a>
                     <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
                     <div class='row'>
                         <div class='col-8'>
-                            <h5><a href='#'>" . $campsiteData["campsiteName"] . "</a></h5>
+                            <h5>" . $campsiteData["campsiteName"] . "</h5>
                         </div>
                         <div class='col-4 text-end'>
                             <form action='member-like.php' method='post' class='d-inline'>
