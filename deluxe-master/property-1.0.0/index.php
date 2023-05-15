@@ -600,7 +600,7 @@ if (isset($_POST["likeEquipDel"])) {
                   //取出設備圖片
                   $equip_image_src = get_first_image_src($equipmentData["equipmentDescription"]);
                   if ($equip_image_src == "") {
-                    $equip_image_src = "images/image 3.png";
+                    $equip_image_src = "../images/Group 151.png";
                   } else {
                     $equip_image_src = '../' . $equip_image_src;
                   }

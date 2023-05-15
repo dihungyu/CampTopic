@@ -535,7 +535,7 @@ if (isset($_POST["likeEquipDel"])) {
                 //取出設備圖片
                 $equip_img_src = get_first_image_src($recommand_equipment["equipmentDescription"]);
                 if ($equip_img_src == "") {
-                  $equip_img_src = "property-1.0.0/images/image_8.jpg";
+                  $equip_img_src = "images/Group 150.png";
                 }
 
                 //若文章內容超過30字做限制

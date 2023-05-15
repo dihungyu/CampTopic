@@ -390,16 +390,16 @@ if (isset($_POST["likeArticleDel"])) {
               echo '      <p>已有' . $activityAttendence . '人參加 </p>';
               if (!$isActivityEnded) {
                 if ($isActivityOngoing) {
-                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>進行中</button>';
+                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#EFE9DA; color:#000ㄤ" disabled>進行中</button>';
                 } else {
                   if ($hasUnapprovedAccounts) {
-                    echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>您有新的審核</button>';
+                    echo '<button class="btn btn-warning" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#B02626;" disabled>您有新的審核</button>';
                   } else {
-                    echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>未到活動時間</button>';
+                    echo '<button class="btn btn-danger" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#00204a" disabled>未到活動時間</button>';
                   }
                 }
               } else {
-                echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;" disabled>已結束</button>';
+                echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#d9d9d9; color:#000" disabled>已結束</button>';
               }
               echo '    </div>';
               echo '  </div>';

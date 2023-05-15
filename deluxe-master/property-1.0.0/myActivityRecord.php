@@ -327,7 +327,7 @@ WHERE activities_accounts.accountId = '$accountId' $ongoing_activity_keyword_con
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#EFE9DA; color:#000"" disabled>進行中</button>';
+                  echo '<button class="btn btn-info" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#EFE9DA; color:#000" disabled>進行中</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';
@@ -689,7 +689,7 @@ WHERE activities_accounts.accountId = '$accountId' AND activities.activityStartD
                   echo '    <hr>';
                   echo '    <div class="findcamper-bottom">';
                   echo '      <p>已有' . $activityAttendence . '人參加 </p>';
-                  echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#d9d9d9; color:#000"" disabled>已結束</button>';
+                  echo '<button class="btn btn-secondary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px; background-color:#d9d9d9; color:#000" disabled>已結束</button>';
                   echo '    </div>';
                   echo '  </div>';
                   echo '</a>';
