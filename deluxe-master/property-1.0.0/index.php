@@ -399,11 +399,11 @@ if (isset($_POST["likeEquipDel"])) {
             推薦營地
           </h3>
         </div>
-        <!-- <div class="col-lg-6 text-lg-end">
+        <div class="col-lg-6 text-lg-end">
           <p>
-            <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有營地</a>
+            <a href="all-land.php" class="btn btn-primary text-white py-3 px-4">查看所有營地</a>
           </p>
-        </div> -->
+        </div>
       </div>
       <div class="row">
         <div class="col-12">
@@ -415,6 +415,11 @@ if (isset($_POST["likeEquipDel"])) {
               //取出營地按讚數前10名的營地
               $sql = "SELECT * FROM `campsites` WHERE `isReviewed` = 1 ORDER BY `campsiteLikeCount` DESC LIMIT 10";
               $campsiteResult = mysqli_query($conn, $sql);
+
+              $campsiteDatas = [];
+              while ($row = mysqli_fetch_assoc($campsiteResult)) {
+                $campsiteDatas[] = $row;
+              }
 
               // 取出已被收藏的營地
               $camp_collect_sql = "SELECT `campsiteId` FROM `collections` WHERE `accountId` = '$accountId'";
@@ -436,9 +441,11 @@ if (isset($_POST["likeEquipDel"])) {
                 $likedCamps[] = $row['campsiteId'];
               }
 
-              if ($campsiteResult && $campsiteResult->num_rows > 0) {
-                while ($campsiteData = mysqli_fetch_assoc($campsiteResult)) {
 
+
+
+              if (!empty($campsiteDatas)) {
+                foreach ($campsiteDatas as $campsiteData) {
                   // 檢查當前營區是否已收藏
                   $isCampCollected = in_array($campsiteData["campsiteId"], $collectedCamps);
 
@@ -446,15 +453,12 @@ if (isset($_POST["likeEquipDel"])) {
                   $isCampLiked = in_array($campsiteData["campsiteId"], $likedCamps);
 
 
-
-
-                  $files_query = "SELECT * FROM files WHERE campsiteId = '$campsiteData[campsiteId]'";
+                  $files_query = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteData['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
                   $files_result = mysqli_query($conn, $files_query);
-                  $image_src = 'images/Rectangle 332.png'; // Default image
-              
-                  if ($file_result = mysqli_fetch_assoc($files_result)) {
-                    $file_path = str_replace('Applications/XAMPP/xamppfiles/htdocs', '../..', $file_result['filePath']);
-                    $image_src = $file_path;
+                  if ($file_row = mysqli_fetch_assoc($files_result)) {
+                    $image_src = $file_row["filePath"];
+                  } else {
+                    $image_src = "images/Rectangle 137.png";
                   }
 
                   //格式化按讚數
@@ -463,7 +467,7 @@ if (isset($_POST["likeEquipDel"])) {
 
 
                   echo "<div class='property-item'>
-                <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 412px; height: 412px;' data-toggle='modal' data-target='#exampleModalCenter' />
+                <img src='" . $image_src . "' alt='Image' class='img-fluid' style='width: 412px; height: 412px;' data-toggle='modal' data-target='#exampleModalCenter" . $campsiteData["campsiteId"] . "' />
 
                 <div class='property-content'>
                   <span class='span-adj' style='justify-content: space-between;'>
@@ -546,7 +550,7 @@ if (isset($_POST["likeEquipDel"])) {
         </div>
         <div class="col-lg-6 text-lg-end">
           <p>
-            <a href="../equipment.php" target="_blank" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
+            <a href="../equipment.php" class="btn btn-primary text-white py-3 px-4">查看所有設備</a>
           </p>
         </div>
       </div>
@@ -697,48 +701,6 @@ if (isset($_POST["likeEquipDel"])) {
               }
 
               ?>
-              <!-- <div class="property-item">
-                <a href="property-single.html" class="img">
-                  <img src="images/image 3.png" alt="Image" class="img-fluid" style='width: 398px; height: 400px;' />
-                </a>
-                <div class="property-content">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span style="display: flex; align-items: center;">
-                      <span class="fa-stack fa-1x" style="margin-right: 5px; ">
-                        <i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>
-                        <i class="fas fa-stack-1x" style="font-size: 13px;">租</i>
-                      </span>
-                      <div class="city d-block">露營帳篷</div>
-                    </span>
-                    <span class="span-adj">
-                      <div class="price mb-1"><span>$1,291</span></div>
-                      <button type="button" class="btn-icon">
-                        <i class="fa-regular fa-bookmark"></i>
-                      </button>
-                    </span>
-                  </div>
-                  <div>
-                    <span class="d-block mb-4 mt-3 text-black-50">
-                      四人帳篷，空間大，租一天1000元，多天可有優惠，以下是帳篷的現況，有興趣者可私訊。</span>
-
-                    <footer style="margin-top:40px">
-                      <div class="card-icon-footer">
-                        <div class="tagcloud">
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">家庭帳</a>
-                          <a href="property-single.html">帳篷</a>
-                        </div>
-                        <span style="display: flex; align-items: center;">
-                          <i class="fa-regular fa-heart"></i>
-                          <p style='margin-top:0px'>1,098</p>
-                        </span>
-                      </div>
-                    </footer>
-                  </div>
-                </div>
-              </div> -->
-
-
               <!-- 分頁導航 -->
             </div>
             <div id="testimonial-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
@@ -914,6 +876,69 @@ if (isset($_POST["likeEquipDel"])) {
           </div>
         </div>
       </div>
+
+      <?php
+      foreach ($campsiteDatas as $campsiteData) {
+        $card_query = "SELECT filePath FROM files WHERE campsiteId = '" . $campsiteData['campsiteId'] . "' AND filePathType = 'campsiteCover' ORDER BY fileCreateDate DESC LIMIT 1";
+        $card_result = mysqli_query($conn, $card_query);
+        if ($card_row = mysqli_fetch_assoc($card_result)) {
+          $card_src = $card_row["filePath"];
+        } else {
+          $card_src = "images/Rectangle 137.png";
+        }
+
+        echo '<div class="modal fade" id="exampleModalCenter' . $campsiteData['campsiteId'] . '" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
+        echo '  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">';
+        echo '    <div class="modal-content">';
+        echo '      <div class="modal-header">';
+        echo '        <h5 class="modal-title" id="exampleModalLongTitle" style="color: black;">' . $campsiteData['campsiteName'] . '</h5>';
+        echo '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        echo '          <i class="fa-solid fa-times" style="color:#a0a0a0"></i>';
+        echo '        </button>';
+
+        echo '      </div>';
+        echo '      <div class="modal-body">';
+        echo '        <div class="row">';
+        echo '          <div class="col-6" style="padding-bottom: 15px;position: relative;">';
+        echo '            <img src="' . $card_src . '" style="width: 100%;height: 320px; border-radius: 4px;">';
+        echo '          </div>';
+        echo '          <div class="col-6" style="padding: 20px;margin-top: 20px;">';
+        echo '            <span class="modal-index">';
+        echo '              <i class="fa-solid fa-location-dot"></i>' . $campsiteData['campsiteAddress'] . '</span>';
+        echo '            <span class="modal-index">';
+        echo '              <i class="fa-solid fa-book"></i>被收藏數：' . $campsiteData['campsiteCollectCount'] . '次</span>';
+        echo '            <span class="modal-index">';
+        echo '              <i class="fa-solid fa-heart"></i>被按讚數：' . $campsiteData['campsiteLikeCount'] . '次</span>';
+        echo '            <div class="tagcloud" style="margin-top: 40px;margin-bottom: 20px;">';
+        $sql_query_labels = "SELECT campsites_labels.labelId, labels.labelName
+        FROM campsites_labels
+        JOIN labels ON campsites_labels.labelId = labels.labelId
+        WHERE campsites_labels.campsiteId = '" . $campsiteData['campsiteId'] . "'";
+        $result_labels = mysqli_query($conn, $sql_query_labels);
+
+        $printed_tags = 0;
+        while ($tags_row = mysqli_fetch_assoc($result_labels)) {
+          if ($printed_tags >= 3) {
+            break;
+          }
+
+          echo "<a href='#'>" . $tags_row['labelName'] . "</a>";
+
+          $printed_tags++;
+        }
+        echo '            </div>';
+        echo '            <div class="modal-more" style="position: absolute;right: 20px;bottom: 31px;">';
+        echo '              <a href="../camp-single.php?campsiteId=' . $campsiteData['campsiteId'] . '"><button class="btn-more">查看更多</button></a>';
+        echo '            </div>';
+        echo '          </div>';
+        echo '        </div>';
+        echo '      </div>';
+        echo '    </div>';
+        echo '  </div>';
+        echo '</div>';
+      }
+      ?>
 
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
