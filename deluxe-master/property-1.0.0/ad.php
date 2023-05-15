@@ -125,8 +125,8 @@ session_start();
 
   <div class="container mt-5 mb-5">
 
-    <span style="text-align: center;margin-top: 10px;font-weight: bold;color: #000;">
-      <h4 style="font-weight: bold;">廣告方案</h4>
+    <span style="text-align: center; color: #000;">
+      <h4>廣告方案</h4>
       <p>透過廣告投放、販賣露營商品，有效提高營地的知名度和可信度，吸引更多潛在客戶，帶來更多收益 !</p>
     </span>
   </div>
@@ -139,11 +139,11 @@ session_start();
         <article class="col-md-12 article-list mt-5 mb-5 " style="display: flex;">
           <div class="col-4">
             <div class="inner" style="display: flex; ">
-              <div class="card" style="margin-left: 5px;">
-                <img src="images/3.png" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+              <div class="card" style="height: 550px;">
+                <img src="images/3.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <span style="display: flex;margin-right: 10px;flex-wrap: wrap;flex-direction: column;align-items: center;font-weight: bold;color: #000;">
-                    <h4 style="color: #000;font-weight: bold;">時段廣告</h4>
+                  <span style="display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; color: #000;">
+                    <h4 style="color: #000;">時段廣告</h4>
                     <p>
                       &#8226; 一個月為期，選擇您最需要宣傳投放的期間<br>
                       &#8226; 專屬時段，不與其他廣告分攤<br>
@@ -158,10 +158,10 @@ session_start();
           </div>
 
           <div class="col-4">
-            <div class="card">
-              <img src="images/4.png" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+            <div class="card"style="height: 550px;">
+              <img src="images/4.png" class="card-img-top" alt="..."">
               <div class="card-body">
-                <span style="display: flex;margin-bottom: 10px;margin-right: 10px;flex-wrap: wrap;flex-direction: column;align-items: center;font-weight: bold;color: #000;">
+                <span style="display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; color: #000;">
                   <h4 style="color: #000;font-weight: bold;">商品販賣</h4>
                   <p>
                     &#8226; 不限期間，在「鹿的設備」頁面曝光商品<br>
@@ -175,19 +175,19 @@ session_start();
           </div>
 
           <div class="col-4">
-            <div class="card">
-              <img src="images/5.png" class="card-img-top" alt="..." style="margin-bottom: -15px;">
+            <div class="card"style="height: 550px;">
+              <img src="images/5.png" class="card-img-top" alt="..."">
               <div class="card-body">
-                <span style="display: flex;margin-bottom: 10px;margin-right: 10px;flex-wrap: wrap;flex-direction: column;align-items: center;font-weight: bold;color: #000;">
-                  <h4 style="color: #000;font-weight: bold;">贊助我們</h4>
+                <span style="display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; color: #000;">
+                  <h4 style="color: #000;">贊助我們</h4>
                   <p>
                     &#8226; 贊助會員制度中「徽章搜集」之獎品<br>
                     &#8226; 提供特殊廣告位置投放<br>
                     &#8226; 下一期間優先選擇時段、位置
                   </p>
-                  <button class="btn-new" style="margin-top: 20px;" data-toggle="modal" data-target="#contectus">
-                    聯絡我們
-                  </button>
+                  <button class="btn-new" data-toggle="modal" data-target="#contectus">
+                      聯絡我們
+                    </button>
               </div>
             </div>
           </div>
