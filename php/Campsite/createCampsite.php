@@ -5,7 +5,8 @@ require_once '../uuid_generator.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
-    if (!empty($_COOKIE['accountId']) && !empty($_POST["cityId"]) && !empty($_POST["campsiteName"]) && !empty($_POST["campsiteDescription"]) && !empty($_POST["campsiteAddress"]) && !empty($_POST["campsiteAddressLink"]) && !empty($_POST["campsiteVideoLink"]) && !empty($_POST["campsiteLowerLimit"]) && !empty($_POST["campsiteUpperLimit"])) {
+    if (!empty($_POST['accountId']) && !empty($_POST["cityId"]) && !empty($_POST["campsiteName"]) && !empty($_POST["campsiteDescription"]) && !empty($_POST["campsiteAddress"]) && !empty($_POST["campsiteAddressLink"]) && !empty($_POST["campsiteVideoLink"]) && !empty($_POST["campsiteLowerLimit"]) && !empty($_POST["campsiteUpperLimit"])) {
+        $accountId = $_POST["accountId"];
         $cityId = $_POST["cityId"];
         $campsiteName = $_POST["campsiteName"];
         $campsiteDescription = $_POST["campsiteDescription"];
@@ -20,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
 
         $campsiteId = uuid_generator();
 
-        $sql_query1 = "INSERT INTO campsites (campsiteId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit)
-                VALUES ('$campsiteId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit')";
+        $sql_query1 = "INSERT INTO campsites (campsiteId, accountId, cityId, campsiteName, campsiteDescription, campsiteAddress, campsiteAddressLink, campsiteVideoLink, campsiteLowerLimit, campsiteUpperLimit)
+                VALUES ('$campsiteId', '$accountId', '$cityId', '$campsiteName', '$campsiteDescription', '$campsiteAddress','$campsiteAddressLink','$campsiteVideoLink','$campsiteLowerLimit','$campsiteUpperLimit')";
         if (!mysqli_query($conn, $sql_query1)) {
             $_SESSION["system_message"] = "營地新增失敗，請再試一次！";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -64,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "insert") {
             exit();
         }
         $_SESSION["system_message"] = "營地新增成功！";
-        header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
+        header("Location: ../../deluxe-master/property-1.0.0/myCampsite.php");
         exit();
     } else {
         $_SESSION["system_message"] = "營地新增失敗，所有欄位不得為空！";
@@ -152,4 +153,3 @@ function process_and_save_cover_images($conn, $campsiteId)
         }
     }
 }
-?>

@@ -91,14 +91,13 @@ if (isset($_GET["campsiteId"])) {
         // Commit the transaction
         mysqli_commit($conn);
         $_SESSION["system_message"] = "營地已刪除！";
-        header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
+        header("Location: ../../deluxe-master/property-1.0.0/myCampsite.php");
         exit();
     } else {
         echo "Error: " . mysqli_error($conn);
         // Rollback the transaction
         mysqli_rollback($conn);
         $_SESSION["system_message"] = "刪除失敗，請重試！";
-        header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
+        header("Location: ../../deluxe-master/property-1.0.0/myCampsite.php");
     }
 }
-?>
