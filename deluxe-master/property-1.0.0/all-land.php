@@ -234,9 +234,15 @@ if (isset($_POST["likeCampDel"])) {
     <div class="section">
         <div class="container" style="max-width: 1260px">
             <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-                <div class="col-5">
-                    <div class="input-group" style="margin-left: 1000px;">
-                        <div id="navbar-search-autocomplete" class="form-outline">
+                    <div class="input-group" style="display: flex; justify-content: space-between;">
+                    <span style="display:flex;align-items: center;justify-content: center">
+                        <button type="button" class="button-filter" data-toggle="modal" data-target="#filter">
+                        <i class="fa-solid fa-bars-staggered" style="margin-right: 4px;"></i>篩選
+                        </button>
+                        <div id="selected-tags-container"></div>
+                    </span>
+                    <span style="display:flex ;">
+                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-right: 10px;">
                             <input type="search" id="form1" name="camp_search_keyword" class="form-control"
                                 style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
                         </div>
@@ -244,9 +250,9 @@ if (isset($_POST["likeCampDel"])) {
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
+                    </sapn>
                 </div>
             </div>
-        </div>
 
 
 
@@ -389,6 +395,44 @@ if (isset($_POST["likeCampDel"])) {
                 </div>
             </div>
         </div>
+
+         <!--篩選 -->
+      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modalContent-filter">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">篩選標籤</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <?php
+              $sql_labels = "SELECT * FROM labels WHERE labelType = '營地'";
+              $result_labels = mysqli_query($conn, $sql_labels);
+              $labels = [];
+              while ($row_labels = mysqli_fetch_assoc($result_labels)) {
+                $labels[] = $row_labels;
+              }
+              foreach ($labels as $index => $label) {
+                $labelId = $label['labelId'];
+                $labelName = $label['labelName'];
+                $inputId = "flexCheck_" . $labelId;
+                echo '<div class="form-check">';
+                echo '<input class="form-check-input" type="checkbox" value="" id="' . $inputId . '" data-label-id="' . $labelId . '">';
+                echo '<label class="form-check-label" for="' . $inputId . '">' . $labelName . '</label>';
+                echo '</div>';
+              }
+              ?>
+            </div>
+            <div class="modal-footer">
+              <div style=" display: flex; justify-content: flex-end;">
+                <button type="button" class="btn-secondary" data-dismiss="modal" onclick="filterActivities()">確認</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
         <div class="site-footer">
             <div class="container">
