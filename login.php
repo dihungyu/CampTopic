@@ -38,13 +38,14 @@ if ($_POST["FormType"] == "Login") {
 				$_SESSION["system_message"] = "歡迎回來！";
 
 				// 轉址至登入頁面
-				if ($_COOKIE["accountType"] == "ADMIN") {
+				if ($row["accountType"] == "ADMIN") {
 					header("Location: /CampTopic/deluxe-master/property-1.0.0/index-manage.php");
 					exit;
-				} elseif ($_COOKIE["accountType"] == "USER" || $_COOKIE["accountType"] == "BUSINESS") {
+				} elseif ($row["accountType"] == "USER" || $row["accountType"] == "BUSINESS") {
 					header("Location: /CampTopic/deluxe-master/property-1.0.0/index.php");
 					exit;
 				}
+
 
 
 				// echo "<script>{window.alert('登入成功！'); location.href='/CampTopic/deluxe-master/property-1.0.0/index.php'}</script>";
