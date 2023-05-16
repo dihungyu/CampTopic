@@ -236,7 +236,7 @@ if (isset($_POST["likeCampDel"])) {
                         <div id="selected-tags-container" style="margin-top: 10px;"></div>
                     </span>
                     <span style="display:flex ;">
-                        <div id="navbar-search-autocomplete" class="form-outline" style="margin-left: 700px;">
+                        <div id="navbar-search-autocomplete" class="form-outline">
                             <input type="search" id="form1" name="camp_search_keyword" class="form-control"
                                 style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
                         </div>

@@ -352,7 +352,7 @@ function format_count($count)
               echo '<div class="card-eq" style="margin-right: 20px;margin-bottom: 20px; flex: 1;">';
               echo '<img src="' . $image_src . '" class="card-img-top" alt="..." style="width:397px; height:263px;">';
               echo '<div class="card-body-eq"style=" margin-top:0px;">';
-              echo '<div class="detail" style="flex-wrap: wrap; display: flex;">';
+              echo '<div class="detail" style="display: flex;">';
               echo '<span style="display: flex; align-items: center;">';
               if ($equipmentType === "租") {
                 echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
@@ -371,7 +371,7 @@ function format_count($count)
                 echo '</span>';
               }
               echo '<a href="equip-single.php?equipmentId=' . $equipmentId . '">';
-              echo '<h5 style="width: 160px;">' . $equipmentName . '</h5>';
+              echo '<h5>' . $equipmentName . '</h5>';
               echo '</a>';
               echo '</span>';
               echo '<span class="span-adj" style="justify-content: flex-end; box-sizing: content-box; width: 162px;">';
