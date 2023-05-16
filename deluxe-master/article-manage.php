@@ -84,7 +84,7 @@ $articleId = $_GET['articleId'];
         .delete-comment:hover {
             color: #dc3545;
         }
-        
+
         .vcard bio {
             border-radius: 50%;
             width: 5%;
@@ -128,7 +128,7 @@ $articleId = $_GET['articleId'];
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item "><a href="property-1.0.0/index.php" class="nav-link">首頁</a></li>
+                    <li class="nav-item "><a href="property-1.0.0/index-manage.php" class="nav-link">首頁</a></li>
                     <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
                     <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
                     <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>

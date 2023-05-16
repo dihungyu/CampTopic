@@ -97,7 +97,7 @@ function format_count($count)
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item "><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item "><a href="index-manage.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="manage-article.php" class="nav-link">文章管理</a></li>
           <li class="nav-item"><a href="manage-equip.php" class="nav-link">設備管理</a></li>
           <li class="nav-item"><a href="manage-land.php" class="nav-link">營地管理</a></li>
