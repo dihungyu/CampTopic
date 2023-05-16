@@ -336,7 +336,7 @@ $files_result = mysqli_query($conn, $files_query);
         echo '</div>';
         echo '</form>';
 
-        echo '<form method="POST" action="../php/Campsite/deleteCampsite.php">';
+        echo '<form method="POST" action="../php/Campsite/disagreeCampsite.php">';
         echo '<div class="modal fade" id="disagreeModal" tabindex="-1" role="dialog" aria-labelledby="disagreeModalLabel" aria-hidden="true">';
         echo '<div class="modal-dialog" role="document">';
         echo '<div class="modal-content">';
