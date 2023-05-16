@@ -228,7 +228,7 @@ function format_count($count)
                   echo '      <h5 class="city">' . $isReviewed_equipment["equipmentName"] . '</h5>';
                   echo '    </a>';
                   echo '      <span class="span-adj">';
-                  echo '        <h4><span>$' . format_count($isReviewed_equipment["equipmentPrice"]) . '</span></h4>';
+                  echo '        <h4><span>$' . number_format($isReviewed_equipment["equipmentPrice"]) . '</span></h4>';
                   echo '      </span>';
                   echo '    </div>';
                   echo '    <div>';
@@ -347,7 +347,7 @@ function format_count($count)
                   echo '      <h5 class="city">' . $unReviewed_equipment["equipmentName"] . '</h5>';
                   echo '    </a>';
                   echo '      <span class="span-adj">';
-                  echo '        <h4><span>$' . format_count($unReviewed_equipment["equipmentPrice"]) . '</span></h4>';
+                  echo '        <h4><span>$' . number_format($unReviewed_equipment["equipmentPrice"]) . '</span></h4>';
                   echo '      </span>';
                   echo '    </div>';
                   echo '    <div>';
