@@ -882,7 +882,7 @@ function format_timestamp($timestamp)
       <!-- /.row -->
 
     </div>
-  </div>
+  
 
   <div class="row mt-5">
     <div class="col-12 text-center">
@@ -911,7 +911,7 @@ function format_timestamp($timestamp)
   </div>
   <!-- /.container -->
 
-  </div>
+  </div></div>
   <?php
   $get_account_mail = "SELECT accountEmail FROM accounts WHERE accountId = '$accountId'";
   $get_account_mail_result = mysqli_query($conn, $get_account_mail);

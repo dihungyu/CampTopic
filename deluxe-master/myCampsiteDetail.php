@@ -183,14 +183,14 @@ $files_result = mysqli_query($conn, $files_query);
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-md-12 ftco-animate">
-                            <h3 class="mb-4">
+                            <h4 class="mb-4" style="display:flex;justify-content: space-between; align-items: center;">
                                 <?php echo $campsiteName; ?>
                                 <button class="btn-icon">
                                     <a href="/CampTopic/deluxe-master/property-1.0.0/myCampsiteUpdate.php?campsiteId=<?php echo $campsiteId ?>">
                                         <i class="fas fa-edit" style="font-weight: 500;color: #000; "></i>
                                     </a>
                                 </button>
-                            </h3>
+                            </h4>
                             <div class="single-slider owl-carousel">
                                 <?php
                                 while ($file_result = mysqli_fetch_assoc($files_result)) {

@@ -84,14 +84,7 @@ $articleId = $_GET['articleId'];
         .delete-comment:hover {
             color: #dc3545;
         }
-
-        .btn {
-            font-size: 13px;
-            width: 60px;
-            height: 40px;
-            background-color: #d9d9d9;
-        }
-
+        
         .vcard bio {
             border-radius: 50%;
             width: 5%;
@@ -222,18 +215,18 @@ $articleId = $_GET['articleId'];
                         </label>
                     </span>
                     <div style="display:flex; justify-content: space-between;">
-                        <h5 class="mb-5 mt-4">
+                        <h5 class="mb-4 mt-4">
                             <?php echo $main_article_row["articleTitle"]; ?>
                         </h5>
                         <span style="display:flex; align-items: center;">
                             <?php
                             if ($main_article_row['isReviewed'] == 0) {
                                 echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal" style="position: relative;">';
-                                echo '            <i class="fa-solid fa-circle-check" style="color: #005555; position: absolute; right:10px;bottom:1px;"></i>';
+                                echo '            <i class="fa-solid fa-circle-check" style="color: #005555;"></i>';
                                 echo '        </button>';
 
                                 echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal" style="position: relative;">';
-                                echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626; position: absolute; bottom: 1px;"></i>';
+                                echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626;"></i>';
                                 echo '        </button>';
                             }
                             ?>
@@ -445,17 +438,16 @@ $articleId = $_GET['articleId'];
     echo '<div class="modal-content">';
     echo '<div class="modal-header">';
     echo '<h5 class="modal-title" id="deleteModalLabel">駁回檢舉確認</h5>';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-    echo '<span aria-hidden="true">&times;</span>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
     echo '</button>';
     echo '</div>';
     echo '<div class="modal-body">';
     echo '確定要駁回「' . $main_article_row['articleTitle'] . '」的審核嗎？';
     echo '</div>';
     echo '<div class="modal-footer">';
-    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
     echo '<input type="hidden" name="articleId" value="' . $main_article_row['articleId'] . '">';
-    echo '<button type="submit" class="btn-new" style="background-color: #28A745;">確認</button>';
+    echo '<button type="submit" class="btn-secondary">確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -468,17 +460,17 @@ $articleId = $_GET['articleId'];
     echo '<div class="modal-content">';
     echo '<div class="modal-header">';
     echo '<h5 class="modal-title" id="deleteModalLabel">通過檢舉確認</h5>';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-    echo '<span aria-hidden="true">&times;</span>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
+    echo '</button>';
     echo '</button>';
     echo '</div>';
     echo '<div class="modal-body">';
     echo '確定要通過「' . $main_article_row['articleTitle'] . '」的檢舉並刪除該文章嗎？';
     echo '</div>';
     echo '<div class="modal-footer">';
-    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
     echo '<input type="hidden" name="articleId" value="' . $main_article_row['articleId'] . '">';
-    echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認</button>';
+    echo '<button type="submit" class="btn-secondary"style="background-color:#B02626;" >確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';

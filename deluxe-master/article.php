@@ -418,9 +418,9 @@ $articleId = $_GET['articleId'];
           $img_src = str_replace("../", "", $img_src);
           $img_src = "../" . $img_src;
 
-          echo "<div class='col-lg-8'>
+          echo "<div class='col-lg-8 '>
           <div class='pt-5 mt-5'>
-            <h5 class='mb-5'>目前" . $comment_count . "留言</h5>
+            <h5 class='mt-5 mb-5'>目前" . $comment_count . "留言</h5>
             <h6 class='mb-5'>由舊到新排序</h6>
             <ul class='comment-list'>";
 

@@ -678,24 +678,24 @@ if (isset($_POST["likeArticleDel"])) {
                 }
 
                 // 輸出card
-                echo '<div class="col-md-4">';
+                echo '<div class="col-md-4" style="align-items: normal;">';
                 echo '<div class="card">';
                 echo '<img src="' . $equip_img_src . '" class="card-img-top" alt="...">';
                 echo '<div class="card-body">';
                 echo '<div class="detail"style="margin-bottom: 0px; display: flex; align-items: center;">';
                 if ($equipmentData["equipmentType"] === "租") {
                   echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:28px;"></i>';
                   echo '<i class="fas fa-stack-1x" style="font-size: 13px;">租</i>';
                   echo '</span>';
                 } else if ($equipmentData["equipmentType"] === "徵") {
                   echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:24px;"></i>';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#8d703b; font-size:28px;"></i>';
                   echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">徵</i>';
                   echo '</span>';
                 } else if ($equipmentData["equipmentType"] === "賣") {
                   echo '<span class="fa-stack fa-1x" style="margin-right: 5px; ">';
-                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:24px;"></i>';
+                  echo '<i class="fas fa-circle fa-stack-2x" style="color:#ba4040; font-size:28px;"></i>';
                   echo '<i class="fas fa-stack-1x fa-inverse" style="font-size: 13px;">售</i>';
                   echo '</span>';
                 }
