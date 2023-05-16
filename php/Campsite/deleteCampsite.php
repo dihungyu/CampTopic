@@ -17,6 +17,11 @@ if (isset($_POST["campsiteId"])) {
     mysqli_stmt_bind_param($stmt1, "s", $campsiteId);
     mysqli_stmt_execute($stmt1);
     $result1 = mysqli_stmt_get_result($stmt1);
+    if (!$result1) {
+        $_SESSION["error_step"] = "Error executing query 1";
+        $all_successful = false;
+    }
+
     $files = [];
     while ($row = mysqli_fetch_assoc($result1)) {
         $files[] = $row;
@@ -39,52 +44,71 @@ if (isset($_POST["campsiteId"])) {
         $result2 = mysqli_stmt_execute($stmt2);
         if (!$result2) {
             $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query 2";
         }
     }
 
     if ($all_successful) {
-        // Delete the file records from the 'files' table
+        // Delete the file records from the 'campsites_services' table
         $sql_query4 = "DELETE FROM campsites_services WHERE campsiteId = ?";
         $stmt4 = mysqli_prepare($conn, $sql_query4);
         mysqli_stmt_bind_param($stmt4, "s", $campsiteId);
         $result4 = mysqli_stmt_execute($stmt4);
         if (!$result4) {
             $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query 4";
         }
     }
 
     if ($all_successful) {
-        // Delete the file records from the 'files' table
+        // Delete the file records from the 'campsites_labels' table
         $sql_query5 = "DELETE FROM campsites_labels WHERE campsiteId = ?";
         $stmt5 = mysqli_prepare($conn, $sql_query5);
         mysqli_stmt_bind_param($stmt5, "s", $campsiteId);
         $result5 = mysqli_stmt_execute($stmt5);
         if (!$result5) {
             $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query 5";
         }
     }
 
     if ($all_successful) {
-        // Delete the file records from the 'files' table
+        // Delete the file records from the 'collections' table
         $sql_query6 = "DELETE FROM collections WHERE campsiteId = ?";
         $stmt6 = mysqli_prepare($conn, $sql_query6);
         mysqli_stmt_bind_param($stmt6, "s", $campsiteId);
         $result6 = mysqli_stmt_execute($stmt6);
         if (!$result6) {
             $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query 6";
         }
     }
 
     if ($all_successful) {
+        // Delete the likes records from the 'likes' table
+        $sql_query_likes = "DELETE FROM likes WHERE campsiteId = ?";
+        $stmt_likes = mysqli_prepare($conn, $sql_query_likes);
+        mysqli_stmt_bind_param($stmt_likes, "s", $campsiteId);
+        $result_likes = mysqli_stmt_execute($stmt_likes);
+        if (!$result_likes) {
+            $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query likes: " . mysqli_stmt_error($stmt_likes);
+        }
+    }
+
+    if ($all_successful) {
+        // Delete the record from the 'campsites' table
         $sql_query3 = "DELETE FROM campsites WHERE campsiteId = ?";
         $stmt3 = mysqli_prepare($conn, $sql_query3);
         mysqli_stmt_bind_param($stmt3, "s", $campsiteId);
         $result3 = mysqli_stmt_execute($stmt3);
-
         if (!$result3) {
             $all_successful = false;
+            $_SESSION["error_step"] = "Error executing query 3: " . mysqli_stmt_error($stmt3);
         }
     }
+
+
 
     // Check if all queries were successful
     if ($all_successful) {
@@ -94,7 +118,6 @@ if (isset($_POST["campsiteId"])) {
         header("Location: ../../deluxe-master/property-1.0.0/myCampsite.php");
         exit();
     } else {
-        echo "Error: " . mysqli_error($conn);
         // Rollback the transaction
         mysqli_rollback($conn);
         $_SESSION["system_message"] = "刪除失敗，請重試！";

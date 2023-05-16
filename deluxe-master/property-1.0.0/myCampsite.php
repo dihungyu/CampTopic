@@ -68,7 +68,7 @@ function format_count($count)
   <script>
     function hideMessage() {
       document.getElementById("message").style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(function() {
         document.getElementById("message").style.display = "none";
       }, 500);
     }
@@ -80,21 +80,26 @@ function format_count($count)
 <body>
 
   <!-- 系統訊息 -->
-  <?php if (isset($_SESSION["system_message"])): ?>
-    <div id="message" class="alert alert-success"
-      style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+  <?php if (isset($_SESSION["system_message"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
       <?php echo $_SESSION["system_message"]; ?>
     </div>
     <?php unset($_SESSION["system_message"]); ?>
   <?php endif; ?>
 
+  <!-- 系統訊息 -->
+  <?php if (isset($_SESSION["error_step"])) : ?>
+    <div id="message" class="alert alert-success" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 5px; font-weight: 500; transition: opacity 0.5s;">
+      <?php echo $_SESSION["error_step"]; ?>
+    </div>
+    <?php unset($_SESSION["error_step"]); ?>
+  <?php endif; ?>
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png"
-          style="width: 90px; height: auto;"></img></a>
+      <a href="index.php"><img class="navbar-brand" src="images/Group 59.png" style="width: 90px; height: auto;"></img></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> 選單
       </button>
 
@@ -107,8 +112,7 @@ function format_count($count)
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -158,12 +162,10 @@ function format_count($count)
         <div class="col-5">
           <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
             <li class="nav-item" style="margin-right:20px">
-              <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab"
-                aria-controls="isReviewed" aria-selected="true">已上架</a>
+              <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab" aria-controls="isReviewed" aria-selected="true">已上架</a>
             </li>
             <li class="nav-item" style="margin-right:20px">
-              <a class="nav-link unReviewed" id="unReviewed-tab" data-toggle="tab" href="#unReviewed" role="tab"
-                aria-controls="unReviewed" aria-selected="true">待審核</a>
+              <a class="nav-link unReviewed" id="unReviewed-tab" data-toggle="tab" href="#unReviewed" role="tab" aria-controls="unReviewed" aria-selected="true">待審核</a>
             </li>
           </ul>
         </div>
@@ -172,8 +174,7 @@ function format_count($count)
             <div class="input-group" style="justify-content: flex-end; margin-right:10px">
 
               <div id="navbar-search-autocomplete" class="form-outline">
-                <input type="search" id="form1" name="camp_search_keyword" class="form-control"
-                  style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
+                <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
               </div>
               <button type="submit" class="button-search">
                 <i class="fas fa-search"></i>
@@ -542,15 +543,9 @@ function format_count($count)
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -566,15 +561,14 @@ function format_count($count)
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
     <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
     <script src="js/e-magz.js"></script>
 
     <script>
-      $(document).ready(function () {
+      $(document).ready(function() {
         function showTab(tab) {
           if (tab === 'isReviewed') {
             $('#isReviewed-tab').addClass('active');
@@ -592,12 +586,12 @@ function format_count($count)
         }
 
         // 當 "已上架" tab 被點擊時的觸發事件
-        $('#isReviewed-tab').on('click', function () {
+        $('#isReviewed-tab').on('click', function() {
           showTab('isReviewed');
         });
 
         // 當 "待審核" tab 被點擊時的觸發事件
-        $('#unReviewed-tab').on('click', function () {
+        $('#unReviewed-tab').on('click', function() {
           showTab('unReviewed');
         });
 
@@ -610,12 +604,12 @@ function format_count($count)
         }
 
         // 搜索功能
-        $('#form1').on('input', function () {
+        $('#form1').on('input', function() {
           let searchKeyword = $(this).val().toLowerCase();
           let activeTab = $('.nav-link.active').hasClass('isReviewed') ? 'isReviewed' : 'unReviewed';
           let targetCards = activeTab === 'isReviewed' ? '.isReviewed-card' : '.unReviewed-card';
 
-          $(targetCards).each(function () {
+          $(targetCards).each(function() {
             let campsiteName = $(this).find('.city').text().toLowerCase();
             if (campsiteName.indexOf(searchKeyword) !== -1) {
               $(this).show();
