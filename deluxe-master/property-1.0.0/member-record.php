@@ -535,11 +535,11 @@ if (isset($_POST["likeArticleDel"])) {
                 // Card content
 
                 echo "
-            <article class='col-md-8 article-list'>
+            <article class='col-md-8 article-list'style='height: 220px;'>
               <div class='inner'>
                 <figure>
                   <a href='../article.php?articleId=" . $articleId . "'>
-                    <img src='" . $article_img_src . "'>
+                    <img src='" . $article_img_src . "' style='height: 220px;'>
                   </a>
                 </figure>
                 <div class='details'>
@@ -551,7 +551,8 @@ if (isset($_POST["likeArticleDel"])) {
                   </div>
                   <h5><a href='../article.php?articleId=" . $articleId . "'>" . $articleData["articleTitle"] . "</a></h5>
                   <p>" . $truncated_content . "</p>
-                  <footer style='justify-content: space-between; padding-top: 10px;'>
+                  <hr>
+                  <footer style='justify-content: space-between;margin-top: -8px;'>
                     <p style='white-space: nowrap;'>" . $comment_count .
                   " 則留言</p>
                     <span style='display:flex; align-items:center;'>

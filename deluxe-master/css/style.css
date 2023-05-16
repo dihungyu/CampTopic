@@ -9666,7 +9666,6 @@ dialog::backdrop {
 }
 .article-list figure {
   width: 300px;
-  height: 195px;
   overflow: hidden;
   background-color: #000;
   float: left;
