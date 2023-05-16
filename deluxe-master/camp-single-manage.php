@@ -154,20 +154,22 @@ $files_result = mysqli_query($conn, $files_query);
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-md-12 ftco-animate">
-                            <h3 class="mb-4">
+                            <h4 class="mb-5" style="display:flex; align-items: center; justify-content: space-between;">
                                 <?php echo $campsiteName;
                                 if ($isReviewed == 0) {
-                                    echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal" style="position: relative;">';
-                                    echo '            <i class="fa-solid fa-circle-check" style="color: #005555; position: absolute; left: 690px; bottom:1px;"></i>';
+                                    echo '      <span class="span-adj">';
+                                    echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal" style="padding:0px">';
+                                    echo '            <i class="fa-solid fa-circle-check" style="color: #005555; margin:0px"></i>';
                                     echo '        </button>';
 
-                                    echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal" style="position: relative;">';
-                                    echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626; position: absolute; left: 710px; bottom: 1px;"></i>';
+                                    echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal"style="padding:0px">';
+                                    echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626;"></i>';
                                     echo '        </button>';
+                                    echo ' </span>';
                                 }
                                 ?>
 
-                            </h3>
+                            </h4>
                             <div class="single-slider owl-carousel">
                                 <?php
                                 while ($file_result = mysqli_fetch_assoc($files_result)) {
@@ -319,17 +321,16 @@ $files_result = mysqli_query($conn, $files_query);
         echo '<div class="modal-content">';
         echo '<div class="modal-header">';
         echo '<h5 class="modal-title" id="deleteModalLabel">審核確認</h5>';
-        echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-        echo '<span aria-hidden="true">&times;</span>';
+        echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
         echo '</button>';
         echo '</div>';
         echo '<div class="modal-body">';
         echo '確定要讓「' . $campsiteName . '」上架嗎？';
         echo '</div>';
         echo '<div class="modal-footer">';
-        echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
         echo '<input type="hidden" name="campsiteId" value="' . $campsiteId . '">';
-        echo '<button type="submit" class="btn-new" style="background-color: #28A745;">確認</button>';
+        echo '<button type="submit" class="btn-secondary">確認</button>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -342,17 +343,16 @@ $files_result = mysqli_query($conn, $files_query);
         echo '<div class="modal-content">';
         echo '<div class="modal-header">';
         echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-        echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-        echo '<span aria-hidden="true">&times;</span>';
+        echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
         echo '</button>';
         echo '</div>';
         echo '<div class="modal-body">';
         echo '確定要否決「' . $campsiteName . '」嗎？';
         echo '</div>';
         echo '<div class="modal-footer">';
-        echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
         echo '<input type="hidden" name="campsiteId" value="' . $campsiteId . '">';
-        echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認</button>';
+        echo '<button type="submit" class="btn-secondary" style="background-color: #B02626;">確認</button>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
