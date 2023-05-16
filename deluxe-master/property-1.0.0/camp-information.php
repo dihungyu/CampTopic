@@ -258,141 +258,7 @@ if (mysqli_num_rows($result_activities) > 0) {
 
     });
 
-    let selectedLabels = [];
 
-    function filterActivities() {
-      selectedLabels = getSelectedLabels();
-      let labelIds = selectedLabels.map(label => label.labelId);
-      let accountId = <?php echo json_encode($accountId); ?>;
-
-      let bodyContent;
-
-      if (labelIds.length > 0) {
-        bodyContent = "labelIds=" + JSON.stringify(labelIds) + "&accountId=" + accountId;
-      } else {
-        bodyContent = "accountId=" + accountId;
-      }
-
-      fetch("../../php/Filter/filter_activities.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: bodyContent
-      })
-        .then(response => response.json())
-        .then((filteredActivities) => {
-          displayFilteredActivities(filteredActivities);
-          displaySelectedLabels();
-        });
-    }
-
-    document.querySelectorAll(".form-check-input").forEach(checkbox => {
-      checkbox.addEventListener("change", () => {
-        filterActivities();
-      });
-    });
-
-    function displaySelectedLabels() {
-      let container = document.getElementById("selected-tags-container");
-      container.innerHTML = "";
-
-      selectedLabels.forEach(label => {
-        let tag = document.createElement("a");
-        tag.classList.add("tag-filter");
-        tag.setAttribute("data-label-id", label.labelId);
-        tag.innerHTML = `${label.labelName}`;
-        container.appendChild(tag);
-      });
-    }
-
-
-    function getSelectedLabels() {
-      let checkboxes = document.querySelectorAll(".form-check-input");
-      let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
-        labelName: checkbox.nextElementSibling.textContent,
-        labelId: checkbox.dataset.labelId
-      }));
-      return selectedLabels;
-    }
-
-    function displayFilteredActivities(activities) {
-      let activitiesContainer = document.querySelector(".col-xs-12");
-
-      activitiesContainer.innerHTML = '';
-
-      if (activities.length === 0) {
-        activitiesContainer.innerHTML = '<h6>無相符的資料！</h6>';
-      } else {
-        activities.forEach(activity => {
-          let activityHTML = generateActivityCard(activity);
-          activitiesContainer.innerHTML += activityHTML;
-        });
-      }
-    }
-
-
-
-    function generateActivityCard(activity) {
-      let activityId = activity.activityId;
-      let campsiteName = activity.campsiteName;
-      let accountName = activity.accountName;
-      let activityTitle = activity.activityTitle;
-      let activityStartDate = activity.activityStartDate;
-      let activityStartMonthDay = new Date(activityStartDate).toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit"
-      });
-      let activityEndDate = activity.activityEndDate;
-      let activityEndMonthDay = new Date(activityEndDate).toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit"
-      });
-      let minAttendee = activity.minAttendee;
-      let maxAttendee = activity.maxAttendee;
-      let activityAttendence = activity.activityAttendence;
-      let leastAttendeeFee = activity.leastAttendeeFee;
-      let maxAttendeeFee = activity.maxAttendeeFee;
-      let img_src = activity.img_src;
-
-      return `
-      <div class="col-sm-6">
-      <div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">
-        <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">
-        <a href="../camper.php?activityId=' . $activityId . '">
-        <span class="card-head">
-          <img src="${img_src}" alt="Admin" />
-          <p>${accountName}</p>
-        </span>
-        <div class="card-body" style="margin-top: 0px;">
-          <h5 class="card-title">${activityStartMonthDay}-${activityEndMonthDay} ${activityTitle}</h5>
-          <div style="display: flex;flex-direction: column">
-            <div class="findcamper">
-              <span class="findcamper-icon">
-                <i class="fa-solid fa-calendar-days"></i>${activityStartMonthDay}-${activityEndMonthDay}</span>
-              <span class="findcamper-icon">
-                <i class="fa-solid fa-person"></i>${minAttendee}-${maxAttendee} 人
-              </span>
-            </div>
-            <div class="findcamper">
-              <span class="findcamper-icon" style="display: flex; align-items: center;">
-                <i class="icon-map"></i>${campsiteName}</span>
-              <span class="findcamper-icon">
-                <i class="fa-solid fa-sack-dollar"></i>${leastAttendeeFee}-${maxAttendeeFee}元</span>
-            </div>
-          </div>
-          <hr>
-          <div class="findcamper-bottom">
-            <p>已有${activityAttendence}人參加 </p>
-            <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
-              data-toggle="modal" data-target="#Modal${activityId}">
-              參加！</button>
-          </div>
-        </div>
-        </a>
-      </div>
-    </div>`;
-    }
 
 
     function hideMessage() {
@@ -1052,10 +918,10 @@ if (mysqli_num_rows($result_activities) > 0) {
               ?>
             </div>
             <div class="modal-footer">
-              <div style=" display: flex; justify-content: flex-end;">
+              <!-- <div style=" display: flex; justify-content: flex-end;">
                 <button type="button" class="btn-secondary" data-dismiss="modal"
                   onclick="filterActivities()">確認</button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -1136,7 +1002,143 @@ if (mysqli_num_rows($result_activities) > 0) {
   <script src="https://kit.fontawesome.com/d02d7e1ecb.js" crossorigin="anonymous"></script>
   <script src="js/e-magz.js"></script>
 
+  <script>
+    let selectedLabels = [];
 
+    function filterActivities() {
+      selectedLabels = getSelectedLabels();
+      let labelIds = selectedLabels.map(label => label.labelId);
+      let accountId = <?php echo json_encode($accountId); ?>;
+
+      let bodyContent;
+
+      if (labelIds.length > 0) {
+        bodyContent = "labelIds=" + JSON.stringify(labelIds) + "&accountId=" + accountId;
+      } else {
+        bodyContent = "accountId=" + accountId;
+      }
+
+      fetch("../../php/Filter/filter_activities.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: bodyContent
+      })
+        .then(response => response.json())
+        .then((filteredActivities) => {
+          displayFilteredActivities(filteredActivities);
+          displaySelectedLabels();
+        });
+    }
+
+    document.querySelectorAll(".form-check-input").forEach(checkbox => {
+      checkbox.addEventListener("change", () => {
+        filterActivities();
+      });
+    });
+
+    function displaySelectedLabels() {
+      let container = document.getElementById("selected-tags-container");
+      container.innerHTML = "";
+
+      selectedLabels.forEach(label => {
+        let tag = document.createElement("a");
+        tag.classList.add("tag-filter");
+        tag.setAttribute("data-label-id", label.labelId);
+        tag.innerHTML = `${label.labelName}`;
+        container.appendChild(tag);
+      });
+    }
+
+
+    function getSelectedLabels() {
+      let checkboxes = document.querySelectorAll(".form-check-input");
+      let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
+        labelName: checkbox.nextElementSibling.textContent,
+        labelId: checkbox.dataset.labelId
+      }));
+      return selectedLabels;
+    }
+
+    function displayFilteredActivities(activities) {
+      let activitiesContainer = document.querySelector(".col-xs-12");
+
+      activitiesContainer.innerHTML = '';
+
+      if (activities.length === 0) {
+        activitiesContainer.innerHTML = '<h6>無相符的資料！</h6>';
+      } else {
+        activities.forEach(activity => {
+          let activityHTML = generateActivityCard(activity);
+          activitiesContainer.innerHTML += activityHTML;
+        });
+      }
+    }
+
+
+
+    function generateActivityCard(activity) {
+      let activityId = activity.activityId;
+      let campsiteName = activity.campsiteName;
+      let accountName = activity.accountName;
+      let activityTitle = activity.activityTitle;
+      let activityStartDate = activity.activityStartDate;
+      let activityStartMonthDay = new Date(activityStartDate).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit"
+      });
+      let activityEndDate = activity.activityEndDate;
+      let activityEndMonthDay = new Date(activityEndDate).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit"
+      });
+      let minAttendee = activity.minAttendee;
+      let maxAttendee = activity.maxAttendee;
+      let activityAttendence = activity.activityAttendence;
+      let leastAttendeeFee = activity.leastAttendeeFee;
+      let maxAttendeeFee = activity.maxAttendeeFee;
+      let img_src = activity.img_src;
+
+      return `
+  <div class="col-sm-6">
+  <div class="card" style="width:600px;margin-left: 0px; margin-bottom: 40px;">
+    <img class="card-img-top" src="images/Rectangle 144.png" alt="Card image cap">
+    <a href="../camper.php?activityId=' . $activityId . '">
+    <span class="card-head">
+      <img src="${img_src}" alt="Admin" />
+      <p>${accountName}</p>
+    </span>
+    <div class="card-body" style="margin-top: 0px;">
+      <h5 class="card-title">${activityStartMonthDay}-${activityEndMonthDay} ${activityTitle}</h5>
+      <div style="display: flex;flex-direction: column">
+        <div class="findcamper">
+          <span class="findcamper-icon">
+            <i class="fa-solid fa-calendar-days"></i>${activityStartMonthDay}-${activityEndMonthDay}</span>
+          <span class="findcamper-icon">
+            <i class="fa-solid fa-person"></i>${minAttendee}-${maxAttendee} 人
+          </span>
+        </div>
+        <div class="findcamper">
+          <span class="findcamper-icon" style="display: flex; align-items: center;">
+            <i class="icon-map"></i>${campsiteName}</span>
+          <span class="findcamper-icon">
+            <i class="fa-solid fa-sack-dollar"></i>${leastAttendeeFee}-${maxAttendeeFee}元</span>
+        </div>
+      </div>
+      <hr>
+      <div class="findcamper-bottom">
+        <p>已有${activityAttendence}人參加 </p>
+        <button class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 14px;"
+          data-toggle="modal" data-target="#Modal${activityId}">
+          參加！</button>
+      </div>
+    </div>
+    </a>
+  </div>
+</div>`;
+    }
+  </script>
 
 
 </body>
