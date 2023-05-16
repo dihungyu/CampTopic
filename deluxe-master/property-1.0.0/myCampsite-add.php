@@ -261,16 +261,16 @@ session_start();
               </select>
             </span>
 
-            <h6 style="font-weight:bold;margin-left: 100px;margin-top: 17px;">設備與設施</h6>
-            <span style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 17px;margin-left: 100px;margin-top: 10px;">
+            <h6 style="font-weight:bold;margin-left: 100px;margin-top: 24px;">設備與設施</h6>
+            <span style="display:flex;align-items: center;flex-wrap: nowrap;margin-bottom: 20px;margin-left: 100px;margin-top: 10px;">
               <?php
               $sql_services = "SELECT * FROM services";
               $result_services = mysqli_query($conn, $sql_services);
 
               if (mysqli_num_rows($result_services) > 0) { // 檢查是否有資料
                 while ($row_services = mysqli_fetch_assoc($result_services)) {
-                  echo '<input type="checkbox" name="services[]" value="' . $row_services['serviceId'] . '" style="color: #F0F0F0;">';
-                  echo '<span style="margin-right: 25px;">' . $row_services['serviceName'] . '</span>';
+                  echo '<input type="checkbox" name="services[]" value="' . $row_services['serviceId'] . '" style="color: #F0F0F0;margin-right: 8px;">';
+                  echo '<span style="margin-right: 24px;">' . $row_services['serviceName'] . '</span>';
                 }
               }
               ?>

@@ -151,7 +151,7 @@ function format_count($count)
   <div class="section">
     <div class="container" style="max-width: 1260px">
       <div class="row mb-6 align-items-center" style="margin-top: 20px; margin-bottom: 40px;">
-        <div class="col-3">
+        <div class="col-5">
           <ul class="nav nav-tabs" style="margin-left: 16px;" id="myTab" role="tablist">
             <li class="nav-item" style="margin-right:20px">
               <a class="nav-link isReviewed" id="isReviewed-tab" data-toggle="tab" href="#isReviewed" role="tab" aria-controls="isReviewed" aria-selected="true">已上架</a>
@@ -161,8 +161,10 @@ function format_count($count)
             </li>
           </ul>
         </div>
-        <div class="col-5">
-          <div class="input-group" style=" margin-left: 530px;">
+        <div class="col-7">
+          <span class="span-adj" style="justify-content: flex-end;">
+          <div class="input-group" style="justify-content: flex-end; margin-right:10px">
+          
             <div id="navbar-search-autocomplete" class="form-outline">
               <input type="search" id="form1" name="camp_search_keyword" class="form-control" style="height: 40px; border-radius: 35px;" placeholder="搜尋營地名稱..." />
             </div>
@@ -170,19 +172,15 @@ function format_count($count)
               <i class="fas fa-search"></i>
             </button>
           </div>
-        </div>
-        <div class="col-4">
-          <span class="span-adj" style="justify-content: flex-end;">
+
             <a href="myCampsite-add.php">
-              <button class="btn-new">
+              <button class="btn-new" style="margin: 0px; width: 96px;">
                 新增營地
               </button>
             </a>
           </span>
         </div>
-      </div>
-    </div>
-
+      </div></div>
 
 
     <div class="tab-content" id="myTabContent">
@@ -477,17 +475,16 @@ function format_count($count)
       echo '<div class="modal-content">';
       echo '<div class="modal-header">';
       echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-      echo '<span aria-hidden="true">&times;</span>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+      echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
       echo '</button>';
       echo '</div>';
       echo '<div class="modal-body">';
       echo '確定要刪除「' . $isReviewed_campsite["campsiteName"] . '」嗎？';
       echo '</div>';
       echo '<div class="modal-footer">';
-      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
       echo '<input type="hidden" name="campsiteId" value="' . $isReviewed_campsite["campsiteId"] . '">';
-      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
+      echo '<button type="submit" class="btn-secondary" style="background-color: #B02626;">確認刪除</button>';
       echo '</div>';
       echo '</div>';
       echo '</div>';
@@ -503,17 +500,16 @@ function format_count($count)
       echo '<div class="modal-content">';
       echo '<div class="modal-header">';
       echo '<h5 class="modal-title" id="deleteModalLabel">刪除確認</h5>';
-      echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-      echo '<span aria-hidden="true">&times;</span>';
+      echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+      echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
       echo '</button>';
       echo '</div>';
       echo '<div class="modal-body">';
       echo '確定要刪除「' . $unReviewed_campsite["campsiteName"] . '」嗎？';
       echo '</div>';
       echo '<div class="modal-footer">';
-      echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
       echo '<input type="hidden" name="campsiteId" value="' . $unReviewed_campsite["campsiteId"] . '">';
-      echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認刪除</button>';
+      echo '<button type="submit" class="btn-secondary" style="background-color: #B02626;">確認刪除</button>';
       echo '</div>';
       echo '</div>';
       echo '</div>';
