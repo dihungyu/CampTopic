@@ -470,7 +470,7 @@ $articleId = $_GET['articleId'];
     echo '</div>';
     echo '<div class="modal-footer">';
     echo '<input type="hidden" name="articleId" value="' . $main_article_row['articleId'] . '">';
-    echo '<button type="submit" class="btn-secondary"style="background-color:#B02626;" >確認</button>';
+    echo '<button type="submit" class="btn-secondary" style="background-color:#B02626;" >確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';

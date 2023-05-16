@@ -200,20 +200,20 @@ $ownerPhoneNumber = $row_account['accountPhoneNumber'];
                                     <h1>
                                         <?php echo $equipmentName ?>
                                     </h1>
+                                </span>
+                                <span style="display:flex; align-items: center;">
                                     <h4 class="equiph4">
                                         <?php echo "$" . number_format($equipmentPrice) ?>
                                     </h4>
-                                </span>
-                                <span style="display:flex; align-items: center;">
 
                                     <?php
                                     if ($isReviewed == 0) {
                                         echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#disagreeModal" style="position: relative;">';
-                                        echo '            <i class="fa-solid fa-circle-check" style="color: #005555; position: absolute; right:10px;bottom:1px;"></i>';
+                                        echo '            <i class="fa-solid fa-circle-check" style="color: #005555;"></i>';
                                         echo '        </button>';
 
                                         echo '        <button type="button" class="btn-icon" data-toggle="modal" data-target="#confirmModal" style="position: relative;">';
-                                        echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626; position: absolute; bottom: 1px;"></i>';
+                                        echo '            <i class="fa-solid fa-circle-xmark" style="color: #B02626;"></i>';
                                         echo '        </button>';
                                     }
                                     ?>
@@ -369,17 +369,16 @@ $ownerPhoneNumber = $row_account['accountPhoneNumber'];
     echo '<div class="modal-content">';
     echo '<div class="modal-header">';
     echo '<h5 class="modal-title" id="deleteModalLabel">駁回檢舉確認</h5>';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-    echo '<span aria-hidden="true">&times;</span>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
     echo '</button>';
     echo '</div>';
     echo '<div class="modal-body">';
     echo '確定要駁回「' . $equipmentName . '」的審核嗎？';
     echo '</div>';
     echo '<div class="modal-footer">';
-    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
     echo '<input type="hidden" name="equipmentId" value="' . $equipmentId . '">';
-    echo '<button type="submit" class="btn-new" style="background-color: #28A745;">確認</button>';
+    echo '<button type="submit" class="btn-secondary">確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -392,17 +391,16 @@ $ownerPhoneNumber = $row_account['accountPhoneNumber'];
     echo '<div class="modal-content">';
     echo '<div class="modal-header">';
     echo '<h5 class="modal-title" id="deleteModalLabel">通過檢舉確認</h5>';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-label="取消">';
-    echo '<span aria-hidden="true">&times;</span>';
+    echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    echo '<i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>';
     echo '</button>';
     echo '</div>';
     echo '<div class="modal-body">';
     echo '確定要通過「' . $equipmentName . '」的檢舉並刪除該設備嗎？';
     echo '</div>';
     echo '<div class="modal-footer">';
-    echo '<button class="btn-new1" data-dismiss="modal">取消</button>';
     echo '<input type="hidden" name="equipmentId" value="' . $equipmentId . '">';
-    echo '<button type="submit" class="btn-new" style="background-color: #B02626;">確認</button>';
+    echo '<button type="submit" class="btn-secondary" style="background-color: #B02626;">確認</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
