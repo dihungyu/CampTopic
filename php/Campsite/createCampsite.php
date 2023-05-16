@@ -1,4 +1,8 @@
 <?php
+// 開啟錯誤報告
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once '../conn.php';
 require_once '../uuid_generator.php';
 
