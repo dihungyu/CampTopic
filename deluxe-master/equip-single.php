@@ -568,7 +568,7 @@ if (isset($_POST["likeEquipDel"])) {
                 echo '<h5 style="width: 180px;">' . $recommand_equipmentName . '</h5>';
                 echo '</a>';
                 echo '<span class="span-adj">';
-                echo '<h4 style="margin-left: 20px; margin-right:0px;">$' . number_format($equipmentPrice) . '</h4>';
+                echo '<h4 style="margin-left: 20px; margin-right:0px;">$' . number_format($recommand_equipmentPrice) . '</h4>';
                 echo "<form action='equip-single.php' method='post' style='margin-bottom: 0px;'>";
                 echo "<input type='hidden' name='" . ($isEquipCollected ? "collectEquipDel" : "collectEquipAdd") . "' value='" . $recommand_equipmentId . "'>";
                 echo "<button type='submit' class='btn-icon'>";
