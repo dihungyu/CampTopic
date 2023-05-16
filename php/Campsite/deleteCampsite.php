@@ -3,8 +3,8 @@ session_start();
 
 require_once '../conn.php';
 
-if (isset($_GET["campsiteId"])) {
-    $campsiteId = $_GET["campsiteId"];
+if (isset($_POST["campsiteId"])) {
+    $campsiteId = $_POST["campsiteId"];
 
     // Start transaction
     mysqli_begin_transaction($conn);
