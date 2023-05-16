@@ -3,8 +3,8 @@ session_start();
 
 require_once '../conn.php';
 
-if (isset($_GET["campsiteId"])) {
-    $campsiteId = $_GET["campsiteId"];
+if (isset($_POST["campsiteId"])) {
+    $campsiteId = $_POST["campsiteId"];
 
     $sql = "UPDATE campsites SET isReviewed = 1 WHERE campsiteId = ?";
     $stmt = mysqli_prepare($conn, $sql);
@@ -26,4 +26,3 @@ if (isset($_GET["campsiteId"])) {
         header("Location: ../../deluxe-master/property-1.0.0/manage-land.php");
     }
 }
-?>
