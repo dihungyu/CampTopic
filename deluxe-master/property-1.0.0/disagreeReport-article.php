@@ -24,7 +24,7 @@ if (isset($_POST["articleId"])) {
 
     if ($all_successful) {
         $_SESSION["system_message"] = "已駁回該文章的檢舉！";
-        header('Location: ../../deluxe-master/property-1.0.0/manage-equip.php');
+        header('Location: ../../deluxe-master/property-1.0.0/manage-article.php');
     } else {
         $_SESSION["system_message"] = "更新失敗，請重試！";
         header('Location: ' . $_SERVER['HTTP_REFERER']);
