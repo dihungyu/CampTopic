@@ -129,10 +129,9 @@ $articleId = $_GET['articleId'];
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item "><a href="property-1.0.0/index-manage.php" class="nav-link">首頁</a></li>
-                    <li class="nav-item"><a href="property-1.0.0/camp-information.php" class="nav-link">找小鹿</a></li>
-                    <li class="nav-item"><a href="all-article.php" class="nav-link">鹿的分享</a></li>
-                    <li class="nav-item"><a href="equipment.php" class="nav-link">鹿的裝備</a></li>
-                    <li class="nav-item"><a href="property-1.0.0/ad.php" class="nav-link">廣告方案</a></li>
+                    <li class="nav-item"><a href="property-1.0.0/manage-article.php" class="nav-link">文章管理</a></li>
+                    <li class="nav-item"><a href="property-1.0.0/manage-equip.php" class="nav-link">設備管理</a></li>
+                    <li class="nav-item"><a href="property-1.0.0/manage-land.php" class="nav-link">營地管理</a></li>
 
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
@@ -141,23 +140,10 @@ $articleId = $_GET['articleId'];
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
-                            <a class="dropdown-item" href="property-1.0.0/member-like.php">我的收藏</a>
-                            <a class="dropdown-item" href="property-1.0.0/member-record.php">發表記錄</a>
-                            <a class="dropdown-item" href="property-1.0.0/myActivityRecord.php">活動紀錄</a>
                             <div class="dropdown-divider"></div>
-                            <?php
-                            // 檢查是否設置了 accountName 或 accountEmail Cookie
-                            if (isset($_COOKIE["accountName"]) || isset($_COOKIE["accountEmail"])) {
-                                echo '<a class="dropdown-item" href="../logout.php?action=logout">登出</a>';
-                            }
-                            // 如果沒有設置 Cookie 則顯示登入選項
-                            else {
-                                echo '<a class="dropdown-item" href="../login.php">登入</a>';
-                            }
-                            ?>
+                            <a class="dropdown-item" href="../logout.php?action=logout">登出</a>
                         </div>
                     </li>
-
                 </ul>
             </div>
         </div>
