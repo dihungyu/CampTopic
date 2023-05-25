@@ -148,7 +148,7 @@ if (isset($_POST["submit"])) {
               帳號
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="member.php">會員帳號</a>
+              <a class="dropdown-item active" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <a class="dropdown-item" href="member-record.php">發表記錄</a>
               <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>

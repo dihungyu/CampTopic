@@ -128,13 +128,13 @@ function format_like_count($count)
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+          <li class="nav-item"><a href="index.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
           <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
           <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
           <li class="nav-item"><a href="ad.php" class="nav-link">廣告方案</a></li>
 
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="member.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號
             </a>
@@ -142,7 +142,7 @@ function format_like_count($count)
               <a class="dropdown-item" href="member.php">會員帳號</a>
               <a class="dropdown-item" href="member-like.php">我的收藏</a>
               <a class="dropdown-item" href="member-record.php">發表記錄</a>
-              <a class="dropdown-item" href="myActivityRecord.php">活動紀錄</a>
+              <a class="dropdown-item active" href="myActivityRecord.php">活動紀錄</a>
               <?php
               // 是否為商家帳號
               if ($_COOKIE["accountType"] == "BUSINESS") {

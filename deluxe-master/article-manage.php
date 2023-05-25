@@ -128,12 +128,12 @@ $articleId = $_GET['articleId'];
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item "><a href="property-1.0.0/index-manage.php" class="nav-link">首頁</a></li>
-                    <li class="nav-item"><a href="property-1.0.0/manage-article.php" class="nav-link">文章管理</a></li>
+                    <li class="nav-item"><a href="property-1.0.0/index-manage.php" class="nav-link">首頁</a></li>
+                    <li class="nav-item active"><a href="property-1.0.0/manage-article.php" class="nav-link">文章管理</a></li>
                     <li class="nav-item"><a href="property-1.0.0/manage-equip.php" class="nav-link">設備管理</a></li>
                     <li class="nav-item"><a href="property-1.0.0/manage-land.php" class="nav-link">營地管理</a></li>
 
-                    <li class="nav-item dropdown active">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             帳號

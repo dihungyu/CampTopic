@@ -100,10 +100,10 @@ function format_count($count)
         <ul class="navbar-nav ml-auto">
           <li class="nav-item "><a href="index-manage.php" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="manage-article.php" class="nav-link">文章管理</a></li>
-          <li class="nav-item"><a href="manage-equip.php" class="nav-link">設備管理</a></li>
+          <li class="nav-item  active"><a href="manage-equip.php" class="nav-link">設備管理</a></li>
           <li class="nav-item"><a href="manage-land.php" class="nav-link">營地管理</a></li>
 
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="member.php" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               帳號

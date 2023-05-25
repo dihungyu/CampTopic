@@ -191,7 +191,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "update" && isset($_POST['art
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="index.php" class="nav-link">首頁</a></li>
+                    <li class="nav-item"><a href="index.php" class="nav-link">首頁</a></li>
                     <li class="nav-item"><a href="camp-information.php" class="nav-link">找小鹿</a></li>
                     <li class="nav-item"><a href="../all-article.php" class="nav-link">鹿的分享</a></li>
                     <li class="nav-item"><a href="../equipment.php" class="nav-link">鹿的裝備</a></li>
