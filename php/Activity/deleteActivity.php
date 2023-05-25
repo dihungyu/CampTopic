@@ -28,6 +28,7 @@ if (isset($_GET["activityId"])) {
         mysqli_stmt_bind_param($stmt2, "s", $routeId);
         $result2 = mysqli_stmt_execute($stmt2);
         if (!$result2) {
+            $_SESSION["system_message"] = "Error deleting trip introductions: " . mysqli_error($conn);
             $all_successful = false;
             break;
         }
@@ -58,6 +59,7 @@ if (isset($_GET["activityId"])) {
         mysqli_stmt_bind_param($stmt6, "s", $routeId);
         $result6 = mysqli_stmt_execute($stmt6);
         if (!$result6) {
+            $_SESSION["system_message"] = "Error deleting file records: " . mysqli_error($conn);
             $all_successful = false;
             break;
         }
@@ -70,6 +72,7 @@ if (isset($_GET["activityId"])) {
         $result3 = mysqli_stmt_execute($stmt3);
 
         if (!$result3) {
+            $_SESSION["system_message"] = "Error deleting routes: " . mysqli_error($conn);
             $all_successful = false;
         }
     }
@@ -81,6 +84,20 @@ if (isset($_GET["activityId"])) {
         $result7 = mysqli_stmt_execute($stmt7);
 
         if (!$result7) {
+            $_SESSION["system_message"] = "Error deleting comments: " . mysqli_error($conn);
+            $all_successful = false;
+        }
+    }
+
+    if ($all_successful) {
+        // Delete from the activities_accounts table first
+        $sql_query8 = "DELETE FROM activities_accounts WHERE activityId = ?";
+        $stmt8 = mysqli_prepare($conn, $sql_query8);
+        mysqli_stmt_bind_param($stmt8, "s", $activityId);
+        $result8 = mysqli_stmt_execute($stmt8);
+
+        if (!$result8) {
+            $_SESSION["system_message"] = "Error deleting records from activities_accounts: " . mysqli_error($conn);
             $all_successful = false;
         }
     }
@@ -92,9 +109,11 @@ if (isset($_GET["activityId"])) {
         $result4 = mysqli_stmt_execute($stmt4);
 
         if (!$result4) {
+            $_SESSION["system_message"] = "Error deleting activities: " . mysqli_error($conn);
             $all_successful = false;
         }
     }
+
 
     // Check if all queries were successful
     if ($all_successful) {
@@ -104,11 +123,8 @@ if (isset($_GET["activityId"])) {
         header("Location: ../../deluxe-master/property-1.0.0/camp-information.php");
         exit();
     } else {
-        echo "Error: " . mysqli_error($conn);
         // Rollback the transaction
         mysqli_rollback($conn);
-        $_SESSION["system_message"] = "刪除失敗，請重試";
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }
-?>

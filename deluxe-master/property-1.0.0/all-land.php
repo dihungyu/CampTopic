@@ -429,12 +429,6 @@ if (isset($_POST["likeCampDel"])) {
                         }
                         ?>
                     </div>
-                    <!-- <div class="modal-footer">
-                        <div style=" display: flex; justify-content: flex-end;">
-                            <button type="button" class="btn-secondary" data-dismiss="modal"
-                                onclick="filterCampsites()">確認</button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -592,20 +586,16 @@ if (isset($_POST["likeCampDel"])) {
 
         <script>
             let selectedLabels = [];
-
             function filterCampsites() {
                 selectedLabels = getSelectedLabels();
                 let labelIds = selectedLabels.map(label => label.labelId);
                 let accountId = <?php echo json_encode($accountId); ?>;
-
                 let bodyContent;
-
                 if (labelIds.length > 0) {
                     bodyContent = "labelIds=" + JSON.stringify(labelIds) + "&accountId=" + accountId;
                 } else {
                     bodyContent = "accountId=" + accountId;
                 }
-
                 fetch("../../php/Filter/filter_campsites.php", {
                     method: "POST",
                     headers: {
@@ -619,13 +609,11 @@ if (isset($_POST["likeCampDel"])) {
                         displaySelectedLabels();
                     });
             }
-
             document.querySelectorAll(".form-check-input").forEach(checkbox => {
                 checkbox.addEventListener("change", () => {
                     filterCampsites();
                 });
             });
-
             function displaySelectedLabels() {
                 let container = document.getElementById("selected-tags-container");
                 container.innerHTML = "";
@@ -638,8 +626,6 @@ if (isset($_POST["likeCampDel"])) {
                     container.appendChild(tag);
                 });
             }
-
-
             function getSelectedLabels() {
                 let checkboxes = document.querySelectorAll(".form-check-input");
                 let selectedLabels = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
@@ -648,12 +634,9 @@ if (isset($_POST["likeCampDel"])) {
                 }));
                 return selectedLabels;
             }
-
             function displayFilteredCampsites(campsites) {
                 let campsitesContainer = document.querySelector(".col-md-12");
-
                 campsitesContainer.innerHTML = '';
-
                 if (campsites.length === 0) {
                     campsitesContainer.innerHTML = '<h4 style="margin-left: 40px">無相符的資料！</h4>';
                 } else {
@@ -663,8 +646,6 @@ if (isset($_POST["likeCampDel"])) {
                     });
                 }
             }
-
-
             function generateCampsiteCard(campsite) {
                 let campsiteId = campsite.campsiteId;
                 let campsiteName = campsite.campsiteName;

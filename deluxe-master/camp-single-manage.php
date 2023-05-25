@@ -116,9 +116,9 @@ $files_result = mysqli_query($conn, $files_query);
                             帳號
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="member.php">會員帳號</a>
+                            <a class="dropdown-item" href="property-1.0.0/member.php">會員帳號</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../../logout.php?action=logout">登出</a>
+                            <a class="dropdown-item" href="../logout.php?action=logout">登出</a>
                         </div>
                     </li>
                 </ul>
