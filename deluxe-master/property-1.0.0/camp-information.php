@@ -538,17 +538,17 @@ if (mysqli_num_rows($result_activities) > 0) {
             echo '    <h5 class="card-title">' . $activityStartMonthDay . '-' . $activityEndMonthDay . ' ' . $activityTitle . '</h5>';
             echo '    <div style="display: flex;flex-direction: column">';
             echo '      <div class="findcamper">';
-            echo '        <span class="findcamper-icon">';
+            echo '        <span class="findcamper-icon" style="width: 240px;">';
             echo '          <i class="fa-solid fa-calendar-days"></i>' . $activityStartMonthDay . '-' . $activityEndMonthDay . '</span>';
-            echo '        <span class="findcamper-icon">';
+            echo '        <span class="findcamper-icon" style="width: 240px;">';
             echo '          <i class="fa-solid fa-person"></i>' . $minAttendee . '-' . $maxAttendee . ' 人';
             echo '        </span>';
             echo '      </div>';
 
             echo '      <div class="findcamper">';
-            echo '        <span class="findcamper-icon" style="display: flex; align-items: center;">';
+            echo '        <span class="findcamper-icon" style="display: flex; align-items: center;width: 240px;">';
             echo '          <i class="icon-map"></i>' . $campsiteName . '</span>';
-            echo '        <span class="findcamper-icon">';
+            echo '        <span class="findcamper-icon" style="width: 240px;">';
             echo '          <i class="fa-solid fa-sack-dollar"></i>' . $leastAttendeeFee . '-' . $maxAttendeeFee . '元</span>';
             echo '      </div>';
 
