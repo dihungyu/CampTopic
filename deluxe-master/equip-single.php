@@ -206,8 +206,8 @@ if (isset($_POST["likeEquipDel"])) {
         <div class="modal-header">
           <h5 class="modal-title" id="reportModalLabel">舉報設備</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+              <i id="close" class="fa-solid fa-circle-xmark" style="color:#a0a0a0;"></i>
+            </button>
         </div>
         <div class="modal-body">
           <form id="report-form">
@@ -222,15 +222,14 @@ if (isset($_POST["likeEquipDel"])) {
             </div>
             <div class="form-group">
               <label for="report-description">詳細描述</label>
-              <textarea class="form-control" id="report-description" name="reportDescription" rows="3"></textarea>
+              <textarea class="form-control" id="report-description" name="reportDescription" rows="2"></textarea>
               <input type="hidden" id="reported-equipment-id" name="equipmentId" value="<?= $equipmentId ?>">
 
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" id="submit-report">提交</button>
+          <button type="button" class="btn-secondary" id="submit-report">提交</button>
         </div>
       </div>
     </div>
