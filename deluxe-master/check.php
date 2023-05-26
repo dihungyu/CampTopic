@@ -1149,10 +1149,10 @@ function format_timestamp($timestamp)
 
 
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityStartDate" id="start-date-input" placeholder="目前開始日期：<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
+              <input type="date" name="activityStartDate" id="start-date-input" value="<?php echo $activityStartDate ?>" style="width: 98%; float: left;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
-              <input type="date" name="activityEndDate" id="end-date-input" placeholder="目前結束日期：<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
+              <input type="date" name="activityEndDate" id="end-date-input" value="<?php echo $activityEndDate ?>" style="width: 98%; float: right;">
             </div>
             <div class="col-md-6" style="padding-right: 0px; padding-left: 0px;">
               <input type="text" name="minAttendee" value="<?php echo $minAttendee ?>" placeholder="最低參加人數（人）" style="width: 98%; float: left;">
