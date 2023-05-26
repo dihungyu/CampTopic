@@ -436,10 +436,10 @@ if (isset($_POST["likeArticleDel"])) {
                 </a>
                     <h4>$" . $campsiteData["campsiteLowerLimit"] . " 起 </h4>
                     <div class='row'>
-                        <div class='col-8'>
+                        <div class='col-9'>
                             <h5>" . $campsiteData["campsiteName"] . "</h5>
                         </div>
-                        <div class='col-4 text-end'>
+                        <div class='col-3 text-end'>
                             <form action='member-like.php' method='post' class='d-inline'>
                                 <input type='hidden' name='collectCampDel' value='" . $campsiteData["campsiteId"] . "'>
                                 <button type='submit' class='btn-icon'><i class='fas fa-bookmark'></i></button>
@@ -854,7 +854,7 @@ if (isset($_POST["likeArticleDel"])) {
                   echo '<div class="card">';
                   echo '<img src="' . $equip_image_src . '" class="card-img-top" alt="...">';
                   echo '<div class="card-body">';
-                  echo '<div class="detail"style="margin-bottom: 0px;">';
+                  echo '<div class="detail">';
                   if ($equipmentData["equipmentType"] === "租") {
                     echo '<span class="fa-stack fa-1x" style="margin-right: 10px; ">';
                     echo '<i class="fas fa-circle fa-stack-2x" style="color:#EFE9DA; font-size:24px;"></i>';
